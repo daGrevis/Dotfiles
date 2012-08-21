@@ -1,0 +1,11 @@
+[user]
+	name = Raitis Stengrevics
+	email = dagrevis@gmail.com
+[core]
+	editor = vim
+[color]
+	ui = true
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %Cblue<%an>%Creset' --abbrev-commit --date=relative
+[rerere]
+	enabled = 1
