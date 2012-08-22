@@ -24,4 +24,6 @@ trayer --edge top --align right  --expand true --width 16 --height 16 --transpar
 
 xmobar &
 
+feh --bg-scale ~/Pictures/wallpaper.jpg
+
 xmonad
