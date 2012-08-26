@@ -24,4 +24,5 @@ main = do
         , ("<Print>",     spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Screenshots/'")
         , ("M-S-<Print>", spawn "scrot '%Y-%m-%d_$wx$h.png' -s -e 'mv $f ~/Screenshots/'") -- Doesn't work!
         , ("M-S-l",       spawn "xscreensaver-command -lock")
+        , ("M-S-i",       spawn "chromium")
         ]
