@@ -1,1 +1,9 @@
 URxvt.scrollBar: false
+URxvt.transparent: true
+URxvt.shading: 190
+URxvt.perl-ext-common:  default,matcher
+URxvt.urlLauncher:      /usr/bin/chromium
+URxvt.matcher.button:   1
+URxvt.font: xft:terminus:size=8
+URxvt.boldFont: URxvt.font: xft:terminus:bold:size=8
+URxvt.lsp: 10
