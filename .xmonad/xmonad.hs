@@ -22,9 +22,10 @@ main = do
         [
           ("M-S-<Return>", spawn "urxvt -lsp 2 -bc")
         , ("M-S-a",        spawn "subl -n")
+        , ("M-S-v",        spawn "urxvt -lsp 2 -bc -e vim")
         , ("M-S-i",        spawn "chromium")
         , ("M-C-i",        spawn "chromium --incognito")
-        , ("M-C-<Delete>", spawn "urxvt -e glances")
+        , ("M-C-<Delete>", spawn "urxvt -lsp 2 -bc -e glances")
         , ("M-p",          spawn "`yeganesh -x -- -i -nb black -nf white -sb \"#1793d1\" -sf white`")
         , ("<Print>",      spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Screenshots/'")
         , ("M-S-<Print>",  spawn "scrot '%Y-%m-%d_$wx$h.png' -s -e 'mv $f ~/Screenshots/'") -- Doesn't work!
