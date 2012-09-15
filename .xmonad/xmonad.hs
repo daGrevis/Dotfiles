@@ -8,7 +8,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
 
-my_terminal = "urxvt -lsp 2 -bc"
+my_terminal = "urxvt"
 term = \s -> spawn $ my_terminal++" -e "++s
 
 main = do
