@@ -10,3 +10,5 @@ PS1='[\u@\h \W]\$ '
 
 source /etc/profile
 source /usr/share/git/completion/git-completion.bash
+
+complete -cf sudo
