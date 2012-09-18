@@ -3,3 +3,5 @@ URxvt.perl-ext-common:  default,matcher
 URxvt.urlLauncher:      /usr/bin/chromium
 URxvt.matcher.button:   1
 URxvt.lsp: 10
+URxvt.background: Black
+URxvt.foreground: White
