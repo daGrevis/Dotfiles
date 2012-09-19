@@ -1,35 +1,44 @@
-if &compatible
-  set nocompatible
-endif
+" i18n and l10n.
+set encoding=utf-8
+set fileencodings=utf-8
 
-set nowrap
-set number
-set showmatch
-set showmode
+" General settings.
 set ruler
-set title
-set wildmenu
-set matchtime=2
-set matchpairs+=<:>
-set hlsearch
-set incsearch
-set esckeys
-set ignorecase
-set smartcase
-set smartindent
-set smarttab
-set magic
-set bs=indent,eol,start
+set number
+set autoread
+set autoindent
+
+" Indentation.
 set tabstop=4
 set shiftwidth=4
-set fileformat=unix
-set lazyredraw
-set nobackup
-set viminfo='20,\"500
-set hidden
-set history=50
-set mouse=v
+set expandtab
 
+" Appereance.
+set background=dark
+set t_Co=256
+colorscheme molokai
+set cursorline
 syntax on
 
+" Filetype.
 filetype plugin indent on
+filetype on
+
+" Disables arrows.
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
+" Search.
+set showmatch
+set hlsearch
+set wrapscan
+set ic
+
+" Pathogen.
+call pathogen#infect()
