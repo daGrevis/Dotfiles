@@ -50,3 +50,6 @@ call pathogen#infect()
 
 " Current plugins:
 " * Powerline,
+" * Flake8;
+
+autocmd FileType python map <buffer> <F2> :call Flake8()<CR>
