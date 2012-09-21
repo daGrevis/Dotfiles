@@ -1,3 +1,6 @@
+" Pathogen.
+call pathogen#infect()
+
 " i18n and l10n.
 set encoding=utf-8
 set fileencodings=utf-8
@@ -45,11 +48,9 @@ set wrapscan
 set ic
 noremap <silent> <c-l> :nohls<cr><c-l>
 
-" Pathogen.
-call pathogen#infect()
-
 " Current plugins:
 " * Powerline,
-" * Flake8;
-
-autocmd FileType python map <buffer> <F2> :call Flake8()<CR>
+" * Supertab,
+" * Syntastic;
+" Other depencdencies:
+" * Molokai (color scheme);
