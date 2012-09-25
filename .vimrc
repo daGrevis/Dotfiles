@@ -1,4 +1,16 @@
-" Blank lines for global peace.
+" Current plugins:
+"
+" * Powerline,
+" * Supertab,
+" * Syntastic,
+" * Commentary;
+"
+" Other depencdencies:
+"
+" * Common sense,
+" * Molokai (color scheme);
+
+" Blank lines for global peace.....
 
 
 
@@ -14,14 +26,13 @@
 call pathogen#infect()
 " Needs to be set so other plugins just work.
 set nocompatible
-" Tells Vim to realod file if it's edited by anyone else. I think that this
-" don't work.
+" Tells Vim to realod file if it's edited by anyone else. I think that this don't work.
 set autoread
-" Sets backups and disallows Vim to create garbage-files whereever it likes.
-" Probably this dont' work neither.
+" Sets backups and disallows Vim to create garbage-files whereever it likes. Probably this dont' work neither.
 set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
+" Sets limit of history. Will help if you are morron and don't use version control.
 set history=10000
 " Detects filetype.
 filetype plugin indent on
@@ -89,23 +100,13 @@ imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
-" Allows to use colon without holding the shift key,
-" People talk that this is good time-saver.
+" Allows to use colon without holding the shift key. People talk that this is good time-saver.
 nore ; :
 nore , ;
 " Adds shortcuts: Ctrl+j, Ctrl+k and Ctrl+t which opens next, previous or new tab.
 nnoremap <silent> <C-j> :tabnext<CR>
 nnoremap <silent> <C-k> :tabprevious<CR>
 nnoremap <silent> <C-t> :tabnew<CR>
-" Pastes contents to sprunge.us. Call it with :Share.
+" Pastes contents to sprunge.us. Call it with :Share. P.S. Thanks, @laadinjsh!
 let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
 exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd
-
-" Current plugins:
-" * Powerline,
-" * Supertab,
-" * Syntastic,
-" * Commentary;
-" Other depencdencies:
-" * Common sense,
-" * Molokai (color scheme);
