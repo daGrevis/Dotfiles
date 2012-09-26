@@ -24,13 +24,13 @@ main = do
         }
         `additionalKeysP`
         [
-          ("M-S-a",        spawn "subl -n")
-        , ("M-S-v",        term  "vim")
-        , ("M-S-i",        spawn "chromium")
-        , ("M-C-i",        spawn "chromium --incognito")
-        , ("M-C-<Delete>", term  "glances")
-        , ("M-p",          spawn "`yeganesh -x -- -i -nb black -nf white -sb \"#1793d1\" -sf white`")
-        , ("<Print>",      spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Screenshots/'")
-        , ("M-S-<Print>",  spawn "scrot '%Y-%m-%d_$wx$h.png' -s -e 'mv $f ~/Screenshots/'") -- Doesn't work!
-        , ("M-S-l",        spawn "xscreensaver-command -lock")
+          ("M-S-a",         spawn "subl -n")
+        , ("M-S-v",         term  "vim")
+        , ("M-S-i",         spawn "chromium")
+        , ("M-C-i",         spawn "chromium --incognito")
+        , ("M1-C-<Delete>", term  "glances")
+        , ("M-p",           spawn "`yeganesh -x -- -i -nb black -nf white -sb \"#1793d1\" -sf white`")
+        , ("<Print>",       spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Screenshots/'")
+        , ("M-S-<Print>",   spawn "scrot '%Y-%m-%d_$wx$h.png' -s -e 'mv $f ~/Screenshots/'") -- Doesn't work!
+        , ("M-S-l",         spawn "xscreensaver-command -lock")
         ]
