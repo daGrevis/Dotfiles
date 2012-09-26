@@ -103,10 +103,10 @@ imap <right> <nop>
 " Allows to use colon without holding the shift key. People talk that this is good time-saver.
 nore ; :
 nore , ;
-" Adds shortcuts: Ctrl+j, Ctrl+k and Ctrl+t which opens next, previous or new tab.
-nnoremap <silent> <C-j> :tabnext<CR>
-nnoremap <silent> <C-k> :tabprevious<CR>
-nnoremap <silent> <C-t> :tabnew<CR>
+" Adds shortcuts: Alt+l, Alt+h and Alt+t which opens next, previous or new tab.
+map <Esc>t :tabnew<CR>
+map <Esc>h gT
+map <Esc>l gt
 " Pastes contents to sprunge.us. Call it with :Share. P.S. Thanks, @laadinjsh!
 let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
 exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd

@@ -15,7 +15,8 @@ main = do
     conf <- dzen defaultConfig
     xmonad $ conf
         {
-          terminal = my_terminal
+          modMask = mod4Mask
+        , terminal = my_terminal
         , layoutHook                = smartBorders (layoutHook conf)
         , XMonad.borderWidth        = 4
         , XMonad.normalBorderColor  = "black"
