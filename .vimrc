@@ -112,3 +112,4 @@ let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
 exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd
 " Flake8 settings.
 let g:syntastic_python_checker_args = "--max-line-length=160"
+let g:syntastic_check_on_open = 1
