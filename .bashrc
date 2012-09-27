@@ -5,7 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
+alias ls='ls --color=always'
+alias less='less -R'
 PS1='[\u@\h \W]\$ '
 
 source /etc/profile
