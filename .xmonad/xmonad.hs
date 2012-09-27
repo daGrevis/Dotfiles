@@ -8,6 +8,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
 
+
 my_terminal = "urxvt"
 term = \s -> spawn $ my_terminal++" -e "++s
 
@@ -15,8 +16,8 @@ main = do
     conf <- dzen defaultConfig
     xmonad $ conf
         {
-          modMask = mod4Mask
-        , terminal = my_terminal
+          modMask                   = mod4Mask
+        , terminal                  = my_terminal
         , layoutHook                = smartBorders (layoutHook conf)
         , XMonad.borderWidth        = 4
         , XMonad.normalBorderColor  = "black"
