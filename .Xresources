@@ -1,27 +1,27 @@
-URxvt.scrollBar: false
-URxvt.perl-ext-common:  default,matcher
-URxvt.urlLauncher:      /usr/bin/chromium
-URxvt.matcher.button:   1
-URxvt.lsp: 10
+URxvt.scrollBar:       false
+URxvt.perl-ext-common: default,matcher
+URxvt.urlLauncher:     /usr/bin/chromium
+URxvt.matcher.button:  1
+URxvt.lsp:             10
 
 !! "Molokai" colorscheme.
 URxvt.foreground: #f8f8f2
 URxvt.background: #1b1d1e
-URxvt.color0: #212121
-URxvt.color1: #e52222
-URxvt.color2: #a6e32d
-URxvt.color3: #fc951e
-URxvt.color4: #c48dff
-URxvt.color5: #fa2573
-URxvt.color6: #67d9f0
-URxvt.color7: #f2f2f2
-URxvt.color8: #212121
-URxvt.color9: #e52222
-URxvt.color10: #a6e32d
-URxvt.color11: #fc951e
-URxvt.color12: #c48dff
-URxvt.color13: #fa2573
-URxvt.color14: #67d9f0
-URxvt.color15: #f8f8f2
+URxvt.color0:     #212121
+URxvt.color1:     #e52222
+URxvt.color2:     #a6e32d
+URxvt.color3:     #fc951e
+URxvt.color4:     #c48dff
+URxvt.color5:     #fa2573
+URxvt.color6:     #67d9f0
+URxvt.color7:     #f2f2f2
+URxvt.color8:     #212121
+URxvt.color9:     #e52222
+URxvt.color10:    #a6e32d
+URxvt.color11:    #fc951e
+URxvt.color12:    #c48dff
+URxvt.color13:    #fa2573
+URxvt.color14:    #67d9f0
+URxvt.color15:    #f8f8f2
 
-URxvt.font: xft:Meslo\ LG\ M\ DZ:size=8
+URxvt.font: xft:Meslo\ LG\ L\ DZ:size=8
