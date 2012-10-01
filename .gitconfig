@@ -8,5 +8,6 @@
 	diff = always
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %Cblue<%an>%Creset' --abbrev-commit --date=relative
+    stat = status
 [rerere]
 	enabled = 1

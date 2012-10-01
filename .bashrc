@@ -7,6 +7,7 @@
 
 alias ls='ls --color=always'
 alias less='less -R'
+alias cl='clear'
 PS1='[\u@\h \W]\$ '
 
 source /etc/profile
