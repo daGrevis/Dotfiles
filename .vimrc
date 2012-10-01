@@ -8,7 +8,7 @@
 " Other depencdencies:
 "
 " * Common sense,
-" * Molokai (color scheme);
+" * Tomorrow Night (color scheme);
 
 " Blank lines for global peace.....
 
@@ -59,14 +59,12 @@ autocmd BufWritePre * :%s/\s\+$//e
 "
 " Appereance.
 "
-" Shows numbers next-to lines.
-set number
-" Turns everything very night-ish.
-set background=dark
+" Shows relative numbers next-to lines. This will make you wanna jump so faaar!
+set relativenumber
 " Enables 256 colors (ye, that's much :D).
 set t_Co=256
 " Sets fave color schema.
-colorscheme molokai
+colorscheme Tomorrow-Night
 " Highlights line which is active.
 set cursorline
 " Turns on syntax highlight.
@@ -75,22 +73,30 @@ syntax on
 set laststatus=2
 " Column after which coding is very dangerous.
 set colorcolumn=160
-" Makes tabline more pleasant.
-hi TabLineFill ctermfg=000000
 
 "
 " Search.
 "
-" Highlights all found results.
-set hlsearch
-" Says to ignore case.
-set ic
 " Shortcut Ctrl+l clears highlights.
 noremap <silent> <C-l> :nohls<cr><C-l>
+" Fix broken Vim's regexes.
+nnoremap / /\v
+vnoremap / /\v
+" If you search for an all-lowercase string your search will be case-insensitive, but if one or more characters is uppercase the search will be case-sensitive.
+set ignorecase
+set smartcase
+" Always assume that it's global search.
+set gdefault
+" Highlights all found results as you type in.
+set incsearch
+set showmatch
+set hlsearch
 
 "
 " Other.
 "
+" Maps jj to Escape. How often do you type jj? :)
+imap jj <Esc>
 " Disables arrows. To teach that I must use HJKL combo.
 map <up> <nop>
 map <down> <nop>
@@ -100,6 +106,13 @@ imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
+" Wrap-friendly Jk-ing. ;D
+nnoremap j gj
+nnoremap k gk
+" Do you know that feeling when unwanted Help opens?
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
 " Allows to use colon without holding the shift key. People talk that this is good time-saver.
 nore ; :
 nore , ;
@@ -107,6 +120,17 @@ nore , ;
 map <Esc>t :tabnew<CR>
 map <Esc>h gT
 map <Esc>l gt
+" Allows to switch between numbers and relative numbers with ease. Use Ctrl+n!
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set number
+    else
+        set relativenumber
+    endif
+endfunc
+nnoremap <C-n> :call NumberToggle()<cr>
+" Allows pasting without breaking indent. To paste from anywhere, but Vim, press F12.
+set pastetoggle=<F12>
 " Pastes contents to sprunge.us. Call it with :Share. P.S. Thanks, @laadinjsh!
 let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
 exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd
