@@ -4,24 +4,25 @@ URxvt.urlLauncher:     /usr/bin/chromium
 URxvt.matcher.button:  1
 URxvt.lsp:             10
 
-!! "Molokai" colorscheme.
-URxvt.foreground: #f8f8f2
-URxvt.background: #1b1d1e
-URxvt.color0:     #212121
-URxvt.color1:     #e52222
-URxvt.color2:     #a6e32d
-URxvt.color3:     #fc951e
-URxvt.color4:     #c48dff
-URxvt.color5:     #fa2573
-URxvt.color6:     #67d9f0
-URxvt.color7:     #f2f2f2
-URxvt.color8:     #212121
-URxvt.color9:     #e52222
-URxvt.color10:    #a6e32d
-URxvt.color11:    #fc951e
-URxvt.color12:    #c48dff
-URxvt.color13:    #fa2573
-URxvt.color14:    #67d9f0
-URxvt.color15:    #f8f8f2
-
 URxvt.font: xft:Meslo\ LG\ L\ DZ:size=8
+
+!! Tomorrow Night.
+URxvt.foreground:  #c5c8c6
+URxvt.background:  #1d1f21
+URxvt.cursorColor: #aeafad
+URxvt.color0:      #000000
+URxvt.color1:      #912226
+URxvt.color2:      #778900
+URxvt.color3:      #ae7b00
+URxvt.color4:      #1d2594
+URxvt.color5:      #682a9b
+URxvt.color6:      #2b6651
+URxvt.color7:      #929593
+URxvt.color8:      #666666
+URxvt.color9:      #cc6666
+URxvt.color10:     #b5bd68
+URxvt.color11:     #f0c674
+URxvt.color12:     #81a2be
+URxvt.color13:     #b294bb
+URxvt.color14:     #8abeb7
+URxvt.color15:     #ecebec
