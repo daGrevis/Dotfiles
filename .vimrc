@@ -137,3 +137,4 @@ exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http:
 " Flake8 settings.
 let g:syntastic_python_checker_args = "--max-line-length=160"
 let g:syntastic_check_on_open = 1
+set bs=2
