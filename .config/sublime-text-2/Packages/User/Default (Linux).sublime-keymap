@@ -1,7 +1,0 @@
-[
-    { "keys": ["f1"], "command": "toggle_side_bar" },
-    { "keys": ["f2"], "command": "toggle_minimap" },
-    { "keys": ["f3"], "command": "toggle_distraction_free" },
-    { "keys": ["f4"], "command": "dpaste" },
-    { "keys": ["ctrl+insert"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} }
-]
