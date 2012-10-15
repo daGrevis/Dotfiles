@@ -39,7 +39,8 @@ beautiful.init(".config/awesome/themes/default/theme.lua")
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vim"
-editor_cmd = terminal .. " -e " .. editor
+term_spawn = terminal .. " -e "
+editor_cmd = term_spawn .. editor
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -69,11 +70,13 @@ layouts =
 -- }}}
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
-tag_names = { "common", "www", "im", "media", "vim", "terminal #1", "terminal #2", "terminal #3", "terminal #4" }
-tags = {}
+tags = {
+    name = { "common", "www", "im", "media", "vim", "term #1", "term #2", "term #3", "term #4" },
+    layout = { layouts[1], layouts[10], layouts[3], layouts[10], layouts[10], layouts[10], layouts[10], layouts[10], layouts[10] }
+}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag(tag_names, s, layouts[1])
+    tags[s] = awful.tag(tags.name, s, tags.layout)
 end
 -- }}}
 
@@ -226,7 +229,6 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -255,6 +257,15 @@ globalkeys = awful.util.table.join(
     --
     -- Custom
     --
+
+    -- Opens terminal.
+    awful.key(
+        { modkey, "Shift" },
+        "Return",
+        function ()
+            awful.util.spawn(terminal)
+        end
+    ),
 
     -- Starts browser.
     awful.key(
@@ -297,7 +308,7 @@ globalkeys = awful.util.table.join(
         { modkey, "Shift" },
         "d",
         function ()
-            awful.util.spawn(terminal .. " -e glances")
+            awful.util.spawn(term_spawn .. "glances")
         end
     ),
 
@@ -306,7 +317,7 @@ globalkeys = awful.util.table.join(
         { modkey, "Shift" },
         "v",
         function ()
-            awful.util.spawn(terminal .. " -e vim")
+            awful.util.spawn(editor_cmd)
         end
     ),
 
