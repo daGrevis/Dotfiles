@@ -250,7 +250,84 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end)
+              end),
+
+    --
+    -- Custom
+    --
+
+    -- Starts browser.
+    awful.key(
+        { modkey, "Shift" },
+        "i",
+        function ()
+            awful.util.spawn("chromium")
+        end
+    ),
+
+    -- Starts browser in private mode (pr0n mode ;D).
+    awful.key(
+        { modkey, "Control" },
+        "i",
+        function ()
+            awful.util.spawn("chromium -incognito")
+        end
+    ),
+
+    -- Makes screenshot.
+    awful.key(
+        { },
+        "Print",
+        function ()
+            awful.util.spawn("scrot '%Y-%m-%d_%X__$wx$h.png' -q 90 -e 'mv $f ~/Screenshots/'")
+        end
+    ),
+
+    -- Starts screensaver.
+    awful.key(
+        { modkey, "Shift" },
+        "l",
+        function ()
+            awful.util.spawn("xscreensaver-command -lock")
+        end
+    ),
+
+    -- Shows info about system.
+    awful.key(
+        { modkey, "Shift" },
+        "d",
+        function ()
+            awful.util.spawn(terminal .. " -e glances")
+        end
+    ),
+
+    -- Opens editor.
+    awful.key(
+        { modkey, "Shift" },
+        "v",
+        function ()
+            awful.util.spawn(terminal .. " -e vim")
+        end
+    ),
+
+    -- Shows menu.
+    awful.key(
+        { modkey },
+        "p",
+        function ()
+            awful.util.spawn("dmenu_run -b -nb black -nf white -sb '#1793d1' -sf white")
+        end
+    ),
+
+    -- Opens explorer.
+    awful.key(
+        { modkey, "Shift" },
+        "t",
+        function ()
+            awful.util.spawn("thunar")
+        end
+    )
+
 )
 
 clientkeys = awful.util.table.join(
