@@ -17,5 +17,8 @@ setxkbmap -layout lv
 # Loads conf for terminal.
 xrdb -merge ~/.Xresources
 
+# Loads screensaver.
+xscreensaver -no-splash &
+
 # Loads WM.
 exec awesome
