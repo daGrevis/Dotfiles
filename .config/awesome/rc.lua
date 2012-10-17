@@ -326,7 +326,7 @@ globalkeys = awful.util.table.join(
         { modkey },
         "p",
         function ()
-            awful.util.spawn("dmenu_run -b -nb black -nf white -sb '#1793d1' -sf white")
+            awful.util.spawn("dmenu_run -b -nb '#333333' -nf white -sb '#1793d1' -sf white")
         end
     ),
 
