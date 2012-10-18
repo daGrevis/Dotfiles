@@ -3,7 +3,8 @@
 " * Powerline,
 " * Supertab,
 " * Syntastic,
-" * Commentary;
+" * Commentary,
+" * Rainbow;
 "
 " Other depencdencies:
 "
@@ -97,8 +98,6 @@ set hlsearch
 "
 " Other.
 "
-" Maps jj to Escape. How often do you type jj? :)
-imap jj <Esc>
 " Disables arrows. To teach that I must use HJKL combo.
 map <up> <nop>
 map <down> <nop>
@@ -139,4 +138,10 @@ exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http:
 " Flake8 settings.
 let g:syntastic_python_checker_args = "--max-line-length=160"
 let g:syntastic_check_on_open = 1
+" Fix that sometimes backspace doesn't work.
 set bs=2
+" Conf for Rainbow plugin.
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
