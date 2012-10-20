@@ -9,7 +9,7 @@
 " Other depencdencies:
 "
 " * Common sense,
-" * Tomorrow Night (color scheme);
+" * Tomorrow (color scheme);
 
 " Blank lines for global peace.....
 
@@ -65,7 +65,7 @@ set relativenumber
 " Enables 256 colors (ye, that's much :D).
 set t_Co=256
 " Sets fave color schema.
-colorscheme Tomorrow-Night
+colorscheme Tomorrow
 " Highlights line which is active.
 set cursorline
 " Turns on syntax highlight.
