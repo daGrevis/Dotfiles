@@ -72,7 +72,7 @@ layouts =
 -- Define a tag table which hold all screen tags.
 tags = {
     name = { "common", "www", "im", "media", "vim", "term #1", "term #2", "term #3", "term #4" },
-    layout = { layouts[1], layouts[10], layouts[3], layouts[10], layouts[10], layouts[10], layouts[10], layouts[10], layouts[10] }
+    layout = { layouts[1], layouts[10], layouts[3], layouts[10], layouts[10], layouts[2], layouts[2], layouts[2], layouts[2] }
 }
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -272,7 +272,7 @@ globalkeys = awful.util.table.join(
         { modkey, "Shift" },
         "i",
         function ()
-            awful.util.spawn("chromium")
+            awful.util.spawn("luakit")
         end
     ),
 
