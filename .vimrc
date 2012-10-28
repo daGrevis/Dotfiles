@@ -4,7 +4,8 @@
 " * Supertab,
 " * Syntastic,
 " * Commentary,
-" * Rainbow;
+" * Rainbow,
+" * NERDTree;
 "
 " Other depencdencies:
 "
@@ -145,3 +146,5 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+" Conf for NERDTree plugin.
+nmap <Tab> :NERDTreeToggle<CR>
