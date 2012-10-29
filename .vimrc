@@ -5,7 +5,7 @@
 " * Syntastic,
 " * Commentary,
 " * Rainbow,
-" * NERDTree;
+" * MatchTag;
 "
 " Other depencdencies:
 "
