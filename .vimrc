@@ -26,14 +26,14 @@
 "
 " Loads plugins in .vim/bundle dir.
 call pathogen#infect()
-" Needs to be set so other plugins just work.
-set nocompatible
-" Tells Vim to realod file if it's edited by anyone else. I think that this don't work.
-set autoread
 " Sets backups and disallows Vim to create garbage-files whereever it likes. Probably this dont' work neither.
 set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
+" Needs to be set so other plugins just work.
+set nocompatible
+" Tells Vim to realod file if it's edited by anyone else. I think that this don't work.
+set autoread
 " Sets limit of history. Will help if you are morron and don't use version control.
 set history=10000
 " Detects filetype.
@@ -146,5 +146,5 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
-" Conf for NERDTree plugin.
+" Conf for NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>

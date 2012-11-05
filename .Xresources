@@ -3,6 +3,7 @@ URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher:     /usr/bin/chromium
 URxvt.matcher.button:  1
 URxvt.lsp:             10
+URxvt.saveLines:       1000000
 
 URxvt.font: xft:Meslo\ LG\ L\ DZ:size=8
 
