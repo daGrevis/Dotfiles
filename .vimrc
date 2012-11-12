@@ -76,7 +76,7 @@ set laststatus=2
 " Column after which coding is very dangerous.
 set colorcolumn=160
 " Sexy tabs. At least... :)
-hi TabLineSel ctermbg=31 ctermfg=7
+hi TabLineSel ctermbg=10 ctermfg=7
 
 "
 " Search.
