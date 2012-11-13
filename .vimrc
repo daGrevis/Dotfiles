@@ -5,7 +5,8 @@
 " * Syntastic,
 " * Commentary,
 " * Rainbow,
-" * MatchTag;
+" * MatchTag,
+" * Surround;
 "
 " Other depencdencies:
 "
@@ -95,6 +96,8 @@ set gdefault
 set incsearch
 set showmatch
 set hlsearch
+" Clears highlights.
+nnoremap <CR> :noh<CR>
 
 "
 " Other.
@@ -148,3 +151,5 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 " Conf for NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
+" Auto sets filetype to HTML for *.html files.
+au BufRead *.html set filetype=html

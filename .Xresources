@@ -5,7 +5,7 @@ URxvt.matcher.button:  1
 URxvt.lsp:             10
 URxvt.saveLines:       1000000
 
-URxvt.font: xft:Meslo\ LG\ L\ DZ:size=8
+URxvt.font: -*-proggyclean-medium-r-normal-*-12-*-*-*-*-*-*-*
 
 ! Tomorrow
 URxvt.foreground:  #4d4d4c
