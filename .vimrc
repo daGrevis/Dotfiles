@@ -153,3 +153,13 @@ au Syntax * RainbowParenthesesLoadBraces
 nmap <Tab> :NERDTreeToggle<CR>
 " Auto sets filetype to HTML for *.html files.
 au BufRead *.html set filetype=html
+" Disables spell-check by default, but allows to toggle it w/ F2.
+set nospell
+function! SpellToggle()
+    if(&spell == 1)
+        set nospell
+    else
+        set spell
+    endif
+endfunc
+nnoremap <F2> :call SpellToggle()<cr>
