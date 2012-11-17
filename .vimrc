@@ -6,7 +6,9 @@
 " * Commentary,
 " * Rainbow,
 " * MatchTag,
-" * Surround;
+" * Surround,
+" * Autojump,
+" * Fugitive;
 "
 " Other depencdencies:
 "
@@ -121,13 +123,15 @@ vnoremap <F1> <ESC>
 " Allows to use colon without holding the shift key. People talk that this is good time-saver.
 nore ; :
 nore , ;
-" Adds shortcuts: Alt+l, Alt+h and Alt+t which opens next, previous or new tab.
-map <Esc>t :tabnew<CR>
-map <Esc>h gT
-map <Esc>l gt
-" Allows to switch between numbers and relative numbers with ease. Use Ctrl+n!
+" Adds shortcuts: Alt+k, Alt+j and Alt+t which opens next, previous or new tab.
+noremap <Esc>t :tabnew<CR>
+noremap <Esc>j gT
+noremap <Esc>k gt
+" Allows to switch between no numbers, numbers and relative numbers with ease. Use Ctrl+n!
 function! NumberToggle()
-    if(&relativenumber == 1)
+    if(&number == 1)
+        set nonumber
+    elseif(&relativenumber == 1)
         set number
     else
         set relativenumber
@@ -163,3 +167,5 @@ function! SpellToggle()
     endif
 endfunc
 nnoremap <F2> :call SpellToggle()<cr>
+noremap <F3> :lnext<CR>
+noremap <F4> :lprev<CR>
