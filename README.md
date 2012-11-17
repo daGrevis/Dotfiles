@@ -1,3 +1,7 @@
 This is how it looked on November 12th, 2012.
 
-![Arch Linux + Awesome](http://i.imgur.com/yVcWs.png)
+![Vim](http://i.imgur.com/yVcWs.png)
+
+And here's another screenshot (on November 17th, 2012):
+
+![Terms](http://i.imgur.com/iQjfl.jpg)
