@@ -8,7 +8,8 @@
 " * MatchTag,
 " * Surround,
 " * Autojump,
-" * Fugitive;
+" * Fugitive,
+" * NERDTree;
 "
 " Other depencdencies:
 "
