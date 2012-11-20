@@ -4,10 +4,9 @@
 " * Supertab,
 " * Syntastic,
 " * Commentary,
-" * Rainbow,
+" * Rainbow parentheses,
 " * MatchTag,
 " * Surround,
-" * Autojump,
 " * Fugitive,
 " * NERDTree;
 "
@@ -46,6 +45,8 @@ filetype on
 " Sets encoding and stuff. I don't really know.
 set encoding=utf-8
 set fileencodings=utf-8
+" Disables Ex-mode. Dunno what it do, but I don't need it.
+map Q <Nop>
 
 "
 " Indentation.
@@ -170,3 +171,7 @@ endfunc
 nnoremap <F2> :call SpellToggle()<cr>
 noremap <F3> :lnext<CR>
 noremap <F4> :lprev<CR>
+" Makes margin above and below cursor.
+set scrolloff=8
+" Ignores files that match ... .
+set wildignore=*.pyc
