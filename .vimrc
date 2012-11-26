@@ -8,7 +8,8 @@
 " * MatchTag,
 " * Surround,
 " * Fugitive,
-" * NERDTree;
+" * NERDTree,
+" * Tagbar;
 "
 " Other depencdencies:
 "
@@ -155,8 +156,10 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
-" Conf for NERDTree.
+" Maps Shift to NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
+" Maps Shift+Tab to Tagbar.
+nmap <S-Tab> :TagbarToggle<CR>
 " Auto sets filetype to HTML for *.html files.
 au BufRead *.html set filetype=html
 " Disables spell-check by default, but allows to toggle it w/ F2.

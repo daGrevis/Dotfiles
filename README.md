@@ -1,3 +1,7 @@
+# Dotfiles for my Arch Linux workstation(s)
+
+**So awesome it should be banned!**
+
 This is how it looked on November 26th, 2012.
 
 ![Terms](http://i.imgur.com/b4fsS.png)
