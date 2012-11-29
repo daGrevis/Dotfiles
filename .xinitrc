@@ -26,5 +26,8 @@ xscreensaver -no-splash &
 # Remaps Caps Lock to Escape key.
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
+# Battery indicator.
+#batti &
+
 # Loads WM.
 exec awesome
