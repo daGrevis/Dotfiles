@@ -11,6 +11,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
+# Sets 2nd monitor usable.
+#xrandr --output VGA-1 --auto --left-of DVI-I-1
+
 # Keyboard layout.
 setxkbmap -layout lv
 
@@ -19,6 +22,9 @@ xrdb -merge ~/.Xresources
 
 # Loads screensaver.
 xscreensaver -no-splash &
+
+# Remaps Caps Lock to Escape key.
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 # Loads WM.
 exec awesome
