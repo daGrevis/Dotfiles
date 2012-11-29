@@ -30,14 +30,12 @@
 "
 " Loads plugins in .vim/bundle dir.
 call pathogen#infect()
-" Sets backups and disallows Vim to create garbage-files whereever it likes. Probably this dont' work neither.
+" Sets backups and disallows Vim to create garbage-files (.swp, .swp etc.) whereever it likes.
 set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
 " Needs to be set so other plugins just work.
 set nocompatible
-" Tells Vim to realod file if it's edited by anyone else. I think that this don't work.
-set autoread
 " Sets limit of history. Will help if you are morron and don't use version control.
 set history=10000
 " Detects filetype.
@@ -72,7 +70,7 @@ set relativenumber
 " Enables 256 colors (ye, that's much :D).
 set t_Co=256
 " Sets fave color schema.
-colorscheme Tomorrow
+colorscheme Tomorrow-Night
 " Highlights line which is active.
 set cursorline
 " Turns on syntax highlight.
@@ -82,7 +80,7 @@ set laststatus=2
 " Column after which coding is very dangerous.
 set colorcolumn=160
 " Sexy tabs. At least... :)
-hi TabLineSel ctermbg=10 ctermfg=7
+"hi TabLineSel ctermbg=10 ctermfg=7
 
 "
 " Search.
@@ -159,7 +157,7 @@ au Syntax * RainbowParenthesesLoadBraces
 " Maps Shift to NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
 " Maps Shift+Tab to Tagbar.
-nmap <S-Tab> :TagbarToggle<CR>
+nmap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
 " Auto sets filetype to HTML for *.html files.
 au BufRead *.html set filetype=html
 " Disables spell-check by default, but allows to toggle it w/ F2.
@@ -178,3 +176,6 @@ noremap <F4> :lprev<CR>
 set scrolloff=8
 " Ignores files that match ... .
 set wildignore=*.pyc
+" Maps q to searching '_'. Useful for deleting til next '_' w/ 'dq' command,
+" for example.
+map q /_<CR>:noh<CR>
