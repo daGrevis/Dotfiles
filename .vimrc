@@ -179,3 +179,6 @@ set wildignore=*.pyc
 " Maps q to searching '_'. Useful for deleting til next '_' w/ 'dq' command,
 " for example.
 map q /_<CR>:noh<CR>
+" Getting to beggining or end of the line in command mode like it's in terminal.
+cmap <C-a> <Home>
+cmap <C-e> <End>
