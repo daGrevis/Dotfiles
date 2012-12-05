@@ -103,25 +103,6 @@ add_binds("all", {
         function (w, m) w:scroll{ xrel =  scroll_step } end),
 })
 
-add_binds("insert", {
-    lousy.bind.key({}, "j", function (w)
-        local now = luakit.time()
-        if now - (w.last_j_press or 0) < 1 then
-            -- Success!
-            w:set_mode()
-            return true
-        end
-        w.last_j_press = now
-        return false
-    end),
-    lousy.bind.any(function (w, o)
-        if #o.mods == 0 and o.key ~= "j" then
-            w.last_j_press = 0
-        end
-        return false
-    end),
-})
-
 add_binds("normal", {
     -- Autoparse the `[count]` before a binding and re-call the hit function
     -- with the count removed and added to the opts table.
@@ -164,9 +145,6 @@ add_binds("normal", {
         function (w) w:set_mode("insert")  end),
 
     key({}, ":", "Enter `command` mode.",
-        function (w) w:set_mode("command") end),
-
-    key({}, ";", "Enter `command` mode.",
         function (w) w:set_mode("command") end),
 
     -- Scrolling
@@ -322,9 +300,6 @@ add_binds("normal", {
     key({}, "o", "Open one or more URLs.",
         function (w) w:enter_cmd(":open ") end),
 
-    key({}, "e", "Open one or more URLs.",
-        function (w) w:enter_cmd(":open ") end),
-
     key({}, "t", "Open one or more URLs in a new tab.",
         function (w) w:enter_cmd(":tabopen ") end),
 
@@ -332,9 +307,6 @@ add_binds("normal", {
         function (w) w:enter_cmd(":winopen ") end),
 
     key({}, "O", "Open one or more URLs based on current location.",
-        function (w) w:enter_cmd(":open " .. (w.view.uri or "")) end),
-
-    key({}, "E", "Open one or more URLs based on current location.",
         function (w) w:enter_cmd(":open " .. (w.view.uri or "")) end),
 
     key({}, "T",
@@ -425,9 +397,6 @@ add_binds("normal", {
 
     key({}, "R", "Reload current tab (skipping cache).",
         function (w) w:reload(true) end),
-
-    key({"Control"}, "c", "Stop loading the current tab.",
-        function (w) w.view:stop() end),
 
     key({"Control", "Shift"}, "R", "Restart luakit (reloading configs).",
         function (w) w:restart() end),
@@ -549,9 +518,6 @@ add_cmds({
     cmd("o[pen]", "Open one or more URLs.",
         function (w, a) w:navigate(w:search_open(a)) end),
 
-    cmd("e", "Open one or more URLs.",
-        function (w, a) w:navigate(w:search_open(a)) end),
-
     cmd("t[abopen]", "Open one or more URLs in a new tab.",
         function (w, a) w:new_tab(w:search_open(a)) end),
 
@@ -582,9 +548,6 @@ add_cmds({
 
     cmd("tabp[revious]", "Switch to the previous tab.",
         function (w) w:prev_tab() end),
-
-    cmd("q[uit]", "Close the current window.",
-        function (w, a, o) w:close_win(o.bang) end),
 
     cmd({"viewsource", "vs"}, "View the source code of the current document.",
         function (w, a, o) w:toggle_source(not o.bang and true or nil) end),
@@ -617,3 +580,48 @@ add_cmds({
 })
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80
+
+
+-- Custom binds.
+
+add_binds("normal", {
+    -- Binds ';' to command mode. Done because quite often, when trying to press ':', unwanted ';' is pressed.
+    key({}, ";", "Enter in command mode.", function (w)
+        w:set_mode("command")
+    end),
+})
+
+add_binds("insert", {
+    -- Binds 'ctrl+c' to normal mode. It's just the way I do it.
+    key({"Control"}, "c", "Enter in normal mode.", function (w)
+        w:set_mode("normal")
+    end),
+})
+
+add_binds("command", {
+    -- Binds 'ctrl+c' to normal mode. It's just the way I do it.
+    key({"Control"}, "c", "Enter in normal mode.", function (w)
+        w:set_mode("normal")
+    end),
+})
+
+-- Custom commands.
+
+add_cmds({
+    -- Allows to navigate to another URL in the same tab. Also allows to search in it.
+    cmd("e[dit]", "Open page.", function (w, uri)
+        w:navigate(w:search_open(uri))
+    end),
+    -- Opens tab and allows to search in it.
+    cmd("tabe[dit]", "Open page in new tab.", function (w, uri)
+        w:new_tab(w:search_open(uri))
+    end),
+    -- Clones current tab or window if there are no tabs.
+    cmd("q[uite]", "Close current tab or window.", function (w)
+        if # w.tabs.children == 1 and w.tabs.children[1].uri == "about:blank" then
+            w:close_win()
+        else
+            w:close_tab()
+        end
+    end),
+})
