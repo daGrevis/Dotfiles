@@ -11,6 +11,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
+# Ugly hack to fix time.
+#{ sudo ntpd -qg; sudo hwclock -w; } &
+
 # Sets 2nd monitor usable.
 #xrandr --output VGA-1 --auto --left-of DVI-I-1
 
