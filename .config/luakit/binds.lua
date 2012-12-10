@@ -589,6 +589,12 @@ add_binds("normal", {
     key({}, ";", "Enter in command mode.", function (w)
         w:set_mode("command")
     end),
+    key({"Mod1"}, "k", "Switch to next tab.", function (w)
+        w:next_tab()
+    end),
+    key({"Mod1"}, "j", "Switch to previous tab.", function (w)
+        w:prev_tab()
+    end),
 })
 
 add_binds("insert", {
