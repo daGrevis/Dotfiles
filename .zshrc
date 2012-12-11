@@ -33,6 +33,8 @@ plugins=(autojump git python sprunge)
 
 source $ZSH/oh-my-zsh.sh
 
+unalias sl
+
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl
 

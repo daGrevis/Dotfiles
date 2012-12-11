@@ -71,8 +71,8 @@ layouts =
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-    name = { "common", "www", "im", "media", "vim", "term #1", "term #2", "term #3", "term #4" },
-    layout = { layouts[1], layouts[10], layouts[3], layouts[10], layouts[10], layouts[2], layouts[2], layouts[2], layouts[2] }
+    name = { "code", "web", "im", "media", "term #1", "term #2", "term #3", "term #4", "term #5" },
+    layout = { layouts[10], layouts[10], layouts[3], layouts[10], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2] }
 }
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -290,7 +290,7 @@ globalkeys = awful.util.table.join(
         { },
         "Print",
         function ()
-            awful.util.spawn("scrot '%Y-%m-%d_%X__$wx$h.png' -q 90 -e 'mv $f ~/Screenshots/'")
+            awful.util.spawn("scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'")
         end
     ),
 
