@@ -10,12 +10,13 @@
 " * Fugitive,
 " * NERDTree,
 " * Tagbar,
-" * MRU;
+" * Repeat,
+" * CtrlP;
 "
 " Other depencdencies:
 "
 " * Common sense,
-" * Tomorrow (color scheme);
+" * Molokai (color scheme);
 
 " Blank lines for global peace.....
 
@@ -71,7 +72,7 @@ set relativenumber
 " Enables 256 colors (ye, that's much :D).
 set t_Co=256
 " Sets fave color schema.
-colorscheme Tomorrow
+colorscheme molokai
 " Highlights line which is active.
 set cursorline
 " Turns on syntax highlight.
@@ -81,13 +82,15 @@ set laststatus=2
 " Column after which coding is very dangerous.
 set colorcolumn=160
 " Sexy tabs. At least... :)
-"hi TabLineSel ctermbg=10 ctermfg=7
+hi TabLine ctermbg=8 ctermfg=7
+hi TabLineFill ctermfg=8
+hi TabLineSel ctermbg=1 ctermfg=7
 
 "
 " Search.
 "
 " Shortcut Ctrl+l clears highlights.
-noremap <silent> <C-l> :nohls<cr><C-l>
+noremap <silent> <C-l> :nohls<CR><C-l>
 " Fix broken Vim's regexes.
 nnoremap / /\v
 vnoremap / /\v
@@ -139,7 +142,7 @@ function! NumberToggle()
         set relativenumber
     endif
 endfunc
-nnoremap <C-n> :call NumberToggle()<cr>
+nnoremap <C-n> :call NumberToggle()<CR>
 " Allows pasting without breaking indent. To paste from anywhere, but Vim, press F12.
 set pastetoggle=<F12>
 " Pastes contents to sprunge.us. Call it with :Share. P.S. Thanks, @laadinjsh!
@@ -170,7 +173,7 @@ function! SpellToggle()
         set spell
     endif
 endfunc
-nnoremap <F2> :call SpellToggle()<cr>
+nnoremap <F2> :call SpellToggle()<CR>
 noremap <F3> :lnext<CR>
 noremap <F4> :lprev<CR>
 " Makes margin above and below cursor.
@@ -183,4 +186,6 @@ cmap <C-e> <End>
 " Saves file when the focus is lost.
 autocmd BufLeave,FocusLost * silent! wall
 " Maps \+h to MRU split.
-noremap \h :MRU<CR>
+noremap \h :CtrlPMRUFiles<CR>
+" Maps \+v to saving file and sourcing .vimrc.
+nmap <Leader>v :w<CR> :source ~/.vimrc<CR>
