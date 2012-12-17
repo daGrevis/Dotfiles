@@ -25,3 +25,5 @@ function bb {
     echo "Bye-bye then!"
     sudo shutdown -h now
 }
+
+alias rm='rm -i' # Once I accidentally deleted database file. If you think that this is "for noobs", you are just plain idiot!
