@@ -26,4 +26,12 @@ function bb {
     sudo shutdown -h now
 }
 
+alias vim='vim -p'
+
+function vim_dir {
+    vim `find $1 -type f | xargs echo`
+}
+
+alias skype2='skype --dbpath=~/.Skype2'
+
 alias rm='rm -i' # Once I accidentally deleted database file. If you think that this is "for noobs", you are just plain idiot!
