@@ -144,7 +144,7 @@ function! NumberToggle()
 endfunc
 nnoremap <C-n> :call NumberToggle()<CR>
 " Allows pasting without breaking indent. To paste from anywhere, but Vim, press F12.
-nnoremap <F12> :set invpaste<CR>
+imap <F12> :set invpaste<CR>
 " Pastes contents to sprunge.us. Call it with :Share. P.S. Thanks, @laadinjsh!
 let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
 exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd
