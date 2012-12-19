@@ -11,20 +11,18 @@
 " * NERDTree,
 " * Tagbar,
 " * Repeat,
-" * CtrlP;
+" * CtrlP,
+" * Snipmate;
 "
 " Other depencdencies:
 "
 " * Common sense,
-" * Molokai (color scheme);
-
-" Blank lines for global peace.....
-
-
-
-
-
-
+" * Monokai (color scheme),
+" * Linux and these packages:
+"   * xclip (for `:Share`),
+"   * Code linters (for Syntastic);
+"
+" Tested on Arch Linux.
 
 
 "
@@ -46,8 +44,9 @@ filetype on
 " Sets encoding and stuff. I don't really know.
 set encoding=utf-8
 set fileencodings=utf-8
-" Disables Ex-mode. Dunno what it do, but I don't need it.
+" Disables things I don't need.
 map Q <Nop>
+map K <Nop>
 
 "
 " Indentation.
@@ -72,7 +71,7 @@ set relativenumber
 " Enables 256 colors (ye, that's much :D).
 set t_Co=256
 " Sets fave color schema.
-colorscheme molokai
+colorscheme Monokai
 " Highlights line which is active.
 set cursorline
 " Turns on syntax highlight.
@@ -144,7 +143,8 @@ function! NumberToggle()
 endfunc
 nnoremap <C-n> :call NumberToggle()<CR>
 " Allows pasting without breaking indent. To paste from anywhere, but Vim, press F12.
-imap <F12> :set invpaste<CR>
+set pastetoggle=<F12>
+set showmode
 " Pastes contents to sprunge.us. Call it with :Share. P.S. Thanks, @laadinjsh!
 let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
 exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd
@@ -186,6 +186,14 @@ cmap <C-e> <End>
 " Saves file when the focus is lost.
 autocmd BufLeave,FocusLost * silent! wall
 " Maps \+h to MRU split.
-noremap \h :CtrlPMRUFiles<CR>
+noremap <Leader>h :CtrlPMRUFiles<CR>
 " Maps \+v to saving file and sourcing .vimrc.
 nmap <Leader>v :w<CR> :source ~/.vimrc<CR>
+" Maps \y to yanking whole file.
+nmap <Leader>y ggVGy
+" Turn on spell-checking in text files.
+au BufRead,BufNewFile *.txt,*.markdown,*.mdown,*.md,*.textile,*.rdoc,*.org,*.creole,*.mediawiki,*.rst,*.asciidoc,*.pod setlocal spell
+" Don't add the comment prefix when I hit enter or o/O on a comment line.
+set formatoptions-=or
+" Maps \r to toggling Rainbow and unicorns.
+noremap <Leader>r :RainbowParenthesesToggle<CR>
