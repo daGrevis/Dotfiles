@@ -2,25 +2,25 @@
 
 **So awesome it should be banned!**
 
-This is how it looked on November 26th, 2012.
+This is how it looked on December 19th, 2012.
 
-![Terms](http://i.imgur.com/b4fsS.png)
+![Terms](http://i.imgur.com/VGTge.jpg)
 
 
 And here's another screenshot of Vim:
 
-![Vim](http://i.imgur.com/oYPAQ.png)
+![Vim](http://i.imgur.com/v0fpu.jpg)
 
-## About Vim
+## Installation
 
-To install needed bundles:
+Install dependencies for Vim:
 
 ~~~
 cd ~
-./install_bundles.sh
+./install_deps_for_vim.sh
 ~~~
 
-To update bundles afterwards:
+Update VIm bundles afterwards:
 
 ~~~
 cd ~/.vim/bundle/
