@@ -17,3 +17,4 @@ git clone https://github.com/majutsushi/tagbar tagbar
 git clone https://github.com/tpope/vim-repeat repeat
 git clone https://github.com/kien/ctrlp.vim ctrlp
 git clone https://github.com/ervandew/snipmate.vim snipmate
+git clone https://github.com/spolu/dwm.vim dwm

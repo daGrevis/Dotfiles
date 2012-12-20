@@ -12,7 +12,8 @@
 " * Tagbar,
 " * Repeat,
 " * CtrlP,
-" * Snipmate;
+" * Snipmate,
+" * Dwm;
 "
 " Other depencdencies:
 "
@@ -131,17 +132,6 @@ nore , ;
 noremap <Esc>t :tabnew<CR>
 noremap <Esc>j gT
 noremap <Esc>k gt
-" Allows to switch between no numbers, numbers and relative numbers with ease. Use Ctrl+n!
-function! NumberToggle()
-    if(&number == 1)
-        set nonumber
-    elseif(&relativenumber == 1)
-        set number
-    else
-        set relativenumber
-    endif
-endfunc
-nnoremap <C-n> :call NumberToggle()<CR>
 " Allows pasting without breaking indent. To paste from anywhere, but Vim, press F12.
 set pastetoggle=<F12>
 set showmode
@@ -197,3 +187,29 @@ au BufRead,BufNewFile *.txt,*.markdown,*.mdown,*.md,*.textile,*.rdoc,*.org,*.cre
 set formatoptions-=or
 " Maps \r to toggling Rainbow and unicorns.
 noremap <Leader>r :RainbowParenthesesToggle<CR>
+
+" Disables original Dwm mappings and remaps them. Done because by default Ctrl+c closed current split, but I use it to exit to normal mode.
+let g:dwm_map_keys = 0
+noremap <C-n> :call DWM_New()<CR>
+noremap <C-l> :call DWM_GrowMaster()<CR>
+noremap <C-h> :call DWM_ShrinkMaster()<CR>
+noremap <Esc>l <C-w>l
+noremap <Esc>h <C-w>h
+
+" Maps → to moving text to the right, but ← to the left.
+nmap <Left> <<
+nmap <Right> >>
+vmap <Left> <gv
+vmap <Right> >gv
+
+" Faster ways to set numbers. relative numbers or no numbers. Press \+n.
+function! NumberToggle()
+    if(&number == 1)
+        set nonumber
+    elseif(&relativenumber == 1)
+        set number
+    else
+        set relativenumber
+    endif
+endfunc
+nnoremap <Leader>n :call NumberToggle()<CR>
