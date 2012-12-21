@@ -213,3 +213,6 @@ function! NumberToggle()
     endif
 endfunc
 nnoremap <Leader>n :call NumberToggle()<CR>
+
+" Shows some non-printables differently.
+set listchars=tab:→\ ,trail:-,nbsp:%,extends:>,precedes:<
