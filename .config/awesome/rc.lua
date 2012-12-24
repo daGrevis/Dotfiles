@@ -258,33 +258,6 @@ globalkeys = awful.util.table.join(
     -- Custom
     --
 
-    -- Opens terminal.
-    awful.key(
-        { modkey, "Shift" },
-        "Return",
-        function ()
-            awful.util.spawn(terminal)
-        end
-    ),
-
-    -- Starts browser.
-    awful.key(
-        { modkey, "Shift" },
-        "i",
-        function ()
-            awful.util.spawn("luakit")
-        end
-    ),
-
-    -- Starts browser in private mode (pr0n mode ;D).
-    awful.key(
-        { modkey, "Control" },
-        "i",
-        function ()
-            awful.util.spawn("chromium -incognito")
-        end
-    ),
-
     -- Makes screenshot.
     awful.key(
         { },
@@ -303,7 +276,43 @@ globalkeys = awful.util.table.join(
         end
     ),
 
-    -- Shows info about system.
+    -- Opens terminal.
+    awful.key(
+        { modkey, "Shift" },
+        "Return",
+        function ()
+            awful.util.spawn(terminal)
+        end
+    ),
+
+    -- Opens simple-terminal.
+    awful.key(
+        { modkey },
+        "Return",
+        function ()
+            awful.util.spawn("xterm")
+        end
+    ),
+
+    -- Opens browser.
+    awful.key(
+        { modkey, "Shift" },
+        "i",
+        function ()
+            awful.util.spawn("chromium")
+        end
+    ),
+
+    -- Opens browser in incognito mode.
+    awful.key(
+        { modkey, "Control" },
+        "i",
+        function ()
+            awful.util.spawn("chromium -incognito")
+        end
+    ),
+
+    -- Opens system-profiler.
     awful.key(
         { modkey, "Shift" },
         "d",
@@ -312,7 +321,7 @@ globalkeys = awful.util.table.join(
         end
     ),
 
-    -- Opens editor.
+    -- Opens text-editor.
     awful.key(
         { modkey, "Shift" },
         "v",
@@ -321,7 +330,7 @@ globalkeys = awful.util.table.join(
         end
     ),
 
-    -- Shows menu.
+    -- Opens  menu.
     awful.key(
         { modkey },
         "p",
@@ -330,12 +339,75 @@ globalkeys = awful.util.table.join(
         end
     ),
 
-    -- Opens explorer.
+    -- Opens file-browser.
     awful.key(
         { modkey, "Shift" },
         "t",
         function ()
             awful.util.spawn("thunar")
+        end
+    ),
+
+    -- Opens sound-mixer.
+    awful.key(
+        { modkey, "Shift" },
+        "m",
+        function ()
+            awful.util.spawn(term_spawn .. "alsamixer")
+        end
+    ),
+
+    -- Opens image-browser.
+    awful.key(
+        { modkey, "Shift" },
+        "r",
+        function ()
+            awful.util.spawn("ristretto")
+        end
+    ),
+
+    -- Opens IM-client.
+    awful.key(
+        { modkey, "Shift" },
+        "s",
+        function ()
+            awful.util.spawn("skype")
+        end
+    ),
+
+    -- Opens IRC-client.
+    awful.key(
+        { modkey, "Shift" },
+        "x",
+        function ()
+            awful.util.spawn("xchat")
+        end
+    ),
+
+    -- Opens FTP/SFTP-client.
+    awful.key(
+        { modkey, "Shift" },
+        "f",
+        function ()
+            awful.util.spawn("filezilla")
+        end
+    ),
+
+    -- Opens email-client.
+    awful.key(
+        { modkey, "Shift" },
+        "e",
+        function ()
+            awful.util.spawn("thunderbird")
+        end
+    ),
+
+    -- Opens office.
+    awful.key(
+        { modkey, "Shift" },
+        "l",
+        function ()
+            awful.util.spawn("libre-office")
         end
     )
 
