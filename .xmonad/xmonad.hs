@@ -24,7 +24,7 @@ main = do
         `additionalKeysP`
         [
           ("M-p", spawn "dmenu_run -b -nb '#333333' -nf white -sb '#1793d1' -sf white") -- Opens menu.
-        , ("<Print>", spawn "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Screenshots/'") -- Takes screenshot.
+        , ("<Print>", spawn "scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'") -- Takes screenshot.
         , ("M-S-l", spawn "xscreensaver-command -lock") -- Starts screensaver.
         , ("M-<Return>", spawn "xterm") -- Opens simple-terminal.
         , ("M-S-v", spawn_term "vim") -- Opens text-editor.
