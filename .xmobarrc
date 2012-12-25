@@ -1,0 +1,26 @@
+Config {
+      font = "-*-proggyclean-medium-r-normal-*-12-*-*-*-*-*-*-*"
+    , bgColor = "black"
+    , fgColor = "white"
+    , position = Top
+    , lowerOnStart = True
+    , commands =
+        [
+          Run Com "uname" ["-s", "-r"] "" 36000 -- 1h
+        , Run Uptime ["-t", "Uptime: <days>d <hours>h <minutes>m <seconds>s"] 10 -- 1s
+        , Run Memory ["-t", "Memory: <usedratio>%"] 10 -- 1s
+        , Run MultiCpu ["-t", "Processor: <total>%", "-L", "3", "-H", "75", "--high", "red"] 10 -- 1s
+        , Run Network "eth0" ["-t", "Network: <rx> kB/s | <tx> kB/s"] 10 -- 1s
+        , Run Weather "EVRA" ["-t", "<tempC>C, <skyCondition> (Riga Airport)"] 6000 -- 10m
+        , Run Date "%d/%m/%y, %H:%M:%S" "date" 10 -- 1s
+        , Run BatteryP ["BAT1"] ["-t", "Battery: <left>% / <timeleft>"] 600 -- 1m
+        , Run DynNetwork ["-t", "Network: <rx> / <tx>", "-S", "True"] 10 -- 1s
+        ]
+    , sepChar = "%"
+    , alignSep = "}{"
+    , template = "%uname% (Arch Linux)    %uptime%    %memory%    %multicpu%    %dynnetwork%    %battery%    %eth0% }{ %EVRA%    %date%"
+    , border = FullBM(0)
+    , borderColor = "black"
+    , hideOnStart = False
+    , persistent = True
+}

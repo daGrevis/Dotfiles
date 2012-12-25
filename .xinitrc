@@ -17,6 +17,9 @@ fi
 # Sets 2nd monitor usable.
 #xrandr --output VGA-1 --auto --left-of DVI-I-1
 
+# Sets cursor.
+xsetroot -cursor_name left_ptr
+
 # Keyboard layout.
 setxkbmap -layout lv
 
@@ -30,7 +33,12 @@ xscreensaver -no-splash &
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 # Battery indicator.
-#batti &
+batti &
+
+# Loads bar.
+xmobar &
+
+feh --bg-scale Pictures/Arch_Linux_Darkwave_by_BalanceST_1920x1080.jpg &
 
 # Loads WM.
-exec awesome
+exec xmonad
