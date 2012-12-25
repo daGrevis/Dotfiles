@@ -18,7 +18,7 @@ Config {
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%uname% (Arch Linux)    %uptime%    %memory%    %multicpu%    %dynnetwork%    %battery%    %eth0% }{ %EVRA%    %date%"
+    , template = "%uname% (Arch Linux)    %uptime%    %memory%    %multicpu%    %dynnetwork%    %battery%    }{ %EVRA%    %date%"
     , border = FullBM(0)
     , borderColor = "black"
     , hideOnStart = False
