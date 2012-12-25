@@ -2,14 +2,13 @@
 
 **So awesome it should be banned!**
 
-This is how it looked on December 19th, 2012.
+This is how it looked on December 25th, 2012.
 
-![Terms](http://i.imgur.com/VGTge.jpg)
+![Vim](http://i.imgur.com/ZSifm.jpg)
 
+![Terms](http://i.imgur.com/5ovbj.jpg)
 
-And here's another screenshot of Vim:
-
-![Vim](http://i.imgur.com/v0fpu.jpg)
+![Luakit](http://i.imgur.com/X5gIF.jpg)
 
 ## Installation
 
