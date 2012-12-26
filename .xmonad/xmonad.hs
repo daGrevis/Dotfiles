@@ -16,10 +16,10 @@ main = do
         , XMonad.borderWidth = 4
         , XMonad.normalBorderColor = "#333333"
         , XMonad.focusedBorderColor = "#1793d1"
-        -- Show xmobar in front of other windows and don't show window's border if there are only one window at the workspace.
-        , layoutHook = avoidStruts $ smartBorders (layoutHook defaultConfig)
-        , manageHook = composeAll [ isFullscreen --> doFullFloat ] -- Allows to watch videos in fullscreen, plus, hides Xmobar.
-        , focusFollowsMouse = False -- Now the mouse won't change windows focus.
+        , layoutHook = avoidStruts $ smartBorders (layoutHook defaultConfig) -- Shows xmobar next to other windows and shows border only when it's needed.
+        -- #XXX: Packages `xmobar-0.16-2` and `xmobar-0.16-3` have bugs w/ `avoidStruts` functionality.
+        , manageHook = composeAll [ isFullscreen --> doFullFloat ] -- Allows fullscreen.
+        , focusFollowsMouse = False -- Disallows the mouse to change focus.
         }
         `additionalKeysP`
         [
