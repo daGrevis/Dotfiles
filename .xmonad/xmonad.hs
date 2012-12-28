@@ -18,7 +18,7 @@ main = do
         , XMonad.focusedBorderColor = "#1793d1"
         , layoutHook = avoidStruts $ smartBorders (layoutHook defaultConfig) -- Shows xmobar next to other windows and shows border only when it's needed.
         -- #XXX: Packages `xmobar-0.16-2` and `xmobar-0.16-3` have bugs w/ `avoidStruts` functionality.
-        , manageHook = composeAll [ isFullscreen --> doFullFloat ] -- Allows fullscreen.
+        , manageHook = composeAll [ isFullscreen --> doFullFloat, manageDocks ] -- Allows fullscreen and trayer.
         , focusFollowsMouse = False -- Disallows the mouse to change focus.
         }
         `additionalKeysP`

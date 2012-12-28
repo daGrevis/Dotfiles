@@ -38,6 +38,9 @@ batti &
 # Loads bar.
 xmobar &
 
+# Loads trayer.
+trayer --height 16 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
+
 feh --bg-scale Pictures/Arch_Linux_Darkwave_by_BalanceST_1920x1080.jpg &
 
 # Loads WM.

@@ -145,9 +145,6 @@ require "go_input"
 require "go_next_prev"
 require "go_up"
 
-require "adblock"
-require "adblock_chrome"
-
 -----------------------------
 -- End user script loading --
 -----------------------------

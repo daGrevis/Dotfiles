@@ -369,9 +369,6 @@ add_binds("normal", {
     key({"Control"}, "w", "Close current tab.",
         function (w) w:close_tab() end),
 
-    key({}, "d", "Close current tab (or `[count]` tabs).",
-        function (w, m) for i=1,m.count do w:close_tab() end end, {count=1}),
-
     key({}, "<", "Reorder tab left `[count=1]` positions.",
         function (w, m)
             w.tabs:reorder(w.view, w.tabs:current() - m.count)
@@ -400,16 +397,6 @@ add_binds("normal", {
 
     key({"Control", "Shift"}, "R", "Restart luakit (reloading configs).",
         function (w) w:restart() end),
-
-    -- Window
-    buf("^ZZ$", "Quit and save the session.",
-        function (w) w:save_session() w:close_win() end),
-
-    buf("^ZQ$", "Quit and don't save the session.",
-        function (w) w:close_win() end),
-
-    buf("^D$",  "Quit and don't save the session.",
-        function (w) w:close_win() end),
 
     -- Enter passthrough mode
     key({"Control"}, "z",
@@ -595,16 +582,12 @@ add_binds("normal", {
     key({"Mod1"}, "j", "Switch to previous tab.", function (w)
         w:prev_tab()
     end),
+    buf("^\\h$", function (w)
+        w:navigate("luakit://history")
+    end)
 })
 
-add_binds("insert", {
-    -- Binds 'ctrl+c' to normal mode. It's just the way I do it.
-    key({"Control"}, "c", "Enter in normal mode.", function (w)
-        w:set_mode("normal")
-    end),
-})
-
-add_binds("command", {
+add_binds("all", {
     -- Binds 'ctrl+c' to normal mode. It's just the way I do it.
     key({"Control"}, "c", "Enter in normal mode.", function (w)
         w:set_mode("normal")

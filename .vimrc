@@ -50,21 +50,6 @@ map Q <Nop>
 map K <Nop>
 
 "
-" Indentation.
-"
-" Auto indents next line.
-set autoindent
-" Converts spaces to tabs. Populate all the tabs!
-set expandtab
-" I guess, it sets tabs to be displayed as four spaces.
-set tabstop=4
-set shiftwidth=4
-" Says that backspace key deletes four spaces at once.
-set softtabstop=4
-" Deletes all trailing whitespace after save.
-autocmd BufWritePre * :%s/\s\+$//e
-
-"
 " Appereance.
 "
 " Shows relative numbers next-to lines. This will make you wanna jump so faaar!
@@ -214,5 +199,18 @@ function! NumberToggle()
 endfunc
 nnoremap <Leader>n :call NumberToggle()<CR>
 
-" Shows some non-printables differently.
-set listchars=tab:→\ ,trail:-,nbsp:%,extends:>,precedes:<
+" Shows invisibles and adds mapping for toggling between showing invisibles or not.
+set listchars=tab:▸\ ,eol:¬
+nmap <leader>l :set list!<CR>
+
+" Tells Vim to use 4 spaces for indentation.
+set et
+set ts=4
+set sw=4
+set sts=4
+
+" Tells Vim to use auto-indentation.
+set ai
+
+" Deletes all trailing whitespace after save.
+autocmd BufWritePre * :%s/\s\+$//e
