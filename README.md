@@ -4,11 +4,11 @@
 
 This is how it looked on December 25th, 2012.
 
-![Vim](http://i.imgur.com/ZSifm.jpg)
+![Vim](http://i.imgur.com/hgXlK.jpg)
 
-![Terms](http://i.imgur.com/5ovbj.jpg)
+![Terms](http://i.imgur.com/orIZf.jpg)
 
-![Luakit](http://i.imgur.com/X5gIF.jpg)
+![Luakit](http://i.imgur.com/68wER.jpg)
 
 ## Installation
 
