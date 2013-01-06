@@ -18,7 +18,7 @@
 " Other depencdencies:
 "
 " * Common sense,
-" * Monokai (color scheme),
+" * Tomorrow (color scheme),
 " * Linux and these packages:
 "   * xclip (for `:Share`),
 "   * Code linters (for Syntastic);
@@ -57,19 +57,17 @@ set relativenumber
 " Enables 256 colors (ye, that's much :D).
 set t_Co=256
 " Sets fave color schema.
-colorscheme Monokai
+colorscheme Tomorrow
 " Highlights line which is active.
 set cursorline
 " Turns on syntax highlight.
-syntax on
-" Always show status bar (Powerline here).
-set laststatus=2
+syntax enable
 " Column after which coding is very dangerous.
 set colorcolumn=160
 " Sexy tabs. At least... :)
-hi TabLine ctermbg=8 ctermfg=7
-hi TabLineFill ctermfg=8
-hi TabLineSel ctermbg=1 ctermfg=7
+" hi TabLine ctermbg=8 ctermfg=7
+" hi TabLineFill ctermfg=8
+" hi TabLineSel ctermbg=1 ctermfg=7
 
 "
 " Search.
@@ -148,28 +146,41 @@ function! SpellToggle()
         set spell
     endif
 endfunc
-nnoremap <F2> :call SpellToggle()<CR>
-noremap <F3> :lnext<CR>
-noremap <F4> :lprev<CR>
+
+" Maps \s to enabling or disabling spelling hints.
+noremap <Leader>s :call SpellToggle()<CR>
+
 " Makes margin above and below cursor.
 set scrolloff=8
-" Ignores files that match ... .
+
+" Ignores files that match these patters.
 set wildignore=*.pyc
-" Getting to beggining or end of the line in command mode like it's in terminal.
+
+" Getting to beggining or end of the line in command mode like it's in terminal (Emacs way).
 cmap <C-a> <Home>
 cmap <C-e> <End>
+
 " Saves file when the focus is lost.
 autocmd BufLeave,FocusLost * silent! wall
-" Maps \+h to MRU split.
+
+" Maps \h to MRU split.
 noremap <Leader>h :CtrlPMRUFiles<CR>
-" Maps \+v to saving file and sourcing .vimrc.
-nmap <Leader>v :w<CR> :source ~/.vimrc<CR>
+
+" Maps \v to opening .vimrc.
+nmap <Leader>v :e $MYVIMRC<CR>
+
 " Maps \y to yanking whole file.
 nmap <Leader>y ggVGy
+
+" Maps \p to pasting all over previous file.
+nmap <Leader>p ggdG"0PGdd
+
 " Turn on spell-checking in text files.
 au BufRead,BufNewFile *.txt,*.markdown,*.mdown,*.md,*.textile,*.rdoc,*.org,*.creole,*.mediawiki,*.rst,*.asciidoc,*.pod setlocal spell
-" Don't add the comment prefix when I hit enter or o/O on a comment line.
+
+" Don't add the comment prefix when I hit enter or o, O on a comment line.
 set formatoptions-=or
+
 " Maps \r to toggling Rainbow and unicorns.
 noremap <Leader>r :RainbowParenthesesToggle<CR>
 
@@ -187,7 +198,11 @@ nmap <Right> >>
 vmap <Left> <gv
 vmap <Right> >gv
 
-" Faster ways to set numbers. relative numbers or no numbers. Press \+n.
+" Maps ↑ to spawning blank line above, but ↓ below.
+nmap <Up> O<Esc>j
+nmap <Down> o<Esc>k
+
+" Faster ways to set numbers. relative numbers or no numbers. Press \n.
 function! NumberToggle()
     if(&number == 1)
         set nonumber
@@ -214,3 +229,10 @@ set ai
 
 " Deletes all trailing whitespace after save.
 autocmd BufWritePre * :%s/\s\+$//e
+
+" Smooth scrolling.
+map <C-U> <C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>
+map <C-D> <C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>
+
+" Shows Poweline.
+set laststatus=2

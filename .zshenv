@@ -1,12 +1,8 @@
-alias ls='ls --color=always'
+alias ls='ls -a --color=always'
 
 alias less='less -R'
 
 alias cl='clear'
-
-alias la='ls -la --color=always'
-
-alias l='ls -l --color=always'
 
 function search {
     echo "Searching: $1"
@@ -28,10 +24,12 @@ function bb {
 
 alias vim='vim -p'
 
-function vim_dir {
+function vimdir {
     vim `find $1 -type f | xargs echo`
 }
 
 alias skype2='skype --dbpath=~/.Skype2'
 
 alias rm='rm -i' # Once I accidentally deleted database file. If you think that this is "for noobs", you are just plain idiot!
+
+alias diff='colordiff -u'
