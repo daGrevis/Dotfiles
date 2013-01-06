@@ -30,7 +30,7 @@ main = do
         , ("M-S-v", spawn_term "vim") -- Opens text-editor.
         , ("M-S-d", spawn_term "glances") -- Opens system-profiler.
         , ("M-S-m", spawn_term "alsamixer") -- Opens mixer.
-        , ("M-S-i", spawn "luakit") -- Opens browser.
+        , ("M-S-i", spawn "chromium") -- Opens browser.
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser in incognito mode.
         , ("M-S-s", spawn "skype") -- Opens IM-client.
         , ("M-S-x", spawn "xchat") -- Opens IRC-client.
