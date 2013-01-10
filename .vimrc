@@ -13,7 +13,8 @@
 " * Repeat,
 " * CtrlP,
 " * Snipmate,
-" * Dwm;
+" * Dwm,
+" * Sensible;
 "
 " Other depencdencies:
 "
@@ -26,117 +27,70 @@
 " Tested on Arch Linux.
 
 
-"
-" General settings.
-"
-" Loads plugins in .vim/bundle dir.
+" Loads plugins (in .vim/bundle/).
 call pathogen#infect()
-" Sets backups and disallows Vim to create garbage-files (.swp, .swp etc.) whereever it likes.
-set backup
-set backupdir=~/.vim/backup
-set directory=~/.vim/tmp
-" Needs to be set so other plugins just work.
-set nocompatible
-" Sets limit of history. Will help if you are morron and don't use version control.
+
+" Sets fave color schema.
+colorscheme solarized
+
+" Sets limit of history.
 set history=10000
-" Detects filetype.
-filetype plugin indent on
-filetype on
-" Sets encoding and stuff. I don't really know.
-set encoding=utf-8
-set fileencodings=utf-8
-" Disables things I don't need.
+
+" Disables things I don't need yet.
 map Q <Nop>
 map K <Nop>
 
-"
-" Appereance.
-"
-" Shows relative numbers next-to lines. This will make you wanna jump so faaar!
+" Shows relative line numbers.
 set relativenumber
-" Enables 256 colors (ye, that's much :D).
-set t_Co=256
-" Sets fave color schema.
-colorscheme Tomorrow
+
 " Highlights line which is active.
 set cursorline
-" Turns on syntax highlight.
-syntax enable
-" Column after which coding is very dangerous.
-set colorcolumn=160
-" Sexy tabs. At least... :)
-" hi TabLine ctermbg=8 ctermfg=7
-" hi TabLineFill ctermfg=8
-" hi TabLineSel ctermbg=1 ctermfg=7
 
-"
-" Search.
-"
-" Shortcut Ctrl+l clears highlights.
-noremap <silent> <C-l> :nohls<CR><C-l>
-" Fix broken Vim's regexes.
+" Column after which coding is very bad.
+set colorcolumn=160
+
+" Fix broken Vim regexes.
 nnoremap / /\v
 vnoremap / /\v
-" If you search for an all-lowercase string your search will be case-insensitive, but if one or more characters is uppercase the search will be case-sensitive.
-set ignorecase
-set smartcase
-" Always assume that it's global search.
-set gdefault
-" Highlights all found results as you type in.
-set incsearch
-set showmatch
-set hlsearch
-" Clears highlights.
-nnoremap <CR> :noh<CR>
+nnoremap ? ?\v
+vnoremap ? ?\v
 
-"
-" Other.
-"
-" Disables arrows. To teach that I must use HJKL combo.
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
-" Wrap-friendly Jk-ing. ;D
+" Always assume that it's global search and replace.
+set gdefault
+
+" Highlights all found results as you type in.
+set hlsearch
+
+" Clears highlights.
+nnoremap <CR> :let @/ = ""<CR>
+
+" Wrap-friendly <j> and <k> keys.
 nnoremap j gj
 nnoremap k gk
-" Do you know that feeling when unwanted Help opens?
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
-" Allows to use colon without holding the shift key. People talk that this is good time-saver.
+
+" Unwatned help is bad.
+map <F1> <ESC>
+
+" I don't like to hold <S> key.
 nore ; :
-nore , ;
-" Adds shortcuts: Alt+k, Alt+j and Alt+t which opens next, previous or new tab.
-noremap <Esc>t :tabnew<CR>
+
+" Mappings for controling tabs.
 noremap <Esc>j gT
 noremap <Esc>k gt
-" Allows pasting without breaking indent. To paste from anywhere, but Vim, press F12.
-set pastetoggle=<F12>
-set showmode
-" Pastes contents to sprunge.us. Call it with :Share. P.S. Thanks, @laadinjsh!
+
+" Pastes contents to sprunge.us. Call it with :Share.P.S. Thanks, @laadinjsh!
 let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
 exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd
-" Flake8 settings.
-let g:syntastic_python_checker_args = "--max-line-length=160"
-let g:syntastic_check_on_open = 1
-" Fix that sometimes backspace doesn't work.
-set bs=2
-" Conf for Rainbow plugin.
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-" Maps Shift to NERDTree.
+
+" Maps <S> key to NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
-" Maps Shift+Tab to Tagbar.
+
+" Maps <S-Tab> to Tagbar.
 nmap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
+
 " Auto sets filetype to HTML for *.html files.
 au BufRead *.html set filetype=html
+
 " Disables spell-check by default, but allows to toggle it w/ F2.
 set nospell
 function! SpellToggle()
@@ -150,9 +104,6 @@ endfunc
 " Maps \s to enabling or disabling spelling hints.
 noremap <Leader>s :call SpellToggle()<CR>
 
-" Makes margin above and below cursor.
-set scrolloff=8
-
 " Ignores files that match these patters.
 set wildignore=*.pyc
 
@@ -163,34 +114,17 @@ cmap <C-e> <End>
 " Saves file when the focus is lost.
 autocmd BufLeave,FocusLost * silent! wall
 
-" Maps \h to MRU split.
-noremap <Leader>h :CtrlPMRUFiles<CR>
+" Maps \c to yanking whole file.
+nmap <Leader>c ggVGy
 
-" Maps \v to opening .vimrc.
-nmap <Leader>v :e $MYVIMRC<CR>
-
-" Maps \y to yanking whole file.
-nmap <Leader>y ggVGy
-
-" Maps \p to pasting all over previous file.
-nmap <Leader>p ggdG"0PGdd
+" Maps \v to pasting all over previous file.
+nmap <Leader>v ggdG"0PGdd
 
 " Turn on spell-checking in text files.
 au BufRead,BufNewFile *.txt,*.markdown,*.mdown,*.md,*.textile,*.rdoc,*.org,*.creole,*.mediawiki,*.rst,*.asciidoc,*.pod setlocal spell
 
 " Don't add the comment prefix when I hit enter or o, O on a comment line.
 set formatoptions-=or
-
-" Maps \r to toggling Rainbow and unicorns.
-noremap <Leader>r :RainbowParenthesesToggle<CR>
-
-" Disables original Dwm mappings and remaps them. Done because by default Ctrl+c closed current split, but I use it to exit to normal mode.
-let g:dwm_map_keys = 0
-noremap <C-n> :call DWM_New()<CR>
-noremap <C-l> :call DWM_GrowMaster()<CR>
-noremap <C-h> :call DWM_ShrinkMaster()<CR>
-noremap <Esc>l <C-w>l
-noremap <Esc>h <C-w>h
 
 " Maps → to moving text to the right, but ← to the left.
 nmap <Left> <<
@@ -224,15 +158,35 @@ set ts=4
 set sw=4
 set sts=4
 
-" Tells Vim to use auto-indentation.
-set ai
-
 " Deletes all trailing whitespace after save.
 autocmd BufWritePre * :%s/\s\+$//e
 
-" Smooth scrolling.
-map <C-U> <C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>
-map <C-D> <C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>
+" Maps \p in imode to go in paste mode.
+inoremap <leader>p <C-o>:set paste<CR>
+" Unsets paste when leaving imode.
+au InsertLeave * :set nopaste
+" Fixes that InsertLeave event doesn't catch C-c binding.
+inoremap <C-c> <Esc>
 
-" Shows Poweline.
-set laststatus=2
+" Flake8 settings.
+let g:syntastic_python_checker_args = "--max-line-length=160"
+let g:syntastic_check_on_open = 1
+
+" Conf for Rainbow plugin.
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+" Maps \r to toggling Rainbow and unicorns.
+noremap <Leader>r :RainbowParenthesesToggle<CR>
+
+" Maps \h to MRU split.
+noremap <Leader>h :CtrlPMRUFiles<CR>
+
+" Disables original Dwm mappings and remaps them. Done because by default Ctrl+c closed current split, but I use it to exit to normal mode.
+let g:dwm_map_keys = 0
+noremap <C-n> :call DWM_New()<CR>
+noremap <C-l> :call DWM_GrowMaster()<CR>
+noremap <C-h> :call DWM_ShrinkMaster()<CR>
+noremap <Esc>l <C-w>l
+noremap <Esc>h <C-w>h

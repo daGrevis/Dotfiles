@@ -1,6 +1,8 @@
 #!/bin/bash
 
-mkdir -p ~/.vim/autoload ~/.vim/bundle ~/.vim/backup ~/.vim/tmp
+mkdir -p ~/.cache/vim/swap/
+mkdir -p ~/.cache/vim/backup/
+mkdir -p ~/.cache/vim/undo/
 curl -Sso ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
 cd ~/.vim/bundle
@@ -18,3 +20,4 @@ git clone https://github.com/tpope/vim-repeat repeat
 git clone https://github.com/kien/ctrlp.vim ctrlp
 git clone https://github.com/ervandew/snipmate.vim snipmate
 git clone https://github.com/spolu/dwm.vim dwm
+git clone https://github.com/tpope/vim-sensible sensible
