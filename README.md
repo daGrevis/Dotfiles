@@ -2,13 +2,9 @@
 
 **So awesome it should be banned!**
 
-This is how it looked on December 25th, 2012.
+This is how it looked on January 12th, 2013.
 
-![Vim](http://i.imgur.com/hgXlK.jpg)
-
-![Terms](http://i.imgur.com/orIZf.jpg)
-
-![Luakit](http://i.imgur.com/68wER.jpg)
+![Terminal and Vim](http://i.imgur.com/Lw8G8.jpg)
 
 ## Installation
 
@@ -19,7 +15,7 @@ cd ~
 ./install_deps_for_vim.sh
 ~~~
 
-Update VIm bundles afterwards:
+To Update VIm bundles:
 
 ~~~
 cd ~/.vim/bundle/
