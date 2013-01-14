@@ -34,4 +34,5 @@ main = do
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser in incognito mode.
         , ("M-S-s", spawn "skype") -- Opens IM-client.
         , ("M-S-x", spawn "xchat") -- Opens IRC-client.
+        , ("M-S-t", spawn "trackpad-toggle.sh") -- Toggles trackpad.
         ]
