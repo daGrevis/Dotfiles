@@ -61,6 +61,9 @@ set gdefault
 " Highlights all found results as you type in.
 set hlsearch
 
+" Ignore case when searching.
+set ignorecase
+
 " Clears highlights.
 nnoremap <CR> :let @/ = ""<CR>
 
@@ -78,9 +81,9 @@ nore ; :
 noremap <Esc>j gT
 noremap <Esc>k gt
 
-" Pastes contents to sprunge.us. Call it with :Share.P.S. Thanks, @laadinjsh!
-let s:cmd = system("uname -s | tr -d '\n'") == "Darwin" ? "pbcopy" : "xclip"
-exec 'command! -range=% Share :<line1>,<line2>write !curl -sF "sprunge=<-" http://sprunge.us|'.s:cmd
+" Pastes contents to vpaste.net.
+map <Leader>vp :exec "w !vpaste ft=".&ft<CR>
+vmap <Leader>vp <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
 
 " Maps <S> key to NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
@@ -190,3 +193,6 @@ noremap <C-l> :call DWM_GrowMaster()<CR>
 noremap <C-h> :call DWM_ShrinkMaster()<CR>
 noremap <Esc>l <C-w>l
 noremap <Esc>h <C-w>h
+
+" Enable mouse in all modes.
+set mouse=a
