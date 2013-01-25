@@ -43,5 +43,8 @@ trayer --height 16 --transparent true --alpha 0 --tint 0x000000 --edge top --ali
 
 feh --bg-scale Pictures/Arch_Linux_Darkwave_by_BalanceST_1920x1080.jpg &
 
+# Starts Dropbox.
+dropbox start &
+
 # Loads WM.
 exec xmonad

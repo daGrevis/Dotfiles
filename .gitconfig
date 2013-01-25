@@ -10,5 +10,6 @@
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative
     stat = status
     co = checkout
+    new = !sh -c 'git checkout -b $0 && git push -u origin $0'
 [rerere]
 	enabled = 1

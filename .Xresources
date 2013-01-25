@@ -5,7 +5,12 @@ URxvt.matcher.button:  1
 URxvt.lsp:             10
 URxvt.saveLines:       1000000
 
-URxvt.font: -*-proggyclean-medium-r-normal-*-12-*-*-*-*-*-*-*
+URxvt.font:           xft:Meslo LG M DZ for Powerline:regular:size=8
+URxvt.imFont:         xft:Meslo LG M DZ for Powerline:regular:size=8
+URxvt.boldFont:       xft:Meslo LG M DZ for Powerline:bold:size=8
+URxvt.italicFont:     xft:Meslo LG M DZ for Powerline:italic:size=8
+URxvt.boldItalicFont: xft:Meslo LG M DZ for Powerline:bold:italic:size=8
+! URxvt.cursorColor:    #FF0000
 
 ! ! Tomorrow
 ! URxvt.foreground:  #4d4d4c
@@ -89,7 +94,7 @@ URxvt.font: -*-proggyclean-medium-r-normal-*-12-*-*-*-*-*-*-*
 #define S_base3               #002b36
 URxvt.background:             S_base03
 URxvt.foreground:             S_base0
-URxvt.cursorColor:            S_base1
+URxvt.cursorColor:            S_red
 URxvt.pointerColorBackground: S_base01
 URxvt.pointerColorForeground: S_base1
 URxvt.color0:                 S_base02

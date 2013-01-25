@@ -196,3 +196,9 @@ noremap <Esc>h <C-w>h
 
 " Enable mouse in all modes.
 set mouse=a
+
+" Maps \r to :registers.
+noremap <Leader>r :registers<CR>
+
+" Maps \ep to execute Python 2 on current file.
+noremap <Leader>ep :echo system("python2 ".expand("%"))<CR>
