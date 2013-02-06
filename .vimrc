@@ -4,22 +4,18 @@
 " * Supertab,
 " * Syntastic,
 " * Commentary,
-" * Rainbow parentheses,
 " * MatchTag,
 " * Surround,
 " * Fugitive,
 " * NERDTree,
 " * Tagbar,
 " * Repeat,
-" * CtrlP,
-" * Snipmate,
-" * Dwm,
 " * Sensible;
 "
 " Other depencdencies:
 "
 " * Common sense,
-" * Tomorrow (color scheme),
+" * Solarized (color scheme),
 " * Linux and these packages:
 "   * xclip (for `:Share`),
 "   * Code linters (for Syntastic);
@@ -65,7 +61,7 @@ set hlsearch
 set ignorecase
 
 " Clears highlights.
-nnoremap <CR> :let @/ = ""<CR>
+nnoremap <C-l> :let @/ = ""<CR>:redraw!<CR>
 
 " Wrap-friendly <j> and <k> keys.
 nnoremap j gj
@@ -78,8 +74,8 @@ map <F1> <ESC>
 nore ; :
 
 " Mappings for controling tabs.
-noremap <Esc>j gT
-noremap <Esc>k gt
+noremap <C-j> :tabprevious<CR>
+noremap <C-k> :tabnext<CR>
 
 " Pastes contents to vpaste.net.
 map <Leader>vp :exec "w !vpaste ft=".&ft<CR>
@@ -90,9 +86,6 @@ nmap <Tab> :NERDTreeToggle<CR>
 
 " Maps <S-Tab> to Tagbar.
 nmap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
-
-" Auto sets filetype to HTML for *.html files.
-au BufRead *.html set filetype=html
 
 " Disables spell-check by default, but allows to toggle it w/ F2.
 set nospell
@@ -123,12 +116,6 @@ nmap <Leader>c ggVGy
 " Maps \v to pasting all over previous file.
 nmap <Leader>v ggdG"0PGdd
 
-" Turn on spell-checking in text files.
-au BufRead,BufNewFile *.txt,*.markdown,*.mdown,*.md,*.textile,*.rdoc,*.org,*.creole,*.mediawiki,*.rst,*.asciidoc,*.pod setlocal spell
-
-" Don't add the comment prefix when I hit enter or o, O on a comment line.
-set formatoptions-=or
-
 " Maps → to moving text to the right, but ← to the left.
 nmap <Left> <<
 nmap <Right> >>
@@ -138,18 +125,6 @@ vmap <Right> >gv
 " Maps ↑ to spawning blank line above, but ↓ below.
 nmap <Up> O<Esc>j
 nmap <Down> o<Esc>k
-
-" Faster ways to set numbers. relative numbers or no numbers. Press \n.
-function! NumberToggle()
-    if(&number == 1)
-        set nonumber
-    elseif(&relativenumber == 1)
-        set number
-    else
-        set relativenumber
-    endif
-endfunc
-nnoremap <Leader>n :call NumberToggle()<CR>
 
 " Shows invisibles and adds mapping for toggling between showing invisibles or not.
 set listchars=tab:▸\ ,eol:¬
@@ -171,34 +146,11 @@ au InsertLeave * :set nopaste
 " Fixes that InsertLeave event doesn't catch C-c binding.
 inoremap <C-c> <Esc>
 
-" Flake8 settings.
-let g:syntastic_python_checker_args = "--max-line-length=160"
-let g:syntastic_check_on_open = 1
-
-" Conf for Rainbow plugin.
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-" Maps \r to toggling Rainbow and unicorns.
-noremap <Leader>r :RainbowParenthesesToggle<CR>
-
-" Maps \h to MRU split.
-noremap <Leader>h :CtrlPMRUFiles<CR>
-
-" Disables original Dwm mappings and remaps them. Done because by default Ctrl+c closed current split, but I use it to exit to normal mode.
-let g:dwm_map_keys = 0
-noremap <C-n> :call DWM_New()<CR>
-noremap <C-l> :call DWM_GrowMaster()<CR>
-noremap <C-h> :call DWM_ShrinkMaster()<CR>
-noremap <Esc>l <C-w>l
-noremap <Esc>h <C-w>h
-
 " Enable mouse in all modes.
 set mouse=a
 
 " Maps \r to :registers.
 noremap <Leader>r :registers<CR>
 
-" Maps \ep to execute Python 2 on current file.
-noremap <Leader>ep :echo system("python2 ".expand("%"))<CR>
+" Disables folding.
+set nofen

@@ -10,7 +10,6 @@ URxvt.imFont:         xft:Meslo LG M DZ for Powerline:regular:size=8
 URxvt.boldFont:       xft:Meslo LG M DZ for Powerline:bold:size=8
 URxvt.italicFont:     xft:Meslo LG M DZ for Powerline:italic:size=8
 URxvt.boldItalicFont: xft:Meslo LG M DZ for Powerline:bold:italic:size=8
-! URxvt.cursorColor:    #FF0000
 
 ! ! Tomorrow
 ! URxvt.foreground:  #4d4d4c
@@ -75,7 +74,7 @@ URxvt.boldItalicFont: xft:Meslo LG M DZ for Powerline:bold:italic:size=8
 ! URxvt.color14:     #4eb4fa
 ! URxvt.color15:     #d0d0d0
 
-! ! Solarized Light
+! Solarized Light
 #define S_yellow              #b58900
 #define S_orange              #cb4b16
 #define S_red                 #dc322f
