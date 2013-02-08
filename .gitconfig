@@ -1,15 +1,22 @@
 [user]
-	name = Raitis Stengrevics
-	email = dagrevis@gmail.com
+    name = Raitis Stengrevics
+    email = dagrevis@gmail.com
 [core]
-	editor = vim
+    editor = vim
 [color]
-	ui = true
-	diff = always
+    ui = true
+    diff = always
+    editor = vim
 [alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative
+    status = status -sb
     stat = status
     co = checkout
     new = !sh -c 'git checkout -b $0 && git push -u origin $0'
+    diff = diff --word-diff
 [rerere]
-	enabled = 1
+    enabled = 1
+[push]
+    default = current
+[merge]
+    tool = vimdiff
