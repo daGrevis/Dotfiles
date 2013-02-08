@@ -1,80 +1,17 @@
-URxvt.scrollBar:       false
-URxvt.perl-ext-common: default,matcher
-URxvt.urlLauncher:     /usr/bin/chromium
-URxvt.matcher.button:  1
-URxvt.lsp:             10
-URxvt.saveLines:       1000000
+*.scrollBar:       false
+*.perl-ext-common: default,matcher
+*.urlLauncher:     /usr/bin/chromium
+*.matcher.button:  1
+*.lsp:             10
+*.saveLines:       1000000
 
-URxvt.font:           xft:Meslo LG M DZ for Powerline:regular:size=8
-URxvt.imFont:         xft:Meslo LG M DZ for Powerline:regular:size=8
-URxvt.boldFont:       xft:Meslo LG M DZ for Powerline:bold:size=8
-URxvt.italicFont:     xft:Meslo LG M DZ for Powerline:italic:size=8
-URxvt.boldItalicFont: xft:Meslo LG M DZ for Powerline:bold:italic:size=8
+*.font:           xft:Meslo LG M DZ for Powerline:regular:size=8
+*.imFont:         xft:Meslo LG M DZ for Powerline:regular:size=8
+*.boldFont:       xft:Meslo LG M DZ for Powerline:bold:size=8
+*.italicFont:     xft:Meslo LG M DZ for Powerline:italic:size=8
+*.boldItalicFont: xft:Meslo LG M DZ for Powerline:bold:italic:size=8
 
-! ! Tomorrow
-! URxvt.foreground:  #4d4d4c
-! URxvt.background:  #ffffff
-! URxvt.cursorColor: #aeafad
-! URxvt.color0:      #000000
-! URxvt.color1:      #c82829
-! URxvt.color2:      #718c00
-! URxvt.color3:      #f5871f
-! URxvt.color4:      #4271ae
-! URxvt.color5:      #8959a8
-! URxvt.color6:      #3e999f
-! URxvt.color7:      #d6d6d6
-! URxvt.color8:      #666666
-! URxvt.color9:      #FF3334
-! URxvt.color10:     #9ec400
-! URxvt.color11:     #eab700
-! URxvt.color12:     #4271ae
-! URxvt.color13:     #b777e0
-! URxvt.color14:     #54ced6
-! URxvt.color15:     #4d4d4c
-
-! ! Tomorrow Night
-! URxvt.foreground:  #c5c8c6
-! URxvt.background:  #1d1f21
-! URxvt.cursorColor: #aeafad
-! URxvt.color0:      #000000
-! URxvt.color1:      #912226
-! URxvt.color2:      #778900
-! URxvt.color3:      #ae7b00
-! URxvt.color4:      #1d2594
-! URxvt.color5:      #682a9b
-! URxvt.color6:      #2b6651
-! URxvt.color7:      #929593
-! URxvt.color8:      #666666
-! URxvt.color9:      #cc6666
-! URxvt.color10:     #b5bd68
-! URxvt.color11:     #f0c674
-! URxvt.color12:     #81a2be
-! URxvt.color13:     #b294bb
-! URxvt.color14:     #8abeb7
-! URxvt.color15:     #ecebec
-
-! ! Molokai
-! URxvt.foreground:  #d0d0d0
-! URxvt.background:  #101010
-! URxvt.cursorColor: #d0d0d0
-! URxvt.color0:      #101010
-! URxvt.color1:      #960050
-! URxvt.color2:      #66aa11
-! URxvt.color3:      #c47f2c
-! URxvt.color4:      #30309b
-! URxvt.color5:      #7e40a5
-! URxvt.color6:      #3579a8
-! URxvt.color7:      #9999aa
-! URxvt.color8:      #303030
-! URxvt.color9:      #ff0090
-! URxvt.color10:     #80ff00
-! URxvt.color11:     #ffba68
-! URxvt.color12:     #5f5fee
-! URxvt.color13:     #bb88dd
-! URxvt.color14:     #4eb4fa
-! URxvt.color15:     #d0d0d0
-
-! Solarized Light
+! Solarized Light (w/ customizations)
 #define S_yellow              #b58900
 #define S_orange              #cb4b16
 #define S_red                 #dc322f
@@ -91,63 +28,24 @@ URxvt.boldItalicFont: xft:Meslo LG M DZ for Powerline:bold:italic:size=8
 #define S_base1               #586e75
 #define S_base2               #073642
 #define S_base3               #002b36
-URxvt.background:             S_base03
-URxvt.foreground:             S_base0
-URxvt.cursorColor:            S_red
-URxvt.pointerColorBackground: S_base01
-URxvt.pointerColorForeground: S_base1
-URxvt.color0:                 S_base02
-URxvt.color1:                 S_red
-URxvt.color2:                 S_green
-URxvt.color3:                 S_yellow
-URxvt.color4:                 S_blue
-URxvt.color5:                 S_magenta
-URxvt.color6:                 S_cyan
-URxvt.color7:                 S_base2
-URxvt.color9:                 S_orange
-URxvt.color8:                 S_base03
-URxvt.color10:                S_base01
-URxvt.color11:                S_base00
-URxvt.color12:                S_base0
-URxvt.color13:                S_violet
-URxvt.color14:                S_base1
-URxvt.color15:                S_base3
-
-! ! Solarized Dark
-! #define S_yellow              #b58900
-! #define S_orange              #cb4b16
-! #define S_red                 #dc322f
-! #define S_magenta             #d33682
-! #define S_violet              #6c71c4
-! #define S_blue                #268bd2
-! #define S_cyan                #2aa198
-! #define S_green               #859900
-! #define S_base03            #002b36
-! #define S_base02            #073642
-! #define S_base01            #586e75
-! #define S_base00            #657b83
-! #define S_base0             #839496
-! #define S_base1             #93a1a1
-! #define S_base2             #eee8d5
-! #define S_base3             #fdf6e3
-! URxvt.background:             S_base03
-! URxvt.foreground:             S_base0
-! URxvt.cursorColor:            S_base1
-! URxvt.pointerColorBackground: S_base01
-! URxvt.pointerColorForeground: S_base1
-! URxvt.color0:                 S_base02
-! URxvt.color1:                 S_red
-! URxvt.color2:                 S_green
-! URxvt.color3:                 S_yellow
-! URxvt.color4:                 S_blue
-! URxvt.color5:                 S_magenta
-! URxvt.color6:                 S_cyan
-! URxvt.color7:                 S_base2
-! URxvt.color9:                 S_orange
-! URxvt.color8:                 S_base03
-! URxvt.color10:                S_base01
-! URxvt.color11:                S_base00
-! URxvt.color12:                S_base0
-! URxvt.color13:                S_violet
-! URxvt.color14:                S_base1
-! URxvt.color15:                S_base3
+*.background:             S_base03
+*.foreground:             S_base0
+*.cursorColor:            S_red
+*.pointerColorBackground: S_base01
+*.pointerColorForeground: S_base1
+*.color0:                 S_base02
+*.color1:                 S_red
+*.color2:                 S_green
+*.color3:                 S_yellow
+*.color4:                 S_blue
+*.color5:                 S_magenta
+*.color6:                 S_cyan
+*.color7:                 S_base2
+*.color9:                 S_orange
+*.color8:                 S_base03
+*.color10:                S_base01
+*.color11:                S_base00
+*.color12:                S_base0
+*.color13:                S_violet
+*.color14:                S_base1
+*.color15:                S_base3
