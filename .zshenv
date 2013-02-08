@@ -33,3 +33,11 @@ alias skype2='skype --dbpath=~/.Skype2'
 alias rm='rm -i' # Once I accidentally deleted database file. If you think that this is "for noobs", you are just plain idiot!
 
 alias diff='colordiff -u'
+
+alias p='ping google.com'
+
+alias flake8='flake8 --max-line-length=160'
+
+alias py="bpython2"
+
+alias gpu='git push -u origin $(current_branch)'
