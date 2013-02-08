@@ -163,5 +163,8 @@ set nofen
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
 
+" Executes Syntastic when buffer is opened.
+let g:syntastic_check_on_open=1
+
 " Tells Syntastic to set line length to 160 symbols as maximum.
 let g:syntatic_python_pyflakes_args="--max-line-length=160"

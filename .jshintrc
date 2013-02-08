@@ -1,0 +1,7 @@
+{
+    "browser": true,
+    "jquery": true,
+    "strict": true,
+    "maxlen": 160,
+    "asi": true
+}
