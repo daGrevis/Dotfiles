@@ -1,5 +1,5 @@
 " Current plugins:
-"
+" "
 " * Powerline,
 " * Supertab,
 " * Syntastic,
@@ -59,6 +59,7 @@ set gdefault
 set hlsearch
 
 " Ignore case when searching unless you type uppercase and lowercase letters.
+set ignorecase
 set smartcase
 
 " Clears highlights for search results.
@@ -159,6 +160,9 @@ noremap <Leader>r :registers<CR>
 
 " Disables folding at all.
 set nofen
+
+" Sets max count for open tabs.
+set tabpagemax=50
 
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
