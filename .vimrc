@@ -1,5 +1,6 @@
 " Current plugins:
 " "
+" * Sensible,
 " * Powerline,
 " * Supertab,
 " * Syntastic,
@@ -10,14 +11,17 @@
 " * NERDTree,
 " * Tagbar,
 " * Repeat,
-" * Sensible;
+" * CtrlP,
+" * Ack;
 "
 " Other dependencies
 "
 " * Common sense,
 " * Solarized (color scheme),
 " * Linux and these packages:
-"   * `vpaste` (for pasting with <Leader>vp),
+"   * `ctags` (for Tagbar),
+"   * `ack` (for Ack),
+"   * `vpaste` (for pasting with <Leader>z),
 "   * Code linters (for Syntastic),
 "   * Patched font (for Powerline);
 "
@@ -31,9 +35,9 @@ call pathogen#infect()
 colorscheme solarized
 
 " Sets limit of history.
-set history=10000
+set history=5000
 
-" Disables things I don't need yet.
+" Disables things I don"t need yet.
 map Q <Nop>
 map K <Nop>
 
@@ -52,7 +56,7 @@ vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
 
-" Always assume that it's global search and replace.
+" Always assume that it"s global search and replace.
 set gdefault
 
 " Highlights all found results as you type in.
@@ -72,7 +76,7 @@ nnoremap k gk
 " Unwanted help is bad. Lets assume that user wanted to press <ESC>.
 map <F1> <ESC>
 
-" I don't like to hold <S> key.
+" I don"t like to hold <S> key.
 nore ; :
 
 " Mappings for controlling tabs.
@@ -80,8 +84,8 @@ noremap <C-j> :tabprevious<CR>
 noremap <C-k> :tabnext<CR>
 
 " Pastes contents to vpaste.net.
-map <Leader>vp :exec "w !vpaste ft=".&ft<CR>
-vmap <Leader>vp <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
+map <Leader>z :exec "w !vpaste ft=".&ft<CR>
+vmap <Leader>z <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
 
 " Maps <S> key to toggling NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
@@ -104,11 +108,6 @@ noremap <Leader>s :call SpellToggle()<CR>
 
 " Ignores files that match these patters.
 set wildignore=*.pyc,*.png,*.gif,*.jpeg,*.jpg,*.ico
-
-" Emacs ways to change cursor in cmode (<C-a> to get to the start, but <C-e>
-" -- to the end).
-cmap <C-a> <Home>
-cmap <C-e> <End>
 
 " Saves file when the focus is lost (for example, when buffers are changed).
 autocmd BufLeave,FocusLost * silent! wall
@@ -148,7 +147,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 inoremap <leader>p <C-o>:set paste<CR>
 " Unsets pmode when leaving imode.
 au InsertLeave * :set nopaste
-" Fixes that InsertLeave event doesn't catch <C-c> mapping.
+" Fixes that InsertLeave event doesn"t catch <C-c> mapping.
 inoremap <C-c> <Esc>
 
 " Enable mouse in all modes. Copy out from Vim holding <S> while highlighting
@@ -164,6 +163,11 @@ set nofen
 " Sets max count for open tabs.
 set tabpagemax=50
 
+" Emacs ways to change cursor in cmode (<C-a> to get to the start, but <C-e>
+" -- to the end).
+cmap <C-a> <Home>
+cmap <C-e> <End>
+
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
 
@@ -172,3 +176,12 @@ let g:syntastic_check_on_open=1
 
 " Tells Syntastic to set line length to 160 symbols as maximum.
 let g:syntatic_python_pyflakes_args="--max-line-length=160"
+
+" Opens file in new tab when using CtrlP.
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<c-t>'],
+    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    \ }
+
+" Shows CtrlP on top.
+let g:ctrlp_match_window_bottom=0
