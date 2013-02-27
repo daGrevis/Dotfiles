@@ -2,9 +2,9 @@
 
 **So awesome it should be banned!**
 
-This is how it looked on January 12th, 2013.
+This is how it looked on February 27th, 2013.
 
-![Terminal and Vim](http://i.imgur.com/Lw8G8.jpg)
+![](http://i.imgur.com/Qv5Z2a2.jpg)
 
 ## Installation
 
