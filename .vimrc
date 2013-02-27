@@ -1,18 +1,19 @@
 " Current plugins:
-" "
-" * Sensible,
-" * Powerline,
-" * Supertab,
-" * Syntastic,
+"
+" * Ack,
 " * Commentary,
-" * MatchTag,
-" * Surround,
-" * Fugitive,
-" * NERDTree,
-" * Tagbar,
-" * Repeat,
 " * CtrlP,
-" * Ack;
+" * Fugitive,
+" * MatchTag,
+" * NERDTree,
+" * Powerline,
+" * Repeat,
+" * Sensible,
+" * Supertab,
+" * Surround,
+" * Syntastic,
+" * Tagbar,
+" * Zen-coding;
 "
 " Other dependencies
 "
@@ -32,7 +33,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme solarized
+colorscheme Tomorrow-Night
 
 " Sets limit of history.
 set history=5000
@@ -168,6 +169,15 @@ set tabpagemax=50
 cmap <C-a> <Home>
 cmap <C-e> <End>
 
+" Almost like in Emacs -- only in the M place there is the C key. So <C-b> to
+" move a word backward, but <C-f> -- forward.
+cmap <C-b> <S-Left>
+cmap <C-f> <S-Right>
+
+" Saves and sources files (meant to be used in `.vimrc` file, but you can be
+" creative too!).
+nmap <Leader>x :w<CR> :so %<CR>
+
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
 
@@ -185,3 +195,5 @@ let g:ctrlp_prompt_mappings = {
 
 " Shows CtrlP on top.
 let g:ctrlp_match_window_bottom=0
+
+noremap <Leader>q :SyntasticToggleMode<CR> :redraw!<CR>
