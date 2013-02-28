@@ -41,3 +41,4 @@ alias flake8='flake8 --max-line-length=160'
 alias py="bpython2"
 
 alias gpu='git push -u origin $(current_branch)'
+alias gpl='git pull'

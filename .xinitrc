@@ -23,14 +23,14 @@ xsetroot -cursor_name left_ptr
 # Keyboard layout.
 setxkbmap -layout lv
 
-# Loads conf for terminal.
-xrdb -merge ~/.Xresources
+# Loads `.Xresources`.
+xrdb ~/.Xresources
+
+# Loads `.Xmodmap`.
+xmodmap ~/.Xmodmap
 
 # Loads screensaver.
 xscreensaver -no-splash &
-
-# Remaps Caps Lock to Escape key.
-xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 # Battery indicator.
 batti &
@@ -41,10 +41,14 @@ xmobar &
 # Loads trayer.
 trayer --height 16 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
 
-feh --bg-scale Pictures/Arch_Linux_Darkwave_by_BalanceST_1920x1080.jpg &
+# Sets background.
+feh --bg-scale Pictures/Arch_Linux_Bluewave_by_BalanceST_1920x1080.jpg &
 
 # Starts Dropbox.
 dropbox start &
+
+# Clipboard manager.
+parcellite &
 
 # Loads WM.
 exec xmonad
