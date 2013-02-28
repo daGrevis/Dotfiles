@@ -8,16 +8,6 @@ This is how it looked on February 27th, 2013.
 
 ## Installation
 
-Install dependencies for Vim:
+Install [Pathogen](https://github.com/tpope/vim-pathogen) by executing `./install_pathogen.sh`.
 
-~~~
-cd ~
-./install_deps_for_vim.sh
-~~~
-
-To Update VIm bundles:
-
-~~~
-cd ~/.vim/bundle/
-./update_bundles.sh
-~~~
+Create dirs by executing `./create_dirs.sh`.
