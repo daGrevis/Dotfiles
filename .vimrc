@@ -22,7 +22,7 @@
 " * Linux and these packages:
 "   * `ctags` (for Tagbar),
 "   * `ack` (for Ack),
-"   * `vpaste` (for pasting with <Leader>z),
+"   * `vpaste.sh` (for pasting with <Leader>z),
 "   * Code linters (for Syntastic),
 "   * Patched font (for Powerline);
 "
