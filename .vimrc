@@ -19,8 +19,7 @@
 "
 " Other dependencies
 "
-" * Common sense,
-" * Solarized (color scheme),
+" * Color scheme,
 " * Linux and these packages:
 "   * `ctags` (for Tagbar),
 "   * `ack` (for Ack),
