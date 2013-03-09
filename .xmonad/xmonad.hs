@@ -34,5 +34,9 @@ main = do
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser in incognito mode.
         , ("M-S-s", spawn "skype") -- Opens IM-client.
         , ("M-S-x", spawn "xchat") -- Opens IRC-client.
-        , ("M-S-t", spawn "toggle_trackpad.sh") -- Toggles trackpad.
+        , ("M-S-t", spawn "transmission-gtk") -- Open torrent-client.
+        , ("M-S-r", spawn_term "ranger") -- Open file-browser.
+        , ("M-t", spawn "Scripts/toggle_trackpad.sh") -- Toggles trackpad.
+        , ("M-[", spawn "Scripts/decrement_brightness.sh") -- Decrements brightness.
+        , ("M-]", spawn "Scripts/increment_brightness.sh") -- Increments brightness.
         ]
