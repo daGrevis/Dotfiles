@@ -3,7 +3,9 @@
 " * Ack,
 " * Commentary,
 " * CtrlP,
+" * EasyMotion,
 " * Fugitive,
+" * Gitgutter,
 " * MatchTag,
 " * NERDTree,
 " * Powerline,
@@ -74,19 +76,13 @@ nnoremap <C-l> :let @/ = ""<CR>
 nnoremap j gj
 nnoremap k gk
 
-" Unwanted help is bad. Lets assume that user wanted to press <ESC>.
-map <F1> <ESC>
-
-" I don"t like to hold <S> key.
-nore ; :
-
 " Mappings for controlling tabs.
 noremap <C-j> :tabprevious<CR>
 noremap <C-k> :tabnext<CR>
 
 " Pastes contents to vpaste.net.
-map <Leader>z :exec "w !vpaste ft=".&ft<CR>
-vmap <Leader>z <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
+map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
+vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
 
 " Maps <S> key to toggling NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
@@ -177,6 +173,19 @@ cmap <C-f> <S-Right>
 " Saves and sources files (meant to be used in `.vimrc` file, but you can be
 " creative too!).
 nmap <Leader>x :w<CR> :so %<CR>
+
+" Toggles between no numbers, numbers and relative numbers.
+function! NumberToggle()
+    if(&number == 1)
+        set nonumber
+    elseif(&relativenumber == 1)
+        set number
+    else
+        set relativenumber
+    endif
+endfunc
+" Mapping for calling `NumberToggle`.
+noremap <Leader>n :call NumberToggle()<CR>
 
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
