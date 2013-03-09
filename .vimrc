@@ -34,7 +34,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme Tomorrow-Night
+colorscheme Tomorrow
 
 " Sets limit of history.
 set history=5000
