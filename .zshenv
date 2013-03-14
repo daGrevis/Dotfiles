@@ -40,5 +40,19 @@ alias flake8='flake8 --max-line-length=160'
 
 alias py="bpython2"
 
-alias gpu='git push -u origin $(current_branch)'
+alias gad='git add'
+alias gcl='git clone'
+alias gcm='git commit'
+alias gco='git checkout'
+alias gdf='git diff'
+alias gin='git init'
+alias glg='git lg' # See `.gitconfig`.
+alias gmr='git merge'
+alias gmv='git mv'
 alias gpl='git pull'
+alias gpu='git push -u origin $(current_branch)' # Needs Oh-my-zsh.
+alias grm='git rm'
+alias grs='git reset'
+alias grv='git revert'
+alias gst='git status --short' # Short version.
+alias gtg='git tag'
