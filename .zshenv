@@ -56,3 +56,4 @@ alias grs='git reset'
 alias grv='git revert'
 alias gst='git status --short' # Short version.
 alias gtg='git tag'
+alias gnw='git new' # See `.gitconfig`.
