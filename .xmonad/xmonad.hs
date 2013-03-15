@@ -13,11 +13,10 @@ main = do
         {
           modMask = mod4Mask
         , terminal = term
-        , XMonad.borderWidth = 4
+        , XMonad.borderWidth = 3
         , XMonad.normalBorderColor = "#333333"
         , XMonad.focusedBorderColor = "#1793d1"
         , layoutHook = avoidStruts $ smartBorders (layoutHook defaultConfig) -- Shows xmobar next to other windows and shows border only when it's needed.
-        -- #XXX: Packages `xmobar-0.16-2` and `xmobar-0.16-3` have bugs w/ `avoidStruts` functionality.
         , manageHook = composeAll [ isFullscreen --> doFullFloat, manageDocks ] -- Allows fullscreen and trayer.
         , focusFollowsMouse = False -- Disallows the mouse to change focus.
         }
@@ -25,6 +24,7 @@ main = do
         [
           ("M-p", spawn "dmenu_run -b -nb '#333333' -nf white -sb '#1793d1' -sf white") -- Opens menu.
         , ("<Print>", spawn "scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'") -- Takes screenshot.
+        , ("M-<Print>", spawn "sleep 0.2; scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/' -s") -- Takes screenshot by selecting area.
         , ("M-S-l", spawn "xscreensaver-command -lock") -- Starts screensaver.
         , ("M-<Return>", spawn "xterm") -- Opens simple-terminal.
         , ("M-S-v", spawn_term "vim") -- Opens text-editor.
