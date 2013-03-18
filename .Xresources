@@ -20,7 +20,7 @@ URxvt.italicFont: xft:Meslo LG M DZ for Powerline:italic:size=8
 
 URxvt.foreground:  t_foreground
 URxvt.background:  t_background
-URxvt.cursorColor: #FF3334
+URxvt.cursorColor: t_red
 URxvt.color0:      #000000
 URxvt.color8:      #666666
 URxvt.color1:      t_red
