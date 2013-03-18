@@ -50,5 +50,8 @@ dropbox start &
 # Clipboard manager.
 parcellite &
 
+# Calendar, contacts, tasks, notes etc..
+osmo &
+
 # Loads WM.
 exec xmonad
