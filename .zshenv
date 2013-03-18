@@ -2,13 +2,6 @@ alias ls='ls -a --color=always'
 
 alias less='less -R'
 
-alias cl='clear'
-
-function search {
-    echo "Searching: $1"
-    find . -type f | xargs grep $1 -sl
-}
-
 function bb {
     echo "Shutdown scheduled. (Press Ctrl + C to terminate)"
     echo -n "Countdown... "
@@ -30,15 +23,11 @@ function vimdir {
 
 alias skype2='skype --dbpath=~/.Skype2'
 
-alias rm='rm -i' # Once I accidentally deleted database file. If you think that this is "for noobs", you are just plain idiot!
+alias rm='rm -i' # Once I accidentally deleted database file. If you think that this is "for noobs", you are an idiot!
 
 alias diff='colordiff -u'
 
 alias p='ping google.com'
-
-alias flake8='flake8 --max-line-length=160'
-
-alias py="bpython2"
 
 alias gad='git add'
 alias gbr='git branch'
@@ -47,14 +36,14 @@ alias gcm='git commit'
 alias gco='git checkout'
 alias gdf='git diff'
 alias gin='git init'
-alias glg='git lg' # See `.gitconfig`.
+alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
 alias gmr='git merge'
 alias gmv='git mv'
-alias gnw='git new' # See `.gitconfig`.
+alias gnw='git checkout -b $0 && git push -u origin $0'
 alias gpl='git pull'
 alias gpu='git push -u origin $(current_branch)' # Needs Oh-my-zsh.
 alias grm='git rm'
 alias grs='git reset'
 alias grv='git revert'
-alias gst='git status'
+alias gst='git status -sb'
 alias gtg='git tag'
