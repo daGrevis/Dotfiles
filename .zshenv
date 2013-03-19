@@ -52,6 +52,7 @@ alias grm='git rm'
 alias grs='git reset'
 alias grv='git revert'
 alias gst='git status -sb'
+alias gsw='git show'
 alias gtg='git tag'
 
 # A command I use for seeing changes between my home and Dotfiles dir.
