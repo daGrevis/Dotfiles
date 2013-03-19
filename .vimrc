@@ -76,8 +76,8 @@ nnoremap j gj
 nnoremap k gk
 
 " Mappings for controlling tabs.
-noremap <C-j> :tabprevious<CR>
-noremap <C-k> :tabnext<CR>
+noremap <C-h> :tabprevious<CR>
+noremap <C-l> :tabnext<CR>
 
 " Pastes contents to vpaste.net.
 map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
@@ -185,6 +185,14 @@ function! NumberToggle()
 endfunc
 " Mapping for calling `NumberToggle`.
 noremap <Leader>n :call NumberToggle()<CR>
+
+" Allows to use splits more quickly (Alt-{h,j,k,l,q,w}).
+noremap <Esc>h <C-w>h
+noremap <Esc>j <C-w>j
+noremap <Esc>k <C-w>k
+noremap <Esc>l <C-w>l
+noremap <Esc>q <C-w>s
+noremap <Esc>w <C-w>v
 
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
