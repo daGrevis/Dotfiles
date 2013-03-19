@@ -49,4 +49,4 @@ alias gst='git status -sb'
 alias gtg='git tag'
 
 # A command I use for seeing changes between my home and Dotfiles dir.
-alias dotdiff='diff . ~ | grep -v "Only in" | grep -v "Common subdirectories" | less'
+alias dotdiff='diff ~ ~/Dotfiles/ | grep -v "Only in" | grep -v "Common subdirectories" | less'
