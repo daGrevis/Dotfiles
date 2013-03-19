@@ -29,6 +29,12 @@ alias diff='colordiff -u'
 
 alias p='ping google.com'
 
+function current_branch() {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || \
+    ref=$(git rev-parse --short HEAD 2> /dev/null) || return
+    echo ${ref#refs/heads/}
+}
+
 alias gad='git add'
 alias gbr='git branch'
 alias gcl='git clone'
@@ -41,7 +47,7 @@ alias gmr='git merge'
 alias gmv='git mv'
 alias gnw='git checkout -b $0 && git push -u origin $0'
 alias gpl='git pull'
-alias gpu='git push -u origin $(current_branch)' # Needs Oh-my-zsh.
+alias gpu='git push -u origin $(current_branch)'
 alias grm='git rm'
 alias grs='git reset'
 alias grv='git revert'
