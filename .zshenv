@@ -15,8 +15,6 @@ function bb {
     sudo shutdown -h now
 }
 
-alias vim='vim -p'
-
 function vimdir {
     vim `find $1 -type f | xargs echo`
 }
@@ -56,3 +54,7 @@ alias gtg='git tag'
 
 # A command I use for seeing changes between my home and Dotfiles dir.
 alias dotdiff='diff ~ ~/Dotfiles/ | grep -v "Only in" | grep -v "Common subdirectories" | less'
+
+function vim {
+    gvim -p $@ & disown && exit
+}

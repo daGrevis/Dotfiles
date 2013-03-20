@@ -34,7 +34,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme Tomorrow
+colorscheme Tomorrow-Night
 
 " Sets limit of history.
 set history=5000
@@ -58,7 +58,7 @@ vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
 
-" Always assume that it"s global search and replace.
+" Always assume that it's global search and replace.
 set gdefault
 
 " Highlights all found results as you type in.
@@ -76,8 +76,8 @@ nnoremap j gj
 nnoremap k gk
 
 " Mappings for controlling tabs.
-noremap <C-h> :tabprevious<CR>
-noremap <C-l> :tabnext<CR>
+noremap <M-a> :tabprevious<CR>
+noremap <M-s> :tabnext<CR>
 
 " Pastes contents to vpaste.net.
 map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
@@ -187,12 +187,15 @@ endfunc
 noremap <Leader>n :call NumberToggle()<CR>
 
 " Allows to use splits more quickly (Alt-{h,j,k,l,q,w}).
-noremap <Esc>h <C-w>h
-noremap <Esc>j <C-w>j
-noremap <Esc>k <C-w>k
-noremap <Esc>l <C-w>l
-noremap <Esc>q <C-w>s
-noremap <Esc>w <C-w>v
+noremap <M-h> <C-w>h
+noremap <M-j> <C-w>j
+noremap <M-k> <C-w>k
+noremap <M-l> <C-w>l
+noremap <M-q> <C-w>s
+noremap <M-w> <C-w>v
+
+" Allows to quickly set color column using <Leader>cc.
+noremap <Leader>cc :set colorcolumn=
 
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
@@ -213,3 +216,26 @@ let g:ctrlp_prompt_mappings = {
 let g:ctrlp_match_window_bottom=0
 
 noremap <Leader>q :SyntasticToggleMode<CR> :redraw!<CR>
+
+if has("gui_running")
+
+    " Removes all GUI stuff.
+    set guioptions=
+
+    " Tells to always use block-style cursor.
+    set guicursor=a:block
+
+    " Allows copying/pasting in GVim using <C-c> and <C-p>.
+    nmap <C-v> "+gP
+    imap <C-v> <Esc><C-v>i
+    vmap <C-c> "+y
+    cmap <C-v> <C-r>*
+    " To copy from cmode, type `q:` and copy command from there.
+
+    " Sets font.
+    set guifont=Andale\ Mono\ for\ Powerline\ 8
+
+    " I love extra whitespace!
+    set linespace=4
+
+endif
