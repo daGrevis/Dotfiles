@@ -46,3 +46,9 @@
 [submodule ".vim/bundle/gitgutter"]
 	path = .vim/bundle/gitgutter
 	url = https://github.com/airblade/vim-gitgutter
+[submodule ".vim/bundle/ultisnips"]
+	path = .vim/bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips
+[submodule ".vim/bundle/coffeescript"]
+	path = .vim/bundle/coffeescript
+	url = https://github.com/kchmck/vim-coffee-script

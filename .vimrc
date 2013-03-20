@@ -1,6 +1,7 @@
 " Current plugins:
 "
 " * Ack,
+" * CoffeeScript,
 " * Commentary,
 " * CtrlP,
 " * EasyMotion,
@@ -15,6 +16,7 @@
 " * Surround,
 " * Syntastic,
 " * Tagbar,
+" * UltiSnips,
 " * Zen-coding;
 "
 " Other dependencies
