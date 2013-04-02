@@ -36,7 +36,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme Tomorrow-Night
+colorscheme hornet
 
 " Sets limit of history.
 set history=5000
@@ -148,8 +148,7 @@ au InsertLeave * :set nopaste
 " Fixes that InsertLeave event doesn"t catch <C-c> mapping.
 inoremap <C-c> <Esc>
 
-" Enable mouse in all modes. Copy out from Vim holding <S> while highlighting
-" text.
+" Enable mouse in all modes. Next line makes me a bad person.
 set mouse=a
 
 " Maps <Leader>r to calling :registers.
@@ -157,9 +156,6 @@ noremap <Leader>r :registers<CR>
 
 " Disables folding at all.
 set nofen
-
-" Sets max count for open tabs.
-set tabpagemax=50
 
 " Emacs ways to change cursor in cmode (<C-a> to get to the start, but <C-e>
 " -- to the end).
@@ -199,6 +195,9 @@ noremap <M-w> <C-w>v
 " Allows to quickly set color column using <Leader>cc.
 noremap <Leader>cc :set colorcolumn=
 
+" Allows to save files w/ superuser permissions.
+cmap w!! %!sudo tee > /dev/null %
+
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
 
@@ -219,6 +218,11 @@ let g:ctrlp_match_window_bottom=0
 
 noremap <Leader>q :SyntasticToggleMode<CR> :redraw!<CR>
 
+" Allows to quickly change color schemes.
+noremap <Leader>[ :StylishPrev<CR>
+noremap <Leader>] :StylishNext<CR>
+noremap <Leader>' :StylishRand<CR>
+
 if has("gui_running")
 
     " Removes all GUI stuff.
@@ -232,12 +236,13 @@ if has("gui_running")
     imap <C-v> <Esc><C-v>i
     vmap <C-c> "+y
     cmap <C-v> <C-r>*
-    " To copy from cmode, type `q:` and copy command from there.
+    " To copy from cmode, type `q:` and copy a command from there.
+    " To copy from smode, type `q/` and copy a phrase from there.
 
     " Sets font.
-    set guifont=Andale\ Mono\ for\ Powerline\ 8
+    set guifont=Andale\ Mono\ for\ Powerline\ 12px
 
     " I love extra whitespace!
-    set linespace=4
+    set linespace=6
 
 endif

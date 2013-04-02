@@ -16,7 +16,7 @@ function bb {
 }
 
 function vimdir {
-    vim `find $1 -type f | xargs echo`
+    gvim `find $1 -type f | xargs echo`
 }
 
 alias skype2='skype --dbpath=~/.Skype2'
@@ -33,6 +33,7 @@ function current_branch() {
     echo ${ref#refs/heads/}
 }
 
+# Tons of Git alias I'm trying to use daily.
 alias gad='git add'
 alias gbr='git branch'
 alias gcl='git clone'
@@ -52,9 +53,13 @@ alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
 
+# To have a reason for using alias.
+alias git=''
+
 # A command I use for seeing changes between my home and Dotfiles dir.
 alias dotdiff='diff ~ ~/Dotfiles/ | grep -v "Only in" | grep -v "Common subdirectories" | less'
 
+# Opens Gvim as it was a real Vim. The difference is little low.
 function vim {
-    gvim -p $@ & disown && exit
+    gvim -p $@ & disown
 }
