@@ -34,24 +34,24 @@ function current_branch() {
 }
 
 # Tons of Git alias I'm trying to use daily.
-alias gad='git add'
-alias gbr='git branch'
-alias gcl='git clone'
-alias gcm='git commit'
-alias gco='git checkout'
-alias gdf='git diff'
-alias gin='git init'
-alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
-alias gmr='git merge'
-alias gmv='git mv'
-alias gpl='git pull'
-alias gpu='git push -u origin $(current_branch)'
-alias grm='git rm'
-alias grs='git reset'
-alias grv='git revert'
-alias gst='git status -sb'
-alias gsw='git show'
-alias gtg='git tag'
+alias gad='/usr/bin/git add'
+alias gbr='/usr/bin/git branch'
+alias gcl='/usr/bin/git clone'
+alias gcm='/usr/bin/git commit'
+alias gco='/usr/bin/git checkout'
+alias gdf='/usr/bin/git diff'
+alias gin='/usr/bin/git init'
+alias glg="/usr/bin/git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
+alias gmr='/usr/bin/git merge'
+alias gmv='/usr/bin/git mv'
+alias gpl='/usr/bin/git pull'
+alias gpu='/usr/bin/git push -u origin $(current_branch)'
+alias grm='/usr/bin/git rm'
+alias grs='/usr/bin/git reset'
+alias grv='/usr/bin/git revert'
+alias gst='/usr/bin/git status -sb'
+alias gsw='/usr/bin/git show'
+alias gtg='/usr/bin/git tag'
 
 # To have a reason for using alias.
 alias git=''
