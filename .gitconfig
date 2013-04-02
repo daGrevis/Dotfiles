@@ -2,7 +2,7 @@
     name = Raitis Stengrevics
     email = dagrevis@gmail.com
 [core]
-    editor = vim
+    editor = gvim -f
 [color]
     ui = true
     diff = always
