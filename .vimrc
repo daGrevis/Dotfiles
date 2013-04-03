@@ -198,6 +198,13 @@ noremap <Leader>cc :set colorcolumn=
 " Allows to save files w/ superuser permissions.
 cmap w!! %!sudo tee > /dev/null %
 
+" If it's Git commit, do some specific ations.
+func SetGitCommitOptions()
+    setlocal colorcolumn=72
+    setlocal spell
+endfunc
+autocmd Filetype gitcommit call SetGitCommitOptions()
+
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
 
@@ -232,7 +239,7 @@ if has("gui_running")
     set guicursor=a:block
 
     " Allows copying/pasting in GVim using <C-c> and <C-p>.
-    nmap <C-v> "+gP
+    nmap <C-v> "+gp
     imap <C-v> <Esc><C-v>i
     vmap <C-c> "+y
     cmap <C-v> <C-r>*
@@ -244,5 +251,9 @@ if has("gui_running")
 
     " I love extra whitespace!
     set linespace=6
+
+    " Some fixes to color scheme.
+    autocmd ColorScheme * hi TabLine guibg=#303030
+    autocmd ColorScheme * hi TabLineFill guifg=#303030
 
 endif
