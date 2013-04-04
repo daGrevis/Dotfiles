@@ -27,7 +27,7 @@ main = do
 
         , ("M-S-l", spawn "xscreensaver-command -lock") -- Starts the screensaver.
 
-        , ("M-<Return>", spawn "xterm") -- Opens the fallback terminal.
+        , ("M-<Return>", spawn "xterm -e bash") -- Opens the fallback terminal.
         , ("M-S-v", spawn "gvim") -- Opens the ultimate text editor.
         , ("M-S-i", spawn "chromium") -- Opens the browser.
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
