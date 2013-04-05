@@ -239,8 +239,8 @@ if has("gui_running")
     set guicursor=a:block
 
     " Allows copying/pasting in GVim using <C-c> and <C-p>.
-    nmap <C-v> "+gp
-    imap <C-v> <Esc><C-v>i
+    nmap <C-v> "+gpa
+    imap <C-v> <Esc><C-v>
     vmap <C-c> "+y
     cmap <C-v> <C-r>*
     " To copy from cmode, type `q:` and copy a command from there.
