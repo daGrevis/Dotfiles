@@ -255,5 +255,7 @@ if has("gui_running")
     " Some fixes to color scheme.
     autocmd ColorScheme * hi TabLine guibg=#303030
     autocmd ColorScheme * hi TabLineFill guifg=#303030
+    autocmd ColorScheme * hi LineNr guifg=#757575
+    autocmd ColorScheme * hi SignColumn guibg=#303030
 
 endif
