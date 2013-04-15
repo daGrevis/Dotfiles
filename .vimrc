@@ -195,6 +195,9 @@ noremap <M-w> <C-w>v
 " Allows to quickly set color column using <Leader>cc.
 noremap <Leader>cc :set colorcolumn=
 
+" Allows to quickly set filetype using <Leader>ft.
+noremap <Leader>ft :set filetype=
+
 " Allows to save files w/ superuser permissions.
 cmap w!! %!sudo tee > /dev/null %
 
@@ -205,14 +208,19 @@ func SetGitCommitOptions()
 endfunc
 autocmd Filetype gitcommit call SetGitCommitOptions()
 
+noremap <C-p> :CtrlPMRU
+
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
 
 " Executes Syntastic when buffer is opened.
-let g:syntastic_check_on_open=1
+let g:syntastic_check_on_open = 1
 
 " Tells Syntastic to set line length to 160 symbols as maximum.
-let g:syntatic_python_pyflakes_args="--max-line-length=160"
+let g:syntatic_python_pyflakes_args = "--max-line-length=160"
+
+" Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
+let g:syntastic_always_populate_loc_list = 1
 
 " Opens file in new tab when using CtrlP.
 let g:ctrlp_prompt_mappings = {
@@ -221,7 +229,7 @@ let g:ctrlp_prompt_mappings = {
     \ }
 
 " Shows CtrlP on top.
-let g:ctrlp_match_window_bottom=0
+let g:ctrlp_match_window_bottom = 0
 
 noremap <Leader>q :SyntasticToggleMode<CR> :redraw!<CR>
 
@@ -239,7 +247,7 @@ if has("gui_running")
     set guicursor=a:block
 
     " Allows copying/pasting in GVim using <C-c> and <C-p>.
-    nmap <C-v> "+gpa
+    nmap <C-v> "+gpa<Esc>
     imap <C-v> <Esc><C-v>
     vmap <C-c> "+y
     cmap <C-v> <C-r>*
@@ -253,9 +261,14 @@ if has("gui_running")
     set linespace=6
 
     " Some fixes to color scheme.
-    autocmd ColorScheme * hi TabLine guibg=#303030
-    autocmd ColorScheme * hi TabLineFill guifg=#303030
-    autocmd ColorScheme * hi LineNr guifg=#757575
-    autocmd ColorScheme * hi SignColumn guibg=#303030
+    " For `hornet`.
+        autocmd ColorScheme * hi TabLine guibg=#303030
+        autocmd ColorScheme * hi TabLineFill guifg=#303030
+        autocmd ColorScheme * hi LineNr guifg=#757575
+        autocmd ColorScheme * hi SignColumn guibg=#303030
+    " For `soda`.
+        autocmd ColorScheme * hi Cursor guibg=#c82829
+    " For `flatland`.
+        " autocmd ColorScheme * hi String guifg=#fecf35
 
 endif
