@@ -51,10 +51,11 @@ alias grs='git reset'
 alias grv='git revert'
 alias gst='git status -sb'
 alias gsw='git show'
+alias gsh='git stash'
 alias gtg='git tag'
 
 # A command I use for seeing changes between my home and Dotfiles dir.
-alias dotdiff='diff ~ ~/Dotfiles/ | grep -v "Only in" | grep -v "Common subdirectories" | less'
+alias dotdiff='diff ~/Dotfiles/ ~ | grep -v "Only in" | grep -v "Common subdirectories" | less'
 
 # Opens Gvim as it was a real Vim. The difference is little low.
 function vim {
