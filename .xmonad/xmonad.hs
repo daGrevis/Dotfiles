@@ -29,6 +29,7 @@ main = do
 
         , ("M-<Return>", spawn "xterm -e bash") -- Opens the fallback terminal.
         , ("M-S-v", spawn "gvim") -- Opens the ultimate text editor.
+        , ("M-C-v", spawn "gvim .vimrc") -- Opens the ultimate text editor with it's ultimate conf.
         , ("M-S-i", spawn "chromium") -- Opens the browser.
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
         , ("M-S-s", spawn "skype") -- Opens Skype.
@@ -38,6 +39,8 @@ main = do
         , ("M-S-r", spawn_term "ranger") -- Opens the file browser.
         , ("M-S-d", spawn_term "glances") -- Opens the system profiler.
         , ("M-S-m", spawn_term "alsamixer") -- Opens the sound mixer.
+        , ("M-S-q", spawn_term "ipython2") -- Opens iPython (for Py2).
+        , ("M-S-w", spawn_term "ipython") -- Opens iPython (for Py3).
 
         , ("<Print>", spawn "scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'") -- Takes screenshot.
         , ("M-S-<Print>", spawn "scrot '%Y-%m-%d_%X__$wx$h.png' -q 100 -e 'mv $f ~/Screenshots/'") -- Takes screenshot in HQ.
