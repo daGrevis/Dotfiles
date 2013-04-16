@@ -105,7 +105,21 @@ endfunc
 noremap <Leader>s :call SpellToggle()<CR>
 
 " Ignores files that match these patters.
-set wildignore=*.pyc,*.png,*.gif,*.jpeg,*.jpg,*.ico
+set wildignore+=*.png
+set wildignore+=*.gif
+set wildignore+=*.jpeg
+set wildignore+=*.jpg
+set wildignore+=*.ico
+set wildignore+=*.pyc
+set wildignore+=*.pyo
+set wildignore+=*.db
+set wildignore+=*/bin/*
+set wildignore+=*/include/*
+set wildignore+=*/lib/*
+set wildignore+=*/migrations/*
+set wildignore+=*/src/*
+set wildignore+=*/reports/*
+set wildignore+=*/share/*
 
 " Saves file when the focus is lost (for example, when buffers are changed).
 autocmd BufLeave,FocusLost * silent! wall
@@ -208,7 +222,7 @@ func SetGitCommitOptions()
 endfunc
 autocmd Filetype gitcommit call SetGitCommitOptions()
 
-noremap <C-p> :CtrlPMRU
+noremap <C-p> call CtrlPMRU()
 
 " Tells Powerline to use fancy symbols.
 let g:Powerline_symbols = "fancy"
@@ -221,12 +235,6 @@ let g:syntatic_python_pyflakes_args = "--max-line-length=160"
 
 " Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
 let g:syntastic_always_populate_loc_list = 1
-
-" Opens file in new tab when using CtrlP.
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<c-t>'],
-    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-    \ }
 
 " Shows CtrlP on top.
 let g:ctrlp_match_window_bottom = 0
