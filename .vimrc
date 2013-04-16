@@ -269,14 +269,9 @@ if has("gui_running")
     set linespace=6
 
     " Some fixes to color scheme.
-    " For `hornet`.
-        autocmd ColorScheme * hi TabLine guibg=#303030
-        autocmd ColorScheme * hi TabLineFill guifg=#303030
-        autocmd ColorScheme * hi LineNr guifg=#757575
-        autocmd ColorScheme * hi SignColumn guibg=#303030
-    " For `soda`.
-        autocmd ColorScheme * hi Cursor guibg=#c82829
-    " For `flatland`.
-        " autocmd ColorScheme * hi String guifg=#fecf35
+    autocmd ColorScheme * hi TabLine guibg=#303030
+    autocmd ColorScheme * hi TabLineFill guifg=#303030
+    autocmd ColorScheme * hi LineNr guifg=#757575
+    autocmd ColorScheme * hi SignColumn guibg=#303030
 
 endif
