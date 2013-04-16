@@ -2,9 +2,9 @@
 
 **So awesome it should be banned!**
 
-This is how it looked on February 27th, 2013.
+This is how it looked on April 16th, 2013.
 
-![](http://i.imgur.com/Qv5Z2a2.jpg)
+![](http://i.imgur.com/w4p4R6I.jpg)
 
 ## Installation
 
