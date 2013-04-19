@@ -36,7 +36,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme hornet
+colorscheme industrial
 
 " Sets limit of history.
 set history=5000
@@ -206,6 +206,10 @@ noremap <M-l> <C-w>l
 noremap <M-q> <C-w>s
 noremap <M-w> <C-w>v
 
+" Open splits in opposite places.
+set splitbelow
+set splitright
+
 " Allows to quickly set color column using <Leader>cc.
 noremap <Leader>cc :set colorcolumn=
 
@@ -221,6 +225,24 @@ func SetGitCommitOptions()
     setlocal spell
 endfunc
 autocmd Filetype gitcommit call SetGitCommitOptions()
+
+" Simple shortcuts.
+noremap <C-e> :edit<Space>
+noremap <C-t> :tabedit<Space>
+
+" Jump back to last know cursor position if possible.
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \     exe "normal g`\"" |
+    \ endif
+
+" Allows to switch to last used tab with <Space><Space>.
+let g:lasttab = 1
+au TabLeave * let g:lasttab = tabpagenr()
+noremap <Space><Space> :exe "tabn ".g:lasttab<CR>
+
+" Enables spellcheck for Markdown.
+au BufRead,BufNewFile *.md setlocal spell
 
 noremap <C-p> call CtrlPMRU()
 
