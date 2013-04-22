@@ -216,6 +216,9 @@ noremap <Leader>cc :set colorcolumn=
 " Allows to quickly set filetype using <Leader>ft.
 noremap <Leader>ft :set filetype=
 
+" Allows to quickly blame people. I like to do it.....
+noremap <Leader>gb :Gblame<CR>
+
 " Allows to save files w/ superuser permissions.
 cmap w!! %!sudo tee > /dev/null %
 
@@ -230,7 +233,7 @@ autocmd Filetype gitcommit call SetGitCommitOptions()
 noremap <C-e> :edit<Space>
 noremap <C-t> :tabedit<Space>
 
-" Jump back to last know cursor position if possible.
+" Jump back to last known cursor position if possible.
 autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \     exe "normal g`\"" |
@@ -253,7 +256,7 @@ let g:Powerline_symbols = "fancy"
 let g:syntastic_check_on_open = 1
 
 " Tells Syntastic to set line length to 160 symbols as maximum.
-let g:syntatic_python_pyflakes_args = "--max-line-length=160"
+let g:syntastic_python_flake8_post_args = "--max-line-length=160"
 
 " Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
 let g:syntastic_always_populate_loc_list = 1
