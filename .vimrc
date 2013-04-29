@@ -36,7 +36,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme industrial
+colorscheme molokai
 
 " Sets limit of history.
 set history=5000
@@ -176,6 +176,8 @@ set nofen
 cmap <C-a> <Home>
 cmap <C-e> <End>
 
+" Protip: <C-a> and <C-x> in imode +/= the number.
+
 " Almost like in Emacs -- only in the M place there is the C key. So <C-b> to
 " move a word backward, but <C-f> -- forward.
 cmap <C-b> <S-Left>
@@ -244,6 +246,9 @@ let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
 noremap <Space><Space> :exe "tabn ".g:lasttab<CR>
 
+" Tells Vim to save undo-files in /tmp.
+set undodir=/tmp
+
 " Enables spellcheck for Markdown.
 au BufRead,BufNewFile *.md setlocal spell
 
@@ -288,15 +293,15 @@ if has("gui_running")
     " To copy from smode, type `q/` and copy a phrase from there.
 
     " Sets font.
-    set guifont=Andale\ Mono\ for\ Powerline\ 12px
+    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 12px
 
     " I love extra whitespace!
-    set linespace=6
+    set linespace=4
 
     " Some fixes to color scheme.
-    autocmd ColorScheme * hi TabLine guibg=#303030
-    autocmd ColorScheme * hi TabLineFill guifg=#303030
-    autocmd ColorScheme * hi LineNr guifg=#757575
-    autocmd ColorScheme * hi SignColumn guibg=#303030
+    autocmd ColorScheme * hi TabLine guibg=#232526
+    autocmd ColorScheme * hi TabLineFill guifg=#232526
+    " autocmd ColorScheme * hi LineNr guifg=#757575
+    " autocmd ColorScheme * hi SignColumn guibg=#303030
 
 endif
