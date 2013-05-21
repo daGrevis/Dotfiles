@@ -37,6 +37,8 @@ call pathogen#infect()
 
 " Sets fave color scheme.
 colorscheme molokai
+let g:molokai_original = 1
+" set background=dark
 
 " Sets limit of history.
 set history=5000
@@ -80,6 +82,15 @@ nnoremap k gk
 " Mappings for controlling tabs.
 noremap <M-a> :tabprevious<CR>
 noremap <M-s> :tabnext<CR>
+noremap <M-1> :tabnext 1<CR>
+noremap <M-2> :tabnext 2<CR>
+noremap <M-3> :tabnext 3<CR>
+noremap <M-4> :tabnext 4<CR>
+noremap <M-5> :tabnext 5<CR>
+noremap <M-6> :tabnext 6<CR>
+noremap <M-7> :tabnext 7<CR>
+noremap <M-8> :tabnext 8<CR>
+noremap <M-9> :tabnext 9<CR>
 
 " Pastes contents to vpaste.net.
 map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
@@ -246,11 +257,16 @@ let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
 noremap <Space><Space> :exe "tabn ".g:lasttab<CR>
 
-" Tells Vim to save undo-files in /tmp.
+" Saves undo-files in /tmp.
 set undodir=/tmp
+
+" Disables swap-files.
+set noswapfile
 
 " Enables spellcheck for Markdown.
 au BufRead,BufNewFile *.md setlocal spell
+
+noremap <Leader>a :Ack  **/*<C-Left><Left>
 
 noremap <C-p> call CtrlPMRU()
 
