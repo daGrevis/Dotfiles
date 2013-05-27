@@ -36,8 +36,8 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme molokai
-let g:molokai_original = 1
+colorscheme jellybeans
+" let g:molokai_original = 1
 " set background=dark
 
 " Sets limit of history.
@@ -309,14 +309,15 @@ if has("gui_running")
     " To copy from smode, type `q/` and copy a phrase from there.
 
     " Sets font.
-    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 12px
+    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 9
 
     " I love extra whitespace!
-    set linespace=4
+    set linespace=6
 
     " Some fixes to color scheme.
-    autocmd ColorScheme * hi TabLine guibg=#232526
-    autocmd ColorScheme * hi TabLineFill guifg=#232526
+    " autocmd ColorScheme * hi TabLine guibg=#232526
+    " autocmd ColorScheme * hi TabLineFill guifg=#232526
+    " autocmd ColorScheme * hi TabLineSel guibg=#403D3D
     " autocmd ColorScheme * hi LineNr guifg=#757575
     " autocmd ColorScheme * hi SignColumn guibg=#303030
 

@@ -1,10 +1,10 @@
 URxvt.scrollBar: false
 
-URxvt.font:                  xft:Andale Mono for Powerline:regular:size=9
-URxvt.boldFont:              xft:Andale Mono for Powerline:bold:size=9
-URxvt.italicFont:            xft:Andale Mono for Powerline:italic:size=9
+URxvt.font:                  xft:Meslo LG M DZ for Powerline:size=9
+URxvt.boldFont:              xft:Meslo LG M DZ for Powerline:bold:size=9
+URxvt.italicFont:            xft:Meslo LG M DZ for Powerline:italic:size=9
 URxvt.searchable-scrollback: M-S-s
-URxvt.lineSpace:             2
+URxvt.lineSpace:             6
 
 ! Tomorrow
 #define t_aqua         #3e999f
