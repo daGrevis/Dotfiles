@@ -6,7 +6,6 @@
 [color]
     ui = true
     diff = always
-    editor = vim
 [rerere]
     enabled = 1
 [merge]

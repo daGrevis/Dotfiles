@@ -36,9 +36,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme jellybeans
-" let g:molokai_original = 1
-" set background=dark
+colorscheme Tomorrow-Night
 
 " Sets limit of history.
 set history=5000
@@ -315,10 +313,9 @@ if has("gui_running")
     set linespace=6
 
     " Some fixes to color scheme.
-    " autocmd ColorScheme * hi TabLine guibg=#232526
-    " autocmd ColorScheme * hi TabLineFill guifg=#232526
-    " autocmd ColorScheme * hi TabLineSel guibg=#403D3D
-    " autocmd ColorScheme * hi LineNr guifg=#757575
-    " autocmd ColorScheme * hi SignColumn guibg=#303030
+    autocmd ColorScheme * hi TabLine guibg=#c5c8c6 guifg=#1d1f21
+    autocmd ColorScheme * hi TabLineFill guifg=#1d1f21
+    autocmd ColorScheme * hi TabLineSel guibg=#373b41
+    autocmd ColorScheme * hi LineNr guifg=#4d5057
 
 endif

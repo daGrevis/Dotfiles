@@ -1,41 +1,29 @@
-URxvt.scrollBar: false
-
+URxvt.searchable-scrollback: M-S-s
+URxvt.scrollBar:             false
 URxvt.font:                  xft:Meslo LG M DZ for Powerline:size=9
 URxvt.boldFont:              xft:Meslo LG M DZ for Powerline:bold:size=9
 URxvt.italicFont:            xft:Meslo LG M DZ for Powerline:italic:size=9
-URxvt.searchable-scrollback: M-S-s
 URxvt.lineSpace:             6
+URxvt.transparent:           true
+URxvt.shading:               25
+URxvt.fading:                25
 
-! Tomorrow
-#define t_aqua         #3e999f
-#define t_background   #ffffff
-#define t_blue         #4271ae
-#define t_comment      #8e908c
-#define t_current_line #efefef
-#define t_foreground   #4d4d4c
-#define t_green        #718c00
-#define t_orange       #f5871f
-#define t_purple       #8959a8
-#define t_red          #c82829
-#define t_selection    #d6d6d6
-#define t_yellow       #eab700
-
-URxvt.foreground:  t_foreground
-URxvt.background:  t_background
-URxvt.cursorColor: t_red
-URxvt.color0:      #000000
-URxvt.color1:      t_red
-URxvt.color2:      t_green
-URxvt.color3:      t_orange
-URxvt.color4:      t_blue
-URxvt.color5:      t_purple
-URxvt.color6:      t_aqua
-URxvt.color7:      t_selection
-URxvt.color8:      #666666
-URxvt.color9:      #FF3334
-URxvt.color10:     #9ec400
-URxvt.color11:     t_yellow
-URxvt.color12:     t_blue
-URxvt.color13:     #b777e0
-URxvt.color14:     #54ced6
-URxvt.color15:     t_current_line
+! Tango
+URxvt.foreground: #f2f2f2
+URxvt.background: #101010
+URxvt.color0: #101010
+URxvt.color1: #f13a21
+URxvt.color2: #93f91d
+URxvt.color3: #ffd00a
+URxvt.color4: #004f9e
+URxvt.color5: #ec0048
+URxvt.color6: #2aa7e7
+URxvt.color7: #f2f2f2
+URxvt.color8: #1d202f
+URxvt.color9: #ff361e
+URxvt.color10: #ffc005
+URxvt.color11: #93ff00
+URxvt.color12: #0071ff
+URxvt.color13: #ef0051
+URxvt.color14: #4bb8fd
+URxvt.color15: #a020f0
