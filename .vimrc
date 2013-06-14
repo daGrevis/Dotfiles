@@ -36,7 +36,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme Tomorrow-Night
+colorscheme fruity
 
 " Sets limit of history.
 set history=5000
@@ -184,6 +184,8 @@ set nofen
 " -- to the end).
 cmap <C-a> <Home>
 cmap <C-e> <End>
+cmap <M-b> <S-Left>
+cmap <M-f> <S-Right>
 
 " Protip: <C-a> and <C-x> in imode +/= the number.
 
@@ -226,6 +228,9 @@ noremap <Leader>cc :set colorcolumn=
 
 " Allows to quickly set filetype using <Leader>ft.
 noremap <Leader>ft :set filetype=
+
+" Searches for diff delimeter.
+noremap <Leader>d /\v\={4,}<CR>
 
 " Allows to quickly blame people. I like to do it.....
 noremap <Leader>gb :Gblame<CR>
@@ -312,10 +317,18 @@ if has("gui_running")
     " I love extra whitespace!
     set linespace=6
 
-    " Some fixes to color scheme.
-    autocmd ColorScheme * hi TabLine guibg=#c5c8c6 guifg=#1d1f21
-    autocmd ColorScheme * hi TabLineFill guifg=#1d1f21
-    autocmd ColorScheme * hi TabLineSel guibg=#373b41
-    autocmd ColorScheme * hi LineNr guifg=#4d5057
+    " Some fixes to colorschemes.
+    " Fixes to hornet colorschema:
+    " autocmd ColorScheme * hi TabLine guibg=#303030
+    " autocmd ColorScheme * hi TabLineFill guifg=#303030
+    " autocmd ColorScheme * hi LineNr guifg=#757575
+    " autocmd ColorScheme * hi SignColumn guibg=#303030
+
+    " Fixes to busybee colorschema:
+    autocmd ColorScheme * hi TabLine guibg=#202020
+    autocmd ColorScheme * hi TabLine guifg=#e2e2e5
+    autocmd ColorScheme * hi TabLineFill guifg=#202020
+    autocmd ColorScheme * hi SignColumn guibg=#202020
+    autocmd ColorScheme * hi LineNr guifg=#555555
 
 endif
