@@ -4,7 +4,7 @@
 
 This is how it looked on April 16th, 2013.
 
-![](http://i.imgur.com/w4p4R6I.jpg)
+![Desktop](https://raw.github.com/daGrevis/Dotfiles/master/desktop.png)
 
 ## Installation
 
