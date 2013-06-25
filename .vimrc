@@ -111,7 +111,18 @@ function! SpellToggle()
 endfunc
 
 " Maps <Leader>s to toggling spell-check.
-noremap <Leader>s :call SpellToggle()<CR>
+noremap <Leader>ss :call SpellToggle()<CR>
+
+" Adds word to words list.
+noremap <Leader>s+ zg
+" Removes word from words list.
+noremap <Leader>s- zug
+" Finds next bad word.
+noremap <Leader>s] ]s
+" Finds previous bad word.
+noremap <Leader>s[ [s
+" Suggest from words list.
+noremap <Leader>s? z=
 
 " Ignores files that match these patters.
 set wildignore+=*.png
