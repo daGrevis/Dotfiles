@@ -36,7 +36,7 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme fruity
+colorscheme luna
 
 " Sets limit of history.
 set history=5000
@@ -280,6 +280,9 @@ set noswapfile
 " Enables spellcheck for Markdown.
 au BufRead,BufNewFile *.md setlocal spell
 
+" Tells Vim to remember the vertical postion.
+set nostartofline
+
 noremap <Leader>a :Ack  **/*<C-Left><Left>
 
 noremap <C-p> call CtrlPMRU()
@@ -321,25 +324,38 @@ if has("gui_running")
     cmap <C-v> <C-r>*
     " To copy from cmode, type `q:` and copy a command from there.
     " To copy from smode, type `q/` and copy a phrase from there.
+    " Pasting into command mode: `<C-r>"`.
 
     " Sets font.
-    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 9
+    set guifont=Envy\ Code\ R\ for\ Powerline\ 10
 
     " I love extra whitespace!
-    set linespace=6
+    set linespace=4
 
-    " Some fixes to colorschemes.
-    " Fixes to hornet colorschema:
+    " Fixes to hornet colorscheme:
     " autocmd ColorScheme * hi TabLine guibg=#303030
     " autocmd ColorScheme * hi TabLineFill guifg=#303030
     " autocmd ColorScheme * hi LineNr guifg=#757575
     " autocmd ColorScheme * hi SignColumn guibg=#303030
 
-    " Fixes to busybee colorschema:
-    autocmd ColorScheme * hi TabLine guibg=#202020
-    autocmd ColorScheme * hi TabLine guifg=#e2e2e5
-    autocmd ColorScheme * hi TabLineFill guifg=#202020
-    autocmd ColorScheme * hi SignColumn guibg=#202020
-    autocmd ColorScheme * hi LineNr guifg=#555555
+    " Fixes to busybee colorscheme:
+    " autocmd ColorScheme * hi TabLine guibg=#202020
+    " autocmd ColorScheme * hi TabLine guifg=#e2e2e5
+    " autocmd ColorScheme * hi TabLineFill guifg=#202020
+    " autocmd ColorScheme * hi SignColumn guibg=#202020
+    " autocmd ColorScheme * hi LineNr guifg=#555555
+
+    " Fixes to luna colorscheme:
+    autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
+    autocmd ColorScheme * hi TabLine guibg=#2e2e2e
+    autocmd ColorScheme * hi TabLineSel guibg=#474747
+    autocmd ColorScheme * hi SignColumn guibg=#2e2e2e
+    autocmd ColorScheme * hi LineNr guifg=#616161
+    autocmd ColorScheme * hi TODO guibg=#474747
+    autocmd ColorScheme * hi Comment guifg=#616161
+    autocmd ColorScheme * hi Identifier guifg=#ff8036
+    autocmd ColorScheme * hi Function guifg=#ff8036
+    autocmd ColorScheme * hi pythonClass guifg=#ff8036
+    autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
 
 endif
