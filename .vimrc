@@ -6,18 +6,21 @@
 " * CtrlP,
 " * Fugitive,
 " * Gitgutter,
+" * Gundo,
+" * HTML5,
+" * Instant-Markdown,
+" * Markdown,
 " * MatchTag,
 " * NERDTree,
 " * Powerline,
 " * Repeat,
 " * Sensible,
+" * Startify,
 " * Stylish,
 " * Supertab,
 " * Surround,
 " * Syntastic,
-" * Tagbar,
-" * UltiSnips,
-" * Zen-coding;
+" * Tagbar;
 "
 " Other dependencies
 "
@@ -283,6 +286,26 @@ au BufRead,BufNewFile *.md setlocal spell
 " Tells Vim to remember the vertical postion.
 set nostartofline
 
+func! GetFilesize()
+    let bytes = getfsize(expand("%:p"))
+    if bytes <= 0
+        return "0"
+    endif
+    if bytes < 1024
+        return bytes
+    else
+        return (bytes / 1024) . "K"
+    endif
+endfunc
+
+noremap <Leader>du :echo GetFilesize()<CR>
+
+func! GetWordCount()
+    return system("cat " . expand("%") . " | wc -w")
+endfunc
+
+noremap <Leader>wc :echo GetWordCount()<CR>
+
 noremap <Leader>a :Ack  **/*<C-Left><Left>
 
 noremap <C-p> call CtrlPMRU()
@@ -308,6 +331,22 @@ noremap <Leader>q :SyntasticToggleMode<CR> :redraw!<CR>
 noremap <Leader>[ :StylishPrev<CR>
 noremap <Leader>] :StylishNext<CR>
 noremap <Leader>' :StylishRand<CR>
+
+"" airline settings
+" remove seperators
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+" remove unused modes
+let g:airline_enable_fugitive=0
+let g:airline_enable_syntastic=0
+" further customization
+" set second section to filename
+let g:airline_section_b="%f"
+" empty third and fourth sections
+let g:airline_section_c=""
+let g:airline_section_x=""
+" put filetype in fifth section
+let g:airline_section_y="%Y"
 
 if has("gui_running")
 
