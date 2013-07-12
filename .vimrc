@@ -93,6 +93,10 @@ noremap <M-7> :tabnext 7<CR>
 noremap <M-8> :tabnext 8<CR>
 noremap <M-9> :tabnext 9<CR>
 
+" Mappings for controlling buffers.
+noremap <C-a> :bn<CR>
+noremap <C-s> :bp<CR>
+
 " Pastes contents to vpaste.net.
 map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
 vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
@@ -200,8 +204,6 @@ cmap <C-a> <Home>
 cmap <C-e> <End>
 cmap <M-b> <S-Left>
 cmap <M-f> <S-Right>
-
-" Protip: <C-a> and <C-x> in imode +/= the number.
 
 " Almost like in Emacs -- only in the M place there is the C key. So <C-b> to
 " move a word backward, but <C-f> -- forward.
@@ -332,21 +334,17 @@ noremap <Leader>[ :StylishPrev<CR>
 noremap <Leader>] :StylishNext<CR>
 noremap <Leader>' :StylishRand<CR>
 
-"" airline settings
-" remove seperators
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-" remove unused modes
-let g:airline_enable_fugitive=0
-let g:airline_enable_syntastic=0
-" further customization
-" set second section to filename
-let g:airline_section_b="%f"
-" empty third and fourth sections
-let g:airline_section_c=""
-let g:airline_section_x=""
-" put filetype in fifth section
-let g:airline_section_y="%Y"
+let g:startify_show_files_number = 20
+let g:startify_bookmarks = [ "~/.vimrc", "~/.xinitrc", "~/.zshrc", "~/.zshenv", "~/.xmonad/xmonad.hs" ]
+let g:startify_custom_header = [
+        \ '        _             _____ _  _         ',
+        \ ' /\   /(_)_ __ ___   |___  | || |   __ _ ',
+        \ ' \ \ / / | ''_ ` _ \     / /| || |_ / _` |',
+        \ '  \ V /| | | | | | |   / / |__   _| (_| |',
+        \ '   \_/ |_|_| |_| |_|  /_(_)   |_|  \__,_|',
+        \ '                                         ',
+        \ '',
+        \ ]
 
 if has("gui_running")
 
@@ -398,3 +396,8 @@ if has("gui_running")
     autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
 
 endif
+
+" Tips:
+" * ~, u and U for changing case, lowercase or uppercase,
+" * <C-a> or <C-x> in imode increase/decrease the number,
+" * :args my/dir/*.py to open files in buffer;
