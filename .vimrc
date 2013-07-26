@@ -105,7 +105,7 @@ vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
 nmap <Tab> :NERDTreeToggle<CR>
 
 " Maps <S-Tab> to toggling Tagbar.
-nmap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
+noremap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
 
 " Disables spell-check by default, but allows to toggle with a function.
 set nospell
@@ -143,7 +143,6 @@ set wildignore+=*.db
 set wildignore+=*/bin/*
 set wildignore+=*/include/*
 set wildignore+=*/lib/*
-set wildignore+=*/migrations/*
 set wildignore+=*/src/*
 set wildignore+=*/reports/*
 set wildignore+=*/share/*
@@ -256,8 +255,9 @@ cmap w!! %!sudo tee > /dev/null %
 
 " If it's Git commit, do some specific ations.
 func SetGitCommitOptions()
-    setlocal colorcolumn=72
+    setlocal colorcolumn=50
     setlocal spell
+    exec ":0"
 endfunc
 autocmd Filetype gitcommit call SetGitCommitOptions()
 
@@ -268,13 +268,13 @@ noremap <C-t> :tabedit<Space>
 " Jump back to last known cursor position if possible.
 autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \     exe "normal g`\"" |
+    \     exec "normal g`\"" |
     \ endif
 
 " Allows to switch to last used tab with <Space><Space>.
 let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
-noremap <Space><Space> :exe "tabn ".g:lasttab<CR>
+noremap <Space> :exec "tabn ".g:lasttab<CR>
 
 " Saves undo-files in /tmp.
 set undodir=/tmp

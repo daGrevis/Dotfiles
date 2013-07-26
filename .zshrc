@@ -47,3 +47,6 @@ export EDITOR=/usr/local/bin/gvim
 
 # Bash-like comments.
 setopt interactivecomments
+
+# Disables correction.
+unsetopt correct_all
