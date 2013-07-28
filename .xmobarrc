@@ -2,7 +2,7 @@ Config {
       font = "-*-proggyclean-medium-r-normal-*-12-*-*-*-*-*-*-*"
     , bgColor = "black"
     , fgColor = "white"
-    , position = Static { xpos = 1680 , ypos = 0, width = 1480, height = 16 }
+    , position = Static { xpos = 0 , ypos = 0, width = 1720, height = 20 }
     , lowerOnStart = True
     , commands =
         [

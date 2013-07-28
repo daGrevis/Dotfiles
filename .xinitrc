@@ -39,10 +39,10 @@ batti &
 xmobar &
 
 # Loads trayer.
-trayer --height 16 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
+trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
 
 # Sets background.
-feh --bg-scale Pictures/Arch_Linux_Bluewave_by_BalanceST_1920x1080.jpg &
+feh --bg-scale Pictures/gnu.png &
 
 # Starts Dropbox.
 dropbox start &
@@ -52,6 +52,9 @@ parcellite &
 
 # Calendar, contacts, tasks, notes etc..
 osmo &
+
+# Starts Chromium in background.
+chromium --disable-sync-preferences --no-startup-window
 
 # Loads WM.
 exec xmonad
