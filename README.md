@@ -2,7 +2,7 @@
 
 **So awesome it should be banned!**
 
-This is how it looked on April 16th, 2013.
+This is how it looked on July 29th, 2013.
 
 ![Desktop](https://raw.github.com/daGrevis/Dotfiles/master/desktop.png)
 
