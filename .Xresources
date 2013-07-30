@@ -1,8 +1,8 @@
 URxvt.searchable-scrollback: M-S-s
 URxvt.scrollBar:             false
-URxvt.font:                  xft:Meslo LG M DZ for Powerline:size=9
-URxvt.boldFont:              xft:Meslo LG M DZ for Powerline:bold:size=9
-URxvt.italicFont:            xft:Meslo LG M DZ for Powerline:italic:size=9
+URxvt.font:                  xft:Envy Code R for Powerline:size=10
+URxvt.boldFont:              xft:Envy Code R for Powerline:bold:size=10
+URxvt.italicFont:            xft:Envy Code R for Powerline:italic:size=10
 URxvt.lineSpace:             6
 URxvt.transparent:           true
 URxvt.shading:               25

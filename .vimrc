@@ -50,6 +50,7 @@ map K <Nop>
 
 " Shows relative line numbers.
 set relativenumber
+set number
 
 " Highlights line which is active.
 set cursorline
@@ -92,10 +93,6 @@ noremap <M-6> :tabnext 6<CR>
 noremap <M-7> :tabnext 7<CR>
 noremap <M-8> :tabnext 8<CR>
 noremap <M-9> :tabnext 9<CR>
-
-" Mappings for controlling buffers.
-noremap <C-a> :bn<CR>
-noremap <C-s> :bp<CR>
 
 " Pastes contents to vpaste.net.
 map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
@@ -169,7 +166,8 @@ nmap <Down> o<Esc>k
 
 " Maps <Leader>l to toggling characters that are not printable (like new-lines
 " or tabs).
-set listchars=tab:▸\ ,eol:¬
+set list
+set listchars=tab:→\ ,trail:·,nbsp:·
 nmap <leader>l :set list!<CR>
 
 " Tells to use 4 spaces for indentation.
@@ -216,11 +214,11 @@ nmap <Leader>x :w<CR> :so %<CR>
 " Toggles between no numbers, numbers and relative numbers.
 function! NumberToggle()
     if(&number == 1)
+        set norelativenumber
         set nonumber
-    elseif(&relativenumber == 1)
-        set number
     else
         set relativenumber
+        set number
     endif
 endfunc
 " Mapping for calling `NumberToggle`.
@@ -335,7 +333,7 @@ noremap <Leader>] :StylishNext<CR>
 noremap <Leader>' :StylishRand<CR>
 
 let g:startify_show_files_number = 20
-let g:startify_bookmarks = [ "~/.vimrc", "~/.xinitrc", "~/.zshrc", "~/.zshenv", "~/.xmonad/xmonad.hs" ]
+let g:startify_bookmarks = [ "~/.vimrc", "~/.xinitrc", "~/.Xresources", "~/.zshrc", "~/.zshenv", "~/.xmonad/xmonad.hs", "~/.xmobarrc" ]
 let g:startify_custom_header = [
         \ '        _             _____ _  _         ',
         \ ' /\   /(_)_ __ ___   |___  | || |   __ _ ',
@@ -369,20 +367,22 @@ if has("gui_running")
     " I love extra whitespace!
     set linespace=4
 
-    " Fixes to hornet colorscheme:
+    " Fix all the colorschemes at runtime!
+
+    " hornet
     " autocmd ColorScheme * hi TabLine guibg=#303030
     " autocmd ColorScheme * hi TabLineFill guifg=#303030
     " autocmd ColorScheme * hi LineNr guifg=#757575
     " autocmd ColorScheme * hi SignColumn guibg=#303030
 
-    " Fixes to busybee colorscheme:
+    " busybee
     " autocmd ColorScheme * hi TabLine guibg=#202020
     " autocmd ColorScheme * hi TabLine guifg=#e2e2e5
     " autocmd ColorScheme * hi TabLineFill guifg=#202020
     " autocmd ColorScheme * hi SignColumn guibg=#202020
     " autocmd ColorScheme * hi LineNr guifg=#555555
 
-    " Fixes to luna colorscheme:
+    " luna
     autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
     autocmd ColorScheme * hi TabLine guibg=#2e2e2e
     autocmd ColorScheme * hi TabLineSel guibg=#474747

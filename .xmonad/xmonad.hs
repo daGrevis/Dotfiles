@@ -36,9 +36,9 @@ main = do
         -- , ("M-C-i", spawn "chromium --enable-webgl --ignore-gpu-blacklist --incognito") -- Opens browser the in incognito mode.
         , ("M-S-s", spawn "skype") -- Opens Skype.
         , ("M-C-s", spawn "skype2") -- Opens the 2nd instance of Skype.
-        , ("M-S-x", spawn "xchat") -- Opens the IRC client.
+        , ("M-S-x", spawn "hexchat") -- Opens the IRC client.
         , ("M-S-t", spawn "transmission-gtk") -- Opens the torrent client.
-        , ("M-S-g", spawn "gedit") -- Opens the text editor.
+        , ("M-S-e", spawn "mousepad") -- Opens the text editor.
         , ("M-S-r", spawn_term "ranger") -- Opens the file browser.
         , ("M-S-d", spawn_term "glances") -- Opens the system profiler.
         , ("M-S-m", spawn_term "alsamixer") -- Opens the sound mixer.

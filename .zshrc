@@ -43,7 +43,7 @@ export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bi
 [[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
 
 # Try <C-x><C-e>.
-export EDITOR=/usr/local/bin/gvim
+export EDITOR=vim
 
 # Bash-like comments.
 setopt interactivecomments

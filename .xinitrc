@@ -42,7 +42,7 @@ xmobar &
 trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
 
 # Sets background.
-feh --bg-scale Pictures/gnu.png &
+feh --bg-scale ~/Pictures/gnu.png &
 
 # Starts Dropbox.
 dropbox start &
@@ -54,7 +54,7 @@ parcellite &
 osmo &
 
 # Starts Chromium in background.
-chromium --disable-sync-preferences --no-startup-window
+chromium --disable-sync-preferences --no-startup-window &
 
 # Loads WM.
 exec xmonad

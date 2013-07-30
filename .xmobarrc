@@ -2,14 +2,14 @@ Config {
       font = "-*-proggyclean-medium-r-normal-*-12-*-*-*-*-*-*-*"
     , bgColor = "black"
     , fgColor = "white"
-    , position = Static { xpos = 0 , ypos = 0, width = 1720, height = 20 }
+    , position = Static { xpos = 0, ypos = 0, width = 3160, height = 20 }
     , lowerOnStart = True
     , commands =
         [
           Run Com "uname" ["-s", "-r"] "" 36000 -- 1h
         , Run Uptime ["-t", "Uptime: <days>d <hours>h <minutes>m <seconds>s"] 10 -- 1s
-        , Run Memory ["-t", "Memory: <usedratio>%"] 10 -- 1s
-        , Run MultiCpu ["-t", "Processor: <total>%", "-L", "3", "-H", "75", "--high", "red"] 10 -- 1s
+        , Run Memory ["-t", "RAM: <usedratio>%"] 10 -- 1s
+        , Run MultiCpu ["-t", "CPUs: <total0>% <total1>% <total2>% <total3>%", "-L", "3", "-H", "75", "--high", "red"] 10 -- 1s
         , Run Network "eth0" ["-t", "Network: <rx> kB/s | <tx> kB/s"] 10 -- 1s
         , Run Weather "EVRA" ["-t", "<tempC>C"] 6000 -- 10m
         , Run Date "%d/%m/%y, %H:%M:%S" "date" 10 -- 1s
