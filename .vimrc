@@ -306,6 +306,14 @@ endfunc
 
 noremap <Leader>wc :echo GetWordCount()<CR>
 
+noremap <Leader>pd A<CR>from pprint import pprint
+            \<CR>
+            \print("#" * 80)
+            \<CR>
+            \pprint()
+            \<CR>
+            \print("#" * 80)<Esc>k
+
 noremap <Leader>a :Ack  **/*<C-Left><Left>
 
 noremap <C-p> call CtrlPMRU()

@@ -56,5 +56,8 @@ osmo &
 # Starts Chromium in background.
 chromium --disable-sync-preferences --no-startup-window &
 
+# Starts Thunar in background.
+thunar --daemon &
+
 # Loads WM.
 exec xmonad

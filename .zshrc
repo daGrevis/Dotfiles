@@ -37,7 +37,7 @@ source $ZSH/oh-my-zsh.sh
 unalias sl
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl:/home/dagrevis/.gem/ruby/1.9.1/bin:/home/dagrevis/.cabal/bin/:/usr/bin/vendor_perl/
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl:/home/dagrevis/.gem/ruby/2.0.0/bin:/home/dagrevis/.cabal/bin/:/usr/bin/vendor_perl/:/home/dagrevis/Scripts/
 
 # Enables autojump.
 [[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh

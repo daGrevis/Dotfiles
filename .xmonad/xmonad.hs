@@ -1,9 +1,9 @@
 import XMonad
 import XMonad.Layout.NoBorders
-import XMonad.Layout.LayoutHints
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Util.EZConfig
+import XMonad.Hooks.EwmhDesktops
 
 
 term = "urxvt"
@@ -17,8 +17,9 @@ main = do
         , XMonad.borderWidth = 3
         , XMonad.normalBorderColor = "#333333"
         , XMonad.focusedBorderColor = "#1793d1"
-        , layoutHook = avoidStruts . smartBorders . layoutHints $ layoutHook defaultConfig
+        , layoutHook = avoidStruts . smartBorders $ layoutHook defaultConfig
         , manageHook = composeAll [ isFullscreen --> doFullFloat, manageDocks ]
+        , handleEventHook = fullscreenEventHook <+> handleEventHook defaultConfig
         , focusFollowsMouse = False
         }
         `additionalKeysP`
