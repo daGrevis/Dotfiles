@@ -356,6 +356,7 @@ if has("gui_running")
 
     " Removes all GUI stuff.
     set guioptions=
+    set guioptions+=c " Removes popups.
 
     " Tells to always use block-style cursor.
     set guicursor=a:block

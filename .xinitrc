@@ -44,9 +44,6 @@ trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --ali
 # Sets background.
 feh --bg-scale ~/Pictures/gnu.png &
 
-# Starts Dropbox.
-dropbox start &
-
 # Clipboard manager.
 parcellite &
 
