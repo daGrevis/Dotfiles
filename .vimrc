@@ -4,10 +4,12 @@
 " * CoffeeScript,
 " * Commentary,
 " * CtrlP,
+" * DelimitMate,
 " * Fugitive,
 " * Gitgutter,
 " * Gundo,
 " * HTML5,
+" * Indent-Object,
 " * Instant-Markdown,
 " * Markdown,
 " * MatchTag,
@@ -20,6 +22,7 @@
 " * Supertab,
 " * Surround,
 " * Syntastic,
+" * Tabular,
 " * Tagbar;
 "
 " Other dependencies
@@ -314,6 +317,8 @@ noremap <Leader>pd A<CR>from pprint import pprint
             \<CR>
             \print("#" * 80)<Esc>k
 
+noremap Y y$
+
 noremap <Leader>a :Ack  **/*<C-Left><Left>
 
 noremap <C-p> call CtrlPMRU()
@@ -333,6 +338,9 @@ let g:syntastic_always_populate_loc_list = 1
 " Shows CtrlP on top.
 let g:ctrlp_match_window_bottom = 0
 
+" Closes Startify  when CtrlP opens a file.
+let g:ctrlp_reuse_window = "startify"
+
 noremap <Leader>q :SyntasticToggleMode<CR> :redraw!<CR>
 
 " Allows to quickly change color schemes.
@@ -343,14 +351,11 @@ noremap <Leader>' :StylishRand<CR>
 let g:startify_show_files_number = 20
 let g:startify_bookmarks = [ "~/.vimrc", "~/.xinitrc", "~/.Xresources", "~/.zshrc", "~/.zshenv", "~/.xmonad/xmonad.hs", "~/.xmobarrc" ]
 let g:startify_custom_header = [
-        \ '        _             _____ _  _         ',
-        \ ' /\   /(_)_ __ ___   |___  | || |   __ _ ',
-        \ ' \ \ / / | ''_ ` _ \     / /| || |_ / _` |',
-        \ '  \ V /| | | | | | |   / / |__   _| (_| |',
-        \ '   \_/ |_|_| |_| |_|  /_(_)   |_|  \__,_|',
-        \ '                                         ',
+        \ '   \/||\/| "/.+|',
         \ '',
         \ ]
+
+let delimitMate_nesting_quotes = ["'", '"', '`']
 
 if has("gui_running")
 

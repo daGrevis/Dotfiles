@@ -3,10 +3,12 @@ git clone https://github.com/mileszs/ack.vim ack
 git clone https://github.com/kchmck/vim-coffee-script coffeescript
 git clone https://github.com/tpope/vim-commentary commentary
 git clone https://github.com/kien/ctrlp.vim ctrlp
+git clone https://github.com/Raimondi/delimitMate delimitmate
 git clone https://github.com/tpope/vim-fugitive fugitive
 git clone https://github.com/airblade/vim-gitgutter gitgutter
 git clone https://github.com/sjl/gundo.vim gundo
 git clone https://github.com/othree/html5.vim html5
+git clone https://github.com/michaeljsmith/vim-indent-object indent-object
 git clone https://github.com/suan/vim-instant-markdown instant-markdown
 git clone https://github.com/tpope/vim-markdown markdown
 git clone https://github.com/gregsexton/MatchTag matchtag
@@ -19,4 +21,5 @@ git clone https://github.com/mislav/stylish.vim stylish
 git clone https://github.com/ervandew/supertab supertab
 git clone https://github.com/tpope/vim-surround surround
 git clone https://github.com/scrooloose/syntastic syntastic
+git clone https://github.com/godlygeek/tabular tabular
 git clone https://github.com/majutsushi/tagbar tagbar

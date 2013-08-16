@@ -77,3 +77,5 @@ alias rot13_rev="tr '[n-z][a-m][N-Z][A-M]' '[a-m][n-z][A-M][N-Z]'"
 function aux {
     ps -aux | grep $1 | grep -v "grep $1"
 }
+
+alias :q=exit
