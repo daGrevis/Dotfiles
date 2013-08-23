@@ -42,7 +42,8 @@
 call pathogen#infect()
 
 " Sets fave color scheme.
-colorscheme luna
+colorscheme solarized
+set background=light
 
 " Sets limit of history.
 set history=5000
@@ -317,7 +318,11 @@ noremap <Leader>pd A<CR>from pprint import pprint
             \<CR>
             \print("#" * 80)<Esc>k
 
+" Funny this doesn't work automatically anymore.
 noremap Y y$
+autocmd FileType python set commentstring=#%s
+
+nnoremap <C-f> yiw:tabe \| Ack <C-r>" **/*
 
 noremap <Leader>a :Ack  **/*<C-Left><Left>
 
@@ -356,6 +361,8 @@ let g:startify_custom_header = [
         \ ]
 
 let delimitMate_nesting_quotes = ["'", '"', '`']
+
+let g:jedi#popup_on_dot = 0
 
 if has("gui_running")
 
@@ -397,17 +404,22 @@ if has("gui_running")
     " autocmd ColorScheme * hi LineNr guifg=#555555
 
     " luna
-    autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
-    autocmd ColorScheme * hi TabLine guibg=#2e2e2e
-    autocmd ColorScheme * hi TabLineSel guibg=#474747
-    autocmd ColorScheme * hi SignColumn guibg=#2e2e2e
-    autocmd ColorScheme * hi LineNr guifg=#616161
-    autocmd ColorScheme * hi TODO guibg=#474747
-    autocmd ColorScheme * hi Comment guifg=#616161
-    autocmd ColorScheme * hi Identifier guifg=#ff8036
-    autocmd ColorScheme * hi Function guifg=#ff8036
-    autocmd ColorScheme * hi pythonClass guifg=#ff8036
-    autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
+    " autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
+    " autocmd ColorScheme * hi TabLine guibg=#2e2e2e
+    " autocmd ColorScheme * hi TabLineSel guibg=#474747
+    " autocmd ColorScheme * hi SignColumn guibg=#2e2e2e
+    " autocmd ColorScheme * hi LineNr guifg=#616161
+    " autocmd ColorScheme * hi TODO guibg=#474747
+    " autocmd ColorScheme * hi Comment guifg=#616161
+    " autocmd ColorScheme * hi Identifier guifg=#ff8036
+    " autocmd ColorScheme * hi Function guifg=#ff8036
+    " autocmd ColorScheme * hi pythonClass guifg=#ff8036
+    " autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
+
+    " solarized
+    autocmd ColorScheme * hi SignColumn guibg=#eee8d5
+    autocmd ColorScheme * hi TODO guibg=#dc322f
+    autocmd ColorScheme * hi TODO guifg=#073642
 
 endif
 

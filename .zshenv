@@ -60,7 +60,11 @@ alias dotdiff='diff ~/Dotfiles/ ~ | grep -v "Only in" | grep -v "Common subdirec
 
 # Opens Gvim as it was a real Vim. The difference is little low.
 function vim {
-    gvim -p $@ & disown
+    if ! xset q &> /dev/null; then
+        vim -p $@
+    else
+        gvim -p $@ & disown
+    fi
 }
 function vimd {
     vim -p $@ && exit
@@ -79,3 +83,12 @@ function aux {
 }
 
 alias :q=exit
+
+# function hexchat {
+#     ps cax | grep hexchat > /dev/null
+#     if [ $? -eq 0 ]; then
+#         /usr/bin/hexchat -ec "gui show"
+#     else
+#         /usr/bin/hexchat
+#     fi
+# }
