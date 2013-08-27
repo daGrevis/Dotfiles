@@ -11,10 +11,10 @@
 " * HTML5,
 " * Indent-Object,
 " * Instant-Markdown,
+" * Lightline,
 " * Markdown,
 " * MatchTag,
 " * NERDTree,
-" * Powerline,
 " * Repeat,
 " * Sensible,
 " * Startify,
@@ -33,7 +33,7 @@
 "   * `ack` (for Ack),
 "   * `vpaste.sh` (for pasting with <Leader>z),
 "   * Code linters (for Syntastic),
-"   * Patched font (for Powerline);
+"   * Patched font (for Lightline);
 "
 " Tested on Arch Linux.
 
@@ -48,11 +48,7 @@ set background=light
 " Sets limit of history.
 set history=5000
 
-" Disables things I don"t need yet.
-map Q <Nop>
-map K <Nop>
-
-" Shows relative line numbers.
+" Shows relative line numbers except for current line.
 set relativenumber
 set number
 
@@ -97,6 +93,7 @@ noremap <M-6> :tabnext 6<CR>
 noremap <M-7> :tabnext 7<CR>
 noremap <M-8> :tabnext 8<CR>
 noremap <M-9> :tabnext 9<CR>
+noremap <M-0> :tablast<CR>
 
 " Pastes contents to vpaste.net.
 map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
@@ -172,7 +169,6 @@ nmap <Down> o<Esc>k
 " or tabs).
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·
-nmap <leader>l :set list!<CR>
 
 " Tells to use 4 spaces for indentation.
 set et
@@ -182,13 +178,6 @@ set sts=4
 
 " Deletes all trailing whitespace after save.
 autocmd BufWritePre * :%s/\s\+$//e
-
-" Maps <Leader>p in imode to go in pmode.
-inoremap <leader>p <C-o>:set paste<CR>
-" Unsets pmode when leaving imode.
-au InsertLeave * :set nopaste
-" Fixes that InsertLeave event doesn"t catch <C-c> mapping.
-inoremap <C-c> <Esc>
 
 " Enable mouse in all modes. Next line makes me a bad person.
 set mouse=a
@@ -210,23 +199,6 @@ cmap <M-f> <S-Right>
 " move a word backward, but <C-f> -- forward.
 cmap <C-b> <S-Left>
 cmap <C-f> <S-Right>
-
-" Saves and sources files (meant to be used in `.vimrc` file, but you can be
-" creative too!).
-nmap <Leader>x :w<CR> :so %<CR>
-
-" Toggles between no numbers, numbers and relative numbers.
-function! NumberToggle()
-    if(&number == 1)
-        set norelativenumber
-        set nonumber
-    else
-        set relativenumber
-        set number
-    endif
-endfunc
-" Mapping for calling `NumberToggle`.
-noremap <Leader>n :call NumberToggle()<CR>
 
 " Allows to use splits more quickly (Alt-{h,j,k,l,q,w}).
 noremap <M-h> <C-w>h
@@ -257,7 +229,7 @@ cmap w!! %!sudo tee > /dev/null %
 
 " If it's Git commit, do some specific ations.
 func SetGitCommitOptions()
-    setlocal colorcolumn=50
+    setlocal colorcolumn=80
     setlocal spell
     exec ":0"
 endfunc
@@ -290,6 +262,7 @@ au BufRead,BufNewFile *.md setlocal spell
 " Tells Vim to remember the vertical postion.
 set nostartofline
 
+" Filesize.
 func! GetFilesize()
     let bytes = getfsize(expand("%:p"))
     if bytes <= 0
@@ -301,35 +274,135 @@ func! GetFilesize()
         return (bytes / 1024) . "K"
     endif
 endfunc
-
 noremap <Leader>du :echo GetFilesize()<CR>
 
+" Word count
 func! GetWordCount()
     return system("cat " . expand("%") . " | wc -w")
 endfunc
-
 noremap <Leader>wc :echo GetWordCount()<CR>
 
+" Simple debugging in Python.
 noremap <Leader>pd A<CR>from pprint import pprint
-            \<CR>
-            \print("#" * 80)
-            \<CR>
-            \pprint()
-            \<CR>
-            \print("#" * 80)<Esc>k
+                        \<CR>
+                        \print("#" * 80)
+                        \<CR>
+                        \pprint()
+                        \<CR>
+                        \print("#" * 80)<Esc>k
 
-" Funny this doesn't work automatically anymore.
+" Funny these doesn't work automatically anymore.
 noremap Y y$
-autocmd FileType python set commentstring=#%s
+
+" Enables spell-check in imode.
+au InsertEnter * setlocal spell
+au InsertLeave * setlocal nospell
+
+" Finds non-ASCII.
+noremap <Leader>q /\v[^\x00-\x7F]<CR>
+
+" Things related to plugins next.
+
+"
+" Ack next.
+"
 
 nnoremap <C-f> yiw:tabe \| Ack <C-r>" **/*
 
 noremap <Leader>a :Ack  **/*<C-Left><Left>
 
+"
+" CtrlP next.
+"
+
 noremap <C-p> call CtrlPMRU()
 
-" Tells Powerline to use fancy symbols.
-let g:Powerline_symbols = "fancy"
+" Shows CtrlP on top.
+let g:ctrlp_match_window_bottom = 0
+
+"
+" DelimitMate next.
+"
+
+let delimitMate_nesting_quotes = ["'", '"', '`']
+
+" Lightline next.
+
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'MyModified',
+      \   'readonly': 'MyReadonly',
+      \   'fugitive': 'MyFugitive',
+      \   'filename': 'MyFilename',
+      \   'fileformat': 'MyFileformat',
+      \   'filetype': 'MyFiletype',
+      \   'fileencoding': 'MyFileencoding',
+      \   'mode': 'MyMode',
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
+        \ '' != expand('%t') ? expand('%t') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  return &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head()) ? '⭠ '.fugitive#head() : ''
+endfunction
+
+function! MyFileformat()
+  return winwidth('.') > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth('.') > 60 ? lightline#mode() : ''
+endfunction
+
+"
+" Startify next.
+"
+
+" Closes Startify when CtrlP opens a file.
+let g:ctrlp_reuse_window = "startify"
+
+let g:startify_show_files_number = 20
+let g:startify_bookmarks = [ "~/.vimrc", "~/.xinitrc", "~/.Xresources", "~/.zshrc", "~/.zshenv", "~/.xmonad/xmonad.hs", "~/.xmobarrc" ]
+" It says `Vim 7.4` in ASCII art.
+let g:startify_custom_header = [
+                               \ '   \/||\/| "/.+|',
+                               \ '',
+                               \ ]
+
+"
+" Syntastic next.
+"
 
 " Executes Syntastic when buffer is opened.
 let g:syntastic_check_on_open = 1
@@ -340,30 +413,8 @@ let g:syntastic_python_flake8_post_args = "--max-line-length=160"
 " Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
 let g:syntastic_always_populate_loc_list = 1
 
-" Shows CtrlP on top.
-let g:ctrlp_match_window_bottom = 0
 
-" Closes Startify  when CtrlP opens a file.
-let g:ctrlp_reuse_window = "startify"
-
-noremap <Leader>q :SyntasticToggleMode<CR> :redraw!<CR>
-
-" Allows to quickly change color schemes.
-noremap <Leader>[ :StylishPrev<CR>
-noremap <Leader>] :StylishNext<CR>
-noremap <Leader>' :StylishRand<CR>
-
-let g:startify_show_files_number = 20
-let g:startify_bookmarks = [ "~/.vimrc", "~/.xinitrc", "~/.Xresources", "~/.zshrc", "~/.zshenv", "~/.xmonad/xmonad.hs", "~/.xmobarrc" ]
-let g:startify_custom_header = [
-        \ '   \/||\/| "/.+|',
-        \ '',
-        \ ]
-
-let delimitMate_nesting_quotes = ["'", '"', '`']
-
-let g:jedi#popup_on_dot = 0
-
+" My Vim shall work in terminal too thanks to control structures.
 if has("gui_running")
 
     " Removes all GUI stuff.
@@ -418,12 +469,7 @@ if has("gui_running")
 
     " solarized
     autocmd ColorScheme * hi SignColumn guibg=#eee8d5
-    autocmd ColorScheme * hi TODO guibg=#dc322f
-    autocmd ColorScheme * hi TODO guifg=#073642
+    autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
+    autocmd ColorScheme * hi PmenuSel guifg=#b58900
 
 endif
-
-" Tips:
-" * ~, u and U for changing case, lowercase or uppercase,
-" * <C-a> or <C-x> in imode increase/decrease the number,
-" * :args my/dir/*.py to open files in buffer;

@@ -10,10 +10,10 @@ git clone https://github.com/sjl/gundo.vim gundo
 git clone https://github.com/othree/html5.vim html5
 git clone https://github.com/michaeljsmith/vim-indent-object indent-object
 git clone https://github.com/suan/vim-instant-markdown instant-markdown
+git clone https://github.com/itchyny/lightline.vim lightline
 git clone https://github.com/tpope/vim-markdown markdown
 git clone https://github.com/gregsexton/MatchTag matchtag
 git clone https://github.com/scrooloose/nerdtree nerdtree
-git clone https://github.com/Lokaltog/vim-powerline powerline
 git clone https://github.com/tpope/vim-repeat repeat
 git clone https://github.com/tpope/vim-sensible sensible
 git clone https://github.com/mhinz/vim-startify startify
