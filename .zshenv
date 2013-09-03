@@ -61,9 +61,9 @@ alias dotdiff='diff ~/Dotfiles/ ~ | grep -v "Only in" | grep -v "Common subdirec
 # Opens Gvim as it was a real Vim. The difference is little low.
 function vim {
     if ! xset q &> /dev/null; then
-        vim -p $@
+        command vim -p $@
     else
-        gvim -p $@ & disown
+        command gvim -p $@ & disown
     fi
 }
 function vimd {

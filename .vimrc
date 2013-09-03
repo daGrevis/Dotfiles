@@ -293,6 +293,7 @@ noremap <Leader>pd A<CR>from pprint import pprint
 
 " Funny these doesn't work automatically anymore.
 noremap Y y$
+autocmd FileType python set commentstring=#%s
 
 " Enables spell-check in imode.
 au InsertEnter * setlocal spell
@@ -413,7 +414,6 @@ let g:syntastic_python_flake8_post_args = "--max-line-length=160"
 " Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
 let g:syntastic_always_populate_loc_list = 1
 
-
 " My Vim shall work in terminal too thanks to control structures.
 if has("gui_running")
 
@@ -471,5 +471,14 @@ if has("gui_running")
     autocmd ColorScheme * hi SignColumn guibg=#eee8d5
     autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
     autocmd ColorScheme * hi PmenuSel guifg=#b58900
+
+else
+
+    colorscheme default
+
+    let g:lightline = {
+        \ 'separator': { 'left': '|', 'right': '|' },
+        \ 'subseparator': { 'left': '|', 'right': '|' }
+        \ }
 
 endif
