@@ -15,7 +15,7 @@ fi
 { sudo ntpd -qg; sudo hwclock -w; } &
 
 # Sets 2nd monitor usable.
-#xrandr --output VGA-1 --auto --left-of DVI-I-1
+xrandr --output VGA-1 --auto --left-of DVI-I-1
 
 # Sets cursor.
 xsetroot -cursor_name left_ptr
@@ -42,7 +42,7 @@ xmobar &
 trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
 
 # Sets background.
-feh --bg-scale ~/Pictures/gnu.png &
+feh --bg-fill ~/Pictures/drops.jpg &
 
 # Clipboard manager.
 parcellite &

@@ -39,7 +39,7 @@ URxvt.tabbed.tab-bg         : 6
 !URxvt.color14    : #4bb8fd
 !URxvt.color15    : #a020f0
 
-! Solarized Light
+! Solarized
 #define S_yellow  #b58900
 #define S_orange  #cb4b16
 #define S_red     #dc322f
@@ -48,14 +48,24 @@ URxvt.tabbed.tab-bg         : 6
 #define S_blue    #268bd2
 #define S_cyan    #2aa198
 #define S_green   #859900
-#define S_base03  #fdf6e3
-#define S_base02  #eee8d5
-#define S_base01  #93a1a1
-#define S_base00  #839496
-#define S_base0   #657b83
-#define S_base1   #586e75
-#define S_base2   #073642
-#define S_base3   #002b36
+! Dark
+!#define S_base03 #002b36
+!#define S_base02 #073642
+!#define S_base01 #586e75
+!#define S_base00 #657b83
+!#define S_base0  #839496
+!#define S_base1  #93a1a1
+!#define S_base2  #eee8d5
+!#define S_base3  #fdf6e3
+! Light
+#define S_base03 #fdf6e3
+#define S_base02 #eee8d5
+#define S_base01 #93a1a1
+#define S_base00 #839496
+#define S_base0  #657b83
+#define S_base1  #586e75
+#define S_base2  #073642
+#define S_base3  #002b36
 URxvt.background  : S_base03
 URxvt.foreground  : S_base0
 URxvt.cursorColor : S_base1

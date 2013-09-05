@@ -1,45 +1,37 @@
-" Current plugins:
-"
-" * Ack,
-" * CoffeeScript,
-" * Commentary,
-" * CtrlP,
-" * DelimitMate,
-" * Fugitive,
-" * Gitgutter,
-" * Gundo,
-" * HTML5,
-" * Indent-Object,
-" * Instant-Markdown,
-" * Lightline,
-" * Markdown,
-" * MatchTag,
-" * NERDTree,
-" * Repeat,
-" * Sensible,
-" * Startify,
-" * Stylish,
-" * Supertab,
-" * Surround,
-" * Syntastic,
-" * Tabular,
-" * Tagbar;
-"
-" Other dependencies
-"
-" * Color scheme,
-" * Linux and these packages:
-"   * `ctags` (for Tagbar),
-"   * `ack` (for Ack),
-"   * `vpaste.sh` (for pasting with <Leader>z),
-"   * Code linters (for Syntastic),
-"   * Patched font (for Lightline);
-"
-" Tested on Arch Linux.
+" Required for Vundle.
+set nocompatible
+filetype off
+set runtimepath+=~/.vim/bundle/vundle/
+call vundle#rc()
 
+Bundle 'gmarik/vundle'
 
-" Loads plugins (in .vim/bundle/).
-call pathogen#infect()
+Bundle 'mileszs/ack.vim'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'tpope/vim-commentary'
+Bundle 'kien/ctrlp.vim'
+Bundle 'Raimondi/delimitMate'
+Bundle 'tpope/vim-fugitive'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'sjl/gundo.vim'
+Bundle 'othree/html5.vim'
+Bundle 'austintaylor/vim-indentobject'
+Bundle 'suan/vim-instant-markdown'
+Bundle 'itchyny/lightline.vim'
+Bundle 'tpope/vim-markdown'
+Bundle 'gregsexton/MatchTag'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-sensible'
+Bundle 'mhinz/vim-startify'
+Bundle 'mislav/stylish.vim'
+Bundle 'ervandew/supertab'
+Bundle 'tpope/vim-surround'
+Bundle 'scrooloose/syntastic'
+Bundle 'godlygeek/tabular'
+Bundle 'majutsushi/tagbar'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'altercation/vim-colors-solarized'
 
 " Sets fave color scheme.
 colorscheme solarized
@@ -291,8 +283,12 @@ noremap <Leader>pd A<CR>from pprint import pprint
                         \<CR>
                         \print("#" * 80)<Esc>k
 
-" Funny these doesn't work automatically anymore.
+" This awesomeness was removed from Sensible, but don't worry - I have learned
+" how to map things and I'm not afraid to use it!
+nnoremap & :&&<CR>
 noremap Y y$
+
+" Funny these doesn't work automatically anymore.
 autocmd FileType python set commentstring=#%s
 
 " Enables spell-check in imode.
@@ -330,7 +326,7 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 " Lightline next.
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'solarized_light',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -414,6 +410,7 @@ let g:syntastic_python_flake8_post_args = "--max-line-length=160"
 " Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
 let g:syntastic_always_populate_loc_list = 1
 
+
 " My Vim shall work in terminal too thanks to control structures.
 if has("gui_running")
 
@@ -468,9 +465,14 @@ if has("gui_running")
     " autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
 
     " solarized
-    autocmd ColorScheme * hi SignColumn guibg=#eee8d5
     autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
     autocmd ColorScheme * hi PmenuSel guifg=#b58900
+    "
+    " solarized light
+    autocmd ColorScheme * hi SignColumn guibg=#eee8d5
+    "
+    " solarized dark
+    " autocmd ColorScheme * hi SignColumn guibg=#073642
 
 else
 

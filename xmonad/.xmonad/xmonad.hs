@@ -36,7 +36,7 @@ main = do
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
         -- , ("M-C-i", spawn "chromium --enable-webgl --ignore-gpu-blacklist --incognito") -- Opens browser the in incognito mode.
         , ("M-S-s", spawn "skype") -- Opens Skype.
-        , ("M-C-s", spawn "skype2") -- Opens the 2nd instance of Skype.
+        , ("M-C-s", spawn "skype --dbpath=~/.Skype2") -- Opens the 2nd instance of Skype.
         , ("M-S-x", spawn "hexchat") -- Opens the IRC client.
         , ("M-S-t", spawn "transmission-gtk") -- Opens the torrent client.
         , ("M-S-e", spawn "mousepad") -- Opens the text editor.

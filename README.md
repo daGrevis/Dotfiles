@@ -4,7 +4,7 @@
 
 This is how it looked on July 29th, 2013.
 
-![Desktop](https://raw.github.com/daGrevis/Dotfiles/master/desktop.png)
+![Desktop](https://raw.github.com/daGrevis/Dotfiles/master/desktop.jpg)
 
 ## Vim installation
 
