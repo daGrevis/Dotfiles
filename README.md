@@ -2,14 +2,22 @@
 
 **So awesome it should be banned!**
 
-This is how it looked on July 29th, 2013.
+This is how it looked on September 5th, 2013.
 
 ![Desktop](https://raw.github.com/daGrevis/Dotfiles/master/desktop.jpg)
 
-## Vim installation
+## Installation
 
-- Create dirs by executing `./create_dirs.sh`,
+~~~
+# Symlink dirs using GNU Stow.
+stow git
 
-- Install [Pathogen](https://github.com/tpope/vim-pathogen) by executing `./install_pathogen.sh`,
+# For Vim.
 
-- Install bundles by executing `./install_bundles.sh`;
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+
+## In Vim:
+
+    :BundleInstall
+    :BundleUpdate
+~~~
