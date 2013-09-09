@@ -31,6 +31,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'godlygeek/tabular'
 Bundle 'majutsushi/tagbar'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-ragtag'
 Bundle 'altercation/vim-colors-solarized'
 
 " Sets fave color scheme.
@@ -409,6 +410,16 @@ let g:syntastic_python_flake8_post_args = "--max-line-length=160"
 
 " Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
 let g:syntastic_always_populate_loc_list = 1
+
+"
+" GitGutter next.
+"
+
+" Disables redraw in real-time.
+let g:gitgutter_realtime = 0
+
+" Disables redraw on file read.
+let g:gitgutter_eager = 0
 
 
 " My Vim shall work in terminal too thanks to control structures.
