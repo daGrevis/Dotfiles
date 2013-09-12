@@ -92,3 +92,7 @@ alias :q=exit
 #         /usr/bin/hexchat
 #     fi
 # }
+
+function remove_orphans {
+    sudo pacman -Rns $(pacman -Qqtd)
+}
