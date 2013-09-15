@@ -1,3 +1,16 @@
+"""
+"    ___     ___   ______  _____  ____  _        ___  _____
+"    |   \   /   \ |      ||     ||    || |      /  _]/ ___/
+"    |    \ |     ||      ||   __| |  | | |     /  [_(   \_
+"    |  D  ||  O  ||_|  |_||  |_   |  | | |___ |    _]\__  |
+"    |     ||     |  |  |  |   _]  |  | |     ||   [_ /  \ |
+"    |     ||     |  |  |  |  |    |  | |     ||     |\    |
+"    |_____| \___/   |__|  |__|   |____||_____||_____| \___| by daGrevis
+"
+"    https://github.com/daGrevis/Dotfiles
+"
+"""
+
 " Required for Vundle.
 set nocompatible
 filetype off
@@ -6,33 +19,35 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-Bundle 'mileszs/ack.vim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'tpope/vim-commentary'
-Bundle 'kien/ctrlp.vim'
 Bundle 'Raimondi/delimitMate'
-Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
-Bundle 'sjl/gundo.vim'
-Bundle 'othree/html5.vim'
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'austintaylor/vim-indentobject'
-Bundle 'suan/vim-instant-markdown'
-Bundle 'itchyny/lightline.vim'
-Bundle 'tpope/vim-markdown'
+Bundle 'ervandew/supertab'
+Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
+Bundle 'itchyny/lightline.vim'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'kien/ctrlp.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'mhinz/vim-startify'
+Bundle 'mileszs/ack.vim'
+Bundle 'mitsuhiko/vim-python-combined'
+Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+Bundle 'sjl/gundo.vim'
+Bundle 'suan/vim-instant-markdown'
+Bundle 'svermeulen/vim-easyclip'
+Bundle 'svermeulen/vim-extended-ft'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-sensible'
-Bundle 'mhinz/vim-startify'
-Bundle 'mislav/stylish.vim'
-Bundle 'ervandew/supertab'
 Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
-Bundle 'godlygeek/tabular'
-Bundle 'majutsushi/tagbar'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-ragtag'
-Bundle 'altercation/vim-colors-solarized'
 
 " Sets fave color scheme.
 colorscheme solarized
@@ -169,7 +184,7 @@ set ts=4
 set sw=4
 set sts=4
 
-" Deletes all trailing whitespace after save.
+" Deletes all trailing whitespace on save.
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Enable mouse in all modes. Next line makes me a bad person.
@@ -299,6 +314,9 @@ au InsertLeave * setlocal nospell
 " Finds non-ASCII.
 noremap <Leader>q /\v[^\x00-\x7F]<CR>
 
+" Remaps <C-x> to go out from imode. Weird fix because of Supertab.
+autocmd VimEnter * inoremap <C-x> <Esc>
+
 " Things related to plugins next.
 
 "
@@ -347,7 +365,8 @@ let g:lightline = {
       \ }
 
 function! MyModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable
+         \ ? '' : '-'
 endfunction
 
 function! MyReadonly()
@@ -358,13 +377,15 @@ function! MyFilename()
   return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
         \  &ft == 'unite' ? unite#get_status_string() :
-        \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
+        \  &ft == 'vimshell'
+        \  ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
         \ '' != expand('%t') ? expand('%t') : '[No Name]') .
         \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
 function! MyFugitive()
-  return &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head()) ? '⭠ '.fugitive#head() : ''
+  return &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+         \ && strlen(fugitive#head()) ? '⭠ '.fugitive#head() : ''
 endfunction
 
 function! MyFileformat()
@@ -391,12 +412,24 @@ endfunction
 let g:ctrlp_reuse_window = "startify"
 
 let g:startify_show_files_number = 20
-let g:startify_bookmarks = [ "~/.vimrc", "~/.xinitrc", "~/.Xresources", "~/.zshrc", "~/.zshenv", "~/.xmonad/xmonad.hs", "~/.xmobarrc" ]
+let g:startify_bookmarks = [
+                         \ "~/.vimrc",
+                         \ "~/.xinitrc",
+                         \ "~/.Xresources",
+                         \ "~/.zshrc",
+                         \ "~/.zshenv",
+                         \ "~/.xmonad/xmonad.hs",
+                         \ "~/.xmobarrc",
+                         \ ]
+
 " It says `Vim 7.4` in ASCII art.
 let g:startify_custom_header = [
                                \ '   \/||\/| "/.+|',
                                \ '',
                                \ ]
+
+" Goes back to Startify.
+nmap <Backspace> :Startify<CR>
 
 "
 " Syntastic next.
@@ -421,6 +454,23 @@ let g:gitgutter_realtime = 0
 " Disables redraw on file read.
 let g:gitgutter_eager = 0
 
+"
+" Easyclip next.
+"
+
+" Disables cutting with `m` (so it doesn't remap marks) and maps it to `yd`.
+let g:EasyClipUseCutDefaults = 0
+nmap yd <Plug>MoveMotionPlug
+nmap ydd <Plug>MoveMotionLinePlug
+noremap yD ""d$
+
+" Remaps `s` as motion to `cl` so that old good `s` works, but motion is still
+" available.
+let g:EasyClipUseSubstituteDefaults = 0
+nmap cl <Plug>SubstituteOverMotionMap
+
+" Opens yanks.
+noremap \y :Yanks<CR>
 
 " My Vim shall work in terminal too thanks to control structures.
 if has("gui_running")
