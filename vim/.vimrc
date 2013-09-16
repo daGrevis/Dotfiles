@@ -21,7 +21,7 @@ Bundle 'gmarik/vundle'
 
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
-Bundle 'altercation/vim-colors-solarized'
+" Bundle 'altercation/vim-colors-solarized'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
@@ -33,6 +33,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
+Bundle 'nanotech/jellybeans.vim'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
@@ -51,8 +52,8 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme solarized
-set background=light
+colorscheme jellybeans
+" set background=light
 
 " Sets limit of history.
 set history=5000
@@ -346,7 +347,7 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 " Lightline next.
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized_light',
+      \ 'colorscheme': 'jellybeans',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -462,13 +463,17 @@ let g:gitgutter_eager = 0
 " Disables cutting with `m` (so it doesn't remap marks) and maps it to `yd`.
 let g:EasyClipUseCutDefaults = 0
 nmap yd <Plug>MoveMotionPlug
+xmap yd <Plug>MoveMotionXPlug
 nmap ydd <Plug>MoveMotionLinePlug
 noremap yD ""d$
 
 " Remaps `s` as motion to `cl` so that old good `s` works, but motion is still
-" available.
+" available. Removes yanking from `s` though.
 let g:EasyClipUseSubstituteDefaults = 0
+noremap s "_s
 nmap cl <Plug>SubstituteOverMotionMap
+
+let g:EasyClipUsePasteDefaults = 0
 
 " Opens yanks.
 noremap \y :Yanks<CR>
@@ -493,7 +498,8 @@ if has("gui_running")
     " Pasting into command mode: `<C-r>"`.
 
     " Sets font.
-    set guifont=Envy\ Code\ R\ for\ Powerline\ 10
+    " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
+    set guifont=Hermit\ 10
 
     " I love extra whitespace!
     set linespace=4
@@ -527,11 +533,11 @@ if has("gui_running")
     " autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
 
     " solarized
-    autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
-    autocmd ColorScheme * hi PmenuSel guifg=#b58900
+    " autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
+    " autocmd ColorScheme * hi PmenuSel guifg=#b58900
     "
     " solarized light
-    autocmd ColorScheme * hi SignColumn guibg=#eee8d5
+    " autocmd ColorScheme * hi SignColumn guibg=#eee8d5
     "
     " solarized dark
     " autocmd ColorScheme * hi SignColumn guibg=#073642
