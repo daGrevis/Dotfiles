@@ -56,5 +56,8 @@ chromium --disable-sync-preferences --no-startup-window &
 # Starts Thunar in background.
 thunar --daemon &
 
+# Starts Dropbox in background.
+dropboxd &
+
 # Loads WM.
 exec xmonad

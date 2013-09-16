@@ -38,9 +38,10 @@ main = do
         , ("M-S-s", spawn "skype") -- Opens Skype.
         , ("M-C-s", spawn "skype --dbpath=~/.Skype2") -- Opens the 2nd instance of Skype.
         , ("M-S-x", spawn "hexchat") -- Opens the IRC client.
-        , ("M-S-t", spawn "transmission-gtk") -- Opens the torrent client.
+        , ("M-S-b", spawn "transmission-gtk") -- Opens the torrent client.
         , ("M-S-e", spawn "mousepad") -- Opens the text editor.
         , ("M-S-r", spawn_term "ranger") -- Opens the file browser.
+        , ("M-S-t", spawn "thunar") -- Opens another file browser.
         , ("M-S-d", spawn_term "glances") -- Opens the system profiler.
         , ("M-S-m", spawn_term "alsamixer") -- Opens the sound mixer.
         , ("M-S-a", spawn_term "ipython2") -- Opens iPython (for Py2).
