@@ -139,6 +139,15 @@ noremap <Leader>s[ [s
 " Suggest from words list.
 noremap <Leader>s? z=
 
+" Fixes some common mistakes in command mode.
+cnoremap W w
+cnoremap ~w W
+cnoremap Q q
+cnoremap ~q Q
+
+" Remaps Ex-mode to no-operation.
+noremap Q <Nop>
+
 " Ignores files that match these patters.
 set wildignore+=*.png
 set wildignore+=*.gif
@@ -154,6 +163,8 @@ set wildignore+=*/lib/*
 set wildignore+=*/src/*
 set wildignore+=*/reports/*
 set wildignore+=*/share/*
+set wildignore+=*/static/vendor/*
+set wildignore+=*/COFFEESCRIPT_CACHE/*
 
 " Saves file when the focus is lost (for example, when buffers are changed).
 autocmd BufLeave,FocusLost * silent! wall
@@ -192,23 +203,14 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Enable mouse in all modes. Next line makes me a bad person.
 set mouse=a
 
-" Maps <Leader>r to calling :registers.
-noremap <Leader>r :registers<CR>
-
 " Disables folding at all.
 set nofen
 
-" Emacs ways to change cursor in cmode (<C-a> to get to the start, but <C-e>
-" -- to the end).
+" Emacs ways to change cursor in cmode.
 cmap <C-a> <Home>
 cmap <C-e> <End>
 cmap <M-b> <S-Left>
 cmap <M-f> <S-Right>
-
-" Almost like in Emacs -- only in the M place there is the C key. So <C-b> to
-" move a word backward, but <C-f> -- forward.
-cmap <C-b> <S-Left>
-cmap <C-f> <S-Right>
 
 " Allows to use splits more quickly (Alt-{h,j,k,l,q,w}).
 noremap <M-h> <C-w>h
@@ -325,9 +327,14 @@ autocmd VimEnter * inoremap <C-x> <Esc>
 " Ack next.
 "
 
-nnoremap <C-f> yiw:tabe \| Ack <C-r>" **/*
-
+" Opens Ack with default boilerplate.
 noremap <Leader>a :Ack  **/*<C-Left><Left>
+
+" Opens Ack in a new tab.
+noremap <Leader>ta :tabe \| Ack  **/*<C-Left><Left>
+
+" Searched for a word under the cursor in a new tab.
+nnoremap <C-f> yiw:tabe \| Ack <C-r>" **/*
 
 "
 " CtrlP next.
@@ -474,6 +481,12 @@ noremap s "_s
 nmap cl <Plug>SubstituteOverMotionMap
 
 let g:EasyClipUsePasteDefaults = 0
+
+" Opens registers.
+noremap <Leader>r :registers<CR>
+"
+" Opens buffers.
+noremap <Leader>b :buffers<CR>
 
 " Opens yanks.
 noremap \y :Yanks<CR>
