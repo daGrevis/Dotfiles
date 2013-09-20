@@ -19,9 +19,10 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
+"Bundle 'altercation/vim-colors-solarized'
+"Bundle 'nanotech/jellybeans.vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
-" Bundle 'altercation/vim-colors-solarized'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
@@ -33,14 +34,12 @@ Bundle 'majutsushi/tagbar'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
-Bundle 'nanotech/jellybeans.vim'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
 Bundle 'suan/vim-instant-markdown'
-Bundle 'svermeulen/vim-easyclip'
-Bundle 'svermeulen/vim-extended-ft'
+Bundle 'tomasr/molokai'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-fugitive'
@@ -52,7 +51,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme jellybeans
+colorscheme molokai
 " set background=light
 
 " Sets limit of history.
@@ -164,7 +163,7 @@ set wildignore+=*/src/*
 set wildignore+=*/reports/*
 set wildignore+=*/share/*
 set wildignore+=*/static/vendor/*
-set wildignore+=*/COFFEESCRIPT_CACHE/*
+set wildignore+=*/static/compiled/*
 
 " Saves file when the focus is lost (for example, when buffers are changed).
 autocmd BufLeave,FocusLost * silent! wall
@@ -321,6 +320,15 @@ noremap <Leader>q /\v[^\x00-\x7F]<CR>
 " Remaps <C-x> to go out from imode. Weird fix because of Supertab.
 autocmd VimEnter * inoremap <C-x> <Esc>
 
+" Opens registers.
+noremap <Leader>r :registers<CR>
+"
+" Opens buffers.
+noremap <Leader>b :buffers<CR>
+
+" Fixes coffee not seeing Vim edits.
+au BufWritePost *.coffee silent! copen!
+
 " Things related to plugins next.
 
 "
@@ -354,7 +362,6 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 " Lightline next.
 
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -462,34 +469,6 @@ let g:gitgutter_realtime = 0
 
 " Disables redraw on file read.
 let g:gitgutter_eager = 0
-
-"
-" Easyclip next.
-"
-
-" Disables cutting with `m` (so it doesn't remap marks) and maps it to `yd`.
-let g:EasyClipUseCutDefaults = 0
-nmap yd <Plug>MoveMotionPlug
-xmap yd <Plug>MoveMotionXPlug
-nmap ydd <Plug>MoveMotionLinePlug
-noremap yD ""d$
-
-" Remaps `s` as motion to `cl` so that old good `s` works, but motion is still
-" available. Removes yanking from `s` though.
-let g:EasyClipUseSubstituteDefaults = 0
-noremap s "_s
-nmap cl <Plug>SubstituteOverMotionMap
-
-let g:EasyClipUsePasteDefaults = 0
-
-" Opens registers.
-noremap <Leader>r :registers<CR>
-"
-" Opens buffers.
-noremap <Leader>b :buffers<CR>
-
-" Opens yanks.
-noremap \y :Yanks<CR>
 
 " My Vim shall work in terminal too thanks to control structures.
 if has("gui_running")

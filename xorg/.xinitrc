@@ -39,7 +39,7 @@ batti &
 xmobar &
 
 # Loads trayer.
-trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
+trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 250 &
 
 # Sets background.
 feh --bg-fill ~/Pictures/drops.jpg &
