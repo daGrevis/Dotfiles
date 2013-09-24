@@ -96,3 +96,8 @@ alias :q=exit
 function remove_orphans {
     sudo pacman -Rns $(pacman -Qqtd)
 }
+
+function source_zsh {
+    source ~/.zshrc
+    source ~/.zshenv
+}
