@@ -20,7 +20,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 "Bundle 'altercation/vim-colors-solarized'
-"Bundle 'nanotech/jellybeans.vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'austintaylor/vim-indentobject'
@@ -34,6 +33,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
+Bundle 'nanotech/jellybeans.vim'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
@@ -51,7 +51,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme molokai
+colorscheme jellybeans
 " set background=light
 
 " Sets limit of history.
@@ -105,8 +105,8 @@ noremap <M-9> :tabnext 9<CR>
 noremap <M-0> :tablast<CR>
 
 " Pastes contents to vpaste.net.
-map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
-vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
+map <Leader>zz :exec "w !vpaste.sh ft=".&ft<CR>
+vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste.sh ft=".&ft<CR>
 
 " Maps <S> key to toggling NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
@@ -362,6 +362,7 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 " Lightline next.
 
 let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -447,6 +448,9 @@ let g:startify_custom_header = [
 " Goes back to Startify.
 nmap <Backspace> :Startify<CR>
 
+" Doesn't change to directory.
+let g:startify_change_to_dir = 0
+
 "
 " Syntastic next.
 "
@@ -527,10 +531,10 @@ if has("gui_running")
     " solarized
     " autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
     " autocmd ColorScheme * hi PmenuSel guifg=#b58900
-    "
+
     " solarized light
     " autocmd ColorScheme * hi SignColumn guibg=#eee8d5
-    "
+
     " solarized dark
     " autocmd ColorScheme * hi SignColumn guibg=#073642
 
