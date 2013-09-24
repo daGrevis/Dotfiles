@@ -29,7 +29,20 @@ ZSH_THEME="custom"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(autojump fasd)
+plugins=(
+    archlinux
+    autojump
+    bower
+    coffee
+    encode64
+    npm
+    pass
+    pip
+    redis-cli
+    systemd
+    urltools
+    web-search
+)
 
 source $ZSH/oh-my-zsh.sh
 
