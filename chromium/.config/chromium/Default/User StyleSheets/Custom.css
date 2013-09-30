@@ -1,3 +1,12 @@
+::-webkit-scrollbar {
+    width: .8em;
+    background: #d5d5d5;
+}
+::-webkit-scrollbar-thumb {
+    background: #7f7f7f;
+    border: 2px solid #e6e6e6;
+}
+
 /*	https://github.com/Augus/Readable-ChromeDevThemes
 ------------------------------------------------*/
 
