@@ -101,3 +101,8 @@ function source_zsh {
     source ~/.zshrc
     source ~/.zshenv
 }
+
+function start_lamp {
+    sudo systemctl restart httpd
+    sudo systemctl restart mysqld
+}

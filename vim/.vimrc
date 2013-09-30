@@ -105,8 +105,8 @@ noremap <M-9> :tabnext 9<CR>
 noremap <M-0> :tablast<CR>
 
 " Pastes contents to vpaste.net.
-map <Leader>zz :exec "w !vpaste ft=".&ft<CR>
-vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
+map <Leader>zz :exec "w !vpaste.sh ft=".&ft<CR>
+vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste.sh ft=".&ft<CR>
 
 " Maps <S> key to toggling NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
@@ -365,6 +365,7 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 " Lightline next.
 
 let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -453,6 +454,9 @@ let g:startify_change_to_dir = 0
 " Goes back to Startify.
 nmap <Backspace> :Startify<CR>
 
+" Doesn't change to directory.
+let g:startify_change_to_dir = 0
+
 "
 " Syntastic next.
 "
@@ -533,10 +537,10 @@ if has("gui_running")
     " solarized
     " autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
     " autocmd ColorScheme * hi PmenuSel guifg=#b58900
-    "
+
     " solarized light
     " autocmd ColorScheme * hi SignColumn guibg=#eee8d5
-    "
+
     " solarized dark
     " autocmd ColorScheme * hi SignColumn guibg=#073642
 
