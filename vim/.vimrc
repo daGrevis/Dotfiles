@@ -454,9 +454,6 @@ let g:startify_change_to_dir = 0
 " Goes back to Startify.
 nmap <Backspace> :Startify<CR>
 
-" Doesn't change to directory.
-let g:startify_change_to_dir = 0
-
 "
 " Syntastic next.
 "
