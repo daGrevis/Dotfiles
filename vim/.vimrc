@@ -20,7 +20,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 "Bundle 'altercation/vim-colors-solarized'
-"Bundle 'nanotech/jellybeans.vim'
+"Bundle 'tomasr/molokai'
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'austintaylor/vim-indentobject'
@@ -34,12 +34,12 @@ Bundle 'majutsushi/tagbar'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
+Bundle 'nanotech/jellybeans.vim'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
 Bundle 'suan/vim-instant-markdown'
-Bundle 'tomasr/molokai'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-fugitive'
@@ -51,7 +51,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme molokai
+colorscheme jellybeans
 " set background=light
 
 " Sets limit of history.
@@ -239,7 +239,7 @@ noremap <Leader>gb :Gblame<CR>
 cmap w!! %!sudo tee > /dev/null %
 
 " If it's Git commit, do some specific ations.
-func SetGitCommitOptions()
+func! SetGitCommitOptions()
     setlocal colorcolumn=80
     setlocal spell
     exec ":0"
@@ -328,6 +328,9 @@ noremap <Leader>b :buffers<CR>
 
 " Fixes coffee not seeing Vim edits.
 au BufWritePost *.coffee silent! copen!
+
+" Abbrevs next.
+iabbrev teh the
 
 " Things related to plugins next.
 
@@ -443,6 +446,9 @@ let g:startify_custom_header = [
                                \ '   \/||\/| "/.+|',
                                \ '',
                                \ ]
+
+" Doesn't change the directory when going to a file from Startify.
+let g:startify_change_to_dir = 0
 
 " Goes back to Startify.
 nmap <Backspace> :Startify<CR>
