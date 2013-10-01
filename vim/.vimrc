@@ -332,6 +332,9 @@ au BufWritePost *.coffee silent! copen!
 " Abbrevs next.
 iabbrev teh the
 
+" 42.
+nnoremap <Leader>42 :help 42<CR>
+
 " Things related to plugins next.
 
 "
