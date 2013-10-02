@@ -51,7 +51,7 @@ parcellite &
 osmo &
 
 # Starts Chromium in background.
-chromium --disable-sync-preferences --no-startup-window --enable-webgl --ignore-gpu-blacklist &
+chromium --disable-sync-preferences --no-startup-window &
 
 # Starts Thunar in background.
 thunar --daemon &
