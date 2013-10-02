@@ -30,11 +30,10 @@ main = do
 
         , ("M-<Return>", spawn "xterm -e bash") -- Opens the fallback terminal.
         , ("M-S-v", spawn "gvim") -- Opens the ultimate text editor.
-        , ("M-C-v", spawn "gvim .vimrc") -- Opens the ultimate text editor with it's ultimate conf.
-        , ("M-S-i", spawn "chromium") -- Opens the browser.
-        -- , ("M-S-i", spawn "chromium --enable-webgl --ignore-gpu-blacklist") -- Opens the browser.
-        , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
-        -- , ("M-C-i", spawn "chromium --enable-webgl --ignore-gpu-blacklist --incognito") -- Opens browser the in incognito mode.
+        -- , ("M-S-i", spawn "chromium") -- Opens the browser.
+        , ("M-S-i", spawn "chromium --enable-webgl --ignore-gpu-blacklist") -- Opens the browser.
+        -- , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
+        , ("M-C-i", spawn "chromium --enable-webgl --ignore-gpu-blacklist --incognito") -- Opens browser the in incognito mode.
         , ("M-S-s", spawn "skype") -- Opens Skype.
         , ("M-C-s", spawn "skype --dbpath=~/.Skype2") -- Opens the 2nd instance of Skype.
         , ("M-S-x", spawn "hexchat") -- Opens the IRC client.

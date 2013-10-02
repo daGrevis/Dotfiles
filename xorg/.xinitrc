@@ -42,7 +42,7 @@ xmobar &
 trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 250 &
 
 # Sets background.
-feh --bg-fill ~/Pictures/drops.jpg &
+feh --bg-center ~/Pictures/cat.jpg &
 
 # Clipboard manager.
 parcellite &
@@ -51,7 +51,7 @@ parcellite &
 osmo &
 
 # Starts Chromium in background.
-chromium --disable-sync-preferences --no-startup-window &
+chromium --disable-sync-preferences --no-startup-window --enable-webgl --ignore-gpu-blacklist &
 
 # Starts Thunar in background.
 thunar --daemon &
