@@ -6,14 +6,17 @@ import XMonad.Util.EZConfig
 import XMonad.Hooks.EwmhDesktops
 
 
-term = "urxvt"
-spawn_term = \s -> spawn $ term ++ " -e " ++ s
+myTerminal = "urxvt"
+myWorkspaces = ["Vim", "Web", "IM", "Media", "CLI #1", "CLI #2", "CLI #3", "CLI #4", "CLI #5"]
+
+spawnTerminal = \s -> spawn $ myTerminal ++ " -e " ++ s
 
 main = do
     xmonad $ defaultConfig
         {
           modMask = mod4Mask
-        , terminal = term
+        , terminal = myTerminal
+        , workspaces = myWorkspaces
         , XMonad.borderWidth = 3
         , XMonad.normalBorderColor = "#333333"
         , XMonad.focusedBorderColor = "#1793d1"
@@ -28,7 +31,6 @@ main = do
 
         , ("M-S-l", spawn "xscreensaver-command -lock") -- Starts the screensaver.
 
-        , ("M-<Return>", spawn "xterm -e bash") -- Opens the fallback terminal.
         , ("M-S-v", spawn "gvim") -- Opens the ultimate text editor.
         , ("M-S-i", spawn "chromium") -- Opens the browser.
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
@@ -37,11 +39,11 @@ main = do
         , ("M-S-x", spawn "hexchat") -- Opens the IRC client.
         , ("M-S-b", spawn "transmission-gtk") -- Opens the torrent client.
         , ("M-S-e", spawn "mousepad") -- Opens the text editor.
-        , ("M-S-r", spawn_term "ranger") -- Opens the file browser.
+        , ("M-S-r", spawnTerminal "ranger") -- Opens the file browser.
         , ("M-S-t", spawn "thunar") -- Opens another file browser.
-        , ("M-S-d", spawn_term "glances") -- Opens the system profiler.
-        , ("M-S-m", spawn_term "alsamixer") -- Opens the sound mixer.
-        , ("M-S-a", spawn_term "ipython2") -- Opens iPython (for Py2).
+        , ("M-S-d", spawnTerminal "glances") -- Opens the system profiler.
+        , ("M-S-m", spawnTerminal "alsamixer") -- Opens the sound mixer.
+        , ("M-S-a", spawnTerminal "ipython2") -- Opens iPython (for Py2).
 
         , ("<Print>", spawn "scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'") -- Takes screenshot.
         , ("M-S-<Print>", spawn "scrot '%Y-%m-%d_%X__$wx$h.png' -q 100 -e 'mv $f ~/Screenshots/'") -- Takes screenshot in HQ.

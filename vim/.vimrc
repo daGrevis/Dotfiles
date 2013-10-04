@@ -31,6 +31,7 @@ Bundle 'itchyny/lightline.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
+Bundle 'mattn/emmet-vim'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
@@ -443,6 +444,7 @@ let g:startify_bookmarks = [
                          \ "~/.zshenv",
                          \ "~/.xmonad/xmonad.hs",
                          \ "~/.xmobarrc",
+                         \ "~/.config/chromium/Default/User StyleSheets/Custom.css",
                          \ ]
 
 " It says `Vim 7.4` in ASCII art.
@@ -501,7 +503,7 @@ if has("gui_running")
 
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
-    set guifont=Hermit\ 10
+    set guifont=Hermit\ 8
 
     " I love extra whitespace!
     set linespace=4

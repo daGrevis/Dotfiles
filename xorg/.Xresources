@@ -1,9 +1,9 @@
 URxvt.perl-ext-common       : default,matcher
 URxvt.searchable-scrollback : M-S-s
 URxvt.scrollBar             : false
-URxvt.font                  : xft:Envy Code R for Powerline:size=10
-URxvt.boldFont              : xft:Envy Code R for Powerline:bold:size=10
-URxvt.italicFont            : xft:Envy Code R for Powerline:italic:size=10
+URxvt.font                  : xft:Hermit:size=8
+URxvt.boldFont              : xft:Hermit:bold:size=8
+URxvt.italicFont            : xft:Hermit:italic:size=8
 URxvt.lineSpace             : 4
 URxvt.transparent           : true
 URxvt.shading               : 20
