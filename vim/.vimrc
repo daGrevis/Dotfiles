@@ -53,7 +53,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme jellybeans
+colorscheme luna
 " set background=light
 
 " Sets limit of history.
@@ -112,19 +112,6 @@ vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste.sh ft=".&ft<CR>
 
 " Maps <S-Tab> to toggling Tagbar.
 noremap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
-
-" Disables spell-check by default, but allows to toggle with a function.
-set nospell
-function! SpellToggle()
-    if(&spell == 1)
-        set nospell
-    else
-        set spell
-    endif
-endfunc
-
-" Maps <Leader>s to toggling spell-check.
-noremap <Leader>ss :call SpellToggle()<CR>
 
 " Adds word to words list.
 noremap <Leader>s+ zg
@@ -309,10 +296,6 @@ noremap Y y$
 " Funny these doesn't work automatically anymore.
 autocmd FileType python set commentstring=#%s
 
-" Enables spell-check in imode.
-au InsertEnter * setlocal spell
-au InsertLeave * setlocal nospell
-
 " Finds non-ASCII.
 noremap <Leader>q /\v[^\x00-\x7F]<CR>
 
@@ -369,7 +352,6 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 "
 
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark', 'tagbar'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
@@ -577,6 +559,7 @@ nmap <Leader>u :GundoToggle<CR>
 "
 
 let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_color_change_percent = 2
 
 " My Vim shall work in terminal too thanks to control structures.
 if has("gui_running")
@@ -620,17 +603,17 @@ if has("gui_running")
     " autocmd ColorScheme * hi LineNr guifg=#555555
 
     " luna
-    " autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
-    " autocmd ColorScheme * hi TabLine guibg=#2e2e2e
-    " autocmd ColorScheme * hi TabLineSel guibg=#474747
-    " autocmd ColorScheme * hi SignColumn guibg=#2e2e2e
-    " autocmd ColorScheme * hi LineNr guifg=#616161
-    " autocmd ColorScheme * hi TODO guibg=#474747
-    " autocmd ColorScheme * hi Comment guifg=#616161
-    " autocmd ColorScheme * hi Identifier guifg=#ff8036
-    " autocmd ColorScheme * hi Function guifg=#ff8036
-    " autocmd ColorScheme * hi pythonClass guifg=#ff8036
-    " autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
+    autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
+    autocmd ColorScheme * hi TabLine guibg=#2e2e2e
+    autocmd ColorScheme * hi TabLineSel guibg=#474747
+    autocmd ColorScheme * hi SignColumn guibg=#2e2e2e
+    autocmd ColorScheme * hi LineNr guifg=#616161
+    autocmd ColorScheme * hi TODO guibg=#474747
+    autocmd ColorScheme * hi Comment guifg=#616161
+    autocmd ColorScheme * hi Identifier guifg=#ff8036
+    autocmd ColorScheme * hi Function guifg=#ff8036
+    autocmd ColorScheme * hi pythonClass guifg=#ff8036
+    autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
 
     " solarized
     " autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
