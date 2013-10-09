@@ -215,7 +215,7 @@ noremap <Leader>cc :set colorcolumn=
 " Allows to quickly set filetype using <Leader>ft.
 noremap <Leader>ft :set filetype=
 
-" Searches for diff delimeter.
+" Searches for diff delimiter.
 noremap <Leader>d /\v\={4,}<CR>
 
 " Allows to quickly blame people. I like to do it.....
@@ -224,7 +224,7 @@ noremap <Leader>gb :Gblame<CR>
 " Allows to save files w/ superuser permissions.
 cmap w!! %!sudo tee > /dev/null %
 
-" If it's Git commit, do some specific ations.
+" If it's Git commit, do some specific actions.
 func! SetGitCommitOptions()
     setlocal colorcolumn=80
     setlocal spell
@@ -256,7 +256,7 @@ set noswapfile
 " Enables spellcheck for Markdown.
 au BufRead,BufNewFile *.md setlocal spell
 
-" Tells Vim to remember the vertical postion.
+" Tells Vim to remember the vertical position.
 set nostartofline
 
 " Filesize.
@@ -352,6 +352,7 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 "
 
 let g:lightline = {
+      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark', 'tagbar'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
