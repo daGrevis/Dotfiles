@@ -161,7 +161,7 @@ nmap <Leader>c ggVGy
 nmap <Leader>v ggdG"0PGdd
 
 " Maps <Right> to indenting text to the right, but <Left> to the left. Works
-" in mode and vmode.
+" in nmode and vmode.
 nmap <Left> <<
 nmap <Right> >>
 vmap <Left> <gv
@@ -171,8 +171,7 @@ vmap <Right> >gv
 nmap <Up> O<Esc>j
 nmap <Down> o<Esc>k
 
-" Maps <Leader>l to toggling characters that are not printable (like new-lines
-" or tabs).
+" Show some special chars like tab and traling spaces differently.
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·
 
@@ -184,9 +183,6 @@ set sts=4
 
 " Deletes all trailing whitespace on save.
 autocmd BufWritePre * :%s/\s\+$//e
-
-" Enable mouse in all modes. Next line makes me a bad person.
-set mouse=a
 
 " Disables folding at all.
 set nofen
@@ -218,10 +214,10 @@ noremap <Leader>ft :set filetype=
 " Searches for diff delimiter.
 noremap <Leader>d /\v\={4,}<CR>
 
-" Allows to quickly blame people. I like to do it.....
+" Allows to quickly blame people. I like to do that.....
 noremap <Leader>gb :Gblame<CR>
 
-" Allows to save files w/ superuser permissions.
+" Allows to save files as superuser.
 cmap w!! %!sudo tee > /dev/null %
 
 " If it's Git commit, do some specific actions.
@@ -242,7 +238,7 @@ autocmd BufReadPost *
     \     exec "normal g`\"" |
     \ endif
 
-" Allows to switch to last used tab with <Space><Space>.
+" Allows to quicly switch to the most recently used tab.
 let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
 noremap <Space> :exec "tabn ".g:lasttab<CR>
@@ -336,6 +332,7 @@ nnoremap <C-f> yiw:tabe \| Ack <C-r>" **/*
 " CtrlP next.
 "
 
+" Calls MRU.
 noremap <C-p> call CtrlPMRU()
 
 " Shows CtrlP on top.
@@ -377,6 +374,9 @@ let g:lightline = {
       \ 'component': {
       \   'tagbar': '%{tagbar#currenttag("[%s]", "", "f")}',
       \ },
+      \ 'tab_component_function': {
+      \   'filename': 'MyTabFilename',
+      \ },
       \ }
 
 function! MyModified()
@@ -389,16 +389,27 @@ function! MyReadonly()
 endfunction
 
 function! MyFilename()
-  let fname = expand('%:t')
-  return fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
+  let n = tabpagenr()
+  let buflist = tabpagebuflist(n)
+  let winnr = tabpagewinnr(n)
+  let bufnum = buflist[winnr - 1]
+  let bufname = expand('#'.bufnum.':t')
+  let buffullname = expand('#'.bufnum.':p')
+  let buffullnames = []
+  let bufnames = []
+  for i in range(1, tabpagenr('$'))
+    if i != n
+      let num = tabpagebuflist(i)[tabpagewinnr(i) - 1]
+      call add(buffullnames, expand('#' . num . ':p'))
+      call add(bufnames, expand('#' . num . ':t'))
+    endif
+  endfor
+  let i = index(bufnames, bufname)
+  if strlen(bufname) && i >= 0 && buffullnames[i] != buffullname
+    return substitute(buffullname, '.*/\([^/]\+/\)', '\1', '')
+  else
+    return strlen(bufname) ? bufname : '[No Name]'
+  endif
 endfunction
 
 function! MyFugitive()
@@ -436,6 +447,29 @@ function! MyMode()
         \ &ft == 'vimfiler' ? 'VimFiler' :
         \ &ft == 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! MyTabFilename(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  let bufnum = buflist[winnr - 1]
+  let bufname = expand('#'.bufnum.':t')
+  let buffullname = expand('#'.bufnum.':p')
+  let buffullnames = []
+  let bufnames = []
+  for i in range(1, tabpagenr('$'))
+    if i != a:n
+      let num = tabpagebuflist(i)[tabpagewinnr(i) - 1]
+      call add(buffullnames, expand('#' . num . ':p'))
+      call add(bufnames, expand('#' . num . ':t'))
+    endif
+  endfor
+  let i = index(bufnames, bufname)
+  if strlen(bufname) && i >= 0 && buffullnames[i] != buffullname
+    return substitute(buffullname, '.*/\([^/]\+/\)', '\1', '')
+  else
+    return strlen(bufname) ? bufname : '[No Name]'
+  endif
 endfunction
 
 function! CtrlPMark()
@@ -562,7 +596,7 @@ nmap <Leader>u :GundoToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_color_change_percent = 2
 
-" My Vim shall work in terminal too thanks to control structures.
+" My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
 
     " Removes all GUI stuff.
@@ -580,6 +614,9 @@ if has("gui_running")
     " To copy from cmode, type `q:` and copy a command from there.
     " To copy from smode, type `q/` and copy a phrase from there.
     " Pasting into command mode: `<C-r>"`.
+
+    " Enable mouse in all modes.
+    set mouse=a
 
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
@@ -631,8 +668,8 @@ else
     colorscheme default
 
     let g:lightline = {
-        \ 'separator': { 'left': '|', 'right': '|' },
-        \ 'subseparator': { 'left': '|', 'right': '|' }
+        \ 'separator': { 'left': ' ', 'right': ' ' },
+        \ 'subseparator': { 'left': ' ', 'right': ' ' }
         \ }
 
 endif
