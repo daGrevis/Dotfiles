@@ -286,7 +286,14 @@ noremap <Leader>pd A<CR>from pprint import pprint
                         \<CR>
                         \pprint()
                         \<CR>
-                        \print("#" * 80)<Esc>k
+                        \print("#" * 80)<Esc>k$
+
+" Simple debugging in PHP.
+noremap <Leader>hd A<CR><pre>
+                        \<CR>
+                        \<?php print_r(); ?>
+                        \<CR>
+                        \</pre><Esc>k$F(
 
 " This awesomeness was removed from Sensible, but don't worry - I have learned
 " how to map things and I'm not afraid to use it!
