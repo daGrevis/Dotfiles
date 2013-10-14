@@ -559,11 +559,16 @@ nmap <Backspace> :Startify<CR>
 " Executes Syntastic when buffer is opened.
 let g:syntastic_check_on_open = 1
 
-" Tells Syntastic to set line length to 160 symbols as maximum.
-let g:syntastic_python_flake8_post_args = "--max-line-length=160"
-
 " Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
 let g:syntastic_always_populate_loc_list = 1
+
+" Conf for Python files.
+let g:syntastic_python_checkers = ['python', 'pylama']
+let g:syntastic_python_pylama_post_args = '-o ~/pylama.ini'
+
+" Conf for CoffeeScript files.
+let g:syntastic_coffee_checkers = ['coffee', 'coffeelint']
+let g:syntastic_coffee_coffeelint_post_args = '--file ~/coffeelint.json'
 
 "
 " GitGutter next.
