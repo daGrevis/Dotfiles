@@ -23,11 +23,11 @@ xsetroot -cursor_name left_ptr
 # Keyboard layout.
 setxkbmap -layout lv
 
+# Makes Caps another Ctrl.
+setxkbmap -option ctrl:nocaps
+
 # Loads `.Xresources`.
 xrdb ~/.Xresources
-
-# Loads `.Xmodmap`.
-xmodmap ~/.Xmodmap
 
 # Loads screensaver.
 xscreensaver -no-splash &
