@@ -59,5 +59,8 @@ thunar --daemon &
 # Starts Dropbox in background.
 dropboxd &
 
+# Adjust brighntess based on current location and other factors.
+redshift -l 57:24 &
+
 # Loads WM.
 exec xmonad
