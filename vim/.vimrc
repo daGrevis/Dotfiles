@@ -335,6 +335,9 @@ noremap <Leader>ta :tabe \| Ack  **/*<C-Left><Left>
 " Searched for a word under the cursor in a new tab.
 nnoremap <C-f> yiw:tabe \| Ack <C-r>" **/*
 
+" Use The Silver Searcher.
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 "
 " CtrlP next.
 "
