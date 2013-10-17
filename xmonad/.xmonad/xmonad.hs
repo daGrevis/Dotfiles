@@ -50,6 +50,7 @@ main = do
         , ("M-<Print>", spawn "sleep 0.2; scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/' -s") -- Takes screenshot by selecting area.
 
         , ("M-,", spawn "Scripts/toggle_trackpad.sh") -- Toggles trackpad.
+        , ("M-.", spawn "pkill -USR1 redshift") -- Toggles Redshift.
 
         , ("M-[", spawn "Scripts/decrement_brightness.sh") -- Decrements brightness.
         , ("M-]", spawn "Scripts/increment_brightness.sh") -- Increments brightness.
