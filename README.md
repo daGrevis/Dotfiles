@@ -1,6 +1,6 @@
 # Dotfiles for my Arch Linux workstation(s)
 
-**So awesome it should be banned!**
+**So awesome they should be banned!**
 
 This is how it looked on September 5th, 2013.
 
@@ -10,7 +10,9 @@ This is how it looked on September 5th, 2013.
 
 ~~~
 # Symlink dirs using GNU Stow.
-stow git
+stow xorg
+stow vim
+# ...
 
 # For Vim.
 
@@ -18,6 +20,6 @@ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 ## In Vim:
 
-    :BundleInstall
-    :BundleUpdate
+    :BundleInstall # Install bundles for the first time.
+    :BundleUpdate # Update bundles when you feel like it.
 ~~~
