@@ -36,7 +36,7 @@ main = do
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
         , ("M-S-s", spawn "skype") -- Opens Skype.
         , ("M-C-s", spawn "skype --dbpath=~/.Skype2") -- Opens the 2nd instance of Skype.
-        , ("M-S-x", spawn "hexchat") -- Opens the IRC client.
+        , ("M-S-x", spawn "ps -aux | grep hexchat | grep -v grep > /dev/null; if [ $? -eq 0 ]; then hexchat -ec 'gui show'; else hexchat; fi") -- Toggles the IRC client.
         , ("M-S-b", spawn "transmission-gtk") -- Opens the torrent client.
         , ("M-S-e", spawn "mousepad") -- Opens the text editor.
         , ("M-S-r", spawnTerminal "ranger") -- Opens the file browser.

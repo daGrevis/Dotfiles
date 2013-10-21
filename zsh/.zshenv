@@ -84,15 +84,6 @@ function aux {
 
 alias :q=exit
 
-# function hexchat {
-#     ps cax | grep hexchat > /dev/null
-#     if [ $? -eq 0 ]; then
-#         /usr/bin/hexchat -ec "gui show"
-#     else
-#         /usr/bin/hexchat
-#     fi
-# }
-
 function remove_orphans {
     sudo pacman -Rns $(pacman -Qqtd)
 }
