@@ -19,11 +19,11 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-"Bundle 'altercation/vim-colors-solarized'
 "Bundle 'tomasr/molokai'
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'austintaylor/vim-indentobject'
+Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
@@ -53,7 +53,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme luna
+colorscheme Tomorrow-Night
 " set background=light
 
 " Sets limit of history.
@@ -359,7 +359,7 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 "
 
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark', 'tagbar'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
@@ -546,6 +546,7 @@ let g:startify_bookmarks = [
                          \ "~/.xmonad/xmonad.hs",
                          \ "~/.xmobarrc",
                          \ "~/.config/chromium/Default/User StyleSheets/Custom.css",
+                         \ "~/.gtkrc-2.0",
                          \ ]
 
 " It says `Vim 7.4` in ASCII art.
@@ -656,17 +657,17 @@ if has("gui_running")
     " autocmd ColorScheme * hi LineNr guifg=#555555
 
     " luna
-    autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
-    autocmd ColorScheme * hi TabLine guibg=#2e2e2e
-    autocmd ColorScheme * hi TabLineSel guibg=#474747
-    autocmd ColorScheme * hi SignColumn guibg=#2e2e2e
-    autocmd ColorScheme * hi LineNr guifg=#616161
-    autocmd ColorScheme * hi TODO guibg=#474747
-    autocmd ColorScheme * hi Comment guifg=#616161
-    autocmd ColorScheme * hi Identifier guifg=#ff8036
-    autocmd ColorScheme * hi Function guifg=#ff8036
-    autocmd ColorScheme * hi pythonClass guifg=#ff8036
-    autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
+    " autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
+    " autocmd ColorScheme * hi TabLine guibg=#2e2e2e
+    " autocmd ColorScheme * hi TabLineSel guibg=#474747
+    " autocmd ColorScheme * hi SignColumn guibg=#2e2e2e
+    " autocmd ColorScheme * hi LineNr guifg=#616161
+    " autocmd ColorScheme * hi TODO guibg=#474747
+    " autocmd ColorScheme * hi Comment guifg=#616161
+    " autocmd ColorScheme * hi Identifier guifg=#ff8036
+    " autocmd ColorScheme * hi Function guifg=#ff8036
+    " autocmd ColorScheme * hi pythonClass guifg=#ff8036
+    " autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
 
     " solarized
     " autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
