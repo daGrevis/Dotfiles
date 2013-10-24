@@ -598,6 +598,9 @@ let g:gitgutter_eager = 0
 " Maps <S> key to toggling NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
 
+" Ignore files. Can this somehow extend from wildignore?
+let NERDTreeIgnore = ['\.pyc$']
+
 "
 " Gundo next.
 "
