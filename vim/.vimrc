@@ -19,14 +19,15 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
+"Bundle 'chriskempson/vim-tomorrow-theme'
 "Bundle 'tomasr/molokai'
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'austintaylor/vim-indentobject'
-Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
+Bundle 'guns/jellyx.vim'
 Bundle 'itchyny/lightline.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
@@ -53,7 +54,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme Tomorrow-Night
+colorscheme jellyx
 " set background=light
 
 " Sets limit of history.
@@ -212,7 +213,7 @@ noremap <Leader>cc :set colorcolumn=
 noremap <Leader>ft :set filetype=
 
 " Searches for diff delimiter.
-noremap <Leader>d /\v\={4,}<CR>
+noremap <Leader>d /\v\={4,}\|\<{4,}\|\>{4,}<CR>
 
 " Allows to quickly blame people. I like to do that.....
 noremap <Leader>gb :Gblame<CR>
@@ -555,8 +556,6 @@ let g:startify_custom_header = [
                                \ '',
                                \ ]
 
-let g:startify_custom_footer = [''] + map(split(system('fortune | cowsay -f tux.cow'), '\n'), '"   ". v:val') + ['','']
-
 " Doesn't change the directory when going to a file from Startify.
 let g:startify_change_to_dir = 0
 
@@ -613,7 +612,7 @@ nmap <Leader>u :GundoToggle<CR>
 "
 
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 2
+let g:indent_guides_color_change_percent = 4
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
