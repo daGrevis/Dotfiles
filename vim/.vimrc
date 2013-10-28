@@ -316,6 +316,7 @@ au BufWritePost *.coffee silent! copen!
 
 " Abbrevs next.
 iabbrev teh the
+iabbrev fro for
 
 " 42.
 nnoremap <Leader>42 :help 42<CR>
@@ -554,8 +555,6 @@ let g:startify_custom_header = [
                                \ '   \/||\/| "/.+|',
                                \ '',
                                \ ]
-
-let g:startify_custom_footer = [''] + map(split(system('fortune | cowsay -f tux.cow'), '\n'), '"   ". v:val') + ['','']
 
 " Doesn't change the directory when going to a file from Startify.
 let g:startify_change_to_dir = 0
