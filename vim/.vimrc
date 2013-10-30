@@ -319,8 +319,17 @@ au BufWritePost *.coffee silent! copen!
 iabbrev teh the
 iabbrev fro for
 
-" 42.
-nnoremap <Leader>42 :help 42<CR>
+function Custom_jump(motion) range
+    let cnt = v:count1
+    let save = @/
+    mark '
+    while cnt > 0
+        silent! exe a:motion
+        let cnt = cnt - 1
+    endwhile
+    call histdel('/', -1)
+    let @/ = save
+endfun
 
 " Things related to plugins next.
 
