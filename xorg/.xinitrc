@@ -42,7 +42,7 @@ xmobar &
 trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 250 &
 
 # Sets background.
-feh --bg-center ~/Pictures/cat.jpg &
+feh --bg-scale ~/Pictures/ink_arch_by_deckon-d3hxm5b.jpg &
 
 # Clipboard manager.
 parcellite &
