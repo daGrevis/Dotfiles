@@ -97,3 +97,5 @@ function start_lamp {
     sudo systemctl restart httpd
     sudo systemctl restart mysqld
 }
+
+alias time=/usr/bin/time

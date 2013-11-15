@@ -15,7 +15,7 @@ fi
 { sudo ntpd -qg; sudo hwclock -w; } &
 
 # Sets 2nd monitor usable.
-xrandr --output VGA-1 --auto --left-of DVI-I-1
+xrandr --output HDMI3 --auto --output HDMI2 --auto --right-of HDMI3
 
 # Sets cursor.
 xsetroot -cursor_name left_ptr
@@ -44,17 +44,14 @@ trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --ali
 # Sets background.
 feh --bg-scale ~/Pictures/ink_arch_by_deckon-d3hxm5b.jpg &
 
-# Clipboard manager.
-parcellite &
-
-# Calendar, contacts, tasks, notes etc..
-osmo &
-
 # Starts Chromium in background.
 chromium --disable-sync-preferences --no-startup-window &
 
 # Starts Thunar in background.
 thunar --daemon &
+
+# Clipboard manager.
+clipit --daemon &
 
 # Starts Dropbox in background.
 dropboxd &
