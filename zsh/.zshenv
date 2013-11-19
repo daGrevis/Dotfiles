@@ -34,7 +34,7 @@ function current_branch() {
 }
 
 # Tons of Git alias I'm trying to use daily.
-alias gad='git add'
+alias gad='git add --ignore-removal'
 alias gbr='git branch'
 alias gcl='git clone'
 alias gcm='git commit'
@@ -97,3 +97,5 @@ function start_lamp {
     sudo systemctl restart httpd
     sudo systemctl restart mysqld
 }
+
+alias time=/usr/bin/time

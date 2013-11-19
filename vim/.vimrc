@@ -19,15 +19,15 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-"Bundle 'chriskempson/vim-tomorrow-theme'
-"Bundle 'tomasr/molokai'
+" Bundle 'chriskempson/vim-tomorrow-theme'
+" Bundle 'guns/jellyx.vim'
+" Bundle 'tomasr/molokai'
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
-Bundle 'guns/jellyx.vim'
 Bundle 'itchyny/lightline.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
@@ -54,7 +54,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme jellyx
+colorscheme jellybeans
 " set background=light
 
 " Sets limit of history.
@@ -319,8 +319,17 @@ au BufWritePost *.coffee silent! copen!
 iabbrev teh the
 iabbrev fro for
 
-" 42.
-nnoremap <Leader>42 :help 42<CR>
+function Custom_jump(motion) range
+    let cnt = v:count1
+    let save = @/
+    mark '
+    while cnt > 0
+        silent! exe a:motion
+        let cnt = cnt - 1
+    endwhile
+    call histdel('/', -1)
+    let @/ = save
+endfun
 
 " Things related to plugins next.
 
@@ -613,7 +622,7 @@ nmap <Leader>u :GundoToggle<CR>
 "
 
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 4
+let g:indent_guides_color_change_percent = 2
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
