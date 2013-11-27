@@ -19,16 +19,15 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-" Bundle 'chriskempson/vim-tomorrow-theme'
-" Bundle 'guns/jellyx.vim'
-" Bundle 'tomasr/molokai'
+Bundle "bling/vim-airline"
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'austintaylor/vim-indentobject'
+Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
+Bundle 'flazz/vim-colorschemes'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
-Bundle 'itchyny/lightline.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
@@ -54,7 +53,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " Sets fave color scheme.
-colorscheme jellybeans
+colorscheme base16-default
 " set background=light
 
 " Sets limit of history.
@@ -285,6 +284,9 @@ noremap <Leader>pd A<CR>from pprint import pprint
                         \<CR>
                         \print("#" * 80)<Esc>k$
 
+" Interactive debugging in Python.
+noremap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
+
 " Simple debugging in PHP.
 noremap <Leader>hd A<CR><pre>
                         \<CR>
@@ -346,9 +348,6 @@ noremap <Leader>ta :tabe \| Ack  **/*<C-Left><Left>
 " Searched for a word under the cursor in a new tab.
 nnoremap <C-f> yiw:tabe \| Ack <C-r>" **/*
 
-" Use The Silver Searcher.
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
 "
 " CtrlP next.
 "
@@ -364,181 +363,6 @@ let g:ctrlp_match_window_bottom = 0
 "
 
 let delimitMate_nesting_quotes = ["'", '"', '`']
-
-"
-" Lightline next.
-"
-
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark', 'tagbar'] ],
-      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'MyFugitive',
-      \   'filename': 'MyFilename',
-      \   'fileformat': 'MyFileformat',
-      \   'filetype': 'MyFiletype',
-      \   'fileencoding': 'MyFileencoding',
-      \   'mode': 'MyMode',
-      \   'ctrlpmark': 'CtrlPMark',
-      \ },
-      \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag',
-      \ },
-      \ 'component_type': {
-      \   'syntastic': 'error',
-      \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
-      \ 'component': {
-      \   'tagbar': '%{tagbar#currenttag("[%s]", "", "f")}',
-      \ },
-      \ 'tab_component_function': {
-      \   'filename': 'MyTabFilename',
-      \ },
-      \ }
-
-function! MyModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable
-         \ ? '' : '-'
-endfunction
-
-function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '<U+2B64>' : ''
-endfunction
-
-function! MyFilename()
-  let n = tabpagenr()
-  let buflist = tabpagebuflist(n)
-  let winnr = tabpagewinnr(n)
-  let bufnum = buflist[winnr - 1]
-  let bufname = expand('#'.bufnum.':t')
-  let buffullname = expand('#'.bufnum.':p')
-  let buffullnames = []
-  let bufnames = []
-  for i in range(1, tabpagenr('$'))
-    if i != n
-      let num = tabpagebuflist(i)[tabpagewinnr(i) - 1]
-      call add(buffullnames, expand('#' . num . ':p'))
-      call add(bufnames, expand('#' . num . ':t'))
-    endif
-  endfor
-  let i = index(bufnames, bufname)
-  if strlen(bufname) && i >= 0 && buffullnames[i] != buffullname
-    return substitute(buffullname, '.*/\([^/]\+/\)', '\1', '')
-  else
-    return strlen(bufname) ? bufname : '[No Name]'
-  endif
-endfunction
-
-function! MyFugitive()
-  try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = '⭠ '
-      let _ = fugitive#head()
-      return strlen(_) ? mark._ : ''
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
-function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-
-function! MyFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-endfunction
-
-function! MyMode()
-  let fname = expand('%:t')
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! MyTabFilename(n)
-  let buflist = tabpagebuflist(a:n)
-  let winnr = tabpagewinnr(a:n)
-  let bufnum = buflist[winnr - 1]
-  let bufname = expand('#'.bufnum.':t')
-  let buffullname = expand('#'.bufnum.':p')
-  let buffullnames = []
-  let bufnames = []
-  for i in range(1, tabpagenr('$'))
-    if i != a:n
-      let num = tabpagebuflist(i)[tabpagewinnr(i) - 1]
-      call add(buffullnames, expand('#' . num . ':p'))
-      call add(bufnames, expand('#' . num . ':t'))
-    endif
-  endfor
-  let i = index(bufnames, bufname)
-  if strlen(bufname) && i >= 0 && buffullnames[i] != buffullname
-    return substitute(buffullname, '.*/\([^/]\+/\)', '\1', '')
-  else
-    return strlen(bufname) ? bufname : '[No Name]'
-  endif
-endfunction
-
-function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP'
-    call lightline#link('iR'[g:lightline.ctrlp_regex])
-    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-          \ , g:lightline.ctrlp_next], 0)
-  else
-    return ''
-  endif
-endfunction
-
-let g:ctrlp_status_func = {
-  \ 'main': 'CtrlPStatusFunc_1',
-  \ 'prog': 'CtrlPStatusFunc_2',
-  \ }
-
-function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
-  let g:lightline.ctrlp_regex = a:regex
-  let g:lightline.ctrlp_prev = a:prev
-  let g:lightline.ctrlp_item = a:item
-  let g:lightline.ctrlp_next = a:next
-  return lightline#statusline(0)
-endfunction
-
-function! CtrlPStatusFunc_2(str)
-  return lightline#statusline(0)
-endfunction
-
-let g:tagbar_status_func = 'TagbarStatusFunc'
-
-function! TagbarStatusFunc(current, sort, fname, ...) abort
-    let g:lightline.fname = a:fname
-  return lightline#statusline(0)
-endfunction
-
-augroup AutoSyntastic
-  autocmd!
-  autocmd BufWritePost * call s:syntastic()
-augroup END
-function! s:syntastic()
-  SyntasticCheck
-  call lightline#update()
-endfunction
-
-let g:unite_force_overwrite_statusline = 0
-let g:vimfiler_force_overwrite_statusline = 0
-let g:vimshell_force_overwrite_statusline = 0
 
 "
 " Startify next.
@@ -694,10 +518,5 @@ if has("gui_running")
 else
 
     colorscheme default
-
-    let g:lightline = {
-        \ 'separator': { 'left': ' ', 'right': ' ' },
-        \ 'subseparator': { 'left': ' ', 'right': ' ' }
-        \ }
 
 endif

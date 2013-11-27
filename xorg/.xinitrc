@@ -59,5 +59,7 @@ dropboxd &
 # Adjust brighntess based on current location and other factors.
 redshift -l 57:24 &
 
+gpg-agent --daemon &
+
 # Loads WM.
 exec xmonad
