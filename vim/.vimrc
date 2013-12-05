@@ -515,6 +515,9 @@ if has("gui_running")
     " solarized dark
     " autocmd ColorScheme * hi SignColumn guibg=#073642
 
+    " base16
+    autocmd ColorScheme * hi Comment guifg=#6a6a6a
+
 else
 
     colorscheme default
