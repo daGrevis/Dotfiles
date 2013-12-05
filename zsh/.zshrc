@@ -63,3 +63,5 @@ setopt interactivecomments
 
 # Disables correction.
 unsetopt correct_all
+
+# until ping -w1 -c1 8.8.8.8; do sleep 5; done && notify-send 'Internet Connection' 'You are now connected!'
