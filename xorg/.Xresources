@@ -5,9 +5,9 @@ URxvt.font                  : xft:Hermit:size=8
 URxvt.boldFont              : xft:Hermit:bold:size=8
 URxvt.italicFont            : xft:Hermit:italic:size=8
 URxvt.lineSpace             : 4
-URxvt.transparent           : true
-URxvt.shading               : 20
-URxvt.fading                : 20
+!URxvt.transparent           : true
+!URxvt.shading               : 20
+!URxvt.fading                : 20
 URxvt.url-launcher          : xdg-open
 URxvt.matcher.button        : 1
 

@@ -30,6 +30,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
+Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'mattn/emmet-vim'
 Bundle 'mhinz/vim-startify'
@@ -51,6 +52,7 @@ Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'vim-scripts/colorizer'
 
 " Sets fave color scheme.
 colorscheme base16-default
@@ -448,6 +450,16 @@ nmap <Leader>u :GundoToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_color_change_percent = 2
 
+"
+" Rainbow-paretheses next.
+"
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+au Syntax * RainbowParenthesesLoadChevrons
+
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
 
@@ -515,8 +527,28 @@ if has("gui_running")
     " solarized dark
     " autocmd ColorScheme * hi SignColumn guibg=#073642
 
-    " base16
-    autocmd ColorScheme * hi Comment guifg=#6a6a6a
+    " " base16-tomorrow
+    " " #969896 darken by 20%.
+    " autocmd ColorScheme * hi Comment guifg=#636563
+    " " #969896 darken by 10%.
+    " autocmd ColorScheme * hi LineNr guifg=#7d7f7d
+    " " Default yellow.
+    " autocmd ColorScheme * hi CursorLineNr guifg=#ffff60
+    " autocmd ColorScheme * hi StartifySection guifg=#cc6666
+    " autocmd ColorScheme * hi StartifyNumber guifg=#f0c674
+    " autocmd ColorScheme * hi StartifyBracket guifg=#de935f
+    " autocmd ColorScheme * hi Cursor guibg=#de935f
+
+    " base16-default
+    autocmd ColorScheme * hi Comment guifg=#505050
+    autocmd ColorScheme * hi LineNr guifg=#505050
+    autocmd ColorScheme * hi TODO guibg=#ac4142 guifg=#f5f5f5
+    " Default yellow.
+    autocmd ColorScheme * hi CursorLineNr guifg=#ffff60
+    autocmd ColorScheme * hi StartifySection guifg=#ac4142
+    autocmd ColorScheme * hi StartifyNumber guifg=#f4bf75
+    autocmd ColorScheme * hi StartifyBracket guifg=#d28445
+    autocmd ColorScheme * hi Cursor guibg=#f5f5f5
 
 else
 
