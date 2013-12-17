@@ -23,8 +23,17 @@ xsetroot -cursor_name left_ptr
 # Keyboard layout.
 setxkbmap -layout lv
 
-# Makes Caps another Ctrl.
-setxkbmap -option ctrl:nocaps
+# Make caps as control and escape at the same time. Based on super-caps by cmatheson.
+xmodmap -e 'clear Lock'
+xmodmap -e 'keycode 25 = Control_L'
+xmodmap -e 'add Control = Control_L'
+xmodmap -e 'keysym Escape = Caps_Lock'
+xmodmap -e 'add Lock = Caps_Lock'
+xmodmap -e 'keycode 999 = Escape'
+xcape -e 'Control_L=Escape'
+# Maps escape and left control to no-op.
+xmodmap -e 'keycode 9 ='
+xmodmap -e 'keycode 25 ='
 
 # Loads `.Xresources`.
 xrdb ~/.Xresources
