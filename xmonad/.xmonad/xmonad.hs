@@ -45,8 +45,7 @@ main = do
         , ("M-S-m", spawnTerminal "alsamixer") -- Opens the sound mixer.
         , ("M-S-a", spawnTerminal "ipython2") -- Opens iPython (for Py2).
 
-        , ("<Print>", spawn "scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'") -- Takes screenshot.
-        , ("M-S-<Print>", spawn "scrot '%Y-%m-%d_%X__$wx$h.png' -q 100 -e 'mv $f ~/Screenshots/'") -- Takes screenshot in HQ.
+        , ("<Print>", spawn "xfce4-screenshooter") -- Takes screenshot.
         , ("M-<Print>", spawn "sleep 0.2; scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/' -s") -- Takes screenshot by selecting area.
 
         , ("M-,", spawn "Scripts/toggle_trackpad.sh") -- Toggles trackpad.
