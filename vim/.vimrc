@@ -23,6 +23,7 @@ Bundle "bling/vim-airline"
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'austintaylor/vim-indentobject'
+Bundle 'bilalq/lite-dfm'
 Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
 Bundle 'flazz/vim-colorschemes'
@@ -52,11 +53,12 @@ Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'vim-scripts/VimClojure'
 Bundle 'vim-scripts/colorizer'
 
 " Sets fave color scheme.
 colorscheme base16-default
-" set background=light
+set background=dark
 
 " Sets limit of history.
 set history=5000
@@ -451,14 +453,10 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_color_change_percent = 2
 
 "
-" Rainbow-paretheses next.
+" LiteDFM next.
 "
 
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-au Syntax * RainbowParenthesesLoadChevrons
+nnoremap <F11> :LiteDFMToggle<CR>
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")

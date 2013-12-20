@@ -23,11 +23,9 @@ xsetroot -cursor_name left_ptr
 # Keyboard layout.
 setxkbmap -layout lv
 
-if [ $(hostname) = "haze" ]; then
-    ESCAPE_KEYCODE=9
-    CAPS_KEYCODE=66
-    LCONTROL_KEYCODE=37
-fi;
+ESCAPE_KEYCODE=9
+CAPS_KEYCODE=66
+LCONTROL_KEYCODE=37
 
 # Make caps as control and escape at the same time. Based on super-caps by cmatheson.
 xmodmap -e "clear Lock"
