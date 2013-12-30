@@ -19,31 +19,29 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-Bundle "bling/vim-airline"
+Bundle 'bling/vim-airline'
 Bundle 'Raimondi/delimitMate'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'bilalq/lite-dfm'
 Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
-Bundle 'flazz/vim-colorschemes'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
+Bundle 'guns/vim-clojure-static'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
-Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'oblitum/rainbow'
 Bundle 'majutsushi/tagbar'
 Bundle 'mattn/emmet-vim'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
-Bundle 'nanotech/jellybeans.vim'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
-Bundle 'suan/vim-instant-markdown'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-fugitive'
@@ -53,7 +51,6 @@ Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'vim-scripts/VimClojure'
 Bundle 'vim-scripts/colorizer'
 
 " Sets fave color scheme.
@@ -473,6 +470,16 @@ let g:indent_guides_color_change_percent = 2
 "
 
 nnoremap <F11> :LiteDFMToggle<CR>
+
+"
+" Rainbow next.
+"
+
+" Sensible.vim and Rainbow.vim conflicted. Hack-on!
+let g:syntax_on = 1
+syntax enable
+
+au FileType lisp,clojure RainbowLoad
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
