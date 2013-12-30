@@ -2,9 +2,9 @@
 
 **So awesome they should be banned!**
 
-This is how it looked on September 5th, 2013.
+This is how it looked on December 30th, 2013.
 
-![Desktop](https://raw.github.com/daGrevis/Dotfiles/master/desktop.jpg)
+![Desktop](https://dl.dropboxusercontent.com/u/3674268/dotfiles.jpg)
 
 ## Installation
 
