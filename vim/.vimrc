@@ -110,9 +110,15 @@ noremap <M-8> :tabnext 8<CR>
 noremap <M-9> :tabnext 9<CR>
 noremap <M-0> :tablast<CR>
 
-" Pastes contents to vpaste.net.
-map <Leader>zz :exec "w !vpaste.sh ft=".&ft<CR>
-vmap <Leader>zz <ESC>:exec "'<,'>w !vpaste.sh ft=".&ft<CR>
+" Pastes content to pasting service. Works in normal mode (whole buffer) or
+" visual mode (selection only).
+map <Leader>zz :exec "w !LINK=$(curl -F 'text=<-' 'http://vpaste.net/?nu&ft="
+                     \ . &ft . "') && echo -n $LINK \| xclip -i && "
+                     \ . "echo -n $LINK \| xclip -i -selection clipboard"<CR>
+vmap <Leader>zz <Esc>:exec "'<,'>w !LINK=$(curl -F 'text=<-' "
+                           \ . "'http://vpaste.net/?ft=" . &ft . "') && "
+                           \ . "echo -n $LINK \| xclip -i && echo -n $LINK \| "
+                           \ . "xclip -i -selection clipboard"<CR>
 
 " Maps <S-Tab> to toggling Tagbar.
 noremap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
@@ -336,6 +342,16 @@ function Custom_jump(motion) range
     call histdel('/', -1)
     let @/ = save
 endfun
+
+func! ExecuteClojure()
+    exec "!lein exec %"
+endfun
+command! ExecuteClojure call ExecuteClojure()
+
+func! ExecutePython()
+    exec "!python %"
+endfun
+command! ExecutePython call ExecutePython()
 
 " Things related to plugins next.
 

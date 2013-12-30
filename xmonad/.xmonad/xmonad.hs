@@ -56,5 +56,5 @@ main = do
         , ("M-[", spawn "Scripts/decrement_brightness.sh") -- Decrements brightness.
         , ("M-]", spawn "Scripts/increment_brightness.sh") -- Increments brightness.
 
-        , ("M-<Space>", cycleRecentWS [xK_space] xK_Tab xK_grave) -- Switches back to the last used workspace.
+        , ("M-S-<Space>", cycleRecentWS [xK_space] xK_Tab xK_grave) -- Switches back to the last used workspace.
         ]
