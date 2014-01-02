@@ -28,7 +28,7 @@ Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
-Bundle 'guns/vim-clojure-static'
+Bundle 'vim-scripts/VimClojure'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'oblitum/rainbow'
@@ -513,63 +513,63 @@ if has("gui_running")
     " Fix all the colorschemes at runtime!
 
     " hornet
-    " autocmd ColorScheme * hi TabLine guibg=#303030
-    " autocmd ColorScheme * hi TabLineFill guifg=#303030
-    " autocmd ColorScheme * hi LineNr guifg=#757575
-    " autocmd ColorScheme * hi SignColumn guibg=#303030
+    " autocmd VimEnter * hi TabLine guibg=#303030
+    " autocmd VimEnter * hi TabLineFill guifg=#303030
+    " autocmd VimEnter * hi LineNr guifg=#757575
+    " autocmd VimEnter * hi SignColumn guibg=#303030
 
     " busybee
-    " autocmd ColorScheme * hi TabLine guibg=#202020
-    " autocmd ColorScheme * hi TabLine guifg=#e2e2e5
-    " autocmd ColorScheme * hi TabLineFill guifg=#202020
-    " autocmd ColorScheme * hi SignColumn guibg=#202020
-    " autocmd ColorScheme * hi LineNr guifg=#555555
+    " autocmd VimEnter * hi TabLine guibg=#202020
+    " autocmd VimEnter * hi TabLine guifg=#e2e2e5
+    " autocmd VimEnter * hi TabLineFill guifg=#202020
+    " autocmd VimEnter * hi SignColumn guibg=#202020
+    " autocmd VimEnter * hi LineNr guifg=#555555
 
     " luna
-    " autocmd ColorScheme * hi TabLineFill guifg=#2e2e2e
-    " autocmd ColorScheme * hi TabLine guibg=#2e2e2e
-    " autocmd ColorScheme * hi TabLineSel guibg=#474747
-    " autocmd ColorScheme * hi SignColumn guibg=#2e2e2e
-    " autocmd ColorScheme * hi LineNr guifg=#616161
-    " autocmd ColorScheme * hi TODO guibg=#474747
-    " autocmd ColorScheme * hi Comment guifg=#616161
-    " autocmd ColorScheme * hi Identifier guifg=#ff8036
-    " autocmd ColorScheme * hi Function guifg=#ff8036
-    " autocmd ColorScheme * hi pythonClass guifg=#ff8036
-    " autocmd ColorScheme * hi rubyArrayDelimiter guifg=#ff8036
+    " autocmd VimEnter * hi TabLineFill guifg=#2e2e2e
+    " autocmd VimEnter * hi TabLine guibg=#2e2e2e
+    " autocmd VimEnter * hi TabLineSel guibg=#474747
+    " autocmd VimEnter * hi SignColumn guibg=#2e2e2e
+    " autocmd VimEnter * hi LineNr guifg=#616161
+    " autocmd VimEnter * hi TODO guibg=#474747
+    " autocmd VimEnter * hi Comment guifg=#616161
+    " autocmd VimEnter * hi Identifier guifg=#ff8036
+    " autocmd VimEnter * hi Function guifg=#ff8036
+    " autocmd VimEnter * hi pythonClass guifg=#ff8036
+    " autocmd VimEnter * hi rubyArrayDelimiter guifg=#ff8036
 
     " solarized
-    " autocmd ColorScheme * hi TODO guibg=#dc322f guifg=#073642
-    " autocmd ColorScheme * hi PmenuSel guifg=#b58900
+    " autocmd VimEnter * hi TODO guibg=#dc322f guifg=#073642
+    " autocmd VimEnter * hi PmenuSel guifg=#b58900
 
     " solarized light
-    " autocmd ColorScheme * hi SignColumn guibg=#eee8d5
+    " autocmd VimEnter * hi SignColumn guibg=#eee8d5
 
     " solarized dark
-    " autocmd ColorScheme * hi SignColumn guibg=#073642
+    " autocmd VimEnter * hi SignColumn guibg=#073642
 
     " " base16-tomorrow
     " " #969896 darken by 20%.
-    " autocmd ColorScheme * hi Comment guifg=#636563
+    " autocmd VimEnter * hi Comment guifg=#636563
     " " #969896 darken by 10%.
-    " autocmd ColorScheme * hi LineNr guifg=#7d7f7d
+    " autocmd VimEnter * hi LineNr guifg=#7d7f7d
     " " Default yellow.
-    " autocmd ColorScheme * hi CursorLineNr guifg=#ffff60
-    " autocmd ColorScheme * hi StartifySection guifg=#cc6666
-    " autocmd ColorScheme * hi StartifyNumber guifg=#f0c674
-    " autocmd ColorScheme * hi StartifyBracket guifg=#de935f
-    " autocmd ColorScheme * hi Cursor guibg=#de935f
+    " autocmd VimEnter * hi CursorLineNr guifg=#ffff60
+    " autocmd VimEnter * hi StartifySection guifg=#cc6666
+    " autocmd VimEnter * hi StartifyNumber guifg=#f0c674
+    " autocmd VimEnter * hi StartifyBracket guifg=#de935f
+    " autocmd VimEnter * hi Cursor guibg=#de935f
 
     " base16-default
-    autocmd ColorScheme * hi Comment guifg=#505050
-    autocmd ColorScheme * hi LineNr guifg=#505050
-    autocmd ColorScheme * hi TODO guibg=#ac4142 guifg=#f5f5f5
+    autocmd VimEnter * hi Comment guifg=#505050
+    autocmd VimEnter * hi LineNr guifg=#505050
+    autocmd VimEnter * hi TODO guibg=#ac4142 guifg=#f5f5f5
     " Default yellow.
-    autocmd ColorScheme * hi CursorLineNr guifg=#ffff60
-    autocmd ColorScheme * hi StartifySection guifg=#ac4142
-    autocmd ColorScheme * hi StartifyNumber guifg=#f4bf75
-    autocmd ColorScheme * hi StartifyBracket guifg=#d28445
-    autocmd ColorScheme * hi Cursor guibg=#f5f5f5
+    autocmd VimEnter * hi CursorLineNr guifg=#ffff60
+    autocmd VimEnter * hi StartifySection guifg=#ac4142
+    autocmd VimEnter * hi StartifyNumber guifg=#f4bf75
+    autocmd VimEnter * hi StartifyBracket guifg=#d28445
+    autocmd VimEnter * hi Cursor guibg=#f5f5f5
 
 else
 
