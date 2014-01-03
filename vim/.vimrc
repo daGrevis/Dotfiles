@@ -21,7 +21,7 @@ Bundle 'gmarik/vundle'
 
 Bundle 'bling/vim-airline'
 Bundle 'Raimondi/delimitMate'
-Bundle 'airblade/vim-gitgutter'
+Bundle 'mhinz/vim-signify'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'bilalq/lite-dfm'
 Bundle 'chriskempson/base16-vim'
@@ -52,6 +52,8 @@ Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
 
 " Sets fave color scheme.
 colorscheme base16-default
