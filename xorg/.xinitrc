@@ -72,6 +72,7 @@ dropboxd &
 # Adjust brighntess based on current location and other factors.
 redshift -l 57:24 &
 
+# Starts GnuPG-agent.
 gpg-agent --daemon &
 
 # Loads WM.

@@ -387,8 +387,8 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 " Startify next.
 "
 
-" Closes Startify when CtrlP opens a file.
-let g:ctrlp_reuse_window = "startify"
+" Closes Startify when NERDTree or CtrlP opens a buffer.
+autocmd FileType startify setlocal buftype=
 
 let g:startify_show_files_number = 20
 let g:startify_bookmarks = [
