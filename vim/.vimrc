@@ -56,7 +56,7 @@ Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 
 " Sets fave color scheme.
-colorscheme base16-default
+colorscheme base16-eighties
 set background=dark
 
 " Sets limit of history.
@@ -563,15 +563,15 @@ if has("gui_running")
     " autocmd VimEnter * hi Cursor guibg=#de935f
 
     " base16-default
-    autocmd VimEnter * hi Comment guifg=#505050
-    autocmd VimEnter * hi LineNr guifg=#505050
-    autocmd VimEnter * hi TODO guibg=#ac4142 guifg=#f5f5f5
+    " autocmd VimEnter * hi Comment guifg=#505050
+    " autocmd VimEnter * hi LineNr guifg=#505050
+    " autocmd VimEnter * hi TODO guibg=#ac4142 guifg=#f5f5f5
     " Default yellow.
     autocmd VimEnter * hi CursorLineNr guifg=#ffff60
-    autocmd VimEnter * hi StartifySection guifg=#ac4142
-    autocmd VimEnter * hi StartifyNumber guifg=#f4bf75
-    autocmd VimEnter * hi StartifyBracket guifg=#d28445
-    autocmd VimEnter * hi Cursor guibg=#f5f5f5
+    " autocmd VimEnter * hi StartifySection guifg=#ac4142
+    " autocmd VimEnter * hi StartifyNumber guifg=#f4bf75
+    " autocmd VimEnter * hi StartifyBracket guifg=#d28445
+    " autocmd VimEnter * hi Cursor guibg=#f5f5f5
 
 else
 
