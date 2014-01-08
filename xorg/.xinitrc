@@ -55,7 +55,7 @@ xmobar &
 trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
 
 # Sets background.
-feh --bg-scale ~/Pictures/traffic-lights.jpg &
+feh --bg-scale ~/Pictures/ink_arch_by_deckon-d3hxm5b.jpg
 
 # Starts Chromium in background.
 chromium --disable-sync-preferences --no-startup-window &

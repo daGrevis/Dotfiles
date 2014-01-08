@@ -12,24 +12,24 @@ URxvt.url-launcher          : xdg-open
 URxvt.matcher.button        : 1
 
 ! Tango
-URxvt.foreground : #f2f2f2
-URxvt.background : #101010
-URxvt.color0     : #101010
-URxvt.color1     : #f13a21
-URxvt.color2     : #93f91d
-URxvt.color3     : #ffd00a
-URxvt.color4     : #004f9e
-URxvt.color5     : #ec0048
-URxvt.color6     : #2aa7e7
-URxvt.color7     : #f2f2f2
-URxvt.color8     : #1d202f
-URxvt.color9     : #ff361e
-URxvt.color10    : #ffc005
-URxvt.color11    : #93ff00
-URxvt.color12    : #0071ff
-URxvt.color13    : #ef0051
-URxvt.color14    : #4bb8fd
-URxvt.color15    : #a020f0
+!URxvt.foreground : #f2f2f2
+!URxvt.background : #101010
+!URxvt.color0     : #101010
+!URxvt.color1     : #f13a21
+!URxvt.color2     : #93f91d
+!URxvt.color3     : #ffd00a
+!URxvt.color4     : #004f9e
+!URxvt.color5     : #ec0048
+!URxvt.color6     : #2aa7e7
+!URxvt.color7     : #f2f2f2
+!URxvt.color8     : #1d202f
+!URxvt.color9     : #ff361e
+!URxvt.color10    : #ffc005
+!URxvt.color11    : #93ff00
+!URxvt.color12    : #0071ff
+!URxvt.color13    : #ef0051
+!URxvt.color14    : #4bb8fd
+!URxvt.color15    : #a020f0
 
 ! Solarized
 !#define S_yellow  #b58900
@@ -77,3 +77,40 @@ URxvt.color15    : #a020f0
 !URxvt.color13     : S_violet
 !URxvt.color14     : S_base1
 !URxvt.color15     : S_base3
+
+! Base16
+#define base00 #151515
+#define base01 #202020
+#define base02 #303030
+#define base03 #505050
+#define base04 #b0b0b0
+#define base05 #d0d0d0
+#define base06 #e0e0e0
+#define base07 #f5f5f5
+#define base08 #ac4142
+#define base09 #d28445
+#define base0A #f4bf75
+#define base0B #90a959
+#define base0C #75b5aa
+#define base0D #6a9fb5
+#define base0E #aa759f
+#define base0F #8f5536
+URxvt.foreground  : base05
+URxvt.background  : base00
+URxvt.cursorColor : base05
+URxvt.color0      : base00
+URxvt.color1      : base08
+URxvt.color2      : base0B
+URxvt.color3      : base0A
+URxvt.color4      : base02
+URxvt.color5      : base0E
+URxvt.color6      : base0C
+URxvt.color7      : base05
+URxvt.color8      : base03
+URxvt.color9      : base09
+URxvt.color10     : base05
+URxvt.color11     : base02
+URxvt.color12     : base04
+URxvt.color13     : base06
+URxvt.color14     : base0F
+URxvt.color15     : base07
