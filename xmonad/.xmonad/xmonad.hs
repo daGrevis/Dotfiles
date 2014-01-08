@@ -33,8 +33,7 @@ main = do
         , ("M-S-l", spawn "xscreensaver-command -lock") -- Starts the screensaver.
 
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
-        , ("M-C-s", spawn "skype --dbpath=~/.Skype2") -- Opens the 2nd instance of Skype.
-        , ("M-S-a", spawnTerminal "ipython2") -- Opens iPython (for Py2).
+        , ("M-S-a", spawnTerminal "ipython") -- Opens REPL for Python.
         , ("M-S-b", spawn "transmission-gtk") -- Opens the torrent client.
         , ("M-S-d", spawnTerminal "glances") -- Opens the system profiler.
         , ("M-S-e", spawn "mousepad") -- Opens the text editor.
@@ -42,7 +41,7 @@ main = do
         , ("M-S-i", spawn "chromium") -- Opens the browser.
         , ("M-S-m", spawnTerminal "alsamixer") -- Opens the sound mixer.
         , ("M-S-r", spawnTerminal "ranger") -- Opens the file browser.
-        , ("M-S-s", spawn "skype") -- Opens Skype.
+        , ("M-S-s", spawnTerminal "lein repl") -- Opens REPL for Clojure.
         , ("M-S-t", spawn "thunar") -- Opens another file browser.
         , ("M-S-v", spawn "gvim") -- Opens the ultimate text editor.
         , ("M-S-n", spawn "chromium --new-window https://play.spotify.com/playlist") -- Opens Spotify.
