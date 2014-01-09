@@ -19,25 +19,27 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-Bundle 'bling/vim-airline'
 Bundle 'Raimondi/delimitMate'
-Bundle 'mhinz/vim-signify'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'bilalq/lite-dfm'
+Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
-Bundle 'vim-scripts/VimClojure'
+Bundle 'guns/vim-sexp'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
-Bundle 'oblitum/rainbow'
 Bundle 'majutsushi/tagbar'
 Bundle 'mattn/emmet-vim'
+Bundle 'mattn/gist-vim'
+Bundle 'mattn/webapi-vim'
+Bundle 'mhinz/vim-signify'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
 Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'oblitum/rainbow'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
@@ -49,11 +51,11 @@ Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-sensible'
+Bundle 'tpope/vim-sexp-mappings-for-regular-people'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'vim-scripts/VimClojure'
 Bundle 'vim-scripts/colorizer'
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
 
 " Sets fave color scheme.
 colorscheme base16-eighties
@@ -482,6 +484,13 @@ let g:syntax_on = 1
 syntax enable
 
 au FileType lisp,clojure RainbowLoad
+
+"
+" Sexp next.
+"
+
+" Disables mappings in insert mode.
+let g:sexp_enable_insert_mode_mappings = 0
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
