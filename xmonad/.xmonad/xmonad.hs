@@ -32,10 +32,12 @@ main = do
 
         , ("M-S-l", spawn "xscreensaver-command -lock") -- Starts the screensaver.
 
+        , ("M-C-x", spawn "/usr/lib/xscreensaver/phosphor -delay 7000 -scale 2 -program bash") -- Opens sh in xscreensaver.
         , ("M-C-i", spawn "chromium --incognito") -- Opens browser the in incognito mode.
         , ("M-S-a", spawnTerminal "ipython") -- Opens REPL for Python.
         , ("M-S-b", spawn "transmission-gtk") -- Opens the torrent client.
-        , ("M-S-d", spawnTerminal "glances") -- Opens the system profiler.
+        , ("M-S-d", spawnTerminal "chromium --new-window http://devdocs.io/") -- Opens DevDocsDevDocs.io.
+        , ("M-S-h", spawnTerminal "glances") -- Opens the system profiler.
         , ("M-S-e", spawn "mousepad") -- Opens the text editor.
         , ("M-S-x", spawn "ps -aux | grep hexchat | grep -v grep > /dev/null; if [ $? -eq 0 ]; then hexchat -ec 'gui show'; else hexchat; fi") -- Toggles the IRC client.
         , ("M-S-i", spawn "chromium") -- Opens the browser.

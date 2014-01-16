@@ -12,3 +12,5 @@
     tool = vimdiff
 [github]
     user = daGrevis
+[push]
+	default = simple
