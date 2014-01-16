@@ -95,8 +95,8 @@ nnoremap j gj
 nnoremap k gk
 
 " Mappings for controlling tabs.
-noremap <M-a> :tabprevious<CR>
-noremap <M-s> :tabnext<CR>
+noremap <S-j> :tabprevious<CR>
+noremap <S-k> :tabnext<CR>
 noremap <M-1> :tabnext 1<CR>
 noremap <M-2> :tabnext 2<CR>
 noremap <M-3> :tabnext 3<CR>
