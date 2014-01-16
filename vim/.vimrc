@@ -58,7 +58,7 @@ Bundle 'vim-scripts/VimClojure'
 Bundle 'vim-scripts/colorizer'
 
 " Sets fave color scheme.
-colorscheme base16-eighties
+colorscheme base16-default
 set background=dark
 
 " Sets limit of history.
@@ -70,9 +70,6 @@ set number
 
 " Highlights line which is active.
 set cursorline
-
-" Column after which coding is very bad.
-set colorcolumn=160
 
 " Fix broken Vim regexes.
 nnoremap / /\v
@@ -216,9 +213,6 @@ noremap <M-w> <C-w>v
 set splitbelow
 set splitright
 
-" Allows to quickly set color column using <Leader>cc.
-noremap <Leader>cc :set colorcolumn=
-
 " Allows to quickly set filetype using <Leader>ft.
 noremap <Leader>ft :set filetype=
 
@@ -353,6 +347,23 @@ func! ExecutePython()
     exec "!python %"
 endfun
 command! ExecutePython call ExecutePython()
+
+" Sets color-column**s**.
+let &colorcolumn="80,".join(range(160,999),",")
+
+function! HLNext (blinktime)
+    let [bufnum, lnum, col, off] = getpos('.')
+    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+    let target_pat = '\c\%#'.@/
+    let ring = matchadd('Error', target_pat, 101)
+    redraw
+    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    call matchdelete(ring)
+    redraw
+endfunction
+
+nnoremap <silent> n n:call HLNext(0.4)<CR>
+nnoremap <silent> N N:call HLNext(0.4)<CR>
 
 " Things related to plugins next.
 
@@ -572,15 +583,15 @@ if has("gui_running")
     " autocmd VimEnter * hi Cursor guibg=#de935f
 
     " base16-default
-    " autocmd VimEnter * hi Comment guifg=#505050
-    " autocmd VimEnter * hi LineNr guifg=#505050
-    " autocmd VimEnter * hi TODO guibg=#ac4142 guifg=#f5f5f5
+    autocmd VimEnter * hi Comment guifg=#505050
+    autocmd VimEnter * hi LineNr guifg=#505050
+    autocmd VimEnter * hi TODO guibg=#ac4142 guifg=#f5f5f5
     " Default yellow.
     autocmd VimEnter * hi CursorLineNr guifg=#ffff60
-    " autocmd VimEnter * hi StartifySection guifg=#ac4142
-    " autocmd VimEnter * hi StartifyNumber guifg=#f4bf75
-    " autocmd VimEnter * hi StartifyBracket guifg=#d28445
-    " autocmd VimEnter * hi Cursor guibg=#f5f5f5
+    autocmd VimEnter * hi StartifySection guifg=#ac4142
+    autocmd VimEnter * hi StartifyNumber guifg=#f4bf75
+    autocmd VimEnter * hi StartifyBracket guifg=#d28445
+    autocmd VimEnter * hi Cursor guibg=#f5f5f5
 
 else
 
