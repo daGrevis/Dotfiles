@@ -138,8 +138,8 @@ cnoremap ~w W
 cnoremap Q q
 cnoremap ~q Q
 
-" Remaps Ex-mode to no-operation.
-noremap Q <Nop>
+" Runs macro.
+noremap Q @q
 
 " Ignores files that match these patters.
 set wildignore+=*.png
@@ -351,9 +351,10 @@ command! ExecutePython call ExecutePython()
 " Sets color-column**s**.
 let &colorcolumn="80,".join(range(160,999),",")
 
-function! HLNext (blinktime)
+" Highlights next found match.
+function! HighlightNext (blinktime)
     let [bufnum, lnum, col, off] = getpos('.')
-    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+    let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
     let ring = matchadd('Error', target_pat, 101)
     redraw
@@ -362,8 +363,8 @@ function! HLNext (blinktime)
     redraw
 endfunction
 
-nnoremap <silent> n n:call HLNext(0.4)<CR>
-nnoremap <silent> N N:call HLNext(0.4)<CR>
+nnoremap <silent> n n:call HighlightNext(0.4)<CR>
+nnoremap <silent> N N:call HighlightNext(0.4)<CR>
 
 " Things related to plugins next.
 
@@ -500,6 +501,17 @@ au FileType lisp,clojure RainbowLoad
 " Sexp next.
 "
 
+"
+" Airline next.
+"
+
+" Enables tagline, but disables bufferline.
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+
+" Shows everything about code tree.
+let g:airline#extensions#tagbar#flags = 'f'
+
 " Disables mappings in insert mode.
 let g:sexp_enable_insert_mode_mappings = 0
 
@@ -583,7 +595,7 @@ if has("gui_running")
     " autocmd VimEnter * hi Cursor guibg=#de935f
 
     " base16-default
-    autocmd VimEnter * hi Comment guifg=#505050
+    autocmd VimEnter * hi Comment guifg=#b0b0b0
     autocmd VimEnter * hi LineNr guifg=#505050
     autocmd VimEnter * hi TODO guibg=#ac4142 guifg=#f5f5f5
     " Default yellow.
