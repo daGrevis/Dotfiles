@@ -21,7 +21,6 @@ Bundle 'gmarik/vundle'
 
 Bundle 'Raimondi/delimitMate'
 Bundle 'austintaylor/vim-indentobject'
-Bundle 'bilalq/lite-dfm'
 Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
@@ -503,12 +502,6 @@ nmap <Leader>u :GundoToggle<CR>
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_color_change_percent = 2
-
-"
-" LiteDFM next.
-"
-
-nnoremap <F11> :LiteDFMToggle<CR>
 
 "
 " Rainbow next.
