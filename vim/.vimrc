@@ -21,7 +21,6 @@ Bundle 'gmarik/vundle'
 
 Bundle 'Raimondi/delimitMate'
 Bundle 'austintaylor/vim-indentobject'
-Bundle 'bilalq/lite-dfm'
 Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
@@ -461,11 +460,34 @@ let g:gitgutter_eager = 0
 " NERDTree next.
 "
 
-" Maps <S> key to toggling NERDTree.
+" Maps <Tab> key to toggling NERDTree.
 nmap <Tab> :NERDTreeToggle<CR>
 
-" Ignore files. Can this somehow extend from wildignore?
-let NERDTreeIgnore = ['\.pyc$']
+" Removes all unnecessary stuff.
+let NERDTreeMinimalUI = 1
+
+" Adds arrows for directories.
+let NERDTreeDirArrows = 1
+
+" Changes width.
+let NERDTreeWinSize = 60
+
+" Respect to wildignore.
+function! s:FileGlobToRegexp(glob)
+    if a:glob =~# '^\*\.'
+        return '\.' . a:glob[2:] . '$'
+    else
+        return '^' . a:glob . '$'
+    endif
+endfunction
+function! s:SuffixToRegexp( suffix )
+    return escape(v:val, '.~') . "$"
+endfunction
+let g:NERDTreeIgnore =
+\   map(split(&wildignore, ','), 's:FileGlobToRegexp(v:val)') +
+\   map(split(&suffixes, ','), 's:SuffixToRegexp(v:val)')
+delfunction s:SuffixToRegexp
+delfunction s:FileGlobToRegexp
 
 "
 " Gundo next.
@@ -480,12 +502,6 @@ nmap <Leader>u :GundoToggle<CR>
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_color_change_percent = 2
-
-"
-" LiteDFM next.
-"
-
-nnoremap <F11> :LiteDFMToggle<CR>
 
 "
 " Rainbow next.
