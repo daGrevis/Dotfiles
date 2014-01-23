@@ -215,6 +215,9 @@ set splitright
 " Allows to quickly set filetype using <Leader>ft.
 noremap <Leader>ft :set filetype=
 
+" Allows to quickly set text-width for wrapping using <Leader>tw.
+noremap <Leader>tw :set textwidth=
+
 " Searches for diff delimiter.
 noremap <Leader>d /\v\={4,}\|\<{4,}\|\>{4,}<CR>
 
@@ -357,13 +360,21 @@ function! HighlightNext (blinktime)
     let target_pat = '\c\%#'.@/
     let ring = matchadd('Error', target_pat, 101)
     redraw
-    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    exec 'sleep ' . float2nr(a:blinktime * 400) . 'm'
     call matchdelete(ring)
     redraw
 endfunction
 
 nnoremap <silent> n n:call HighlightNext(0.4)<CR>
 nnoremap <silent> N N:call HighlightNext(0.4)<CR>
+
+" Don't redraw while executing macros.
+set lazyredraw
+
+" Remove the Windows ^M - when encodings get messed up.
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+noremap <Leader>j :join<CR>
 
 " Things related to plugins next.
 
