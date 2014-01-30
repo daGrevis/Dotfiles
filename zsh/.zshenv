@@ -102,6 +102,7 @@ alias time=/usr/bin/time
 
 function random_password {
     pwgen --ambiguous --capitalize --numerals --symbols 16
+}
 
 function sdf {
     svn diff | colordiff | less
