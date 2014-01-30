@@ -29,6 +29,7 @@ Bundle 'gregsexton/MatchTag'
 Bundle 'guns/vim-sexp'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
+Bundle 'lfilho/cosco.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'mattn/emmet-vim'
 Bundle 'mattn/gist-vim'
@@ -42,6 +43,7 @@ Bundle 'oblitum/rainbow'
 Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
+Bundle 'shawncplus/phpcomplete.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-commentary'
@@ -542,6 +544,14 @@ let g:airline#extensions#tagbar#flags = 'f'
 " Disables mappings in insert mode.
 let g:sexp_enable_insert_mode_mappings = 0
 
+"
+" Cosco next.
+"
+
+command! CommaOrSemiColon call cosco#commaOrSemiColon()
+
+nmap <Leader>; :call cosco#commaOrSemiColon()<CR>
+
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
 
@@ -566,10 +576,10 @@ if has("gui_running")
 
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
-    set guifont=Hermit\ 8
+    set guifont=Envypn\ 10
 
     " I love extra whitespace!
-    set linespace=4
+    set linespace=6
 
     " Fix all the colorschemes at runtime!
 

@@ -1,10 +1,10 @@
 URxvt.perl-ext-common       : default,matcher
 URxvt.searchable-scrollback : M-S-s
 URxvt.scrollBar             : false
-URxvt.font                  : xft:Hermit:size=8
-URxvt.boldFont              : xft:Hermit:size=8
-URxvt.italicFont            : xft:Hermit:size=8
-URxvt.lineSpace             : 4
+URxvt.font                  : xft:Envypn:size=8
+URxvt.boldFont              : xft:Envypn:size=8
+URxvt.italicFont            : xft:Envypn:size=8
+URxvt.lineSpace             : 6
 !URxvt.transparent           : true
 !URxvt.shading               : 20
 !URxvt.fading                : 20

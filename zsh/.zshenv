@@ -99,3 +99,11 @@ function start_lamp {
 }
 
 alias time=/usr/bin/time
+
+function sdf {
+    svn diff | colordiff | less
+}
+
+function slg {
+    svn log --limit 20 | less
+}
