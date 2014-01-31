@@ -357,10 +357,11 @@ let &colorcolumn="80,".join(range(160,999),",")
 
 " Highlights next found match.
 function! HighlightNext (blinktime)
+    highlight HighlightNext guibg=#ac4142 guifg=#f5f5f5
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
-    let ring = matchadd('Error', target_pat, 101)
+    let ring = matchadd('HighlightNext', target_pat, 101)
     redraw
     exec 'sleep ' . float2nr(a:blinktime * 400) . 'm'
     call matchdelete(ring)
@@ -576,10 +577,11 @@ if has("gui_running")
 
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
-    set guifont=Envypn\ 10
+    " set guifont=Envypn\ 10
+    set guifont=Meslo\ LG\ M\ 8
 
     " I love extra whitespace!
-    set linespace=6
+    set linespace=4
 
     " Fix all the colorschemes at runtime!
 

@@ -1,10 +1,10 @@
 URxvt.perl-ext-common       : default,matcher
 URxvt.searchable-scrollback : M-S-s
 URxvt.scrollBar             : false
-URxvt.font                  : xft:Envypn:size=8
-URxvt.boldFont              : xft:Envypn:size=8
-URxvt.italicFont            : xft:Envypn:size=8
-URxvt.lineSpace             : 6
+URxvt.font                  : xft:Meslo LG M:size=8
+URxvt.boldFont              : xft:Meslo LG M:size=8
+URxvt.italicFont            : xft:Meslo LG M:size=8
+URxvt.lineSpace             : 4
 !URxvt.transparent           : true
 !URxvt.shading               : 20
 !URxvt.fading                : 20
@@ -102,15 +102,15 @@ URxvt.color0      : base00
 URxvt.color1      : base08
 URxvt.color2      : base0B
 URxvt.color3      : base0A
-URxvt.color4      : base02
+URxvt.color4      : base06
 URxvt.color5      : base0E
 URxvt.color6      : base0C
 URxvt.color7      : base05
 URxvt.color8      : base03
-URxvt.color9      : base09
+URxvt.color9      : base08
 URxvt.color10     : base05
-URxvt.color11     : base02
-URxvt.color12     : base04
+URxvt.color11     : base00
+URxvt.color12     : base0B
 URxvt.color13     : base06
 URxvt.color14     : base0F
 URxvt.color15     : base07

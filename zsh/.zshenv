@@ -102,6 +102,7 @@ alias time=/usr/bin/time
 
 function random_password {
     pwgen --ambiguous --capitalize --numerals --symbols 16
+}
 
 function sdf {
     svn diff | colordiff | less
@@ -109,4 +110,16 @@ function sdf {
 
 function slg {
     svn log --limit 20 | less
+}
+
+function spl {
+    svn update
+}
+
+function scm {
+    svn commit
+}
+
+function sst {
+    svn status
 }
