@@ -111,3 +111,15 @@ function sdf {
 function slg {
     svn log --limit 20 | less
 }
+
+function spl {
+    svn update
+}
+
+function scm {
+    svn commit
+}
+
+function sst {
+    svn status
+}
