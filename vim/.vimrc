@@ -19,9 +19,9 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-Bundle 'Raimondi/delimitMate'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'bling/vim-airline'
+Bundle 'Chiel92/vim-autoformat'
 Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
@@ -41,6 +41,7 @@ Bundle 'mitsuhiko/vim-python-combined'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'oblitum/rainbow'
 Bundle 'othree/html5.vim'
+Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'shawncplus/phpcomplete.vim'
@@ -55,8 +56,8 @@ Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-sexp-mappings-for-regular-people'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'vim-scripts/VimClojure'
 Bundle 'vim-scripts/colorizer'
+Bundle 'vim-scripts/VimClojure'
 
 " Sets fave color scheme.
 colorscheme base16-default
@@ -378,6 +379,14 @@ set lazyredraw
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 noremap <Leader>j :join<CR>
+
+vnoremap <Leader>s :!sort<CR>
+
+noremap <Leader>f :Autoformat<CR>
+
+" Sources line/selection.
+nnoremap <Leader>x ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
+vnoremap <Leader>x y:execute @@<cr>:echo 'Sourced selection.'<cr>
 
 " Things related to plugins next.
 
