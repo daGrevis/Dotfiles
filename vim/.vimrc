@@ -298,11 +298,7 @@ noremap <Leader>pd A<CR>from pprint import pprint
 noremap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
 
 " Simple debugging in PHP.
-noremap <Leader>hd A<CR><pre>
-                        \<CR>
-                        \<?php print_r(); ?>
-                        \<CR>
-                        \</pre><Esc>k$F(
+noremap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
 
 " This awesomeness was removed from Sensible, but don't worry - I have learned
 " how to map things and I'm not afraid to use it!
