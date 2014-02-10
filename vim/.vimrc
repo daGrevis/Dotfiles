@@ -60,7 +60,7 @@ Bundle 'vim-scripts/colorizer'
 Bundle 'vim-scripts/VimClojure'
 
 " Sets fave color scheme.
-colorscheme base16-default
+colorscheme base16-tomorrow
 set background=dark
 
 " Sets limit of history.
@@ -298,11 +298,7 @@ noremap <Leader>pd A<CR>from pprint import pprint
 noremap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
 
 " Simple debugging in PHP.
-noremap <Leader>hd A<CR><pre>
-                        \<CR>
-                        \<?php print_r(); ?>
-                        \<CR>
-                        \</pre><Esc>k$F(
+noremap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
 
 " This awesomeness was removed from Sensible, but don't worry - I have learned
 " how to map things and I'm not afraid to use it!
@@ -587,7 +583,8 @@ if has("gui_running")
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
     " set guifont=Envypn\ 10
-    set guifont=Meslo\ LG\ M\ 8
+    " set guifont=Meslo\ LG\ M\ 8
+    set guifont=Hermit\ 8
 
     " I love extra whitespace!
     set linespace=4
@@ -630,28 +627,34 @@ if has("gui_running")
     " solarized dark
     " autocmd VimEnter * hi SignColumn guibg=#073642
 
-    " " base16-tomorrow
-    " " #969896 darken by 20%.
-    " autocmd VimEnter * hi Comment guifg=#636563
-    " " #969896 darken by 10%.
-    " autocmd VimEnter * hi LineNr guifg=#7d7f7d
-    " " Default yellow.
-    " autocmd VimEnter * hi CursorLineNr guifg=#ffff60
-    " autocmd VimEnter * hi StartifySection guifg=#cc6666
-    " autocmd VimEnter * hi StartifyNumber guifg=#f0c674
-    " autocmd VimEnter * hi StartifyBracket guifg=#de935f
-    " autocmd VimEnter * hi Cursor guibg=#de935f
+    if g:colors_name == "base16-default"
 
-    " base16-default
-    autocmd VimEnter * hi Comment guifg=#b0b0b0
-    autocmd VimEnter * hi LineNr guifg=#505050
-    autocmd VimEnter * hi TODO guibg=#ac4142 guifg=#f5f5f5
-    " Default yellow.
-    autocmd VimEnter * hi CursorLineNr guifg=#ffff60
-    autocmd VimEnter * hi StartifySection guifg=#ac4142
-    autocmd VimEnter * hi StartifyNumber guifg=#f4bf75
-    autocmd VimEnter * hi StartifyBracket guifg=#d28445
-    autocmd VimEnter * hi Cursor guibg=#f5f5f5
+        hi Comment guifg=#b0b0b0
+        hi LineNr guifg=#505050
+        hi TODO guibg=#ac4142 guifg=#f5f5f5
+        " Default yellow.
+        hi CursorLineNr guifg=#ffff60
+        hi StartifySection guifg=#ac4142
+        hi StartifyNumber guifg=#f4bf75
+        hi StartifyBracket guifg=#d28445
+        hi Cursor guibg=#f5f5f5
+
+    endif
+
+    if g:colors_name == "base16-tomorrow"
+
+        " #969896 darken by 20%.
+        hi Comment guifg=#636563
+        " #969896 darken by 10%.
+        hi LineNr guifg=#7d7f7d
+        " Default yellow.
+        hi CursorLineNr guifg=#ffff60
+        hi StartifySection guifg=#cc6666
+        hi StartifyNumber guifg=#f0c674
+        hi StartifyBracket guifg=#de935f
+        hi Cursor guibg=#e0e0e0
+
+    endif
 
 else
 
