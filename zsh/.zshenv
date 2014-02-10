@@ -123,3 +123,7 @@ function scm {
 function sst {
     svn status
 }
+
+function hr {
+    printf '─%.0s' $(seq $COLUMNS)
+}
