@@ -157,7 +157,6 @@ set wildignore+=*/include/*
 set wildignore+=*/lib/*
 set wildignore+=*/src/*
 set wildignore+=*/reports/*
-set wildignore+=*/share/*
 set wildignore+=*/static/vendor/*
 set wildignore+=*/static/compiled/*
 
@@ -259,8 +258,15 @@ set undodir=/tmp
 " Disables swap-files.
 set noswapfile
 
-" Enables spellcheck for Markdown.
-au BufRead,BufNewFile *.md setlocal spell
+" Adds dictionaries to auto-complete.
+set complete+=k
+
+" Enables niceties for writing text.
+au Filetype text,markdown setlocal spell
+au Filetype text,markdown setlocal dictionary+=/usr/share/dict/words
+
+" Auto-complete won't open preview split or whatever.
+set completeopt-=preview
 
 " Tells Vim to remember the vertical position.
 set nostartofline
@@ -310,9 +316,6 @@ autocmd FileType python set commentstring=#%s
 
 " Finds non-ASCII.
 noremap <Leader>q /\v[^\x00-\x7F]<CR>
-
-" Remaps <C-x> to go out from imode. Weird fix because of Supertab.
-autocmd VimEnter * inoremap <C-x> <Esc>
 
 " Opens registers.
 noremap <Leader>r :registers<CR>
@@ -557,6 +560,12 @@ let g:sexp_enable_insert_mode_mappings = 0
 command! CommaOrSemiColon call cosco#commaOrSemiColon()
 
 nmap <Leader>; :call cosco#commaOrSemiColon()<CR>
+
+"
+" Supertab next.
+"
+
+let g:SuperTabDefaultCompletionType = "context"
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")

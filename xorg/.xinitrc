@@ -55,7 +55,7 @@ xmobar &
 trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
 
 # Sets background.
-feh --bg-center ~/Pictures/arch-linux.png
+feh --bg-scale ~/Pictures/20\ -\ 5pcmBOm.jpg
 
 # Starts Chromium in background.
 chromium --disable-sync-preferences --no-startup-window &
