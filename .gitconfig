@@ -1,0 +1,16 @@
+[user]
+    name = Raitis Stengrevics
+    email = dagrevis@gmail.com
+[core]
+    editor = gvim -f
+[color]
+    ui = true
+    diff = always
+[rerere]
+    enabled = 1
+[merge]
+    tool = vimdiff
+[github]
+    user = daGrevis
+[push]
+    default = simple
