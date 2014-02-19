@@ -60,7 +60,7 @@ Bundle 'vim-scripts/colorizer'
 Bundle 'vim-scripts/VimClojure'
 
 " Sets fave color scheme.
-colorscheme base16-tomorrow
+colorscheme base16-default
 set background=dark
 
 " Sets limit of history.
@@ -593,7 +593,8 @@ if has("gui_running")
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
     " set guifont=Envypn\ 10
     " set guifont=Meslo\ LG\ M\ 8
-    set guifont=Hermit\ 8
+    " set guifont=Hermit\ 8
+    set guifont=Tamsyn\ 14px
 
     " I love extra whitespace!
     set linespace=4
