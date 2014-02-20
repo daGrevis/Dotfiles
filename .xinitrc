@@ -11,11 +11,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-# Ugly hack to fix time.
-{ sudo ntpd -qg; sudo hwclock -w; } &
-
 # Sets 2nd monitor usable.
-xrandr --output HDMI3 --auto --output HDMI2 --auto --right-of HDMI3
+# xrandr --output HDMI3 --auto --output HDMI2 --auto --right-of HDMI3
 
 # Sets cursor.
 xsetroot -cursor_name left_ptr
@@ -49,16 +46,10 @@ xscreensaver -no-splash &
 batti &
 
 # Loads bar.
-xmobar &
+# xmobar &
 
 # Loads trayer.
-trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
-
-# Sets background.
-feh --bg-scale ~/Pictures/20\ -\ 5pcmBOm.jpg
-
-# Starts Chromium in background.
-chromium --disable-sync-preferences --no-startup-window &
+# trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
 
 # Starts Thunar in background.
 thunar --daemon &
@@ -76,4 +67,4 @@ redshift -l 57:24 &
 gpg-agent --daemon &
 
 # Loads WM.
-exec xmonad
+exec awesome

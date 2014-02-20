@@ -127,3 +127,11 @@ function sst {
 function hr {
     printf '─%.0s' $(seq $COLUMNS)
 }
+
+function delete_pyc {
+    find . -name '*.pyc' -delete
+}
+
+function update_mirrorlist {
+    sudo reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
+}
