@@ -11,7 +11,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-$WORK_HOSTNAME="work"
+HOME_HOSTNAME="haze"
+WORK_HOSTNAME="work"
 
 if [[ $(hostname) == $WORK_HOSTNAME ]]; then
     # Sets 2nd monitor usable.
@@ -43,17 +44,10 @@ xmodmap -e "keycode $LCONTROL_KEYCODE ="
 # Loads `.Xresources`.
 xrdb ~/.Xresources
 
-# Loads screensaver.
-xscreensaver -no-splash &
-
-# Battery indicator.
-batti &
-
-# Loads bar.
-# xmobar &
-
-# Loads trayer.
-# trayer --height 20 --transparent true --alpha 0 --tint 0x000000 --edge top --align right --widthtype pixel --width 200 &
+if [[ $(hostname) == $HOME_HOSTNAME ]]; then
+    # Battery indicator.
+    batti &
+fi
 
 # Starts Thunar in background.
 thunar --daemon &
