@@ -15,6 +15,14 @@ function debug(what)
                     text = what})
 end
 
+function get_hostname()
+    return io.popen("uname -n"):read()
+end
+
+function get_network_interface()
+    return io.popen("ip route get 8.8.8.8 | awk '{ print $5; exit }'"):read()
+end
+
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = "Oops, there were errors during startup!",
@@ -81,11 +89,16 @@ mem_widget = wibox.widget.textbox()
 vicious.register(mem_widget, vicious.widgets.mem, "$1% ($2/$3 MB)", 1)
 
 cpu_widget = wibox.widget.textbox()
-vicious.register(cpu_widget, vicious.widgets.cpu, "$1% $2% $3% $4%", 1)
+vicious.register(cpu_widget, vicious.widgets.cpu, function(_, t)
+    return table.concat(t, "% ") .. "%"
+end)
+
+network_interface = get_network_interface()
 
 net_widget = wibox.widget.textbox()
-vicious.register(net_widget,
-                 vicious.widgets.net, "${enp3s0 down_kb}/${enp3s0 up_kb} kB/s")
+vicious.register(net_widget, vicious.widgets.net,
+                 string.format("${%s down_kb}/${%s up_kb} kB/s",
+                               network_interface, network_interface))
 
 separator_widget = wibox.widget.textbox()
 separator_widget:set_text("  ")
