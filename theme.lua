@@ -30,9 +30,9 @@ theme.fg_focus = theme.color_gray3
 theme.fg_urgent = theme.color_gray3
 theme.fg_minimize = theme.color_gray3
 
-theme.border_width = 1
+theme.border_width = 2
 theme.border_normal = theme.color_black2
-theme.border_focus = theme.color_gray0
+theme.border_focus = theme.color_red
 theme.border_marked = theme.color_red
 
 theme.wallpaper = "~/Pictures/moon.jpg"
