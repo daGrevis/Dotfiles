@@ -162,7 +162,7 @@ function set_bat(bat_widget)
         return
     end
     local percentage = string.match(output, ".-(%d+)%%")
-    local time_left = string.match(output, ".-(%d+:%d+:%d+)")
+    local time_left = string.match(output, ".-(%d+:%d+)")
     local is_charging = string.find(output, "Charging") ~= nil
     local is_full = string.find(output, "Full") ~= nil
     s = string.format("%s%%", percentage, time_left)
@@ -175,7 +175,7 @@ function set_bat(bat_widget)
     bat_widget:set_text(s)
 end
 set_bat(bat_widget)
-bat_timer = timer({ timeout = 5 })
+bat_timer = timer({ timeout = 10 })
 bat_timer:connect_signal("timeout", function()
     set_bat(bat_widget)
 end)
