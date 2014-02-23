@@ -592,9 +592,9 @@ if has("gui_running")
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
     " set guifont=Envypn\ 10
-    " set guifont=Meslo\ LG\ M\ 8
+    set guifont=Meslo\ LG\ M\ 8
     " set guifont=Hermit\ 8
-    set guifont=Tamsyn\ 14px
+    " set guifont=Tamsyn\ 14px
 
     " I love extra whitespace!
     set linespace=4

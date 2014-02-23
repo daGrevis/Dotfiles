@@ -17,7 +17,7 @@ theme.color_blue = "#6a9fb5"
 theme.color_purple = "#aa759f"
 theme.color_brown = "#8f5536"
 
-theme.font = "Tamsyn 10"
+theme.font = "Meslo LG M DZ 8"
 
 theme.bg_normal = theme.color_black0
 theme.bg_focus = theme.color_black2
@@ -32,10 +32,10 @@ theme.fg_minimize = theme.color_gray3
 
 theme.border_width = 2
 theme.border_normal = theme.color_black2
-theme.border_focus = theme.color_red
-theme.border_marked = theme.color_red
+theme.border_focus = "#1793d1"
+theme.border_marked = "#1793d1"
 
-theme.wallpaper = "~/Pictures/moon.jpg"
+theme.wallpaper = "~/Pictures/star.png"
 
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
 theme.layout_fairv = "/usr/share/awesome/themes/default/layouts/fairvw.png"

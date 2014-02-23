@@ -44,11 +44,6 @@ xmodmap -e "keycode $LCONTROL_KEYCODE ="
 # Loads `.Xresources`.
 xrdb ~/.Xresources
 
-if [[ $(hostname) == $HOME_HOSTNAME ]]; then
-    # Battery indicator.
-    batti &
-fi
-
 # Starts Thunar in background.
 thunar --daemon &
 

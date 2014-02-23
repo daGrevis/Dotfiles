@@ -9,10 +9,24 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
 
+beautiful.init(awful.util.getdir("config") .. "/themes/default/theme.lua")
+
 function debug(what)
-    naughty.notify({preset = naughty.config.presets.critical,
-                    title = "Spanish inquisition",
-                    text = what})
+    if type(what) == "nil" then
+        what = "nil"
+    end
+    if type(what) == "boolean" then
+        if what == true then
+            what = "true"
+        else
+            what = "false"
+        end
+    end
+    naughty.notify({title = "Debug",
+                    text = what,
+                    bg = beautiful.color_red,
+                    fg = beautiful.color_black0,
+                    border_width = 0})
 end
 
 function get_hostname()
@@ -42,16 +56,14 @@ do
     end)
 end
 
-beautiful.init(awful.util.getdir("config") .. "/themes/default/theme.lua")
-
 modkey = "Mod4"
 terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vi"
-editor_cmd = terminal .. " -e " .. editor
 browser = "chromium"
 browser_incognito = "chromium --incognito"
 bittorrent_client = "transmission-gtk"
 irc_client = "sh ~/Scripts/hexchat_once.sh"
+print_command = "scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'"
 
 function spawn_in_terminal(command)
     awful.util.spawn(terminal .. " -e " .. command)
@@ -70,9 +82,7 @@ local layouts =
 }
 
 if beautiful.wallpaper then
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-    end
+    gears.wallpaper.centered(beautiful.wallpaper)
 end
 
 tags = {}
@@ -83,7 +93,7 @@ end
 
 -- Widgets.
 
-textclock_widget = awful.widget.textclock("%d/%m/%y, %H:%M:%S", 1)
+textclock_widget = awful.widget.textclock("%y/%m/%d, %H:%M:%S", 1)
 
 mem_widget = wibox.widget.textbox()
 vicious.register(mem_widget, vicious.widgets.mem, "$1% ($2/$3 MB)", 1)
@@ -93,12 +103,42 @@ vicious.register(cpu_widget, vicious.widgets.cpu, function(_, t)
     return table.concat(t, "% ") .. "%"
 end)
 
-network_interface = get_network_interface()
-
 net_widget = wibox.widget.textbox()
-vicious.register(net_widget, vicious.widgets.net,
-                 string.format("${%s down_kb}/${%s up_kb} kB/s",
-                               network_interface, network_interface))
+vicious.register(net_widget, vicious.widgets.net, function(widget, args)
+                                network_interface = get_network_interface()
+                                down_kb = args[string.format("{%s down_kb}", network_interface)] or 0
+                                up_kb = args[string.format("{%s up_kb}", network_interface)] or 0
+                                return string.format("%s/%s kB/s", down_kb, up_kb)
+                            end)
+
+weather_widget = wibox.widget.textbox()
+vicious.register(weather_widget, vicious.widgets.weather, function(widget, args)
+    local mps = args["{windmph}"] / 2.237
+    return string.format("%sC, %d mps", args["{tempc}"], mps)
+end, 1200, "EVRA")
+
+bat_widget = wibox.widget.textbox()
+function set_bat(bat_widget)
+    local output = io.popen("acpi"):read()
+    local percentage = string.match(output, ".-(%d+)%%")
+    local time_left = string.match(output, ".-(%d+:%d+:%d+)")
+    local is_charging = string.find(output, "Charging") ~= nil
+    local is_full = string.find(output, "Full") ~= nil
+    local s = string.format("%s%%", percentage, time_left)
+    if time_left ~= nil then
+        s = s .. string.format("/%s", time_left)
+    end
+    if is_charging or is_full then
+        s = s .. " ↯"
+    end
+    bat_widget:set_text(s)
+end
+set_bat(bat_widget)
+bat_timer = timer({ timeout = 5 })
+bat_timer:connect_signal("timeout", function()
+    set_bat(bat_widget)
+end)
+bat_timer.start(bat_timer)
 
 separator_widget = wibox.widget.textbox()
 separator_widget:set_text("  ")
@@ -138,6 +178,14 @@ for s = 1, screen.count() do
     right_layout:add(separator_widget)
 
     right_layout:add(net_widget)
+
+    right_layout:add(separator_widget)
+
+    right_layout:add(bat_widget)
+
+    right_layout:add(separator_widget)
+
+    right_layout:add(weather_widget)
 
     right_layout:add(separator_widget)
 
@@ -190,7 +238,10 @@ keys = awful.util.table.join(
         awful.util.spawn(terminal)
     end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift" }, "q", awesome.quit),
+    awful.key({ modkey, "Control" }, "q", awesome.quit),
+    awful.key({modkey, "Control"}, "l", function()
+        awful.util.spawn("slock")
+    end),
 
     awful.key({ modkey, }, "l", function()
         awful.tag.incmwfact(0.05)
@@ -236,10 +287,13 @@ keys = awful.util.table.join(
             "' -nf '" .. beautiful.fg_normal ..
             "' -sb '" .. beautiful.bg_focus ..
             "' -sf '" .. beautiful.fg_focus ..
-            "' -fn 'Tamsyn-10'")
+            "' -fn 'Meslo LG M DZ-8'")
     end),
-    awful.key({modkey, "Shift"}, "l", function()
-        awful.util.spawn("slock")
+    awful.key({}, "Print", function()
+        awful.util.spawn(print_command)
+    end),
+    awful.key({modkey, "Shift"}, "e", function()
+        awful.util.spawn("mousepad")
     end)
 )
 
@@ -249,6 +303,10 @@ client_keys = awful.util.table.join(
     end),
     awful.key({ modkey, "Shift" }, "c", function(c)
         c:kill()
+    end),
+    awful.key({ modkey, }, "m", function (c)
+        c.maximized_horizontal = not c.maximized_horizontal
+        c.maximized_vertical = not c.maximized_vertical
     end)
 )
 
@@ -292,7 +350,8 @@ awful.rules.rules = {
                      keys = client_keys,
                      buttons = client_buttons } },
     { rule = { class = "gimp" },
-      properties = { floating = true } }
+      properties = { floating = true } },
+    { rule = { class = "Gvim" }, properties = { size_hints_honor = false } },
 }
 
 client.connect_signal("focus", function(c)
@@ -301,3 +360,12 @@ end)
 client.connect_signal("unfocus", function(c)
     c.border_color = beautiful.border_normal
 end)
+
+local hook = function(c)
+    if c.maximized_horizontal == true and c.maximized_vertical == true then
+        c.border_width = 0
+    else
+        c.border_width = beautiful.border_width
+    end
+end
+client.connect_signal("property::maximized_horizontal", hook) client.connect_signal("property::maximized_vertical", hook)
