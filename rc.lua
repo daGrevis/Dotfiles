@@ -9,6 +9,10 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
 
+function is_integer(x)
+    return tonumber(x) ~= nil
+end
+
 beautiful.init(awful.util.getdir("config") .. "/themes/default/theme.lua")
 
 function debug(what)
@@ -113,19 +117,42 @@ vicious.register(net_widget, vicious.widgets.net, function(widget, args)
 
 weather_widget = wibox.widget.textbox()
 vicious.register(weather_widget, vicious.widgets.weather, function(widget, args)
-    local mps = args["{windmph}"] / 2.237
-    return string.format("%sC, %d mps", args["{tempc}"], mps)
+    local s = ""
+    local tempc = args["{tempc}"]
+    local windmph = args["{windmph}"]
+    if not is_integer(tempc) and not is_integer(windmph) then
+        s = "N/A"
+        return s
+    end
+    if is_integer(tempc) then
+        s = string.format("%sC", tempc)
+    end
+    if is_integer(windmph) then
+        local windmps = windmph / 2.237
+        if is_integer(tempc) then
+            s = string.format("%s, %d mps", s, windmps)
+        else
+            s = string.format("%d mps", windmps)
+        end
+    end
+    return s
 end, 1200, "EVRA")
 
 bat_widget = wibox.widget.textbox()
 function set_bat(bat_widget)
+    local s = ""
     local output = io.popen("acpi"):read()
+    if not output then
+        s = "N/A"
+        bat_widget:set_text(s)
+        return
+    end
     local percentage = string.match(output, ".-(%d+)%%")
     local time_left = string.match(output, ".-(%d+:%d+:%d+)")
     local is_charging = string.find(output, "Charging") ~= nil
     local is_full = string.find(output, "Full") ~= nil
-    local s = string.format("%s%%", percentage, time_left)
-    if time_left ~= nil then
+    s = string.format("%s%%", percentage, time_left)
+    if time_left then
         s = s .. string.format("/%s", time_left)
     end
     if is_charging or is_full then
