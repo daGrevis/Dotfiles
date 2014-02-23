@@ -115,8 +115,7 @@ vicious.register(net_widget, vicious.widgets.net, function(widget, args)
                                 return string.format("%s/%s kB/s", down_kb, up_kb)
                             end)
 
-weather_widget = wibox.widget.textbox()
-vicious.register(weather_widget, vicious.widgets.weather, function(widget, args)
+function get_weather(widget, args)
     local s = ""
     local tempc = args["{tempc}"]
     local windmph = args["{windmph}"]
@@ -135,6 +134,21 @@ vicious.register(weather_widget, vicious.widgets.weather, function(widget, args)
             s = string.format("%d mps", windmps)
         end
     end
+    return s
+end
+weather_widget = wibox.widget.textbox()
+weather_timer = timer({ timeout = 10 })
+weather_timer:connect_signal("timeout", function()
+    vicious.unregister(weather_widget, true)
+    vicious.activate(weather_widget)
+end)
+vicious.register(weather_widget, vicious.widgets.weather, function(widget, args)
+    local s = get_weather(widget, args)
+    if s == "N/A" then
+        weather_timer.start(weather_timer)
+        return s
+    end
+    weather_timer.stop(weather_timer)
     return s
 end, 1200, "EVRA")
 
@@ -166,6 +180,9 @@ bat_timer:connect_signal("timeout", function()
     set_bat(bat_widget)
 end)
 bat_timer.start(bat_timer)
+
+volume_widget = wibox.widget.textbox()
+vicious.register(volume_widget, vicious.widgets.volume, "$1% $2", 1, "Master")
 
 separator_widget = wibox.widget.textbox()
 separator_widget:set_text("  ")
@@ -213,6 +230,10 @@ for s = 1, screen.count() do
     right_layout:add(separator_widget)
 
     right_layout:add(weather_widget)
+
+    right_layout:add(separator_widget)
+
+    right_layout:add(volume_widget)
 
     right_layout:add(separator_widget)
 
@@ -289,9 +310,6 @@ keys = awful.util.table.join(
         awful.layout.inc(layouts, -1)
     end),
 
-    awful.key({modkey, "Shift"}, "m", function()
-        spawn_in_terminal("alsamixer")
-    end),
     awful.key({modkey, "Shift"}, "i", function()
         awful.util.spawn(browser)
     end),
@@ -321,6 +339,21 @@ keys = awful.util.table.join(
     end),
     awful.key({modkey, "Shift"}, "e", function()
         awful.util.spawn("mousepad")
+    end),
+    awful.key({modkey, "Shift"}, "r", function()
+        spawn_in_terminal("ranger")
+    end),
+    awful.key({modkey, "Shift"}, "m", function()
+        spawn_in_terminal("bc")
+    end),
+    awful.key({}, "XF86AudioMute", function()
+        spawn_in_terminal("amixer -q set Master toggle")
+    end),
+    awful.key({}, "XF86AudioRaiseVolume", function()
+        spawn_in_terminal("amixer -q set Master 1dB+")
+    end),
+    awful.key({}, "XF86AudioLowerVolume", function()
+        spawn_in_terminal("amixer -q set Master 1dB-")
     end)
 )
 
