@@ -207,39 +207,45 @@ for s = 1, screen.count() do
 
     local right_layout = wibox.layout.fixed.horizontal()
 
-    right_layout:add(separator_widget)
+    if s == 1 then
 
-    right_layout:add(textclock_widget)
+        right_layout:add(textclock_widget)
 
-    right_layout:add(separator_widget)
+        right_layout:add(separator_widget)
 
-    right_layout:add(mem_widget)
+        right_layout:add(mem_widget)
 
-    right_layout:add(separator_widget)
+        right_layout:add(separator_widget)
 
-    right_layout:add(cpu_widget)
+        right_layout:add(cpu_widget)
 
-    right_layout:add(separator_widget)
+        right_layout:add(separator_widget)
 
-    right_layout:add(net_widget)
+        right_layout:add(net_widget)
 
-    right_layout:add(separator_widget)
+        right_layout:add(separator_widget)
 
-    right_layout:add(bat_widget)
+        if get_hostname() ~= "rx-wks-44" then
 
-    right_layout:add(separator_widget)
+            right_layout:add(volume_widget)
 
-    right_layout:add(weather_widget)
+            right_layout:add(separator_widget)
 
-    right_layout:add(separator_widget)
+            right_layout:add(bat_widget)
 
-    right_layout:add(volume_widget)
+            right_layout:add(separator_widget)
 
-    right_layout:add(separator_widget)
+        end
 
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
+        right_layout:add(weather_widget)
 
-    right_layout:add(separator_widget)
+        right_layout:add(separator_widget)
+
+        right_layout:add(wibox.widget.systray())
+
+        right_layout:add(separator_widget)
+
+    end
 
     right_layout:add(my_layoutbox[s])
 

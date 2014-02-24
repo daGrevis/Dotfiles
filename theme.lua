@@ -35,7 +35,7 @@ theme.border_normal = theme.color_black2
 theme.border_focus = "#1793d1"
 theme.border_marked = "#1793d1"
 
-theme.wallpaper = "~/Pictures/star.png"
+theme.wallpaper = "~/Pictures/wallpaper"
 
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
 theme.layout_fairv = "/usr/share/awesome/themes/default/layouts/fairvw.png"
