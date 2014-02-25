@@ -187,7 +187,6 @@ vicious.register(volume_widget, vicious.widgets.volume, "$1% $2", 1, "Master")
 separator_widget = wibox.widget.textbox()
 separator_widget:set_text("  ")
 
-
 -- Builds topbar.
 
 my_wibox = {}

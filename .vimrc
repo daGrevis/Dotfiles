@@ -26,6 +26,7 @@ Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
+Bundle 'guns/vim-clojure-static'
 Bundle 'guns/vim-sexp'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
@@ -47,7 +48,9 @@ Bundle 'scrooloose/syntastic'
 Bundle 'shawncplus/phpcomplete.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-classpath'
 Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-ragtag'
@@ -57,7 +60,6 @@ Bundle 'tpope/vim-sexp-mappings-for-regular-people'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
-Bundle 'vim-scripts/VimClojure'
 
 " Sets fave color scheme.
 colorscheme base16-default
@@ -560,12 +562,6 @@ let g:sexp_enable_insert_mode_mappings = 0
 command! CommaOrSemiColon call cosco#commaOrSemiColon()
 
 nmap <Leader>; :call cosco#commaOrSemiColon()<CR>
-
-"
-" Supertab next.
-"
-
-let g:SuperTabDefaultCompletionType = "context"
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")

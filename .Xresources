@@ -12,24 +12,25 @@ URxvt.url-launcher          : xdg-open
 URxvt.matcher.button        : 1
 
 ! Tango
-URxvt.foreground : #f2f2f2
-URxvt.background : #101010
-URxvt.color0     : #101010
-URxvt.color1     : #f13a21
-URxvt.color2     : #93f91d
-URxvt.color3     : #ffd00a
-URxvt.color4     : #004f9e
-URxvt.color5     : #ec0048
-URxvt.color6     : #2aa7e7
-URxvt.color7     : #f2f2f2
-URxvt.color8     : #1d202f
-URxvt.color9     : #ff361e
-URxvt.color10    : #ffc005
-URxvt.color11    : #93ff00
-URxvt.color12    : #0071ff
-URxvt.color13    : #ef0051
-URxvt.color14    : #4bb8fd
-URxvt.color15    : #a020f0
+URxvt.background     : #101010
+URxvt.foreground     : #eeeeec
+URxvt.colorUL        : #8ae234
+URxvt.underlineColor : #92659a
+URxvt.color0         : #2e3436
+URxvt.color8         : #6e706b
+URxvt.color1         : #cc0000
+URxvt.color9         : #ef2929
+URxvt.color2         : #4e9a06
+URxvt.color10        : #8ae234
+URxvt.color3         : #edd400
+URxvt.color11        : #fce94f
+URxvt.color4         : #3465a4
+URxvt.color12        : #729fcf
+URxvt.color5         : #92659a
+URxvt.color13        : #c19fbe
+URxvt.color6         : #07c7ca
+URxvt.color14        : #63e9e9
+URxvt.color7         : #d3d7cf
 
 ! Solarized
 !#define S_yellow  #b58900
