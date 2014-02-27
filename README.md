@@ -2,6 +2,6 @@
 
 **So awesome they should be banned!**
 
-![one screen](https://raw.github.com/daGrevis/Dotfiles/dev/Screenshots/one_screen.jpg)
+![one screen](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/one_screen.jpg)
 
-![two screens](https://raw.github.com/daGrevis/Dotfiles/dev/Screenshots/two_screens.jpg)
+![two screens](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/two_screens.jpg)
