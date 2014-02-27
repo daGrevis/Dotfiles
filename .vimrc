@@ -314,6 +314,10 @@ noremap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
 nnoremap & :&&<CR>
 noremap Y y$
 
+" Maps H and L to jump to the first and the last position of current line.
+nmap H ^
+nmap L $
+
 " Funny these doesn't work automatically anymore.
 autocmd FileType python set commentstring=#%s
 
