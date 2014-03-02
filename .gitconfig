@@ -14,3 +14,8 @@
     user = daGrevis
 [push]
     default = simple
+[grep]
+    extendRegexp = true
+    lineNumber = true
+[alias]
+    g = grep --break --heading --line-number
