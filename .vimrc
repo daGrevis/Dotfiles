@@ -39,7 +39,6 @@ Bundle 'mhinz/vim-signify'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
-Bundle 'nanotech/jellybeans.vim'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'oblitum/rainbow'
 Bundle 'othree/html5.vim'
@@ -63,7 +62,7 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
 
 " Sets fave color scheme.
-colorscheme jellybeans
+colorscheme base16-tomorrow
 set background=dark
 
 " Sets limit of history.
