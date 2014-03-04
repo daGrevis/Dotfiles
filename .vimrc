@@ -562,6 +562,12 @@ command! CommaOrSemiColon call cosco#commaOrSemiColon()
 
 nmap <Leader>; :call cosco#commaOrSemiColon()<CR>
 
+"
+" Preview next.
+"
+
+let g:PreviewBrowsers = 'chromium'
+
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
 
