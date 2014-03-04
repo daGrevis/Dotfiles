@@ -50,7 +50,29 @@ source $ZSH/oh-my-zsh.sh
 unalias sl
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/core_perl:/home/dagrevis/.gem/ruby/2.0.0/bin:/home/dagrevis/.cabal/bin/:/usr/bin/vendor_perl/:/home/dagrevis/Scripts/
+PATH=""
+PATH+=/usr/local/bin
+PATH+=":"
+PATH+=/usr/bin
+PATH+=":"
+PATH+=/bin
+PATH+=":"
+PATH+=/usr/local/sbin
+PATH+=":"
+PATH+=/usr/sbin
+PATH+=":"
+PATH+=/sbin
+PATH+=":"
+PATH+=/usr/bin/core_perl
+PATH+=":"
+PATH+=/usr/bin/vendor_perl
+PATH+=":"
+PATH+=/home/dagrevis/.cabal/bin
+PATH+=":"
+PATH+=/home/dagrevis/Scripts
+PATH+=":"
+PATH+=$(ruby -rubygems -e 'puts Gem.user_dir')/bin
+export PATH=$PATH
 
 # Enables autojump.
 [[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
