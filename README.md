@@ -5,3 +5,5 @@
 ![one screen](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/one_screen.jpg)
 
 ![two screens](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/two_screens.jpg)
+
+![windows](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/windows.jpg)
