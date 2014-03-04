@@ -26,6 +26,7 @@ Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
+Bundle 'greyblake/vim-preview'
 Bundle 'guns/vim-clojure-static'
 Bundle 'guns/vim-sexp'
 Bundle 'kchmck/vim-coffee-script'
@@ -265,7 +266,8 @@ set complete+=k
 
 " Enables niceties for writing text.
 au Filetype text,markdown setlocal spell
-au Filetype text,markdown setlocal dictionary+=/usr/share/dict/words
+" au Filetype text,markdown setlocal dictionary+=/usr/share/dict/words
+set dictionary+=/usr/share/dict/words
 
 " Auto-complete won't open preview split or whatever.
 set completeopt-=preview
@@ -432,17 +434,7 @@ let delimitMate_nesting_quotes = ["'", '"', '`']
 autocmd FileType startify setlocal buftype=
 
 let g:startify_show_files_number = 20
-let g:startify_bookmarks = [
-                         \ "~/.vimrc",
-                         \ "~/.xinitrc",
-                         \ "~/.Xresources",
-                         \ "~/.zshrc",
-                         \ "~/.zshenv",
-                         \ "~/.xmonad/xmonad.hs",
-                         \ "~/.xmobarrc",
-                         \ "~/.config/chromium/Default/User StyleSheets/Custom.css",
-                         \ "~/.gtkrc-2.0",
-                         \ ]
+let g:startify_bookmarks = ["~/Dotfiles/", "~/Texts/"]
 
 " It says `Vim 7.4` in ASCII art.
 let g:startify_custom_header = [
@@ -499,6 +491,9 @@ let NERDTreeDirArrows = 1
 
 " Changes width.
 let NERDTreeWinSize = 60
+
+" Shows dotfiles.
+let NERDTreeShowHidden = 1
 
 " Respect to wildignore.
 function! s:FileGlobToRegexp(glob)
