@@ -76,10 +76,10 @@ set number
 set cursorline
 
 " Fix broken Vim regexes.
-nnoremap / /\v
-vnoremap / /\v
-nnoremap ? ?\v
-vnoremap ? ?\v
+nmap / /\v
+vmap / /\v
+nmap ? ?\v
+vmap ? ?\v
 
 " Always assume that it's global search and replace.
 set gdefault
@@ -92,34 +92,35 @@ set ignorecase
 set smartcase
 
 " Clears highlights for search results.
-nnoremap <C-l> :let @/ = ""<CR>
+nmap <C-l> :let @/ = ""<CR>
 
 " Wrap-friendly <j> and <k> keys.
-nnoremap j gj
-nnoremap k gk
+nmap j gj
+nmap k gk
 
 " Mappings for controlling tabs.
-noremap <S-j> :tabprevious<CR>
-noremap <S-k> :tabnext<CR>
-noremap <M-1> :tabnext 1<CR>
-noremap <M-2> :tabnext 2<CR>
-noremap <M-3> :tabnext 3<CR>
-noremap <M-4> :tabnext 4<CR>
-noremap <M-5> :tabnext 5<CR>
-noremap <M-6> :tabnext 6<CR>
-noremap <M-7> :tabnext 7<CR>
-noremap <M-8> :tabnext 8<CR>
-noremap <M-9> :tabnext 9<CR>
-noremap <M-0> :tablast<CR>
+nmap <S-j> :tabprevious<CR>
+nmap <S-k> :tabnext<CR>
+nmap <M-1> :tabnext 1<CR>
+nmap <M-2> :tabnext 2<CR>
+nmap <M-3> :tabnext 3<CR>
+nmap <M-4> :tabnext 4<CR>
+nmap <M-5> :tabnext 5<CR>
+nmap <M-6> :tabnext 6<CR>
+nmap <M-7> :tabnext 7<CR>
+nmap <M-8> :tabnext 8<CR>
+nmap <M-9> :tabnext 9<CR>
+nmap <M-0> :tablast<CR>
 
 " Fixes some common mistakes in command mode.
+" If you want upper W or Q, type ~w or ~q.
 cnoremap W w
 cnoremap ~w W
 cnoremap Q q
 cnoremap ~q Q
 
 " Runs macro.
-noremap Q @q
+nmap Q @q
 
 " Ignores files that match these patters.
 set wildignore+=*.png
@@ -175,12 +176,12 @@ cmap <M-b> <S-Left>
 cmap <M-f> <S-Right>
 
 " Allows to use splits more quickly (Alt-{h,j,k,l,q,w}).
-noremap <M-h> <C-w>h
-noremap <M-j> <C-w>j
-noremap <M-k> <C-w>k
-noremap <M-l> <C-w>l
-noremap <M-q> <C-w>s
-noremap <M-w> <C-w>v
+nmap <M-h> <C-w>h
+nmap <M-j> <C-w>j
+nmap <M-k> <C-w>k
+nmap <M-l> <C-w>l
+nmap <M-q> <C-w>s
+nmap <M-w> <C-w>v
 
 " Open splits in opposite places.
 set splitbelow
@@ -198,8 +199,8 @@ endfunc
 autocmd Filetype gitcommit call SetGitCommitOptions()
 
 " Simple shortcuts.
-noremap <C-e> :edit<Space>
-noremap <C-t> :tabedit<Space>
+nmap <C-e> :edit<Space>
+nmap <C-t> :tabedit<Space>
 
 " Jump back to last known cursor position if possible.
 autocmd BufReadPost *
@@ -210,7 +211,7 @@ autocmd BufReadPost *
 " Allows to quickly switch to the most recently used tab.
 let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
-noremap <Space> :exec "tabn ".g:lasttab<CR>
+nmap <Space> :exec "tabn ".g:lasttab<CR>
 
 " Saves undo-files in /tmp.
 set undodir=/tmp
@@ -233,8 +234,7 @@ set nostartofline
 
 " This awesomeness was removed from Sensible, but don't worry - I have learned
 " how to map things and I'm not afraid to use it!
-nnoremap & :&&<CR>
-noremap Y y$
+nmap Y y$
 
 " Maps H and L to jump to the first and the last position of current line.
 nmap H ^
@@ -276,8 +276,8 @@ function! HighlightNext (blinktime)
     redraw
 endfunction
 
-nnoremap <silent> n n:call HighlightNext(0.4)<CR>
-nnoremap <silent> N N:call HighlightNext(0.4)<CR>
+nmap <silent> n n:call HighlightNext(0.4)<CR>
+nmap <silent> N N:call HighlightNext(0.4)<CR>
 
 " Don't redraw while executing macros.
 set lazyredraw
@@ -295,15 +295,15 @@ vmap <Leader>zz <Esc>:exec "'<,'>w !LINK=$(curl -F 'text=<-' "
                            \ . "xclip -i -selection clipboard"<CR>
 
 " Adds word to words list.
-noremap <Leader>s+ zg
+nmap <Leader>s+ zg
 " Removes word from words list.
-noremap <Leader>s- zug
+nmap <Leader>s- zug
 " Finds next bad word.
-noremap <Leader>s] ]s
+nmap <Leader>s] ]s
 " Finds previous bad word.
-noremap <Leader>s[ [s
+nmap <Leader>s[ [s
 " Suggest from words list.
-noremap <Leader>s? z=
+nmap <Leader>s? z=
 
 " Maps <Leader>c to yanking whole file.
 nmap <Leader>c ggVGy
@@ -312,35 +312,35 @@ nmap <Leader>c ggVGy
 nmap <Leader>v ggdG"0PGdd
 
 " Allows to quickly set filetype using <Leader>ft.
-noremap <Leader>ft :set filetype=
+nmap <Leader>ft :set filetype=
 
 " Allows to quickly set text-width for wrapping using <Leader>tw.
-noremap <Leader>tw :set textwidth=
+nmap <Leader>tw :set textwidth=
 
 " Searches for diff delimiter.
-noremap <Leader>d /\v\={4,}\|\<{4,}\|\>{4,}<CR>
+nmap <Leader>d /\v\={4,}\|\<{4,}\|\>{4,}<CR>
 
 " Allows to quickly blame people. I like to do that.....
-noremap <Leader>gb :Gblame<CR>
+nmap <Leader>gb :Gblame<CR>
 
 " Finds non-ASCII.
-noremap <Leader>nasc /\v[^\x00-\x7F]<CR>
+nmap <Leader>nasc /\v[^\x00-\x7F]<CR>
 
 " Remove the Windows ^M - when encodings get messed up.
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+nmap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Joins line as J did. I remapped original J to switch to left tab.
-noremap <Leader>j :join<CR>
+nmap <Leader>j :join<CR>
 
 " Sorts lines.
-vnoremap <Leader>s :!sort<CR>
+vmap <Leader>s :!sort<CR>
 
 " Sources line/selection.
-nnoremap <Leader>x ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
-vnoremap <Leader>x y:execute @@<cr>:echo 'Sourced selection.'<cr>
+nmap <Leader>x ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
+vmap <Leader>x y:execute @@<cr>:echo 'Sourced selection.'<cr>
 
 " Simple debugging in Python.
-noremap <Leader>pd A<CR>from pprint import pprint
+nmap <Leader>pd A<CR>from pprint import pprint
                         \<CR>
                         \print("#" * 80)
                         \<CR>
@@ -349,10 +349,10 @@ noremap <Leader>pd A<CR>from pprint import pprint
                         \print("#" * 80)<Esc>k$
 
 " Interactive debugging in Python.
-noremap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
+nmap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
 
 " Simple debugging in PHP.
-noremap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
+nmap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
 
 " Things related to plugins next.
 
@@ -361,20 +361,20 @@ noremap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
 "
 
 " Opens Ack with default boilerplate.
-noremap <Leader>a :Ack  **/*<C-Left><Left>
+nmap <Leader>a :Ack  **/*<C-Left><Left>
 
 " Opens Ack in a new tab.
-noremap <Leader>ta :tabe \| Ack  **/*<C-Left><Left>
+nmap <Leader>ta :tabe \| Ack  **/*<C-Left><Left>
 
 " Searched for a word under the cursor in a new tab.
-nnoremap <C-f> yiw:tabe \| Ack <C-r>" **/*
+nmap <C-f> yiw:tabe \| Ack <C-r>" **/*
 
 "
 " CtrlP next.
 "
 
 " Calls MRU.
-noremap <C-p> call CtrlPMRU()
+nmap <C-p> call CtrlPMRU()
 
 " Shows CtrlP on top.
 let g:ctrlp_match_window_bottom = 0
@@ -526,13 +526,15 @@ nmap <Leader>; :call cosco#commaOrSemiColon()<CR>
 "
 
 " Maps <S-Tab> to toggling Tagbar.
-noremap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
+nmap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
 
 "
 " Preview next.
 "
 
 let g:PreviewBrowsers = 'chromium'
+
+nmap <Leader>pr :Preview<CR>
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
