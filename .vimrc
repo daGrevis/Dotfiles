@@ -65,6 +65,10 @@ Bundle 'vim-scripts/colorizer'
 colorscheme base16-tomorrow
 set background=dark
 
+"
+" Setters next.
+"
+
 " Sets limit of history.
 set history=5000
 
@@ -75,11 +79,6 @@ set number
 " Highlights line which is active.
 set cursorline
 
-" Fix broken Vim regexes.
-nmap / /\v
-vmap / /\v
-nmap ? ?\v
-vmap ? ?\v
 
 " Always assume that it's global search and replace.
 set gdefault
@@ -90,6 +89,92 @@ set hlsearch
 " Ignore case when searching unless you type uppercase and lowercase letters.
 set ignorecase
 set smartcase
+
+" Ignores files that match these patters.
+set wildignore+=*.png
+set wildignore+=*.gif
+set wildignore+=*.jpeg
+set wildignore+=*.jpg
+set wildignore+=*.ico
+set wildignore+=*.pyc
+set wildignore+=*.pyo
+set wildignore+=*.db
+set wildignore+=*/bin/*
+set wildignore+=*/include/*
+set wildignore+=*/lib/*
+set wildignore+=*/src/*
+set wildignore+=*/reports/*
+set wildignore+=*/static/vendor/*
+set wildignore+=*/static/compiled/*
+
+" Show some special chars like tab and trailing spaces differently.
+set list
+set listchars=tab:→\ ,trail:·,nbsp:·
+
+" Tells to use 4 spaces for indentation.
+set et
+set ts=4
+set sw=4
+set sts=4
+
+" Disables folding at all.
+set nofen
+
+" Open splits in opposite places.
+set splitbelow
+set splitright
+
+" Saves undo-files in /tmp.
+set undodir=/tmp
+
+" Disables swap-files.
+set noswapfile
+
+" Adds dictionaries to auto-complete.
+set complete+=k
+
+" Adds word-list.
+set dictionary+=/usr/share/dict/words
+
+" Auto-complete won't open preview split or whatever.
+set completeopt-=preview
+
+" Tells Vim to remember the vertical position.
+set nostartofline
+
+" Don't redraw while executing macros.
+set lazyredraw
+
+" Sets color-column**s**.
+let &colorcolumn="80,".join(range(160,999),",")
+
+"
+" Commands next.
+"
+
+" Abbrevs next.
+iabbrev teh the
+iabbrev fro for
+
+func! ExecuteClojure()
+    exec "!lein exec %"
+endfunc
+command! ExecuteClojure call ExecuteClojure()
+
+func! ExecutePython()
+    exec "!python %"
+endfunc
+command! ExecutePython call ExecutePython()
+
+"
+" Maps next.
+"
+
+" Fix broken Vim regexes.
+nmap / /\v
+vmap / /\v
+nmap ? ?\v
+vmap ? ?\v
 
 " Clears highlights for search results.
 nmap <C-l> :let @/ = ""<CR>
@@ -113,34 +198,11 @@ nmap <M-9> :tabnext 9<CR>
 nmap <M-0> :tablast<CR>
 
 " Fixes some common mistakes in command mode.
-" If you want upper W or Q, type ~w or ~q.
-cnoremap W w
-cnoremap ~w W
-cnoremap Q q
-cnoremap ~q Q
+nmap :W :w
+nmap :Q :q
 
 " Runs macro.
 nmap Q @q
-
-" Ignores files that match these patters.
-set wildignore+=*.png
-set wildignore+=*.gif
-set wildignore+=*.jpeg
-set wildignore+=*.jpg
-set wildignore+=*.ico
-set wildignore+=*.pyc
-set wildignore+=*.pyo
-set wildignore+=*.db
-set wildignore+=*/bin/*
-set wildignore+=*/include/*
-set wildignore+=*/lib/*
-set wildignore+=*/src/*
-set wildignore+=*/reports/*
-set wildignore+=*/static/vendor/*
-set wildignore+=*/static/compiled/*
-
-" Saves file when the focus is lost (for example, when buffers are changed).
-autocmd BufLeave,FocusLost * silent! wall
 
 " Maps <Right> to indenting text to the right, but <Left> to the left. Works
 " in normal mode and visual mode.
@@ -152,22 +214,6 @@ vmap <Right> >gv
 " Maps <Up> to spawning blank line above, but <Down> -- below.
 nmap <Up> O<Esc>j
 nmap <Down> o<Esc>k
-
-" Show some special chars like tab and trailing spaces differently.
-set list
-set listchars=tab:→\ ,trail:·,nbsp:·
-
-" Tells to use 4 spaces for indentation.
-set et
-set ts=4
-set sw=4
-set sts=4
-
-" Deletes all trailing whitespace on save.
-autocmd BufWritePre * :%s/\s\+$//e
-
-" Disables folding at all.
-set nofen
 
 " Emacs ways to change cursor in command mode.
 cmap <C-a> <Home>
@@ -183,54 +229,12 @@ nmap <M-l> <C-w>l
 nmap <M-q> <C-w>s
 nmap <M-w> <C-w>v
 
-" Open splits in opposite places.
-set splitbelow
-set splitright
-
 " Allows to save files as superuser.
 cmap w!! %!sudo tee > /dev/null %
-
-" If it's Git commit, do some specific actions.
-func! SetGitCommitOptions()
-    setlocal colorcolumn=80
-    setlocal spell
-    exec ":0"
-endfunc
-autocmd Filetype gitcommit call SetGitCommitOptions()
 
 " Simple shortcuts.
 nmap <C-e> :edit<Space>
 nmap <C-t> :tabedit<Space>
-
-" Jump back to last known cursor position if possible.
-autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \     exec "normal g`\"" |
-    \ endif
-
-" Allows to quickly switch to the most recently used tab.
-let g:lasttab = 1
-au TabLeave * let g:lasttab = tabpagenr()
-nmap <Space> :exec "tabn ".g:lasttab<CR>
-
-" Saves undo-files in /tmp.
-set undodir=/tmp
-
-" Disables swap-files.
-set noswapfile
-
-" Adds dictionaries to auto-complete.
-set complete+=k
-
-" Enables niceties for writing text.
-au Filetype text,markdown setlocal spell
-set dictionary+=/usr/share/dict/words
-
-" Auto-complete won't open preview split or whatever.
-set completeopt-=preview
-
-" Tells Vim to remember the vertical position.
-set nostartofline
 
 " This awesomeness was removed from Sensible, but don't worry - I have learned
 " how to map things and I'm not afraid to use it!
@@ -240,31 +244,8 @@ nmap Y y$
 nmap H ^
 nmap L $
 
-" Funny these doesn't work automatically anymore.
-autocmd FileType python set commentstring=#%s
-
-" Fixes coffee not seeing Vim edits.
-au BufWritePost *.coffee silent! copen!
-
-" Abbrevs next.
-iabbrev teh the
-iabbrev fro for
-
-func! ExecuteClojure()
-    exec "!lein exec %"
-endfun
-command! ExecuteClojure call ExecuteClojure()
-
-func! ExecutePython()
-    exec "!python %"
-endfun
-command! ExecutePython call ExecutePython()
-
-" Sets color-column**s**.
-let &colorcolumn="80,".join(range(160,999),",")
-
 " Highlights next found match.
-function! HighlightNext (blinktime)
+func! HighlightNext (blinktime)
     highlight HighlightNext guibg=#ac4142 guifg=#f5f5f5
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
@@ -274,15 +255,13 @@ function! HighlightNext (blinktime)
     exec 'sleep ' . float2nr(a:blinktime * 400) . 'm'
     call matchdelete(ring)
     redraw
-endfunction
-
+endfunc
 nmap <silent> n n:call HighlightNext(0.4)<CR>
 nmap <silent> N N:call HighlightNext(0.4)<CR>
 
-" Don't redraw while executing macros.
-set lazyredraw
-
-" Leaders next.
+"
+" Leader-maps next.
+"
 
 " Pastes content to pasting service. Works in normal mode (whole buffer) or
 " visual mode (selection only).
@@ -353,6 +332,44 @@ nmap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
 
 " Simple debugging in PHP.
 nmap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
+
+"
+" Auto-commands next.
+"
+
+" Saves file when the focus is lost (for example, when buffers are changed).
+autocmd BufLeave,FocusLost * silent! wall
+
+" Deletes all trailing whitespace on save.
+autocmd BufWritePre * :%s/\s\+$//e
+
+" Jump back to last known cursor position if possible.
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \     exec "normal g`\"" |
+    \ endif
+
+" Allows to quickly switch to the most recently used tab.
+let g:lasttab = 1
+au TabLeave * let g:lasttab = tabpagenr()
+nmap <Space> :exec "tabn ".g:lasttab<CR>
+
+" Enables niceties for writing text.
+autocmd Filetype text,markdown setlocal spell
+
+" If it's Git commit, do some specific actions.
+func! SetGitCommitOptions()
+    setlocal colorcolumn=80
+    setlocal spell
+    exec ":0"
+endfunc
+autocmd Filetype gitcommit call SetGitCommitOptions()
+
+" Funny these doesn't work automatically anymore.
+autocmd FileType python set commentstring=#%s
+
+" Fixes coffee not seeing Vim edits.
+au BufWritePost *.coffee silent! copen!
 
 " Things related to plugins next.
 
@@ -455,21 +472,19 @@ let NERDTreeWinSize = 60
 let NERDTreeShowHidden = 1
 
 " Respect to wildignore.
-function! s:FileGlobToRegexp(glob)
+func! s:FileGlobToRegexp(glob)
     if a:glob =~# '^\*\.'
         return '\.' . a:glob[2:] . '$'
     else
         return '^' . a:glob . '$'
     endif
-endfunction
-function! s:SuffixToRegexp( suffix )
+endfunc
+func! s:SuffixToRegexp(suffix)
     return escape(v:val, '.~') . "$"
-endfunction
+endfunc
 let g:NERDTreeIgnore =
 \   map(split(&wildignore, ','), 's:FileGlobToRegexp(v:val)') +
 \   map(split(&suffixes, ','), 's:SuffixToRegexp(v:val)')
-delfunction s:SuffixToRegexp
-delfunction s:FileGlobToRegexp
 
 "
 " Gundo next.
@@ -569,42 +584,6 @@ if has("gui_running")
     set linespace=4
 
     " Fix all the color schemes at runtime!
-
-    " hornet
-    " autocmd VimEnter * hi TabLine guibg=#303030
-    " autocmd VimEnter * hi TabLineFill guifg=#303030
-    " autocmd VimEnter * hi LineNr guifg=#757575
-    " autocmd VimEnter * hi SignColumn guibg=#303030
-
-    " busybee
-    " autocmd VimEnter * hi TabLine guibg=#202020
-    " autocmd VimEnter * hi TabLine guifg=#e2e2e5
-    " autocmd VimEnter * hi TabLineFill guifg=#202020
-    " autocmd VimEnter * hi SignColumn guibg=#202020
-    " autocmd VimEnter * hi LineNr guifg=#555555
-
-    " luna
-    " autocmd VimEnter * hi TabLineFill guifg=#2e2e2e
-    " autocmd VimEnter * hi TabLine guibg=#2e2e2e
-    " autocmd VimEnter * hi TabLineSel guibg=#474747
-    " autocmd VimEnter * hi SignColumn guibg=#2e2e2e
-    " autocmd VimEnter * hi LineNr guifg=#616161
-    " autocmd VimEnter * hi TODO guibg=#474747
-    " autocmd VimEnter * hi Comment guifg=#616161
-    " autocmd VimEnter * hi Identifier guifg=#ff8036
-    " autocmd VimEnter * hi Function guifg=#ff8036
-    " autocmd VimEnter * hi pythonClass guifg=#ff8036
-    " autocmd VimEnter * hi rubyArrayDelimiter guifg=#ff8036
-
-    " solarized
-    " autocmd VimEnter * hi TODO guibg=#dc322f guifg=#073642
-    " autocmd VimEnter * hi PmenuSel guifg=#b58900
-
-    " solarized light
-    " autocmd VimEnter * hi SignColumn guibg=#eee8d5
-
-    " solarized dark
-    " autocmd VimEnter * hi SignColumn guibg=#073642
 
     if g:colors_name == "base16-default"
 
