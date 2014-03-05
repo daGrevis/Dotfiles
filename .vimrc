@@ -21,7 +21,6 @@ Bundle 'gmarik/vundle'
 
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'bling/vim-airline'
-Bundle 'Chiel92/vim-autoformat'
 Bundle 'chriskempson/base16-vim'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
@@ -62,7 +61,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
 
-" Sets fave color scheme.
+" Sets favourite color scheme.
 colorscheme base16-tomorrow
 set background=dark
 
@@ -113,30 +112,6 @@ noremap <M-8> :tabnext 8<CR>
 noremap <M-9> :tabnext 9<CR>
 noremap <M-0> :tablast<CR>
 
-" Pastes content to pasting service. Works in normal mode (whole buffer) or
-" visual mode (selection only).
-map <Leader>zz :exec "w !LINK=$(curl -F 'text=<-' 'http://vpaste.net/?nu&ft="
-                     \ . &ft . "') && echo -n $LINK \| xclip -i && "
-                     \ . "echo -n $LINK \| xclip -i -selection clipboard"<CR>
-vmap <Leader>zz <Esc>:exec "'<,'>w !LINK=$(curl -F 'text=<-' "
-                           \ . "'http://vpaste.net/?ft=" . &ft . "') && "
-                           \ . "echo -n $LINK \| xclip -i && echo -n $LINK \| "
-                           \ . "xclip -i -selection clipboard"<CR>
-
-" Maps <S-Tab> to toggling Tagbar.
-noremap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
-
-" Adds word to words list.
-noremap <Leader>s+ zg
-" Removes word from words list.
-noremap <Leader>s- zug
-" Finds next bad word.
-noremap <Leader>s] ]s
-" Finds previous bad word.
-noremap <Leader>s[ [s
-" Suggest from words list.
-noremap <Leader>s? z=
-
 " Fixes some common mistakes in command mode.
 cnoremap W w
 cnoremap ~w W
@@ -166,14 +141,8 @@ set wildignore+=*/static/compiled/*
 " Saves file when the focus is lost (for example, when buffers are changed).
 autocmd BufLeave,FocusLost * silent! wall
 
-" Maps <Leader>c to yanking whole file.
-nmap <Leader>c ggVGy
-
-" Maps <Leader>v to pasting all over previous file.
-nmap <Leader>v ggdG"0PGdd
-
 " Maps <Right> to indenting text to the right, but <Left> to the left. Works
-" in nmode and vmode.
+" in normal mode and visual mode.
 nmap <Left> <<
 nmap <Right> >>
 vmap <Left> <gv
@@ -183,7 +152,7 @@ vmap <Right> >gv
 nmap <Up> O<Esc>j
 nmap <Down> o<Esc>k
 
-" Show some special chars like tab and traling spaces differently.
+" Show some special chars like tab and trailing spaces differently.
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·
 
@@ -199,7 +168,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Disables folding at all.
 set nofen
 
-" Emacs ways to change cursor in cmode.
+" Emacs ways to change cursor in command mode.
 cmap <C-a> <Home>
 cmap <C-e> <End>
 cmap <M-b> <S-Left>
@@ -216,18 +185,6 @@ noremap <M-w> <C-w>v
 " Open splits in opposite places.
 set splitbelow
 set splitright
-
-" Allows to quickly set filetype using <Leader>ft.
-noremap <Leader>ft :set filetype=
-
-" Allows to quickly set text-width for wrapping using <Leader>tw.
-noremap <Leader>tw :set textwidth=
-
-" Searches for diff delimiter.
-noremap <Leader>d /\v\={4,}\|\<{4,}\|\>{4,}<CR>
-
-" Allows to quickly blame people. I like to do that.....
-noremap <Leader>gb :Gblame<CR>
 
 " Allows to save files as superuser.
 cmap w!! %!sudo tee > /dev/null %
@@ -250,7 +207,7 @@ autocmd BufReadPost *
     \     exec "normal g`\"" |
     \ endif
 
-" Allows to quicly switch to the most recently used tab.
+" Allows to quickly switch to the most recently used tab.
 let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
 noremap <Space> :exec "tabn ".g:lasttab<CR>
@@ -266,7 +223,6 @@ set complete+=k
 
 " Enables niceties for writing text.
 au Filetype text,markdown setlocal spell
-" au Filetype text,markdown setlocal dictionary+=/usr/share/dict/words
 set dictionary+=/usr/share/dict/words
 
 " Auto-complete won't open preview split or whatever.
@@ -274,41 +230,6 @@ set completeopt-=preview
 
 " Tells Vim to remember the vertical position.
 set nostartofline
-
-" Filesize.
-func! GetFilesize()
-    let bytes = getfsize(expand("%:p"))
-    if bytes <= 0
-        return "0"
-    endif
-    if bytes < 1024
-        return bytes
-    else
-        return (bytes / 1024) . "K"
-    endif
-endfunc
-noremap <Leader>du :echo GetFilesize()<CR>
-
-" Word count
-func! GetWordCount()
-    return system("cat " . expand("%") . " | wc -w")
-endfunc
-noremap <Leader>wc :echo GetWordCount()<CR>
-
-" Simple debugging in Python.
-noremap <Leader>pd A<CR>from pprint import pprint
-                        \<CR>
-                        \print("#" * 80)
-                        \<CR>
-                        \pprint()
-                        \<CR>
-                        \print("#" * 80)<Esc>k$
-
-" Interactive debugging in Python.
-noremap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
-
-" Simple debugging in PHP.
-noremap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
 
 " This awesomeness was removed from Sensible, but don't worry - I have learned
 " how to map things and I'm not afraid to use it!
@@ -322,33 +243,12 @@ nmap L $
 " Funny these doesn't work automatically anymore.
 autocmd FileType python set commentstring=#%s
 
-" Finds non-ASCII.
-noremap <Leader>q /\v[^\x00-\x7F]<CR>
-
-" Opens registers.
-noremap <Leader>r :registers<CR>
-"
-" Opens buffers.
-noremap <Leader>b :buffers<CR>
-
 " Fixes coffee not seeing Vim edits.
 au BufWritePost *.coffee silent! copen!
 
 " Abbrevs next.
 iabbrev teh the
 iabbrev fro for
-
-function Custom_jump(motion) range
-    let cnt = v:count1
-    let save = @/
-    mark '
-    while cnt > 0
-        silent! exe a:motion
-        let cnt = cnt - 1
-    endwhile
-    call histdel('/', -1)
-    let @/ = save
-endfun
 
 func! ExecuteClojure()
     exec "!lein exec %"
@@ -382,18 +282,77 @@ nnoremap <silent> N N:call HighlightNext(0.4)<CR>
 " Don't redraw while executing macros.
 set lazyredraw
 
+" Leaders next.
+
+" Pastes content to pasting service. Works in normal mode (whole buffer) or
+" visual mode (selection only).
+map <Leader>zz :exec "w !LINK=$(curl -F 'text=<-' 'http://vpaste.net/?nu&ft="
+                     \ . &ft . "') && echo -n $LINK \| xclip -i && "
+                     \ . "echo -n $LINK \| xclip -i -selection clipboard"<CR>
+vmap <Leader>zz <Esc>:exec "'<,'>w !LINK=$(curl -F 'text=<-' "
+                           \ . "'http://vpaste.net/?ft=" . &ft . "') && "
+                           \ . "echo -n $LINK \| xclip -i && echo -n $LINK \| "
+                           \ . "xclip -i -selection clipboard"<CR>
+
+" Adds word to words list.
+noremap <Leader>s+ zg
+" Removes word from words list.
+noremap <Leader>s- zug
+" Finds next bad word.
+noremap <Leader>s] ]s
+" Finds previous bad word.
+noremap <Leader>s[ [s
+" Suggest from words list.
+noremap <Leader>s? z=
+
+" Maps <Leader>c to yanking whole file.
+nmap <Leader>c ggVGy
+
+" Maps <Leader>v to pasting all over previous file.
+nmap <Leader>v ggdG"0PGdd
+
+" Allows to quickly set filetype using <Leader>ft.
+noremap <Leader>ft :set filetype=
+
+" Allows to quickly set text-width for wrapping using <Leader>tw.
+noremap <Leader>tw :set textwidth=
+
+" Searches for diff delimiter.
+noremap <Leader>d /\v\={4,}\|\<{4,}\|\>{4,}<CR>
+
+" Allows to quickly blame people. I like to do that.....
+noremap <Leader>gb :Gblame<CR>
+
+" Finds non-ASCII.
+noremap <Leader>nasc /\v[^\x00-\x7F]<CR>
+
 " Remove the Windows ^M - when encodings get messed up.
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
+" Joins line as J did. I remapped original J to switch to left tab.
 noremap <Leader>j :join<CR>
 
+" Sorts lines.
 vnoremap <Leader>s :!sort<CR>
-
-noremap <Leader>f :Autoformat<CR>
 
 " Sources line/selection.
 nnoremap <Leader>x ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 vnoremap <Leader>x y:execute @@<cr>:echo 'Sourced selection.'<cr>
+
+" Simple debugging in Python.
+noremap <Leader>pd A<CR>from pprint import pprint
+                        \<CR>
+                        \print("#" * 80)
+                        \<CR>
+                        \pprint()
+                        \<CR>
+                        \print("#" * 80)<Esc>k$
+
+" Interactive debugging in Python.
+noremap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
+
+" Simple debugging in PHP.
+noremap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
 
 " Things related to plugins next.
 
@@ -458,7 +417,7 @@ let g:syntastic_check_on_open = 1
 " Allows to use `:lnext` and `:lprevious` to move around Syntastic errors.
 let g:syntastic_always_populate_loc_list = 1
 
-" Conf for Python files.
+" Linters for Python files.
 let g:syntastic_python_checkers = ['python', 'pylama']
 let g:syntastic_python_pylama_post_args = '-o ~/pylama.ini'
 
@@ -563,6 +522,13 @@ command! CommaOrSemiColon call cosco#commaOrSemiColon()
 nmap <Leader>; :call cosco#commaOrSemiColon()<CR>
 
 "
+" Tagbar next.
+"
+
+" Maps <S-Tab> to toggling Tagbar.
+noremap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
+
+"
 " Preview next.
 "
 
@@ -583,8 +549,8 @@ if has("gui_running")
     imap <C-v> <Esc><C-v>
     vmap <C-c> "+y
     cmap <C-v> <C-r>*
-    " To copy from cmode, type `q:` and copy a command from there.
-    " To copy from smode, type `q/` and copy a phrase from there.
+    " To copy from command-mode, type `q:` and copy a command from there.
+    " To copy from command-mode, type `q/` and copy a phrase from there.
     " Pasting into command mode: `<C-r>"`.
 
     " Enable mouse in all modes.
@@ -600,7 +566,7 @@ if has("gui_running")
     " I love extra whitespace!
     set linespace=4
 
-    " Fix all the colorschemes at runtime!
+    " Fix all the color schemes at runtime!
 
     " hornet
     " autocmd VimEnter * hi TabLine guibg=#303030

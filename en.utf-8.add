@@ -13,3 +13,12 @@ Teardown
 teardowns
 username
 screenshot
+plugins
+filetype
+Linters
+Conf
+dotfiles
+bufferline
+tagline
+popups
+regexes
