@@ -79,7 +79,6 @@ set number
 " Highlights line which is active.
 set cursorline
 
-
 " Always assume that it's global search and replace.
 set gdefault
 
@@ -90,7 +89,7 @@ set hlsearch
 set ignorecase
 set smartcase
 
-" Ignores files that match these patters.
+" Ignores files that match these patterns.
 set wildignore+=*.png
 set wildignore+=*.gif
 set wildignore+=*.jpeg
