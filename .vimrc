@@ -22,6 +22,7 @@ Bundle 'gmarik/vundle'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'bling/vim-airline'
 Bundle 'chriskempson/base16-vim'
+Bundle 'editorconfig/editorconfig-vim'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
@@ -110,7 +111,8 @@ set wildignore+=*/static/compiled/*
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·
 
-" Tells to use 4 spaces for indentation.
+" Sane defaults for coding styles. Use EditorConfig for language-specific or
+" project-specific defaults.
 set et
 set ts=4
 set sw=4
