@@ -63,7 +63,7 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
 
 " Sets favourite color scheme.
-colorscheme base16-tomorrow
+colorscheme base16-twilight
 set background=dark
 
 "
