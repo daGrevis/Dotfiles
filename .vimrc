@@ -180,6 +180,9 @@ command! SudoW call SudoW()
 
 " Fix broken Vim regexes.
 nmap / /\v
+vmap / /\v
+nmap ? ?\v
+vmap ? ?\v
 cmap %s/ %s/\v/<Left>
 
 " Clears highlights for search results.
