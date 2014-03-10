@@ -20,3 +20,4 @@ ln -s ~/Dotfiles/xmonad.hs ~/.xmonad/xmonad.hs
 ln -s ~/Dotfiles/.Xresources ~/.Xresources
 ln -s ~/Dotfiles/.zshenv ~/.zshenv
 ln -s ~/Dotfiles/.zshrc ~/.zshrc
+ln -s ~/Dotfiles/.editorconfig ~/.editorconfig

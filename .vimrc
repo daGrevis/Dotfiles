@@ -21,6 +21,7 @@ Bundle 'gmarik/vundle'
 
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'bling/vim-airline'
+Bundle 'cespare/vim-toml'
 Bundle 'chriskempson/base16-vim'
 Bundle 'editorconfig/editorconfig-vim'
 Bundle 'ervandew/supertab'
@@ -63,8 +64,12 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
 
 " Sets favourite color scheme.
-colorscheme base16-twilight
-set background=dark
+colorscheme base16-bright
+set background=light
+
+" Abbrevs next.
+iabbrev teh the
+iabbrev fro for
 
 "
 " Setters next.
@@ -153,10 +158,6 @@ let &colorcolumn="80,".join(range(160,999),",")
 " Commands next.
 "
 
-" Abbrevs next.
-iabbrev teh the
-iabbrev fro for
-
 func! ExecuteClojure()
     exec "!lein exec %"
 endfunc
@@ -167,15 +168,19 @@ func! ExecutePython()
 endfunc
 command! ExecutePython call ExecutePython()
 
+" Allows to save files as superuser.
+func! SudoW()
+    exec "w !sudo dd of=%"
+endfunc
+command! SudoW call SudoW()
+
 "
 " Maps next.
 "
 
 " Fix broken Vim regexes.
 nmap / /\v
-vmap / /\v
-nmap ? ?\v
-vmap ? ?\v
+cmap %s/ %s/\v/<Left>
 
 " Clears highlights for search results.
 nmap <C-l> :let @/ = ""<CR>
@@ -229,9 +234,6 @@ nmap <M-k> <C-w>k
 nmap <M-l> <C-w>l
 nmap <M-q> <C-w>s
 nmap <M-w> <C-w>v
-
-" Allows to save files as superuser.
-cmap w!! %!sudo tee > /dev/null %
 
 " Simple shortcuts.
 nmap <C-e> :edit<Space>
@@ -612,6 +614,13 @@ if has("gui_running")
         hi StartifyNumber guifg=#f0c674
         hi StartifyBracket guifg=#de935f
         hi Cursor guibg=#e0e0e0
+
+    endif
+
+    if g:colors_name == "base16-bright"
+
+        hi Comment guifg=#b0b0b0
+        hi CursorLineNr guifg=#505050
 
     endif
 
