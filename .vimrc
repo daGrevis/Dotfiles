@@ -64,8 +64,8 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
 
 " Sets favourite color scheme.
-colorscheme base16-bright
-set background=light
+colorscheme base16-railscasts
+set background=dark
 
 " Abbrevs next.
 iabbrev teh the
@@ -582,12 +582,12 @@ if has("gui_running")
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
     " set guifont=Envypn\ 10
-    set guifont=Meslo\ LG\ M\ 8
+    set guifont=Meslo\ LG\ M\ 9
     " set guifont=Hermit\ 8
     " set guifont=Tamsyn\ 14px
 
     " I love extra whitespace!
-    set linespace=4
+    " set linespace=4
 
     " Fix all the color schemes at runtime!
 
