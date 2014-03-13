@@ -549,7 +549,7 @@ nmap <Leader>; :call cosco#commaOrSemiColon()<CR>
 "
 
 " Maps <S-Tab> to toggling Tagbar.
-nmap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
+nnoremap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
 
 "
 " Preview next.
