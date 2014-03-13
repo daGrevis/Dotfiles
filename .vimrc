@@ -64,7 +64,7 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
 
 " Sets favourite color scheme.
-colorscheme base16-tomorrow
+colorscheme base16-railscasts
 set background=dark
 
 " Abbrevs next.
@@ -184,7 +184,7 @@ nmap / /\v
 vmap / /\v
 nmap ? ?\v
 vmap ? ?\v
-cmap %s/ %s/\v/<Left>
+cnoremap s/ s/\v/<Left>
 
 " Clears highlights for search results.
 nmap <C-l> :let @/ = ""<CR>
