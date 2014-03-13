@@ -61,7 +61,7 @@ do
 end
 
 modkey = "Mod4"
-terminal = "urxvt"
+terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "vi"
 browser = "chromium"
 browser_incognito = "chromium --incognito"

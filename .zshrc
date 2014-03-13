@@ -1,3 +1,5 @@
+DEFAULT_USER='dagrevis'
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -5,7 +7,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="custom"
+ZSH_THEME='custom'
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -74,6 +76,9 @@ PATH+=":"
 PATH+=$(ruby -rubygems -e 'puts Gem.user_dir')/bin
 export PATH=$PATH
 
+export WORKON_HOME=~/Envs
+source /usr/bin/virtualenvwrapper.sh
+
 # Enables autojump.
 [[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
 
@@ -85,5 +90,3 @@ setopt interactivecomments
 
 # Disables correction.
 unsetopt correct_all
-
-# until ping -w1 -c1 8.8.8.8; do sleep 5; done && notify-send 'Internet Connection' 'You are now connected!'

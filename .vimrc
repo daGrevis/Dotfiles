@@ -64,8 +64,8 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
 
 " Sets favourite color scheme.
-colorscheme base16-bright
-set background=light
+colorscheme base16-tomorrow
+set background=dark
 
 " Abbrevs next.
 iabbrev teh the
@@ -171,6 +171,7 @@ command! ExecutePython call ExecutePython()
 " Allows to save files as superuser.
 func! SudoW()
     exec "w !sudo dd of=%"
+    exec "e!"
 endfunc
 command! SudoW call SudoW()
 
@@ -318,6 +319,7 @@ nmap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 nmap <Leader>j :join<CR>
 
 " Sorts lines.
+nmap <Leader>s :%!sort<CR>
 vmap <Leader>s :!sort<CR>
 
 " Sources line/selection.
@@ -504,7 +506,7 @@ nmap <Leader>u :GundoToggle<CR>
 "
 
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 2
+let g:indent_guides_color_change_percent = 4
 
 "
 " Rainbow next.
@@ -582,12 +584,12 @@ if has("gui_running")
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
     " set guifont=Envypn\ 10
-    set guifont=Meslo\ LG\ M\ 8
+    set guifont=Meslo\ LG\ M\ 9
     " set guifont=Hermit\ 8
     " set guifont=Tamsyn\ 14px
 
     " I love extra whitespace!
-    set linespace=4
+    " set linespace=4
 
     " Fix all the color schemes at runtime!
 

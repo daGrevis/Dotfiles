@@ -1,6 +1,11 @@
-PROMPT=' %~ $(git_prompt_info)%% '
+function ssh_prompt {
+    if [[ -n "$SSH_CLIENT" ]]; then
+        echo "$fg_bold[yellow]ssh$reset_color "
+    fi
+}
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_CLEAN=""
-ZSH_THEME_GIT_PROMPT_DIRTY=" ×"
+function directory_prompt {
+    echo '%~'
+}
+
+PROMPT=" $(ssh_prompt)$(directory_prompt) %% "
