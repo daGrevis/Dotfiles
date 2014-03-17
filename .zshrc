@@ -76,9 +76,6 @@ PATH+=":"
 PATH+=$(ruby -rubygems -e 'puts Gem.user_dir')/bin
 export PATH=$PATH
 
-export WORKON_HOME=~/Envs
-source /usr/bin/virtualenvwrapper.sh
-
 # Enables autojump.
 [[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
 
