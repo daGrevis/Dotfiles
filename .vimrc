@@ -30,6 +30,7 @@ Bundle 'gregsexton/MatchTag'
 Bundle 'greyblake/vim-preview'
 Bundle 'guns/vim-clojure-static'
 Bundle 'guns/vim-sexp'
+Bundle 'honza/vim-snippets'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'lfilho/cosco.vim'
@@ -48,10 +49,12 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'shawncplus/phpcomplete.vim'
+Bundle 'SirVer/ultisnips'
 Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-classpath'
 Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-dispatch'
 Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
@@ -304,7 +307,7 @@ nmap <Leader>ft :set filetype=
 nmap <Leader>tw :set textwidth=
 
 " Searches for diff delimiter.
-nmap <Leader>d /\v\={4,}\|\<{4,}\|\>{4,}<CR>
+nmap <Leader>gd /\v\={4,}\|\<{4,}\|\>{4,}<CR>
 
 " Allows to quickly blame people. I like to do that.....
 nmap <Leader>gb :Gblame<CR>
@@ -337,9 +340,6 @@ nmap <Leader>pd A<CR>from pprint import pprint
 
 " Interactive debugging in Python.
 nmap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
-
-" Simple debugging in PHP.
-nmap <Leader>hd A<CR>?><CR><pre><CR><?php print_r(); exit;<Esc>$F(
 
 "
 " Auto-commands next.
@@ -519,8 +519,10 @@ syntax enable
 au FileType lisp,clojure RainbowLoad
 
 "
-" Sexp next.
+" Dispatch next.
 "
+
+nmap <Leader>d :Dispatch<Space>
 
 "
 " Airline next.
