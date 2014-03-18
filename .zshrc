@@ -76,9 +76,6 @@ PATH+=":"
 PATH+=$(ruby -rubygems -e 'puts Gem.user_dir')/bin
 export PATH=$PATH
 
-export WORKON_HOME=~/Envs
-source /usr/bin/virtualenvwrapper.sh
-
 # Enables autojump.
 [[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
 
@@ -90,3 +87,40 @@ setopt interactivecomments
 
 # Disables correction.
 unsetopt correct_all
+
+source "$HOME/.antigen/antigen.zsh"
+
+antigen-bundle arialdomartini/oh-my-git
+antigen-use oh-my-zsh
+antigen-bundle git
+antigen-bundle zsh-users/zsh-syntax-highlighting
+antigen-bundle zsh-users/zsh-history-substring-search
+antigen-bundle zsh-users/zsh-completions
+antigen theme arialdomartini/oh-my-git-themes arialdo-granzestyle
+
+antigen-apply
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+
+# Tons of Git alias I'm trying to use daily.
+alias gad='git add --ignore-removal'
+alias gbr='git branch'
+alias gcl='git clone'
+alias gcm='git commit'
+alias gco='git checkout'
+alias gcp='git cherry-pick'
+alias gdf='git diff'
+alias gin='git init'
+alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
+alias gmr='git merge'
+alias gmv='git mv'
+alias gpl='git pull'
+alias gpu='git push -u origin $(current_branch)'
+alias grm='git rm'
+alias grs='git reset'
+alias grv='git revert'
+alias gsh='git stash'
+alias gst='git status -sb'
+alias gsw='git show'
+alias gtg='git tag'
+alias ggr='git grep --break --heading --line-number'
