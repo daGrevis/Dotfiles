@@ -1,108 +1,57 @@
-DEFAULT_USER='dagrevis'
+source antigen.zsh
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+antigen use oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME='custom'
+antigen bundle archlinux
+antigen bundle autojump
+antigen bundle bower
+antigen bundle coffee
+antigen bundle encode64
+antigen bundle gem
+antigen bundle git
+antigen bundle lein
+antigen bundle npm
+antigen bundle pass
+antigen bundle pip
+antigen bundle redis-cli
+antigen bundle systemd
+antigen-bundle zsh-users/zsh-history-substring-search
+antigen bundle zsh-users/zsh-syntax-highlighting
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+antigen theme robbyrussell
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+antigen apply
 
-# Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+export EDITOR='gvim -f'
 
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(
-    archlinux
-    autojump
-    bower
-    coffee
-    encode64
-    npm
-    pass
-    pip
-    redis-cli
-    systemd
-    urltools
-    web-search
-)
-
-source $ZSH/oh-my-zsh.sh
-
-# Oh-my-zsh creates alias `sl`, but `sl` is a package too!
-unalias sl
-
-# Customize to your needs...
-PATH=""
-PATH+=/usr/local/bin
-PATH+=":"
-PATH+=/usr/bin
-PATH+=":"
-PATH+=/bin
-PATH+=":"
-PATH+=/usr/local/sbin
-PATH+=":"
-PATH+=/usr/sbin
-PATH+=":"
-PATH+=/sbin
-PATH+=":"
-PATH+=/usr/bin/core_perl
-PATH+=":"
-PATH+=/usr/bin/vendor_perl
-PATH+=":"
-PATH+=/home/dagrevis/.cabal/bin
-PATH+=":"
-PATH+=/home/dagrevis/Scripts
-PATH+=":"
-PATH+=$(ruby -rubygems -e 'puts Gem.user_dir')/bin
-export PATH=$PATH
-
-# Enables autojump.
-[[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
-
-# Try <C-x><C-e>.
-export EDITOR=gvim\ -f
-
-# Bash-like comments.
 setopt interactivecomments
 
-# Disables correction.
-unsetopt correct_all
+function bb {
+    echo 'Shutdown scheduled. (Press Ctrl + C to terminate)'
+    echo -n 'Countdown... '
+    for i in {10..1}
+    do
+        echo -n "$i "
+        sleep 1
+    done
+    echo
+    echo 'Bye-bye then!'
+    sudo shutdown -h now
+}
 
-source "$HOME/.antigen/antigen.zsh"
+alias rm='rm -i'
 
-antigen-bundle arialdomartini/oh-my-git
-antigen-use oh-my-zsh
-antigen-bundle git
-antigen-bundle zsh-users/zsh-syntax-highlighting
-antigen-bundle zsh-users/zsh-history-substring-search
-antigen-bundle zsh-users/zsh-completions
-antigen theme arialdomartini/oh-my-git-themes arialdo-granzestyle
+alias diff='colordiff -u'
 
-antigen-apply
+alias p='ping google.com'
+alias p2='ping 8.8.8.8'
 
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+function current_branch() {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || \
+    ref=$(git rev-parse --short HEAD 2> /dev/null) || return
+    echo ${ref#refs/heads/}
+}
 
-# Tons of Git alias I'm trying to use daily.
 alias gad='git add --ignore-removal'
 alias gbr='git branch'
 alias gcl='git clone'
@@ -124,3 +73,67 @@ alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
 alias ggr='git grep --break --heading --line-number'
+
+function vim {
+    if ! xset q &> /dev/null; then
+        command vim -p $@
+    else
+        command gvim -p $@ & disown
+    fi
+}
+function vimd {
+    vim -p $@ && exit
+}
+
+function aux {
+    ps -aux | grep $1 | grep -v "grep $1"
+}
+
+alias :q=exit
+
+function remove_orphans {
+    sudo pacman -Rns $(pacman -Qqtd)
+}
+
+function restart_lamp {
+    sudo systemctl restart httpd
+    sudo systemctl restart mysqld
+}
+
+alias time=/usr/bin/time
+
+function random_password {
+    pwgen --ambiguous --capitalize --numerals --symbols 16
+}
+
+function sdf {
+    svn diff | colordiff | less
+}
+
+function slg {
+    svn log --limit 20 | less
+}
+
+function spl {
+    svn update
+}
+
+function scm {
+    svn commit
+}
+
+function sst {
+    svn status
+}
+
+function hr {
+    printf '─%.0s' $(seq $COLUMNS)
+}
+
+function delete_pyc {
+    find . -name '*.pyc' -delete
+}
+
+function update_mirrorlist {
+    sudo reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
+}
