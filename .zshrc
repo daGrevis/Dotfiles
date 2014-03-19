@@ -137,3 +137,11 @@ function delete_pyc {
 function update_mirrorlist {
     sudo reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
 }
+
+function cower_search {
+    cower --color=auto --sort=votes -s $1
+}
+
+function cower_show {
+    cower --color=auto -i $1
+}
