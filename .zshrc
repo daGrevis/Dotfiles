@@ -145,3 +145,5 @@ function cower_search {
 function cower_show {
     cower --color=auto -i $1
 }
+
+alias skype2='skype --dbpath=~/.Skype2'
