@@ -55,7 +55,7 @@ function current_branch() {
 alias gad='git add --ignore-removal'
 alias gbr='git branch'
 alias gcl='git clone'
-alias gcm='git commit'
+alias gcm='git commit -v'
 alias gco='git checkout'
 alias gcp='git cherry-pick'
 alias gdf='git diff'
