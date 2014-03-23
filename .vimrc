@@ -24,7 +24,6 @@ Bundle 'bling/vim-airline'
 Bundle 'cespare/vim-toml'
 Bundle 'chriskempson/base16-vim'
 Bundle 'editorconfig/editorconfig-vim'
-Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
 Bundle 'greyblake/vim-preview'
@@ -65,8 +64,8 @@ Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-sexp-mappings-for-regular-people'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'vim-scripts/colorizer'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'vim-scripts/colorizer'
 
 " Abbrevs next.
 iabbrev teh the
