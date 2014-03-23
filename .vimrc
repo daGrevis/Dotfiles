@@ -43,6 +43,7 @@ Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
 Bundle 'mitsuhiko/vim-python-combined'
 Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'noahfrederick/vim-noctu'
 Bundle 'oblitum/rainbow'
 Bundle 'othree/html5.vim'
 Bundle 'Raimondi/delimitMate'
@@ -65,10 +66,6 @@ Bundle 'tpope/vim-sexp-mappings-for-regular-people'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
-
-" Sets favourite color scheme.
-colorscheme base16-railscasts
-set background=dark
 
 " Abbrevs next.
 iabbrev teh the
@@ -563,6 +560,10 @@ nmap <Leader>pr :Preview<CR>
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
 
+    " Sets favourite color scheme.
+    colorscheme base16-railscasts
+    set background=dark
+
     " Removes all GUI stuff.
     set guioptions=
     set guioptions+=c " Removes popups.
@@ -632,6 +633,9 @@ if has("gui_running")
 
 else
 
-    colorscheme default
+    colorscheme noctu
+
+    " Disables indent-guides.
+    let g:indent_guides_auto_colors = 0
 
 endif
