@@ -59,5 +59,8 @@ redshift -l 57:24 &
 # Starts GnuPG-agent.
 gpg-agent --daemon &
 
+# To get my aliases working with awesome wm.
+source ~/.zshrc
+
 # Loads WM.
 exec awesome

@@ -1,3 +1,10 @@
+# Customize to your needs...
+PATH+=":"
+PATH+=/home/dagrevis/Scripts
+PATH+=":"
+PATH+=$(ruby -rubygems -e 'puts Gem.user_dir')/bin
+export PATH=$PATH
+
 source antigen.zsh
 
 antigen use oh-my-zsh

@@ -66,6 +66,7 @@ Bundle 'tpope/vim-sexp-mappings-for-regular-people'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/colorizer'
+Bundle 'Valloric/YouCompleteMe'
 
 " Abbrevs next.
 iabbrev teh the
@@ -561,7 +562,7 @@ nmap <Leader>pr :Preview<CR>
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme base16-railscasts
+    colorscheme base16-default
     set background=dark
 
     " Removes all GUI stuff.
@@ -597,8 +598,6 @@ if has("gui_running")
 
     if g:colors_name == "base16-default"
 
-        hi Comment guifg=#b0b0b0
-        hi LineNr guifg=#505050
         hi TODO guibg=#ac4142 guifg=#f5f5f5
         " Default yellow.
         hi CursorLineNr guifg=#ffff60

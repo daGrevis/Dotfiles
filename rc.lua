@@ -334,6 +334,15 @@ keys = awful.util.table.join(
             "' -sf '" .. beautiful.fg_focus ..
             "' -fn 'Meslo LG M DZ-8'")
     end),
+    awful.key({modkey, "Control"}, "p", function()
+        awful.util.spawn(
+            "passmenu -i " ..
+            "-nb '" ..  beautiful.bg_normal ..
+            "' -nf '" .. beautiful.fg_normal ..
+            "' -sb '" .. beautiful.bg_focus ..
+            "' -sf '" .. beautiful.fg_focus ..
+            "' -fn 'Meslo LG M DZ-8'")
+    end),
     awful.key({}, "Print", function()
         awful.util.spawn(print_command)
     end),
