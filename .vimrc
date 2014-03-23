@@ -319,7 +319,7 @@ nmap <Leader>nasc /\v[^\x00-\x7F]<CR>
 nmap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Joins line as J did. I remapped original J to switch to left tab.
-nmap <Leader>j :join<CR>
+map <Leader>j :join<CR>
 
 " Sorts lines.
 nmap <Leader>s :%!sort<CR>
@@ -443,8 +443,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_always_populate_loc_list = 1
 
 " Linters for Python files.
-let g:syntastic_python_checkers = ['python', 'pylama']
-let g:syntastic_python_pylama_post_args = '-o ~/pylama.ini'
+let g:syntastic_python_checkers = ['python', 'pep8', 'pyflakes']
 
 " Conf for CoffeeScript files.
 let g:syntastic_coffee_checkers = ['coffee', 'coffeelint']
