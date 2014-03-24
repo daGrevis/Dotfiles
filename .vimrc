@@ -19,6 +19,8 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
+" 9000+ plugins, but still faster than swiftest IDEs!
+Bundle 'AndrewRadev/splitjoin.vim'
 Bundle 'austintaylor/vim-indentobject'
 Bundle 'bling/vim-airline'
 Bundle 'cespare/vim-toml'
@@ -27,12 +29,11 @@ Bundle 'editorconfig/editorconfig-vim'
 Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/MatchTag'
 Bundle 'greyblake/vim-preview'
-Bundle 'guns/vim-clojure-static'
 Bundle 'guns/vim-sexp'
 Bundle 'honza/vim-snippets'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'kien/ctrlp.vim'
 Bundle 'lfilho/cosco.vim'
+Bundle 'lilydjwg/colorizer'
 Bundle 'majutsushi/tagbar'
 Bundle 'mattn/emmet-vim'
 Bundle 'mattn/gist-vim'
@@ -40,15 +41,13 @@ Bundle 'mattn/webapi-vim'
 Bundle 'mhinz/vim-signify'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
-Bundle 'mitsuhiko/vim-python-combined'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'noahfrederick/vim-noctu'
 Bundle 'oblitum/rainbow'
-Bundle 'othree/html5.vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
-Bundle 'shawncplus/phpcomplete.vim'
+Bundle 'sheerun/vim-polyglot'
 Bundle 'SirVer/ultisnips'
 Bundle 'sjl/gundo.vim'
 Bundle 'tpope/vim-abolish'
@@ -60,12 +59,13 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-rsi'
 Bundle 'tpope/vim-sensible'
 Bundle 'tpope/vim-sexp-mappings-for-regular-people'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'vim-scripts/colorizer'
+Bundle 'vim-scripts/gitignore'
 
 " Abbrevs next.
 iabbrev teh the
@@ -225,12 +225,6 @@ vmap <Right> >gv
 nmap <Up> O<Esc>j
 nmap <Down> o<Esc>k
 
-" Emacs ways to change cursor in command mode.
-cmap <C-a> <Home>
-cmap <C-e> <End>
-cmap <M-b> <S-Left>
-cmap <M-f> <S-Right>
-
 " Allows to use splits more quickly (Alt-{h,j,k,l,q,w}).
 nmap <M-h> <C-w>h
 nmap <M-j> <C-w>j
@@ -266,9 +260,17 @@ endfunc
 nmap <silent> n n:call HighlightNext(0.4)<CR>
 nmap <silent> N N:call HighlightNext(0.4)<CR>
 
+" Jump to end of text you pasted.
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+
 "
 " Leader-maps next.
 "
+
+" Map leader to <Space>.
+let mapleader = "\<Space>"
 
 " Pastes content to pasting service. Works in normal mode (whole buffer) or
 " visual mode (selection only).
@@ -338,6 +340,9 @@ nmap <Leader>pd A<CR>from pprint import pprint
 " Interactive debugging in Python.
 nmap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
 
+nmap <Leader>w :w<CR>
+nmap <Leader>q :wq<CR>
+
 "
 " Auto-commands next.
 "
@@ -353,11 +358,6 @@ autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \     exec "normal g`\"" |
     \ endif
-
-" Allows to quickly switch to the most recently used tab.
-let g:lasttab = 1
-au TabLeave * let g:lasttab = tabpagenr()
-nmap <Space> :exec "tabn ".g:lasttab<CR>
 
 " Enables niceties for writing text.
 autocmd Filetype text,markdown setlocal spell
@@ -531,6 +531,13 @@ let g:airline#extensions#tabline#show_buffers = 0
 " Shows everything about code tree.
 let g:airline#extensions#tagbar#flags = 'f'
 
+" Show number of tab instead of buffer count for each tab.
+let g:airline#extensions#tabline#tab_nr_type = 1
+
+"
+" Sexps next.
+"
+
 " Disables mappings in insert mode.
 let g:sexp_enable_insert_mode_mappings = 0
 
@@ -556,6 +563,21 @@ nnoremap <S-Tab> :TagbarToggle<CR> :wincmd b<CR>
 let g:PreviewBrowsers = 'chromium'
 
 nmap <Leader>pr :Preview<CR>
+
+"
+" Splitjoin next.
+"
+
+nmap <Leader>ss :SplitjoinSplit<CR>
+nmap <Leader>sj :SplitjoinJoin<CR>
+
+"
+" Ultisnips next.
+"
+
+" Allows YCM to work together with Ultisnips. Expand snippet with <C-Tab>.
+let g:UltiSnipsExpandTrigger = '<C-Tab>'
+let g:UltiSnipsListSnippets = '<C-S-Tab>'
 
 " My Vim shall work in TTY too thanks to control structures.
 if has("gui_running")
