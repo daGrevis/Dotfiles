@@ -343,6 +343,11 @@ nmap <Leader>ipd A<CR>import ipdb; ipdb.set_trace()<Esc>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :wq<CR>
 
+" Allows to quickly switch to the most recently used tab.
+let g:lasttab = 1
+au TabLeave * let g:lasttab = tabpagenr()
+nmap <Leader><Leader> :exec "tabn ".g:lasttab<CR>
+
 "
 " Auto-commands next.
 "
