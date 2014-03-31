@@ -353,7 +353,13 @@ keys = awful.util.table.join(
         spawn_in_terminal("ranger")
     end),
     awful.key({modkey, "Shift"}, "m", function()
-        spawn_in_terminal("bc")
+        spawn_in_terminal("alsamixer")
+    end),
+    awful.key({modkey, "Shift"}, "n", function()
+        awful.util.spawn("chromium --new-window https://play.spotify.com/playlist")
+    end),
+    awful.key({modkey, "Shift"}, "'", function()
+        awful.util.spawn("chromium --new-window http://devdocs.io/")
     end),
     awful.key({}, "XF86AudioMute", function()
         spawn_in_terminal("amixer -q set Master toggle")
