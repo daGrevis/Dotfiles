@@ -588,7 +588,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme base16-bright
+    colorscheme base16-flat
     set background=dark
 
     " Removes all GUI stuff.
@@ -600,6 +600,7 @@ if has("gui_running")
 
     " Allows copying/pasting in GVim using <C-c> and <C-p>.
     nmap <C-v> "+gpa<Esc>
+    imap <C-v> <Esc><C-v>
     vmap <C-c> "+y
     cmap <C-v> <C-r>*
     " To copy from command-mode, type `q:` and copy a command from there.
