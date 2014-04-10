@@ -387,14 +387,14 @@ au BufWritePost *.coffee silent! copen!
 " Ack next.
 "
 
-" Opens Ack with default boilerplate.
-nmap <Leader>a :Ack  **/*<C-Left><Left>
+" Shortcut for quicker search.
+nmap <Leader>a :Ack<Space>
 
-" Opens Ack in a new tab.
-nmap <Leader>ta :tabe \| Ack  **/*<C-Left><Left>
+" Seacrhes for a word under the cursor.
+nmap <C-f> :Ack <C-R><C-W><Space>
 
-" Searched for a word under the cursor in a new tab.
-nmap <C-f> yiw:tabe \| Ack <C-r>" **/*
+" Uses ag for faster search.
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 "
 " CtrlP next.
@@ -405,6 +405,9 @@ nmap <C-p> call CtrlPMRU()
 
 " Shows CtrlP on top.
 let g:ctrlp_match_window_bottom = 0
+
+" Uses ag for faster search.
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
 "
 " DelimitMate next.
@@ -588,7 +591,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme base16-flat
+    colorscheme base16-railscasts
     set background=dark
 
     " Removes all GUI stuff.

@@ -81,7 +81,7 @@ local layouts =
 }
 
 if beautiful.wallpaper then
-    gears.wallpaper.centered(beautiful.wallpaper, nil, "black")
+    gears.wallpaper.tiled(beautiful.wallpaper)
 end
 
 tags = {}
