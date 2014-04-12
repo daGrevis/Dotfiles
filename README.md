@@ -10,8 +10,10 @@ You will probably want to execute my awesome script called `symlink.sh` that wil
 
 ## Screenshots
 
-![one screen](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/one_screen.jpg)
+![Clean](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/clean.jpg)
 
-![two screens](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/two_screens.jpg)
+![Shell](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/shell.jpg)
 
-![windows](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/windows.jpg)
+![Vim](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/vim.jpg)
+
+![Browser](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/browser.jpg)
