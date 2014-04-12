@@ -90,6 +90,23 @@ for s = 1, screen.count() do
                          "6", "7", "8", "9"}, s, layouts[1])
 end
 
+menu_items = {
+   { "restart", awesome.restart },
+   { "quit", awesome.quit }
+}
+
+menu = awful.menu({
+    items = {
+        { "awesome", menu_items, beautiful.awesome_icon },
+        { "open terminal", terminal }
+    }
+})
+
+launcher = awful.widget.launcher({
+    image = beautiful.awesome_icon,
+    menu = menu
+})
+
 -- Widgets.
 
 textclock_widget = awful.widget.textclock("%y/%m/%d, %H:%M:%S", 1)
@@ -196,6 +213,8 @@ for s = 1, screen.count() do
     my_wibox[s] = awful.wibox({ position = "top", screen = s })
 
     local left_layout = wibox.layout.fixed.horizontal()
+
+    left_layout:add(launcher)
 
     left_layout:add(my_taglist[s])
 

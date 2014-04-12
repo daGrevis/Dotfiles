@@ -51,5 +51,6 @@ theme.layout_spiral = "/usr/share/awesome/themes/default/layouts/spiralw.png"
 theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
 theme.icon_theme = nil
+theme.awesome_icon = "~/Dotfiles/arch-linux.png"
 
 return theme
