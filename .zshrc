@@ -152,3 +152,7 @@ function cower_search {
 function cower_show {
     cower --color=auto -i $1
 }
+
+function isup {
+    curl -Iso /dev/null -w "%{http_code}\n" $1
+}
