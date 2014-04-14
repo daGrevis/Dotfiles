@@ -30,7 +30,7 @@ theme.fg_focus = theme.color_gray3
 theme.fg_urgent = theme.color_gray3
 theme.fg_minimize = theme.color_gray3
 
-theme.border_width = 2
+theme.border_width = 5
 theme.border_normal = theme.color_black2
 theme.border_focus = "#1793d1"
 theme.border_marked = "#1793d1"
