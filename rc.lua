@@ -8,6 +8,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
+local lain = require("lain")
 
 function is_integer(x)
     return tonumber(x) ~= nil
@@ -75,13 +76,14 @@ end
 
 local layouts =
 {
-    awful.layout.suit.tile,
+    lain.layout.uselesstile,
+    lain.layout.termfair,
+    awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
-    awful.layout.suit.max
 }
 
 if beautiful.wallpaper then
-    gears.wallpaper.tiled(beautiful.wallpaper)
+    gears.wallpaper.maximized(beautiful.wallpaper)
 end
 
 tags = {}

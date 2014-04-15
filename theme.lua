@@ -30,7 +30,7 @@ theme.fg_focus = theme.color_gray3
 theme.fg_urgent = theme.color_gray3
 theme.fg_minimize = theme.color_gray3
 
-theme.border_width = 5
+theme.border_width = 3
 theme.border_normal = theme.color_black2
 theme.border_focus = "#1793d1"
 theme.border_marked = "#1793d1"
@@ -52,5 +52,10 @@ theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
 theme.icon_theme = nil
 theme.awesome_icon = "~/Dotfiles/arch-linux.png"
+
+theme.lain_icons = "/usr/share/awesome/lib/lain/icons/layout/default/"
+theme.layout_uselesstile = theme.layout_tile
+theme.layout_termfair = theme.lain_icons .. "termfairw.png"
+theme.useless_gap_width = 20
 
 return theme
