@@ -309,7 +309,7 @@ keys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Control" }, "q", awesome.quit),
     awful.key({modkey, "Control"}, "l", function()
-        awful.util.spawn("slock")
+        awful.util.spawn("./Scripts/lock.sh")
     end),
 
     awful.key({ modkey, }, "l", function()
