@@ -59,7 +59,7 @@ redshift -l 57:24 &
 # Starts GnuPG-agent.
 gpg-agent --daemon &
 
-xautolock -time 10 -locker lock
+xautolock -time 10 -locker lock &
 
 # To get my aliases working with awesome wm.
 source ~/.zshrc
