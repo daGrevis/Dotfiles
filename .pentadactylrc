@@ -1,0 +1,6 @@
+loadplugins '\.(js|penta)$'
+
+set guioptions=
+
+nmap d <Esc>
+nmap u <C-o>

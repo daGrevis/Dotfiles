@@ -64,7 +64,7 @@ end
 modkey = "Mod4"
 terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "vi"
-browser = "chromium"
+browser = "firefox"
 browser_incognito = "chromium --incognito"
 bittorrent_client = "transmission-gtk"
 irc_client = "sh ~/Scripts/hexchat_once.sh"
