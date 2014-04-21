@@ -9,6 +9,8 @@ ln -s ~/Dotfiles/.gtkrc-2.0 ~/.gtkrc-2.0
 ln -s ~/Dotfiles/.gtkrc-2.0.mine ~/.gtkrc-2.0.mine
 ln -s ~/Dotfiles/hexchat_once.sh ~/Scripts/hexchat_once.sh
 ln -s ~/Dotfiles/lock.sh ~/Scripts/lock.sh
+ln -s ~/Dotfiles/mpv_config ~/.mpv/config
+ln -s ~/Dotfiles/mpv_input ~/.mpv/input.conf
 ln -s ~/Dotfiles/pacman_colors.sh ~/Scripts/pacman_colors.sh
 ln -s ~/Dotfiles/.pentadactylrc ~/.pentadactylrc
 ln -s ~/Dotfiles/profiles.clj ~/.lein/profiles.clj
