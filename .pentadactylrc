@@ -1,6 +1,18 @@
+" vim: set filetype=vim :
+
 loadplugins '\.(js|penta)$'
 
-set guioptions=
+set guioptions=BnrT
+set hlfind
 
 nmap d <Esc>
-nmap u <C-o>
+
+nmap u :back<CR>
+nmap <C-r> :forward<CR>
+
+nmap <S-j> gT
+nmap <S-k> gt
+
+nmap <C-l> :nohlfind<CR>
+
+nmap <Leader>d :downloads<CR>

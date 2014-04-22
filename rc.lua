@@ -284,15 +284,9 @@ keys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
     awful.key({ modkey, "Shift" }, "j", function()
-        awful.client.swap.byidx(1)
-    end),
-    awful.key({ modkey, "Shift" }, "k", function()
-        awful.client.swap.byidx(-1)
-    end),
-    awful.key({ modkey, "Control" }, "j", function()
         awful.screen.focus_relative(1)
     end),
-    awful.key({ modkey, "Control" }, "k", function()
+    awful.key({ modkey, "Shift" }, "k", function()
         awful.screen.focus_relative(-1)
     end),
     awful.key({ modkey, }, "Tab",

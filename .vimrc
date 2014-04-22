@@ -233,6 +233,8 @@ nmap <M-l> <C-w>l
 nmap <M-q> <C-w>s
 nmap <M-w> <C-w>v
 
+nmap <C-w> :q!<CR>
+
 " Simple shortcuts.
 nmap <C-e> :edit<Space>
 nmap <C-t> :tabedit<Space>
