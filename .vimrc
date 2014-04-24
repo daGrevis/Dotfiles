@@ -593,7 +593,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme base16-default
+    colorscheme base16-tomorrow
     set background=dark
 
     " Removes all GUI stuff.

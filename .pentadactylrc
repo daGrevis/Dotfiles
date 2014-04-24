@@ -2,10 +2,11 @@
 
 loadplugins '\.(js|penta)$'
 
-set guioptions=BnrT
+set guioptions=
 set hlfind
 
 nmap d <Esc>
+nmap w <Esc>
 
 nmap u :back<CR>
 nmap <C-r> :forward<CR>
@@ -15,4 +16,6 @@ nmap <S-k> gt
 
 nmap <C-l> :nohlfind<CR>
 
-nmap <Leader>d :downloads<CR>
+nmap <C-r> R
+
+nmap <C-t> t
