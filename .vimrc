@@ -593,7 +593,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme base16-default
+    colorscheme base16-railscasts
     set background=dark
 
     " Removes all GUI stuff.
@@ -609,7 +609,7 @@ if has("gui_running")
     vmap <C-c> "+y
     cmap <C-v> <C-r>*
     " To copy from command-mode, type `q:` and copy a command from there.
-    " To copy from command-mode, type `q/` and copy a phrase from there.
+    " To copy from command-mode,
     " Pasting into command mode: `<C-r>"`.
 
     " Enable mouse in all modes.
