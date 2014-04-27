@@ -138,7 +138,8 @@ function hr {
 }
 
 function delete_pyc {
-    find . -name '*.pyc' -delete
+    find . -type f -name '*.pyc' -delete
+    find . -type d -name '__pycache__' -delete
 }
 
 function update_mirrorlist {

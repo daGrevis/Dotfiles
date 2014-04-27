@@ -2,11 +2,10 @@
 
 loadplugins '\.(js|penta)$'
 
-set guioptions=BnrT
+set guioptions=
 set hlfind
 
-nmap d <Esc>
-nmap W <Esc>
+set complete=lbh
 
 nmap u :back<CR>
 nmap <C-r> :forward<CR>
@@ -18,4 +17,24 @@ nmap <S-k> gt
 
 nmap <C-l> :nohlfind<CR>
 
+nmap <C-r> R
+
 nmap <C-t> t
+
+nmap d <pass>
+nmap w <pass>
+
+nmap <C-c> <pass>
+
+imap <C-v> <pass>
+imap <C-z> <pass>
+
+cmap <C-v> <pass>
+
+nmap <S-u> :tab viewsource<CR>
+
+nmap s :stop<CR>
+
+nmap yy y
+
+:hi -a Hint font-size: 14px !important;

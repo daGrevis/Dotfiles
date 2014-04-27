@@ -31,6 +31,7 @@ Bundle 'gregsexton/MatchTag'
 Bundle 'greyblake/vim-preview'
 Bundle 'guns/vim-sexp'
 Bundle 'honza/vim-snippets'
+Bundle 'hylang/vim-hy'
 Bundle 'kien/ctrlp.vim'
 Bundle 'lfilho/cosco.vim'
 Bundle 'lilydjwg/colorizer'
@@ -522,7 +523,7 @@ let g:indent_guides_color_change_percent = 4
 let g:syntax_on = 1
 syntax enable
 
-au FileType lisp,clojure RainbowLoad
+au FileType lisp,clojure,hy RainbowLoad
 
 "
 " Dispatch next.
@@ -593,7 +594,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme base16-railscasts
+    colorscheme base16-twilight
     set background=dark
 
     " Removes all GUI stuff.
