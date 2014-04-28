@@ -42,7 +42,7 @@ Bundle 'mattn/webapi-vim'
 Bundle 'mhinz/vim-signify'
 Bundle 'mhinz/vim-startify'
 Bundle 'mileszs/ack.vim'
-Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'nanotech/jellybeans.vim'
 Bundle 'noahfrederick/vim-noctu'
 Bundle 'oblitum/rainbow'
 Bundle 'Raimondi/delimitMate'
@@ -67,6 +67,9 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'vim-scripts/gitignore'
+Bundle 'xolox/vim-easytags'
+Bundle 'xolox/vim-misc'
+Bundle 'Yggdroot/indentLine'
 
 " Abbrevs next.
 iabbrev teh the
@@ -351,6 +354,10 @@ let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
 nmap <Leader><Leader> :exec "tabn ".g:lasttab<CR>
 
+" Go to definition and back.
+nmap gd g]
+nmap gD :pop<CR>
+
 "
 " Auto-commands next.
 "
@@ -509,11 +516,10 @@ let g:NERDTreeIgnore =
 nmap <Leader>u :GundoToggle<CR>
 
 "
-" Indent-guides next.
+" Indent-line next.
 "
 
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 4
+let g:indentLine_char = '┆'
 
 "
 " Rainbow next.
@@ -594,7 +600,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme base16-twilight
+    colorscheme jellybeans
     set background=dark
 
     " Removes all GUI stuff.
@@ -619,12 +625,13 @@ if has("gui_running")
     " Sets font.
     " set guifont=Envy\ Code\ R\ for\ Powerline\ 10
     " set guifont=Envypn\ 10
-    set guifont=Meslo\ LG\ M\ 9
+    " set guifont=Meslo\ LG\ M\ 9
     " set guifont=Hermit\ 8
     " set guifont=Tamsyn\ 14px
+    set guifont=Inconsolata-g\ 12px
 
     " I love extra whitespace!
-    " set linespace=4
+    set linespace=1
 
     " Fix all the color schemes at runtime!
 
