@@ -458,7 +458,9 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_always_populate_loc_list = 1
 
 " Linters for Python files.
-let g:syntastic_python_checkers = ['python', 'pep8', 'pyflakes']
+let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_python_python_exec = 'python2'
+let g:syntastic_python_flake8_exec = 'flake8-python2'
 
 " Conf for CoffeeScript files.
 let g:syntastic_coffee_checkers = ['coffee', 'coffeelint']

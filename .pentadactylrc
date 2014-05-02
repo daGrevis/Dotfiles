@@ -3,9 +3,8 @@
 loadplugins '\.(js|penta)$'
 
 set guioptions+=n
-set hlfind
-
 set complete=lbh
+set hlfind
 
 nmap u :back<CR>
 nmap <C-r> :forward<CR>
