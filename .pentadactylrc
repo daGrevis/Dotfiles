@@ -2,7 +2,7 @@
 
 loadplugins '\.(js|penta)$'
 
-set guioptions=
+set guioptions+=n
 set hlfind
 
 set complete=lbh
