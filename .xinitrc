@@ -46,3 +46,4 @@ source ~/.zshrc
 
 # Loads WM.
 exec awesome
+# exec startxfce4

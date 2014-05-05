@@ -161,3 +161,5 @@ function isup {
 function system_upgrade {
     ./Scripts/system_upgrade.sh
 }
+
+alias grep=egrep

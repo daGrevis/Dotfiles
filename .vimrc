@@ -155,6 +155,9 @@ set nostartofline
 " Don't redraw while executing macros.
 set lazyredraw
 
+" More security by default.
+set cm=blowfish
+
 " Sets color-column**s**.
 let &colorcolumn="80,".join(range(160,999),",")
 
@@ -237,8 +240,6 @@ nmap <M-l> <C-w>l
 nmap <M-q> <C-w>s
 nmap <M-w> <C-w>v
 
-nmap <C-w> :q!<CR>
-
 " Simple shortcuts.
 nmap <C-e> :edit<Space>
 nmap <C-t> :tabedit<Space>
@@ -270,6 +271,10 @@ nmap <silent> N N:call HighlightNext(0.4)<CR>
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
+
+" Go to definition and back.
+nmap gd g]
+nmap gD :pop<CR>
 
 "
 " Leader-maps next.
@@ -354,9 +359,8 @@ let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
 nmap <Leader><Leader> :exec "tabn ".g:lasttab<CR>
 
-" Go to definition and back.
-nmap gd g]
-nmap gD :pop<CR>
+" Indents file.
+nmap <Leader>= gg=G
 
 "
 " Auto-commands next.
