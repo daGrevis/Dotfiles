@@ -158,9 +158,6 @@ set lazyredraw
 " More security by default.
 set cm=blowfish
 
-" Sets color-column**s**.
-let &colorcolumn="80,".join(range(160,999),",")
-
 "
 " Commands next.
 "
@@ -181,6 +178,19 @@ func! SudoW()
     exec "e!"
 endfunc
 command! SudoW call SudoW()
+
+func! SetTextWidth(width_1, ...)
+    let width_1 = str2nr(a:width_1)
+    let width_2 = 160
+    if a:0
+        let width_2 = a:1
+    endif
+    let &colorcolumn=(width_1.",").join(range(width_2, 999),",")
+    let &textwidth=width_1
+endfunc
+command! -nargs=* SetTextWidth call SetTextWidth(<f-args>)
+
+call SetTextWidth(80, 120)
 
 "
 " Maps next.
@@ -312,9 +322,6 @@ nmap <Leader>v ggdG"0PGdd
 
 " Allows to quickly set filetype using <Leader>ft.
 nmap <Leader>ft :set filetype=
-
-" Allows to quickly set text-width for wrapping using <Leader>tw.
-nmap <Leader>tw :set textwidth=
 
 " Searches for diff delimiter.
 nmap <Leader>gd /\v\={4,}\|\<{4,}\|\>{4,}<CR>
