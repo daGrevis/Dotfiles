@@ -369,6 +369,9 @@ nmap <Leader><Leader> :exec "tabn ".g:lasttab<CR>
 " Indents file.
 nmap <Leader>= gg=G
 
+nmap ( [m
+nmap ) ]m
+
 "
 " Auto-commands next.
 "
@@ -613,7 +616,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme jellybeans
+    colorscheme base16-monokai
     set background=dark
 
     " Removes all GUI stuff.
