@@ -424,14 +424,8 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " CtrlP next.
 "
 
-" Calls MRU.
-nmap <C-p> call CtrlPMRU()
-
 " Shows CtrlP on top.
 let g:ctrlp_match_window_bottom = 0
-
-" Uses ag for faster search.
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
 "
 " DelimitMate next.
