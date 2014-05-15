@@ -371,6 +371,9 @@ nmap <Leader>= gg=G
 
 nmap :q1 :q!
 
+nmap ( [m
+nmap ) ]m
+
 "
 " Auto-commands next.
 "
@@ -423,14 +426,8 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " CtrlP next.
 "
 
-" Calls MRU.
-nmap <C-p> call CtrlPMRU()
-
 " Shows CtrlP on top.
 let g:ctrlp_match_window_bottom = 0
-
-" Uses ag for faster search.
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
 "
 " DelimitMate next.
@@ -615,7 +612,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme jellybeans
+    colorscheme base16-monokai
     set background=dark
 
     " Removes all GUI stuff.
