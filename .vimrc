@@ -369,6 +369,8 @@ nmap <Leader><Leader> :exec "tabn ".g:lasttab<CR>
 " Indents file.
 nmap <Leader>= gg=G
 
+nmap :q1 :q!
+
 "
 " Auto-commands next.
 "
