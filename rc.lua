@@ -68,7 +68,6 @@ browser = "firefox"
 browser_incognito = "chromium --incognito"
 bittorrent_client = "transmission-gtk"
 irc_client = "sh ~/Scripts/hexchat_once.sh"
-print_command = "scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'"
 
 function spawn_in_terminal(command)
     awful.util.spawn(terminal .. " -e " .. command)
@@ -359,7 +358,7 @@ keys = awful.util.table.join(
             "' -fn 'Meslo LG M DZ-8'")
     end),
     awful.key({}, "Print", function()
-        awful.util.spawn(print_command)
+        awful.util.spawn("xfce4-screenshooter")
     end),
     awful.key({modkey, "Shift"}, "e", function()
         awful.util.spawn("mousepad")

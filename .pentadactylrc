@@ -2,7 +2,7 @@
 
 loadplugins '\.(js|penta)$'
 
-set guioptions+=n
+set guioptions=ns
 set complete=lbh
 set hlfind
 
@@ -26,7 +26,9 @@ nmap w <pass>
 nmap <C-c> <pass>
 
 imap <C-v> <pass>
-imap <C-z> <pass>
+imap -builtin <M-z> <pass>
+imap -builtin <M-a> <pass>
+imap -builtin <M-x> <pass>
 
 cmap <C-v> <pass>
 
@@ -37,3 +39,8 @@ nmap s :stop<CR>
 nmap yy y
 
 :hi -a Hint font-size: 14px !important;
+
+" Edit text in external editor.
+imap -builtin <C-e> <C-i>
+
+map -builtin <silent> b :toolbartoggle Bookmarks Toolbar<CR>
