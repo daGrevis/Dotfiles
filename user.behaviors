@@ -6,7 +6,8 @@
      ;; The editor tag is applied to all editors
      :editor [:lt.objs.editor/no-wrap
               (:lt.objs.style/set-theme "base16-dark")
-              (:lt.objs.style/font-settings "Hermit" 8 2)]
+              (:lt.objs.style/font-settings "Inconsolata-g" 9 2)
+              (:lt.plugins.vim/activate-vim)]
 
      ;; Here we can add behaviors to just clojure editors
      :editor.clojure [(:lt.objs.langs.clj/print-length 1000)]}
