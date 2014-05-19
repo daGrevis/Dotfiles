@@ -3,7 +3,7 @@
 loadplugins '\.(js|penta)$'
 
 set guioptions=ns
-set complete=lbh
+set complete=location,search,suggestion,bookmark
 set hlfind
 
 nmap u :back<CR>
