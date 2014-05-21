@@ -163,3 +163,7 @@ function system_upgrade {
 }
 
 alias grep=egrep
+
+function serve {
+    python -m http.server
+}
