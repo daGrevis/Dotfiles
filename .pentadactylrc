@@ -47,3 +47,5 @@ imap -builtin <C-e> <C-i>
 map -builtin <silent> b :toolbartoggle Bookmarks Toolbar<CR>
 
 nmap <C-f> /
+
+nmap <C-e> o
