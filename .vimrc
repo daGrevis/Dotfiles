@@ -194,7 +194,7 @@ func! SetTextWidth(width_1, ...)
 endfunc
 command! -nargs=* SetTextWidth call SetTextWidth(<f-args>)
 
-call SetTextWidth(80, 120)
+call SetTextWidth(120, 160)
 
 "
 " Maps next.
@@ -290,6 +290,14 @@ nnoremap <silent> p p`]
 nmap gd g]
 nmap gD :pop<CR>
 
+nmap :q1 :q!
+
+nmap ( [m
+nmap ) ]m
+
+" Repeats last colon command.
+nmap :: @:
+
 "
 " Leader-maps next.
 "
@@ -373,10 +381,8 @@ nmap <Leader><Leader> :exec "tabn ".g:lasttab<CR>
 " Indents file.
 nmap <Leader>= gg=G
 
-nmap :q1 :q!
-
-nmap ( [m
-nmap ) ]m
+" Reloads file.
+nmap <Leader>e :e!<CR>
 
 "
 " Auto-commands next.
