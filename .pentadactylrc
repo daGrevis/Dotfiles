@@ -49,3 +49,5 @@ map -builtin <silent> b :toolbartoggle Bookmarks Toolbar<CR>
 nmap <C-f> /
 
 nmap <C-e> o
+
+nmap <Space>d :tabopen devdocs.io<CR>

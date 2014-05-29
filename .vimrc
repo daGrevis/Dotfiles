@@ -436,6 +436,8 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " CtrlP next.
 "
 
+let g:ctrlp_cmd = 'CtrlPMRU'
+
 " Shows CtrlP on top.
 let g:ctrlp_match_window_bottom = 0
 
@@ -622,7 +624,7 @@ let g:UltiSnipsListSnippets = '<C-S-Tab>'
 if has("gui_running")
 
     " Sets favourite color scheme.
-    colorscheme base16-monokai
+    colorscheme base16-flat
     set background=dark
 
     " Removes all GUI stuff.
