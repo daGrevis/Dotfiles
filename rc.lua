@@ -81,12 +81,12 @@ local layouts =
     awful.layout.suit.max.fullscreen,
 }
 
-if beautiful.wallpaper then
-    gears.wallpaper.maximized(beautiful.wallpaper)
-end
-
 tags = {}
 for s = 1, screen.count() do
+    if beautiful.wallpaper then
+        gears.wallpaper.centered(beautiful.wallpaper, s)
+    end
+
     tags[s] = awful.tag({"1", "2", "3", "4", "5",
                          "6", "7", "8", "9"}, s, layouts[1])
 end
@@ -374,6 +374,9 @@ keys = awful.util.table.join(
     end),
     awful.key({modkey, "Shift"}, "'", function()
         awful.util.spawn("chromium --new-window http://devdocs.io/")
+    end),
+    awful.key({modkey, "Shift"}, "d", function()
+        spawn_in_terminal("glances")
     end),
     awful.key({}, "XF86AudioMute", function()
         spawn_in_terminal("amixer -q set Master toggle")

@@ -9,21 +9,21 @@ source antigen.zsh
 
 antigen use oh-my-zsh
 
-antigen bundle archlinux
+# antigen bundle archlinux
 antigen bundle autojump
-antigen bundle bower
-antigen bundle coffee
-antigen bundle encode64
-antigen bundle gem
-antigen bundle git
-antigen bundle lein
-antigen bundle npm
-antigen bundle pass
-antigen bundle pip
-antigen bundle redis-cli
-antigen bundle systemd
-antigen-bundle zsh-users/zsh-history-substring-search
-antigen bundle zsh-users/zsh-syntax-highlighting
+# antigen bundle bower
+# antigen bundle coffee
+# antigen bundle encode64
+# antigen bundle gem
+# antigen bundle git
+# antigen bundle lein
+# antigen bundle npm
+# antigen bundle pass
+# antigen bundle pip
+# antigen bundle redis-cli
+# antigen bundle systemd
+# antigen-bundle zsh-users/zsh-history-substring-search
+# antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme robbyrussell
 
@@ -167,3 +167,5 @@ alias grep=egrep
 function serve {
     python -m http.server
 }
+
+alias docker.io=docker
