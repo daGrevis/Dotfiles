@@ -358,7 +358,7 @@ keys = awful.util.table.join(
             "' -fn 'Meslo LG M DZ-8'")
     end),
     awful.key({}, "Print", function()
-        awful.util.spawn("xfce4-screenshooter")
+        awful.util.spawn("scrot '%Y-%m-%d_%X__$wx$h.jpg' -q 90 -e 'mv $f ~/Screenshots/'")
     end),
     awful.key({modkey, "Shift"}, "e", function()
         awful.util.spawn("mousepad")
@@ -370,10 +370,10 @@ keys = awful.util.table.join(
         spawn_in_terminal("alsamixer")
     end),
     awful.key({modkey, "Shift"}, "n", function()
-        awful.util.spawn("chromium --new-window https://play.spotify.com/playlist")
+        awful.util.spawn("firefox --new-window https://play.spotify.com/playlist")
     end),
     awful.key({modkey, "Shift"}, "'", function()
-        awful.util.spawn("chromium --new-window http://devdocs.io/")
+        awful.util.spawn("firefox --new-window http://devdocs.io/")
     end),
     awful.key({modkey, "Shift"}, "d", function()
         spawn_in_terminal("glances")

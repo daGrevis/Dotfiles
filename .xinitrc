@@ -44,9 +44,6 @@ xautolock -time 10 -locker lock &
 # To get my aliases working with awesome wm.
 source ~/.zshrc
 
-# Loads network-manager in background.
-wicd-client --tray &
-
 # Loads WM.
 exec awesome
 # exec startxfce4

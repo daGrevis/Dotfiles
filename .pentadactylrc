@@ -2,7 +2,7 @@
 
 loadplugins '\.(js|penta)$'
 
-set guioptions=ns
+set guioptions=s
 set complete=location,search,suggestion,bookmark
 set defsearch=duckduckgo
 set hlfind
@@ -16,8 +16,6 @@ nmap <S-j> gT
 nmap <S-k> gt
 
 nmap <C-l> :nohlfind<CR>
-
-nmap <C-r> R
 
 nmap <C-t> t
 

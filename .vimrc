@@ -40,6 +40,13 @@ set ts=4
 set sw=4
 set sts=4
 
+" Enables 'g' flag for search by default.
+set gdefault
+
+" Ignore case when searching unless you type uppercase and lowercase letters.
+set ignorecase
+set smartcase
+
 " Highlights line where cursor is.
 set cursorline
 
@@ -76,6 +83,11 @@ nmap Y y$
 
 " Joins line as J did.
 map <Leader>j :join<CR>
+
+nmap <C-q> :wq!<CR>
+nmap <C-w> :w<CR>
+nmap <C-e> :edit<Space>
+nmap <C-t> :tabedit<Space>
 
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
