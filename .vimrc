@@ -78,6 +78,13 @@ let mapleader = "\<Space>"
 nmap <S-j> :tabprevious<CR>
 nmap <S-k> :tabnext<CR>
 
+" Maps <M-1> to go to the first tab and so until <M-9>.
+let i = 1
+while i < 10
+    execute 'nmap <M-' . i . '> :tabmove ' . (i - 1) . '<CR>'
+    let i += 1
+endwhile
+
 " Maps Y to yank line from current position til the end.
 nmap Y y$
 
