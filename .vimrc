@@ -11,10 +11,12 @@ Plugin 'gmarik/Vundle.vim'
 
 " Optional plugins.
 Plugin 'Raimondi/delimitMate'
+Plugin 'amdt/vim-niji'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-commentary'
@@ -81,9 +83,15 @@ nmap <S-k> :tabnext<CR>
 " Maps <M-1> to go to the first tab and so until <M-9>.
 let i = 1
 while i < 10
-    execute 'nmap <M-' . i . '> :tabmove ' . (i - 1) . '<CR>'
+    execute 'nmap <M-' . i . '> :tabnext ' . i . '<CR>'
     let i += 1
 endwhile
+
+" Mappings for controlling splits.
+nmap <M-h> <C-w>h
+nmap <M-j> <C-w>j
+nmap <M-k> <C-w>k
+nmap <M-l> <C-w>l
 
 " Maps Y to yank line from current position til the end.
 nmap Y y$
@@ -91,8 +99,13 @@ nmap Y y$
 " Joins line as J did.
 map <Leader>j :join<CR>
 
-nmap <C-q> :wq!<CR>
-nmap <C-w> :w<CR>
+" Wrap-friendly <j> and <k> keys.
+nmap j gj
+nmap k gk
+
+nmap <Leader>q :wq!<CR>
+nmap <Leader>w :w<CR>
+
 nmap <C-e> :edit<Space>
 nmap <C-t> :tabedit<Space>
 
@@ -127,3 +140,12 @@ let g:syntastic_python_flake8_exec = 'flake8-python2'
 " Linters for CoffeeScript files.
 let g:syntastic_coffee_checkers = ['coffee', 'coffeelint']
 let g:syntastic_coffee_coffeelint_post_args = '--file ~/coffeelint.json'
+
+" Opens NERDTree with <Tab>.
+nmap <Tab> :NERDTreeToggle<CR>
+
+" Makes NERDTree more wider.
+let NERDTreeWinSize = 50
+
+" Makes NERDTree show hidden files as well.
+let NERDTreeShowHidden = 1
