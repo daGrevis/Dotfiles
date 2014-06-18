@@ -37,7 +37,14 @@ nmap s :stop<CR>
 
 nmap yy y
 
+:hi -a Hint font-family: Inconsolata-g !important;
 :hi -a Hint font-size: 14px !important;
+:hi -a Hint color: white !important;
+:hi -a Hint background: black !important;
+:hi -a StatusLine font-family: Inconsolata-g !important;
+:hi -a StatusLine font-size: 12px !important;
+:hi -a Comp font-family: Inconsolata-g !important;
+:hi -a Comp font-size: 12px !important;
 
 " Edit text in external editor.
 imap -builtin <C-e> <C-i>
@@ -49,3 +56,6 @@ nmap <C-f> /
 nmap <C-e> o
 
 nmap <Space>d :tabopen devdocs.io<CR>
+
+nmap <Space>t :set guioptions+=T<CR>
+nmap <Space>T :set guioptions-=T<CR>

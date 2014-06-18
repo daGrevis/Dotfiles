@@ -132,6 +132,9 @@ endif
 " Uses ag for faster search.
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
+nmap <Leader>a :Ack<Space>
+nmap <Leader>f yw:Ack <C-r>"
+
 " Linters for Python files.
 let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_python_exec = 'python2'
