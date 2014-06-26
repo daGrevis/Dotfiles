@@ -112,6 +112,14 @@ nmap <C-t> :tabedit<Space>
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
+cmap <C-v> <S-Insert>
+
+" Allows to save files as superuser.
+func! SudoW()
+    exec "w !sudo dd of=%"
+    exec "e!"
+endfunc
+command! SudoW call SudoW()
 
 " Sets color-scheme.
 set background=dark
