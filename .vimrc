@@ -20,6 +20,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
@@ -72,6 +73,8 @@ nmap <silent> N N:call HighlightNext(0.2)<CR>
 
 " Set line-numbers to start from 0 based on current position.
 set relativenumber
+
+set cryptmethod=blowfish
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
