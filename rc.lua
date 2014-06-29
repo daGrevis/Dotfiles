@@ -64,8 +64,6 @@ end
 modkey = "Mod4"
 terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "vi"
-browser = "firefox"
-browser_incognito = "chromium --incognito"
 bittorrent_client = "transmission-gtk"
 irc_client = "sh ~/Scripts/hexchat_once.sh"
 
@@ -325,10 +323,10 @@ keys = awful.util.table.join(
     end),
 
     awful.key({modkey, "Shift"}, "i", function()
-        awful.util.spawn(browser)
+        awful.util.spawn("firefox")
     end),
     awful.key({modkey, "Control"}, "i", function()
-        awful.util.spawn(browser_incognito)
+        awful.util.spawn("firefox -private")
     end),
     awful.key({modkey, "Shift"}, "b", function()
         awful.util.spawn(bittorrent_client)

@@ -158,7 +158,7 @@ function isup {
     curl -Iso /dev/null -w "%{http_code}\n" $1
 }
 
-function system_upgrade {
+function up {
     ./Scripts/system_upgrade.sh
 }
 
