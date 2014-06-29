@@ -22,6 +22,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fireplace'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
@@ -75,6 +76,8 @@ nmap <silent> N N:call HighlightNext(0.2)<CR>
 " Set line-numbers to start from 0 based on current position.
 set relativenumber
 
+set cryptmethod=blowfish
+
 " Map leader to <Space>.
 let mapleader = "\<Space>"
 
@@ -114,6 +117,14 @@ nmap <C-t> :tabedit<Space>
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
+cmap <C-v> <S-Insert>
+
+" Allows to save files as superuser.
+func! SudoW()
+    exec "w !sudo dd of=%"
+    exec "e!"
+endfunc
+command! SudoW call SudoW()
 
 " Sets color-scheme.
 set background=dark
