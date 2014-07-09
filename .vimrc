@@ -16,6 +16,8 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'kien/ctrlp.vim'
+Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -167,3 +169,7 @@ let NERDTreeWinSize = 50
 
 " Makes NERDTree show hidden files as well.
 let NERDTreeShowHidden = 1
+
+" Anonymous gists.
+nmap pp :Gist -a<CR>
+vmap pp <ESC>:'<,'>Gist -a<CR>
