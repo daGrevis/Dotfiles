@@ -8,7 +8,6 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
-local lain = require("lain")
 
 function is_integer(x)
     return tonumber(x) ~= nil
@@ -73,8 +72,6 @@ end
 
 local layouts =
 {
-    lain.layout.uselesstile,
-    lain.layout.termfair,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
 }

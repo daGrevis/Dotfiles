@@ -56,6 +56,5 @@ theme.awesome_icon = "~/Dotfiles/arch-linux.png"
 theme.lain_icons = "/usr/share/awesome/lib/lain/icons/layout/default/"
 theme.layout_uselesstile = theme.layout_tile
 theme.layout_termfair = theme.lain_icons .. "termfairw.png"
-theme.useless_gap_width = 20
 
 return theme
