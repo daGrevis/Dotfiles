@@ -134,7 +134,7 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme base16-eighties
+    colorscheme base16-default
 
     " Removes all GUI stuff.
     set guioptions=
@@ -171,5 +171,5 @@ let NERDTreeWinSize = 50
 let NERDTreeShowHidden = 1
 
 " Anonymous gists.
-nmap pp :Gist -a<CR>
-vmap pp <ESC>:'<,'>Gist -a<CR>
+nmap <Leader>pg :Gist -a<CR>
+vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
