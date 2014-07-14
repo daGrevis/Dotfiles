@@ -116,6 +116,9 @@ nmap <Leader>w :w<CR>
 nmap <C-e> :edit<Space>
 nmap <C-t> :tabedit<Space>
 
+nmap H ^
+nmap L $
+
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>

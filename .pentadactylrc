@@ -56,9 +56,7 @@ nmap <C-f> /
 nmap <C-e> o
 
 nmap <Space>d :tabopen devdocs.io<CR>
-
-nmap <Space>t :set guioptions+=T<CR>
-nmap <Space>T :set guioptions-=T<CR>
+nmap <Space>t :tabopen translate.google.com<CR>
 
 " Basics of Readline.
 cmap <C-a> <Home>
