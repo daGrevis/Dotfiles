@@ -15,6 +15,7 @@ Plugin 'amdt/vim-niji'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
+Plugin 'guns/vim-sexp'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
@@ -27,6 +28,7 @@ Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 
@@ -176,3 +178,6 @@ let NERDTreeShowHidden = 1
 " Anonymous gists.
 nmap <Leader>pg :Gist -a<CR>
 vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
+
+" Disables mappings in insert mode.
+let g:sexp_enable_insert_mode_mappings = 0

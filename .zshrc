@@ -160,3 +160,5 @@ alias docker.io=docker
 function f {
     find . -name $1
 }
+
+alias l='ls -lahtr'
