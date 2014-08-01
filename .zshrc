@@ -166,3 +166,5 @@ alias drm='docker rm'
 alias dstp='docker stop'
 alias dstr='docker start'
 alias dim='docker images'
+
+alias l='ls -lahtr'
