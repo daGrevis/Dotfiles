@@ -80,6 +80,7 @@ function vimd {
 }
 
 function aux {
+    ps -aux | head -n 1
     ps -aux | grep $1 | grep -v "grep $1"
 }
 
@@ -155,8 +156,13 @@ function serve {
     python -m http.server
 }
 
-alias docker.io=docker
-
 function f {
     find . -name $1
 }
+
+alias dps='docker ps'
+alias dlg='docker logs'
+alias drm='docker rm'
+alias dstp='docker stop'
+alias dstr='docker start'
+alias dim='docker images'

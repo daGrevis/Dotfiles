@@ -15,6 +15,7 @@ Plugin 'amdt/vim-niji'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
+Plugin 'guns/vim-sexp'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
@@ -27,6 +28,7 @@ Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 
@@ -60,20 +62,8 @@ set cursorline
 " Highlights search.
 set hlsearch
 
-" Highlights next found match.
-func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#f2777a
-    let [bufnum, lnum, col, off] = getpos('.')
-    let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
-    let target_pat = '\c\%#'.@/
-    let ring = matchadd('HighlightNext', target_pat, 101)
-    redraw
-    exec 'sleep ' . float2nr(a:blinktime * 400) . 'm'
-    call matchdelete(ring)
-    redraw
-endfunc
-nmap <silent> n n:call HighlightNext(0.2)<CR>
-nmap <silent> N N:call HighlightNext(0.2)<CR>
+nmap <silent> n nzzzv
+nmap <silent> N Nzzzv
 
 " Set line-numbers to start from 0 based on current position.
 set relativenumber
@@ -119,6 +109,8 @@ nmap <C-t> :tabedit<Space>
 nmap H ^
 nmap L $
 
+nmap * *<C-o>
+
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
@@ -153,7 +145,7 @@ endif
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 nmap <Leader>a :Ack<Space>
-nmap <Leader>f yw:Ack <C-r>"
+nmap // :Ack<Space><C-r>/
 
 " Linters for Python files.
 let g:syntastic_python_checkers = ['python', 'flake8']
@@ -176,3 +168,6 @@ let NERDTreeShowHidden = 1
 " Anonymous gists.
 nmap <Leader>pg :Gist -a<CR>
 vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
+
+" Disables mappings in insert mode.
+let g:sexp_enable_insert_mode_mappings = 0

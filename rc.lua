@@ -8,7 +8,6 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
-local lain = require("lain")
 
 function is_integer(x)
     return tonumber(x) ~= nil
@@ -73,8 +72,7 @@ end
 
 local layouts =
 {
-    lain.layout.uselesstile,
-    lain.layout.termfair,
+    awful.layout.suit.tile,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
 }
@@ -219,7 +217,7 @@ for s = 1, screen.count() do
 
     local right_layout = wibox.layout.fixed.horizontal()
 
-    if s == 1 then
+    if s == 2 then
 
         right_layout:add(textclock_widget)
 
