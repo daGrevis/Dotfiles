@@ -162,3 +162,7 @@ function f {
 }
 
 alias l='ls -lahtr'
+
+function brightness {
+    sudo tee /sys/class/backlight/intel_backlight/brightness <<< $1
+}
