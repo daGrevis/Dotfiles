@@ -72,6 +72,7 @@ end
 
 local layouts =
 {
+    awful.layout.suit.tile,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
 }
@@ -216,7 +217,7 @@ for s = 1, screen.count() do
 
     local right_layout = wibox.layout.fixed.horizontal()
 
-    if s == 1 then
+    if s == 2 then
 
         right_layout:add(textclock_widget)
 
