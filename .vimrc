@@ -111,6 +111,8 @@ nmap L $
 
 nmap * *<C-o>
 
+nmap Q <Nop>
+
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
