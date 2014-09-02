@@ -143,9 +143,6 @@ if has('gui_running')
 
 endif
 
-" Uses ag for faster search.
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
 nmap <Leader>a :Ack<Space>
 nmap // :Ack<Space><C-r>/
 

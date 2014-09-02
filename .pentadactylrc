@@ -4,7 +4,7 @@ loadplugins '\.(js|penta)$'
 
 set guioptions=s
 set complete=location,search,suggestion,bookmark
-set defsearch=duckduckgo
+set defsearch=google
 set hlfind
 
 nmap u :back<CR>
