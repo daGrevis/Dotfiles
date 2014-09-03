@@ -332,6 +332,9 @@ keys = awful.util.table.join(
     awful.key({modkey, "Shift"}, "x", function()
         awful.util.spawn_with_shell(irc_client)
     end),
+    awful.key({modkey, "Shift"}, "z", function()
+        awful.util.spawn("hipchat")
+    end),
     awful.key({modkey, "Shift"}, "v", function()
         awful.util.spawn("gvim")
     end),
