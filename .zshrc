@@ -11,6 +11,7 @@ antigen use oh-my-zsh
 
 antigen bundle archlinux
 antigen bundle autojump
+antigen bundle docker
 
 antigen theme robbyrussell
 
@@ -164,9 +165,13 @@ function f {
 alias dps='docker ps'
 alias dlg='docker logs'
 alias drm='docker rm'
+alias drmi='docker rmi'
 alias dstp='docker stop'
 alias dstr='docker start'
 alias dim='docker images'
+function docker_clean {
+    drmi -f $(dim -q)
+}
 
 alias l='ls -lahtr'
 
