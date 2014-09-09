@@ -11,6 +11,7 @@ antigen use oh-my-zsh
 
 antigen bundle archlinux
 antigen bundle autojump
+antigen bundle docker
 
 antigen theme robbyrussell
 
@@ -47,12 +48,14 @@ function current_branch() {
 }
 
 alias gad='git add --ignore-removal'
+alias gbl='git blame'
 alias gbr='git branch'
 alias gcl='git clone'
 alias gcm='git commit -v'
 alias gco='git checkout'
 alias gcp='git cherry-pick'
 alias gdf='git diff'
+alias ggr='git grep --break --heading --line-number'
 alias gin='git init'
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
 alias gmr='git merge'
@@ -66,7 +69,6 @@ alias gsh='git stash'
 alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
-alias ggr='git grep --break --heading --line-number'
 
 function vim {
     if ! xset q &> /dev/null; then
@@ -163,9 +165,13 @@ function f {
 alias dps='docker ps'
 alias dlg='docker logs'
 alias drm='docker rm'
+alias drmi='docker rmi'
 alias dstp='docker stop'
 alias dstr='docker start'
 alias dim='docker images'
+function docker_clean {
+    drmi -f $(dim -q)
+}
 
 alias l='ls -lahtr'
 
