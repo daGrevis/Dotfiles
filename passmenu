@@ -10,4 +10,6 @@ password=$(printf '%s\n' "${password_files[@]}" | dmenu "$@")
 
 pass -c "$password"
 
-notify-send 'Password copied' "$password"
+if [[ "$password" != "" ]]; then
+    notify-send 'Password copied' "$password"
+fi;

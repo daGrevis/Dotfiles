@@ -110,6 +110,7 @@ nmap H ^
 nmap L $
 
 nmap * *<C-o>
+nmap # #<C-o>
 
 nmap Q <Nop>
 

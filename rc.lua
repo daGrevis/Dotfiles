@@ -217,7 +217,7 @@ for s = 1, screen.count() do
 
     local right_layout = wibox.layout.fixed.horizontal()
 
-    if s == 2 then
+    if s == 1 then
 
         right_layout:add(textclock_widget)
 
