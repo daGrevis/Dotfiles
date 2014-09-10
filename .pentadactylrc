@@ -2,7 +2,7 @@
 
 loadplugins '\.(js|penta)$'
 
-set guioptions=s
+set guioptions=sb
 set complete=location,search,suggestion,bookmark
 set defsearch=google
 set hlfind
@@ -55,9 +55,10 @@ nmap <C-f> /
 
 nmap <C-e> o
 
+nmap <Space>a :tabopen adminer/<CR>
 nmap <Space>d :tabopen devdocs.io<CR>
-nmap <Space>t :tabopen translate.google.com<CR>
 nmap <Space>m :tabopen maps.google.com<CR>
+nmap <Space>t :tabopen translate.google.com<CR>
 
 " Basics of Readline.
 cmap <C-a> <Home>
