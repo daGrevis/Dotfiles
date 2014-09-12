@@ -106,7 +106,7 @@ launcher = awful.widget.launcher({
 
 -- Widgets.
 
-textclock_widget = awful.widget.textclock("%y/%m/%d, %H:%M:%S", 1)
+textclock_widget = awful.widget.textclock("%y/%m/%d (%A), %H:%M:%S", 1)
 
 mem_widget = wibox.widget.textbox()
 vicious.register(mem_widget, vicious.widgets.mem, "$1% ($2/$3 MB)", 1)
