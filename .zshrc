@@ -60,6 +60,7 @@ alias gin='git init'
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
 alias gmr='git merge'
 alias gmv='git mv'
+alias gp='gpl && gpu'
 alias gpl='git pull'
 alias gpu='git push -u origin $(current_branch)'
 alias grm='git rm'

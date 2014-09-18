@@ -23,6 +23,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-repeat'
@@ -132,7 +133,7 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme base16-default
+    colorscheme molokai
 
     " Removes all GUI stuff.
     set guioptions=c
@@ -143,7 +144,7 @@ if has('gui_running')
 endif
 
 nmap <Leader>a :Ack<Space>
-nmap // :Ack<Space><C-r>/
+nmap // :Ack<Space><C-r>/<Backspace><Backspace><M-b><Right><Right><Backspace><Backspace><C-e>
 
 " Linters for Python files.
 let g:syntastic_python_checkers = ['python', 'flake8']
