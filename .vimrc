@@ -120,6 +120,7 @@ nmap k gk
 
 nmap <Leader>q :wq!<CR>
 nmap <Leader>w :w<CR>
+nmap <M-q> :q!<CR>
 
 nmap <C-e> :edit<Space>
 nmap <C-t> :tabedit<Space>
