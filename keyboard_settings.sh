@@ -12,10 +12,6 @@ LCONTROL_KEYCODE=37
 xmodmap -e "clear Lock"
 xmodmap -e "keycode $CAPS_KEYCODE = Control_L"
 xmodmap -e "add Control = Control_L"
-xmodmap -e "keysym Escape = Caps_Lock"
 xmodmap -e "add Lock = Caps_Lock"
 xmodmap -e "keycode 999 = Escape"
 xcape -e "Control_L=Escape"
-# Maps escape and left control to no-op.
-xmodmap -e "keycode $ESCAPE_KEYCODE ="
-xmodmap -e "keycode $LCONTROL_KEYCODE ="
