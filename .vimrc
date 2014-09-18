@@ -63,8 +63,20 @@ set cursorline
 " Highlights search.
 set hlsearch
 
-nmap <silent> n nzzzv
-nmap <silent> N Nzzzv
+" Highlights next found match.
+func! HighlightNext (blinktime)
+    highlight HighlightNext guibg=#F92672
+    let [bufnum, lnum, col, off] = getpos('.')
+    let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
+    let target_pat = '\c\%#'.@/
+    let ring = matchadd('HighlightNext', target_pat, 101)
+    redraw
+    exec 'sleep ' . float2nr(a:blinktime * 400) . 'm'
+    call matchdelete(ring)
+    redraw
+endfunc
+nmap <silent> n n:call HighlightNext(0.2)<CR>
+nmap <silent> N N:call HighlightNext(0.2)<CR>
 
 " Set line-numbers to start from 0 based on current position.
 set relativenumber
@@ -84,6 +96,11 @@ while i < 10
     execute 'nmap <M-' . i . '> :tabnext ' . i . '<CR>'
     let i += 1
 endwhile
+
+" Allows to switch back to tab you were before.
+let g:last_tab = 1
+nmap <Space><Space> :execute "tabn " . g:last_tab<CR>
+au TabLeave * let g:last_tab = tabpagenr()
 
 " Mappings for controlling splits.
 nmap <M-h> <C-w>h
