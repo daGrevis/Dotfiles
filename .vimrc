@@ -135,9 +135,7 @@ if has('gui_running')
     colorscheme base16-default
 
     " Removes all GUI stuff.
-    set guioptions=
-    " Removes popups.
-    set guioptions+=c
+    set guioptions=c
 
     " Sets font.
     set guifont=Inconsolata-g\ 12px
