@@ -13,6 +13,7 @@ ln -s ~/Dotfiles/.zshenv ~/.zshenv
 ln -s ~/Dotfiles/.zshrc ~/.zshrc
 ln -s ~/Dotfiles/Custom.css ~/.config/chromium/Default/User\ StyleSheets/Custom.css
 ln -s ~/Dotfiles/coffeelint.json ~/coffeelint.json
+ln -s ~/Dotfiles/config.fish ~/.config/fish/config.fish
 ln -s ~/Dotfiles/custom.zsh-theme ~/.oh-my-zsh/themes/custom.zsh-theme
 ln -s ~/Dotfiles/hexchat_once.sh ~/Scripts/hexchat_once.sh
 ln -s ~/Dotfiles/keyboard_settings.sh ~/Scripts/keyboard_settings.sh

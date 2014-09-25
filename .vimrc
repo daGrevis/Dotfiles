@@ -131,7 +131,8 @@ nmap L $
 nmap * *<C-o>
 nmap # #<C-o>
 
-nmap Q <Nop>
+" Default Q is very annoying. Maps it to something useful.
+nmap Q @q
 
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y

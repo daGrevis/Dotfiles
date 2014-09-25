@@ -68,6 +68,7 @@ alias grs='git reset'
 alias grv='git revert'
 alias gsh='git stash'
 alias gst='git status -sb'
+alias gs=gst
 alias gsw='git show'
 alias gtg='git tag'
 
