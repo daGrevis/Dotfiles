@@ -2,7 +2,7 @@
 
 loadplugins '\.(js|penta)$'
 
-set guioptions=sb
+set guioptions=bns
 set complete=location,search,suggestion,bookmark
 set defsearch=google
 set hlfind
