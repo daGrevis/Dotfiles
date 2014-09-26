@@ -45,3 +45,16 @@ end
 function vimd
     gvim -p $argv; exit
 end
+
+alias dcl='docker pull'
+alias dcli='docker rmi -f (docker images -q)'
+alias dim='docker images'
+alias dkl='docker rm -f'
+alias dlg='docker logs'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias drs='docker restart'
+alias dstp='docker stop'
+alias dstr='docker start'
