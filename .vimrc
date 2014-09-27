@@ -134,6 +134,9 @@ nmap # #<C-o>
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
 
+nmap <C-[> [m
+nmap <C-]> ]m
+
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
