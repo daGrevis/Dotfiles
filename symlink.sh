@@ -26,6 +26,7 @@ ln -s ~/Dotfiles/profiles.clj ~/.lein/profiles.clj
 ln -s ~/Dotfiles/rc.lua ~/.config/awesome/rc.lua
 ln -s ~/Dotfiles/system_upgrade.sh ~/Scripts/system_upgrade.sh
 ln -s ~/Dotfiles/theme.lua ~/.config/awesome/themes/default/theme.lua
+ln -s ~/Dotfiles/toggle_mute.sh ~/Scripts/toggle_mute.sh
 ln -s ~/Dotfiles/toggle_trackpad.sh ~/Scripts/toggle_trackpad.sh
 ln -s ~/Dotfiles/user.behaviors ~/.config/LightTable/settings/user.behaviors
 ln -s ~/Dotfiles/xmonad.hs ~/.xmonad/xmonad.hs

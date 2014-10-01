@@ -217,7 +217,7 @@ for s = 1, screen.count() do
 
     local right_layout = wibox.layout.fixed.horizontal()
 
-    if s == 2 then
+    if screen.count() == 1 or s == 2 then
 
         right_layout:add(textclock_widget)
 
@@ -378,13 +378,19 @@ keys = awful.util.table.join(
         spawn_in_terminal("glances")
     end),
     awful.key({}, "XF86AudioMute", function()
-        spawn_in_terminal("amixer -q set Master toggle")
+        awful.util.spawn("./Scripts/toggle_mute.sh")
     end),
     awful.key({}, "XF86AudioRaiseVolume", function()
-        spawn_in_terminal("amixer -q set Master 1dB+")
+        awful.util.spawn("amixer -q set Master 1dB+")
     end),
     awful.key({}, "XF86AudioLowerVolume", function()
-        spawn_in_terminal("amixer -q set Master 1dB-")
+        awful.util.spawn("amixer -q set Master 1dB-")
+    end),
+    awful.key({}, "XF86MonBrightnessUp", function()
+        awful.util.spawn("xbacklight -inc 10")
+    end),
+    awful.key({}, "XF86MonBrightnessDown", function()
+        awful.util.spawn("xbacklight -dec 10")
     end)
 )
 
