@@ -6,9 +6,24 @@ set fish_plugins archlinux autojump
 
 . $fish_path/oh-my-fish.fish
 
-set EDITOR 'gvim -f'
-
 alias l='ls -lahtr'
+alias generate-password='pwgen -By1 16'
+function aux
+    ps -aux | head -n 1
+    ps -aux | grep $argv | grep -v "grep $argv"
+end
+
+set EDITOR 'gvim -f'
+function vim
+    if xset q > /dev/null
+        gvim -p $argv
+    else
+        command vim -p $argv
+    end
+end
+function vimd
+    gvim -p $argv; exit
+end
 
 alias gad='git add --ignore-removal'
 alias gbl='git blame'
@@ -33,18 +48,6 @@ alias gsh='git stash'
 alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
-
-function vim
-    if xset q > /dev/null
-        gvim -p $argv
-    else
-        command vim -p $argv
-    end
-end
-
-function vimd
-    gvim -p $argv; exit
-end
 
 alias dcl='docker pull'
 alias dcli='docker rmi -f (docker images -q)'
