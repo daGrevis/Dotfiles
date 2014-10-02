@@ -12,6 +12,7 @@ function aux
     ps -aux | head -n 1
     ps -aux | grep $argv | grep -v "grep $argv"
 end
+alias serve-http='python -m http.server'
 
 set EDITOR 'gvim -f'
 function vim

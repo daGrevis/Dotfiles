@@ -16,6 +16,7 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'guns/vim-sexp'
+Plugin 'itchyny/lightline.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
@@ -23,7 +24,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'tomasr/molokai'
+Plugin 'sheerun/vim-wombat-scheme'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-repeat'
@@ -65,7 +66,7 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#F92672
+    highlight HighlightNext guibg=#902020
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -82,6 +83,8 @@ nmap <silent> N N:call HighlightNext(0.2)<CR>
 set relativenumber
 
 set cryptmethod=blowfish
+
+set colorcolumn=100
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
@@ -134,9 +137,6 @@ nmap # #<C-o>
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
 
-nmap <C-[> [m
-nmap <C-]> ]m
-
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
@@ -155,7 +155,7 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme molokai
+    colorscheme wombat
 
     " Removes all GUI stuff.
     set guioptions=c
@@ -192,3 +192,8 @@ vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
 
 " Disables mappings in insert mode.
 let g:sexp_enable_insert_mode_mappings = 0
+
+" Changes color-scheme for Lightline.
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
