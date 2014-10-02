@@ -193,7 +193,11 @@ vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
 " Disables mappings in insert mode.
 let g:sexp_enable_insert_mode_mappings = 0
 
-" Changes color-scheme for Lightline.
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
+" Use Git to get files. Much faster and it respects .gitignore rules.
+let g:ctrlp_user_command = [
+    \ '.git/',
+    \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
+\ ]
+
+" Searches in files, buffers and MRU files at the same time.
+let g:ctrlp_cmd = 'CtrlPMixed'
