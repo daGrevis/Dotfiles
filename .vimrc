@@ -25,6 +25,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sheerun/vim-wombat-scheme'
+Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-repeat'
@@ -137,6 +138,10 @@ nmap # #<C-o>
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
 
+" Reselect text when indenting.
+vmap < <gv
+vmap > >gv
+
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
@@ -201,3 +206,11 @@ let g:ctrlp_user_command = [
 
 " Searches in files, buffers and MRU files at the same time.
 let g:ctrlp_cmd = 'CtrlPMixed'
+
+" Don't reload CtrlP cache when opening file outside project.
+let g:ctrlp_working_path_mode = 'r'
+
+let g:ctrlp_extensions = ['funky']
+
+nmap <C-f> :CtrlPFunky<Cr>
+let g:ctrlp_funky_syntax_highlight = 1
