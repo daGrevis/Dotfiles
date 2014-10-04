@@ -142,6 +142,12 @@ nmap Q @q
 vmap < <gv
 vmap > >gv
 
+" Sane regexes (aka very magic).
+nnoremap / /\v
+vnoremap / /\v
+cnoremap s/ s/\v
+cnoremap %s/ %s/\v
+
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
