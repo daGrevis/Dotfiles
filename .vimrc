@@ -24,7 +24,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'sheerun/vim-wombat-scheme'
+Plugin 'sjl/badwolf'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fireplace'
@@ -67,7 +67,7 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#902020
+    highlight HighlightNext guibg=#ff2c4b
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -166,7 +166,7 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme wombat
+    colorscheme badwolf
 
     " Removes all GUI stuff.
     set guioptions=c
