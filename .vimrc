@@ -83,7 +83,7 @@ nmap <silent> N N:call HighlightNext(0.2)<CR>
 " Set line-numbers to start from 0 based on current position.
 set relativenumber
 
-set cryptmethod=blowfish
+set cryptmethod=blowfish2
 
 set colorcolumn=100
 
