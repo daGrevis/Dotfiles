@@ -14,7 +14,7 @@
 [github]
     user = daGrevis
 [push]
-    default = simple
+    default = current
 [grep]
     extendRegexp = true
     lineNumber = true
