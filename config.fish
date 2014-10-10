@@ -7,6 +7,15 @@ set fish_plugins archlinux autojump
 . $fish_path/oh-my-fish.fish
 
 alias l='ls -lahtr'
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -="cd -"
+function mkcd
+    mkdir -p $argv
+    cd $argv
+end
 alias generate-password='pwgen -By1 16'
 function aux
     ps -aux | head -n 1
