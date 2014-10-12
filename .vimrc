@@ -32,7 +32,6 @@ Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'vim-scripts/paredit.vim'
 
 " Required by Vundle.
 call vundle#end()
