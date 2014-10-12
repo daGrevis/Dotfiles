@@ -15,7 +15,6 @@ Plugin 'amdt/vim-niji'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
-Plugin 'guns/vim-sexp'
 Plugin 'itchyny/lightline.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mattn/gist-vim'
@@ -31,9 +30,9 @@ Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'vim-scripts/paredit.vim'
 
 " Required by Vundle.
 call vundle#end()
@@ -200,9 +199,6 @@ let NERDTreeShowHidden = 1
 " Anonymous gists.
 nmap <Leader>pg :Gist -a<CR>
 vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
-
-" Disables mappings in insert mode.
-let g:sexp_enable_insert_mode_mappings = 0
 
 " Use Git to get files. Much faster and it respects .gitignore rules.
 let g:ctrlp_user_command = [
