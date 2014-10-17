@@ -146,6 +146,9 @@ vnoremap / /\v
 cnoremap s/ s/\v
 cnoremap %s/ %s/\v
 
+" Indent all the things!
+nmap + gg=G2<C-o>
+
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
