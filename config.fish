@@ -28,6 +28,8 @@ function aux
     ps -aux | grep $argv | grep -v "grep $argv"
 end
 alias serve-http='python -m http.server'
+alias screenshot='maim'
+alias screenshot-window='maim -s -c 1,0,0,0.1'
 
 set EDITOR 'gvim -f'
 function vim

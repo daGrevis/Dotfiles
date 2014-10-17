@@ -64,7 +64,6 @@ modkey = "Mod4"
 terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "vi"
 bittorrent_client = "transmission-gtk"
-irc_client = "sh ~/Scripts/hexchat_once.sh"
 
 function spawn_in_terminal(command)
     awful.util.spawn(terminal .. " -e " .. command)
@@ -329,11 +328,11 @@ keys = awful.util.table.join(
     awful.key({modkey, "Shift"}, "b", function()
         awful.util.spawn(bittorrent_client)
     end),
-    awful.key({modkey, "Shift"}, "x", function()
-        awful.util.spawn_with_shell(irc_client)
-    end),
     awful.key({modkey, "Shift"}, "z", function()
         awful.util.spawn("hipchat")
+    end),
+    awful.key({modkey, "Shift"}, "x", function()
+        awful.util.spawn("firefox --new-window http://dagrevis.lv:4737/")
     end),
     awful.key({modkey, "Shift"}, "v", function()
         awful.util.spawn("gvim")
