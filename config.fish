@@ -7,6 +7,7 @@ set fish_plugins archlinux autojump
 . $fish_path/oh-my-fish.fish
 
 alias l='ls -lahtr'
+
 function cd
     if count $argv >/dev/null
         if test $argv = "..."
@@ -18,18 +19,29 @@ function cd
         builtin cd
     end
 end
+
 function mkcd
     mkdir -p $argv
     cd $argv
 end
+
 alias generate-password='pwgen -By1 16'
+
 function aux
     ps -aux | head -n 1
     ps -aux | grep $argv | grep -v "grep $argv"
 end
+
 alias serve-http='python -m http.server'
-alias screenshot='maim'
-alias screenshot-window='maim -s -c 1,0,0,0.1'
+
+function take-screenshot
+    set name (date +%F-%T)
+    maim "Screenshots/$name.png"
+end
+function take-screenshot-of-windows
+    set name (date +%F-%T)
+    maim -s -c 1,0,0,0.1 -b 2 "Screenshots/$name.png"
+end
 
 set EDITOR 'gvim -f'
 function vim

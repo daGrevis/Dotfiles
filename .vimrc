@@ -139,6 +139,8 @@ nmap Q @q
 " Reselect text when indenting.
 vmap < <gv
 vmap > >gv
+nmap < V<
+nmap > V>
 
 " Sane regexes (aka very magic).
 nnoremap / /\v
@@ -173,7 +175,7 @@ if has('gui_running')
     set guioptions=c
 
     " Sets font.
-    set guifont=Inconsolata-g\ 12px
+    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 9
 
 endif
 
