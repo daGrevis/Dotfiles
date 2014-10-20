@@ -175,7 +175,7 @@ if has('gui_running')
     set guioptions=c
 
     " Sets font.
-    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 9
+    set guifont=Inconsolata-g\ 9
 
 endif
 
