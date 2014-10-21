@@ -11,51 +11,28 @@ set hlfind
 nmap u :back<CR>
 nmap <C-r> :forward<CR>
 
-" nmap U :tab viewsource<CR>
+nmap <S-u> :tab viewsource<CR>
 
 nmap <S-j> gT
 nmap <S-k> gt
 
-" nmap <C-l> :nohlfind<CR>
+nmap <C-l> :nohlfind<CR>
 
-" nmap <C-t> t
+nmap d <pass>
 
-" nmap d <pass>
-" nmap w <pass>
+nmap <C-c> <pass>
+imap <C-v> <pass>
+cmap <C-v> <pass>
 
-" nmap <C-c> <pass>
+imap -builtin <C-e> <C-i>
 
-" imap <C-v> <pass>
-" imap -builtin <M-z> <pass>
-" imap -builtin <M-a> <pass>
-" imap -builtin <M-x> <pass>
+map -builtin <silent> b :toolbartoggle Bookmarks Toolbar<CR>
 
-" cmap <C-v> <pass>
+cmap <C-a> <Home>
+cmap <C-e> <End>
+cmap <A-b> <C-Left>
+cmap <A-f> <C-Right>
 
-" nmap <S-u> :tab viewsource<CR>
-
-" nmap s :stop<CR>
-
-" nmap yy y
-
-" " Edit text in external editor.
-" imap -builtin <C-e> <C-i>
-
-" map -builtin <silent> b :toolbartoggle Bookmarks Toolbar<CR>
-
-" nmap <C-f> /
-
-" nmap <C-e> o
-
-" nmap <Space>a :tabopen adminer/<CR>
-" nmap <Space>d :tabopen devdocs.io<CR>
-" nmap <Space>m :tabopen maps.google.com<CR>
-" nmap <Space>t :tabopen translate.google.com<CR>
-
-" " Basics of Readline.
-" cmap <C-a> <Home>
-" cmap <C-e> <End>
-" cmap <A-b> <C-Left>
-" cmap <A-f> <C-Right>
-
-hi HintElem background-color: none !important;
+hi Hint -append font-size: 12px !important;
+hi HintElem -append background: none !important;
+hi StatusLine -append font-size: 12px !important;
