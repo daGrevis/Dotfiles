@@ -212,7 +212,7 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    if s == 2 then
+    if screen.count() == 1 or s == 2 then
         right_layout:add(wibox.widget.systray())
         right_layout:add(calendar)
     end
@@ -305,6 +305,21 @@ globalkeys = awful.util.table.join(
     end),
     awful.key({ "Control" }, "Print", function()
         execute_in_shell("take-screenshot-of-windows")
+    end),
+    awful.key({}, "XF86AudioMute", function()
+        awful.util.spawn("./Scripts/toggle_mute.sh")
+    end),
+    awful.key({}, "XF86AudioRaiseVolume", function()
+        awful.util.spawn("amixer -q set Master 1dB+")
+    end),
+    awful.key({}, "XF86AudioLowerVolume", function()
+        awful.util.spawn("amixer -q set Master 1dB-")
+    end),
+    awful.key({}, "XF86MonBrightnessUp", function()
+        awful.util.spawn("xbacklight -inc 10")
+    end),
+    awful.key({}, "XF86MonBrightnessDown", function()
+        awful.util.spawn("xbacklight -dec 10")
     end)
 )
 
