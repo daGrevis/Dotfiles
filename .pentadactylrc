@@ -11,7 +11,7 @@ set hlfind
 nmap u :back<CR>
 nmap <C-r> :forward<CR>
 
-nmap U :tab viewsource<CR>
+nmap <S-u> :tab viewsource<CR>
 
 nmap <S-j> gT
 nmap <S-k> gt
@@ -35,6 +35,6 @@ cmap <C-e> <End>
 cmap <A-b> <C-Left>
 cmap <A-f> <C-Right>
 
-hi HintElem background-color: none;
-hi Hint -append font-size: 14px !important;
-hi StatusLine font-size: 12px;
+hi Hint -append font-size: 12px !important;
+hi HintElem -append background: none !important;
+hi StatusLine -append font-size: 12px !important;
