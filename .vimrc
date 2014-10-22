@@ -139,8 +139,8 @@ nmap Q @q
 " Reselect text when indenting.
 vmap < <gv
 vmap > >gv
-nmap < V<
-nmap > V>
+nmap < <<
+nmap > >>
 
 " Sane regexes (aka very magic).
 nnoremap / /\v
