@@ -400,6 +400,7 @@ root.keys(globalkeys)
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
+    -- To get the rule name, use xprop (xorg-xprop) and look for WM_CLASS in the output.
     -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
@@ -415,6 +416,8 @@ awful.rules.rules = {
     { rule = { class = "gimp" },
       properties = { floating = true } },
     { rule = { class = "Gvim" },
+      properties = { size_hints_honor = false } },
+    { rule = { class = "Xfce4-terminal" },
       properties = { size_hints_honor = false } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },

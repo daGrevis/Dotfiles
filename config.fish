@@ -1,3 +1,4 @@
+# vim: set filetype=zsh :
 set fish_path $HOME/.oh-my-fish
 set fish_greeting ""
 
@@ -41,6 +42,10 @@ end
 function take-screenshot-of-windows
     set name (date +%F-%T)
     maim -s -c 1,0,0,0.1 -b 2 "Screenshots/$name.png"
+end
+
+function update-mirrors
+    sudo reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
 end
 
 set EDITOR 'gvim -f'
