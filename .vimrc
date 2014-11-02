@@ -169,7 +169,7 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme badwolf
+    colorscheme base16-eighties
 
     " Removes all GUI stuff.
     set guioptions=c

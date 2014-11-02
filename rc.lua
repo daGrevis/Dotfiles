@@ -1,4 +1,5 @@
 -- Standard awesome library
+_ = require 'underscore'
 local gears = require("gears")
 local awful = require("awful")
 require("eminent")
@@ -12,6 +13,8 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+local lain = require("lain")
+local vicious = require("vicious")
 
 naughty.config.defaults.screen = 2
 
@@ -44,6 +47,11 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(awful.util.getdir("config") .. "/themes/default/theme.lua")
 
+colors = {
+    green = "#A1B56C", -- base16-default, 0B
+    red = "#AC4142" -- base16-default, 08
+}
+
 -- This is used later as the default terminal and editor to run.
 terminal = "xfce4-terminal"
 shell = "fish"
@@ -56,6 +64,12 @@ end
 
 function execute_in_shell(command)
     awful.util.spawn(shell .. " -c " .. command)
+end
+
+function count(t)
+    local count = 0
+    for _ in pairs(t) do count = count + 1 end
+    return count
 end
 
 function sleep(n)
@@ -125,14 +139,91 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- {{{ Wibox
--- Create a textclock widget
-mytextclock = awful.widget.textclock("%y/%m/%d (%A), %H:%M:%S", 1)
+separator= wibox.widget.textbox()
+separator:set_text("  ")
 
-calendar = blingbling.calendar({ widget = mytextclock })
+calendar = blingbling.calendar({ widget = awful.widget.textclock("%y/%m/%d (%A), %H:%M:%S", 1) })
 calendar:set_link_to_external_calendar(true)
 calendar:set_weeks_number_widget_style({ text_color = "#535d6c" })
 calendar:set_current_day_widget_style({ background_color = "#535d6c" })
+
+volume = wibox.widget.textbox()
+vicious.register(volume, vicious.widgets.volume, "$1% $2", 1, "Master")
+
+bat = wibox.widget.textbox()
+vicious.register(bat, vicious.widgets.bat, function(widget, args)
+    local s = ""
+
+    if args[2] < 10 then
+        s = string.format("<span color='%s'>%s%%</span> %s", colors.red, args[2], args[1])
+    else
+        s = string.format("%s%% %s", args[2], args[1])
+    end
+
+    if args[3] ~= "N/A" then
+        s = string.format("%s (%s)", s, args[3])
+    end
+
+    return s
+end, 60, "BAT1")
+
+mem = wibox.widget.textbox()
+vicious.register(mem, vicious.widgets.mem, function(widget, args)
+    local s = ""
+
+    if args[1] >= 90 then
+        s = string.format("<span color='%s'>%s%%</span>", colors.red, args[1])
+    else
+        s = string.format("%s%%", args[1])
+    end
+
+    s = string.format("%s (%sMB / %sMB)", s, args[2], args[3])
+
+    return s
+end)
+
+cpu = wibox.widget.textbox()
+vicious.register(cpu, vicious.widgets.cpu, function(widget, args)
+    local s = ""
+
+    if args[1] >= 90 then
+        s = string.format("<span color='%s'>%s%%</span>", colors.red, args[1])
+    else
+        s = string.format("%s%%", args[1])
+    end
+
+    s = string.format("%s (%s%%)", s, _.join(_.slice(args, 2, # args), "% "))
+
+    return s
+end)
+
+uptime = wibox.widget.textbox()
+vicious.register(uptime, vicious.widgets.uptime, function(widget, args)
+    local s = ""
+
+    local i = 0
+    _.each(_.slice(args, 4, 6), function(el)
+        i = i + 1
+
+        el = tonumber(el)
+        if el < 0.8 or el > 2.0 then
+            s = s .. string.format("<span color='%s'>%s%%</span>", colors.red, el)
+        else
+            s = s .. string.format("%s%%", el)
+        end
+
+        if i ~= 3 then
+            s = s .. " "
+        end
+    end)
+
+    return s
+end)
+
+function set_volume(parameters)
+    local f = io.popen("amixer --quiet set Master " .. parameters)
+    f:close()
+end
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -213,8 +304,21 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if screen.count() == 1 or s == 2 then
-        right_layout:add(wibox.widget.systray())
+        right_layout:add(separator)
         right_layout:add(calendar)
+        right_layout:add(separator)
+        right_layout:add(volume)
+        right_layout:add(separator)
+        right_layout:add(bat)
+        right_layout:add(separator)
+        right_layout:add(mem)
+        right_layout:add(separator)
+        right_layout:add(cpu)
+        right_layout:add(separator)
+        right_layout:add(uptime)
+        right_layout:add(separator)
+        right_layout:add(wibox.widget.systray())
+        right_layout:add(separator)
     end
     right_layout:add(mylayoutbox[s])
 
@@ -307,19 +411,28 @@ globalkeys = awful.util.table.join(
         execute_in_shell("take-screenshot-of-windows")
     end),
     awful.key({}, "XF86AudioMute", function()
-        awful.util.spawn("./Scripts/toggle_mute.sh")
+        set_volume("toggle")
     end),
     awful.key({}, "XF86AudioRaiseVolume", function()
-        awful.util.spawn("amixer -q set Master 1dB+")
+        set_volume("2%+")
     end),
     awful.key({}, "XF86AudioLowerVolume", function()
-        awful.util.spawn("amixer -q set Master 1dB-")
+        set_volume("2%-")
     end),
     awful.key({}, "XF86MonBrightnessUp", function()
         awful.util.spawn("xbacklight -inc 10")
     end),
     awful.key({}, "XF86MonBrightnessDown", function()
         awful.util.spawn("xbacklight -dec 10")
+    end),
+    awful.key({modkey, "Control"}, "p", function()
+        awful.util.spawn(
+            "passmenu -i " ..
+            "-nb '" ..  beautiful.bg_normal .. "' " ..
+            "-nf '" .. beautiful.fg_normal .. "' " ..
+            "-sb '" .. beautiful.bg_focus .. "' " ..
+            "-sf '" .. beautiful.fg_focus .. "' " ..
+            "-fn 'Inconsolata\\-g-9'")
     end)
 )
 
