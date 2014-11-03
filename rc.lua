@@ -58,14 +58,6 @@ shell = "fish"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
-function spawn_in_terminal(command)
-    awful.util.spawn(terminal .. " -e " .. command)
-end
-
-function execute_in_shell(command)
-    awful.util.spawn(shell .. " -c " .. command)
-end
-
 function count(t)
     local count = 0
     for _ in pairs(t) do count = count + 1 end
@@ -74,6 +66,28 @@ end
 
 function sleep(n)
     os.execute("sleep " .. tonumber(n))
+end
+
+function spawn_in_terminal(command)
+    awful.util.spawn(terminal .. " -e " .. command)
+end
+
+function execute_in_shell(command)
+    awful.util.spawn(shell .. " -c " .. command)
+end
+
+function get_hostname()
+    local f = io.popen("uname -n")
+    local hostname = f:read()
+    f:close()
+    return hostname
+end
+
+function get_cores()
+    local f = io.popen("nproc")
+    local cores = tonumber(f:read())
+    f:close()
+    return cores
 end
 
 -- Default modkey.
@@ -205,11 +219,10 @@ vicious.register(uptime, vicious.widgets.uptime, function(widget, args)
     _.each(_.slice(args, 4, 6), function(el)
         i = i + 1
 
-        el = tonumber(el)
-        if el < 0.8 or el > 2.0 then
-            s = s .. string.format("<span color='%s'>%s%%</span>", colors.red, el)
+        if tonumber(el) >= 0.7 * get_cores() then
+            s = s .. string.format("<span color='%s'>%s</span>", colors.red, el)
         else
-            s = s .. string.format("%s%%", el)
+            s = s .. string.format("%s", el)
         end
 
         if i ~= 3 then
@@ -307,10 +320,12 @@ for s = 1, screen.count() do
         right_layout:add(separator)
         right_layout:add(calendar)
         right_layout:add(separator)
-        right_layout:add(volume)
-        right_layout:add(separator)
-        right_layout:add(bat)
-        right_layout:add(separator)
+        if get_hostname() ~= "rx-wks-44" then
+            right_layout:add(volume)
+            right_layout:add(separator)
+            right_layout:add(bat)
+            right_layout:add(separator)
+        end
         right_layout:add(mem)
         right_layout:add(separator)
         right_layout:add(cpu)

@@ -38,6 +38,8 @@ cmap <A-f> <C-Right>
 
 nmap <Space><Space> <C-^>
 
+nmap s :stop<CR>
+
 hi Hint -append font-size: 12px !important;
 hi HintElem -append background: none !important;
 hi StatusLine -append font-size: 12px !important;
