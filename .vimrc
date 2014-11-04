@@ -24,7 +24,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sjl/badwolf'
-Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-repeat'
@@ -139,8 +138,6 @@ nmap Q @q
 " Reselect text when indenting.
 vmap < <gv
 vmap > >gv
-nmap < <<
-nmap > >>
 
 " Sane regexes (aka very magic).
 nnoremap / /\v
@@ -215,8 +212,3 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Don't reload CtrlP cache when opening file outside project.
 let g:ctrlp_working_path_mode = 'r'
-
-let g:ctrlp_extensions = ['funky']
-
-nmap <C-f> :CtrlPFunky<Cr>
-let g:ctrlp_funky_syntax_highlight = 1
