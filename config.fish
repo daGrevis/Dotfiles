@@ -96,3 +96,9 @@ alias drmi='docker rmi'
 alias drs='docker restart'
 alias dstp='docker stop'
 alias dstr='docker start'
+function clean-containers
+    docker rm -f (docker ps -aq)
+end
+function clean-images
+    docker rmi -f (docker images -q)
+end
