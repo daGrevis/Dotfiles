@@ -90,6 +90,8 @@ function get_cores()
     return cores
 end
 
+cores = get_cores()
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -219,7 +221,7 @@ vicious.register(uptime, vicious.widgets.uptime, function(widget, args)
     _.each(_.slice(args, 4, 6), function(el)
         i = i + 1
 
-        if tonumber(el) >= 0.7 * get_cores() then
+        if tonumber(el) >= 0.7 * cores then
             s = s .. string.format("<span color='%s'>%s</span>", colors.red, el)
         else
             s = s .. string.format("%s", el)
