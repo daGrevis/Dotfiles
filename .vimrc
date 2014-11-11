@@ -25,12 +25,14 @@ Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sjl/badwolf'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'wellle/targets.vim'
 
 " Required by Vundle.
 call vundle#end()
@@ -152,13 +154,6 @@ nmap + gg=G2<C-o>
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
 cmap <C-v> <S-Insert>
-
-" Allows to save files as superuser.
-func! SudoW()
-    exec "w !sudo dd of=%"
-    exec "e!"
-endfunc
-command! SudoW call SudoW()
 
 " Sets color-scheme.
 colorscheme slate
