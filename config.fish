@@ -102,3 +102,7 @@ end
 function clean-images
     docker rmi -f (docker images -q)
 end
+
+function clean-pyc
+    find -type f -name '*.pyc' -delete
+end
