@@ -138,7 +138,7 @@ nmap # #<C-o>
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
 
-nmap <C-x> :make<CR>
+nmap <C-x> :make!<CR>
 
 " TODO: What should I do know?
 nmap <C-q> <Nop>
