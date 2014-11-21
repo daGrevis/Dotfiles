@@ -181,7 +181,7 @@ vicious.register(bat, vicious.widgets.bat, function(widget, args)
     end
 
     return s
-end, 60, "BAT1")
+end, 5, "BAT1")
 
 mem = wibox.widget.textbox()
 vicious.register(mem, vicious.widgets.mem, function(widget, args)
