@@ -24,6 +24,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sjl/badwolf'
+Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fireplace'
@@ -32,7 +33,6 @@ Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'w0ng/vim-hybrid'
 Plugin 'wellle/targets.vim'
 
 " Required by Vundle.
@@ -67,7 +67,7 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#cc6666
+    highlight HighlightNext guibg=#F92672
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -162,7 +162,7 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme hybrid
+    colorscheme molokai
 
     " Removes all GUI stuff.
     set guioptions=c
