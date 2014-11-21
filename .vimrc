@@ -32,6 +32,7 @@ Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'w0ng/vim-hybrid'
 Plugin 'wellle/targets.vim'
 
 " Required by Vundle.
@@ -66,7 +67,7 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#ff2c4b
+    highlight HighlightNext guibg=#cc6666
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -161,7 +162,7 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme base16-eighties
+    colorscheme hybrid
 
     " Removes all GUI stuff.
     set guioptions=c
@@ -207,3 +208,5 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Don't reload CtrlP cache when opening file outside project.
 let g:ctrlp_working_path_mode = 'r'
+
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
