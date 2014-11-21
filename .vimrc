@@ -138,6 +138,8 @@ nmap # #<C-o>
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
 
+nmap <C-x> :make<CR>
+
 " Reselect text when indenting.
 vmap < <gv
 vmap > >gv
@@ -155,6 +157,9 @@ nmap + gg=G2<C-o>
 vmap <C-c> "+y
 imap <C-v> <S-Insert>
 cmap <C-v> <S-Insert>
+
+au filetype python set makeprg=python\ %
+au filetype clojure set makeprg=lein\ exec\ %
 
 " Sets color-scheme.
 colorscheme slate
