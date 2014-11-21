@@ -27,7 +27,8 @@ cmap <C-v> <pass>
 
 nmap <S-u> :tab viewsource<CR>
 
-imap -builtin <C-e> <C-i>
+" <C-i> will open $EDITOR with contents of current input/textarea.
+imap <C-q> <C-i>
 
 map -builtin <silent> b :toolbartoggle Bookmarks Toolbar<CR>
 

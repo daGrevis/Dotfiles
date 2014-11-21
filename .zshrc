@@ -86,7 +86,7 @@ PATH=$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin
 export EDITOR='gvim -f'
 export VISUAL=${EDITOR}
 
-bindkey "^E" edit-command-line
+bindkey "^Q" edit-command-line
 
 alias l='ls -lahtr'
 

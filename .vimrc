@@ -140,6 +140,9 @@ nmap Q @q
 
 nmap <C-x> :make<CR>
 
+" TODO: What should I do know?
+nmap <C-q> <Nop>
+
 " Reselect text when indenting.
 vmap < <gv
 vmap > >gv
