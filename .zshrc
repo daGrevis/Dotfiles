@@ -150,7 +150,7 @@ function gpl {
     fi
 }
 
-alias dcl='docker pull'
+alias dpl='docker pull'
 alias dcli='docker rmi -f (docker images -q)'
 alias dim='docker images'
 alias dkl='docker rm -f'
