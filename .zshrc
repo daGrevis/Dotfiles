@@ -132,7 +132,6 @@ alias gin='git init'
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
 alias gmr='git merge'
 alias gmv='git mv'
-alias gpl='git pull'
 alias gpu='git push --set-upstream'
 alias grm='git rm'
 alias grs='git reset'
@@ -142,6 +141,14 @@ alias gsh='git stash'
 alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
+function gpl {
+    V=$(git rev-parse HEAD)
+    git pull
+    if [[ "${V}" != $(git rev-parse HEAD) ]]; then
+        echo
+        git --no-pager log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative ${V}..HEAD
+    fi
+}
 
 alias dcl='docker pull'
 alias dcli='docker rmi -f (docker images -q)'
