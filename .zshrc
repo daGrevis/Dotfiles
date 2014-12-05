@@ -182,3 +182,5 @@ function take-screenshot-of-windows {
     maim -s -c 1,0,0,0.1 -b 2 "Screenshots/${NAME}.png"
 }
 
+# Quickfix.
+unset GREP_OPTIONS
