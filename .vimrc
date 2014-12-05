@@ -129,7 +129,9 @@ nmap <C-e> :edit<Space>
 nmap <C-t> :tabedit<Space>
 
 nmap H ^
+vmap H ^
 nmap L $
+vmap L $
 
 nmap * *<C-o>
 nmap # #<C-o>
