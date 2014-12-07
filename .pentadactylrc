@@ -44,3 +44,7 @@ nmap s :stop<CR>
 hi Hint -append font-size: 12px !important;
 hi HintElem -append background: none !important;
 hi StatusLine -append font-size: 12px !important;
+
+nmap i o
+
+nmap <S-h> :history<CR>
