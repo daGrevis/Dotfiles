@@ -126,7 +126,7 @@ alias gcl='git clone'
 alias gcm='git commit -v'
 alias gco='git checkout'
 alias gcp='git cherry-pick'
-alias gdf='git diff'
+alias gdf='git difftool --no-prompt --extcmd icdiff "$@" | less'
 alias ggr='git grep --break --heading --line-number'
 alias gin='git init'
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"

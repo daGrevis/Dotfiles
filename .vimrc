@@ -23,7 +23,6 @@ Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'sjl/badwolf'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fireplace'
@@ -33,6 +32,7 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'wellle/targets.vim'
+Plugin 'blerins/flattown'
 
 " Required by Vundle.
 call vundle#end()
@@ -171,7 +171,7 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme badwolf
+    colorscheme flattown
 
     " Removes all GUI stuff.
     set guioptions=c
