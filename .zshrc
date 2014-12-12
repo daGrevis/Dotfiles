@@ -154,7 +154,9 @@ alias dpl='docker pull'
 alias dcli='docker rmi -f (docker images -q)'
 alias dim='docker images'
 alias dkl='docker rm -f'
-alias dlg='docker logs'
+function dlg {
+    docker logs $@ 2>&1
+}
 alias dps='docker ps'
 alias dpsa='docker ps -a'
 alias drm='docker rm'
