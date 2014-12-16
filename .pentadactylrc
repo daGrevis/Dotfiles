@@ -48,3 +48,10 @@ hi StatusLine -append font-size: 12px !important;
 nmap i o
 
 nmap <S-h> :history<CR>
+
+command! pinboard :open javascript:(function(){q=location.href;if(document.getSelection){d=document.getSelection();}else{d='';};p=document.title;void(open('https://pinboard.in/add?showtags=yes&url='+encodeURIComponent(q)+'&description='+encodeURIComponent(d)+'&title='+encodeURIComponent(p),'Pinboard',%20'toolbar=no,width=700,height=600'))})()
+
+nmap <a> :pinboard<CR>
+
+nmap <A-q> :q!<CR>
+nmap <A-w> :q<CR>
