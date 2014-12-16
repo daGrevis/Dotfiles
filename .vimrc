@@ -12,6 +12,7 @@ Plugin 'gmarik/Vundle.vim'
 " Optional plugins.
 Plugin 'Raimondi/delimitMate'
 Plugin 'amdt/vim-niji'
+Plugin 'blerins/flattown'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
@@ -32,7 +33,6 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'wellle/targets.vim'
-Plugin 'blerins/flattown'
 
 " Required by Vundle.
 call vundle#end()
