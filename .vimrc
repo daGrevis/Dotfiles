@@ -66,7 +66,7 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#F92672
+    highlight HighlightNext guibg=#db402c
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
