@@ -126,7 +126,6 @@ alias gcl='git clone'
 alias gcm='git commit -v'
 alias gco='git checkout'
 alias gcp='git cherry-pick'
-alias gdf='git difftool --no-prompt --extcmd icdiff "$@" | less'
 alias ggr='git grep --break --heading --line-number'
 alias gin='git init'
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
@@ -141,6 +140,15 @@ alias gsh='git stash'
 alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
+# See https://github.com/jeffkaufman/icdiff/blob/master/git-icdiff
+function gdf {
+    echo $@
+    if [ -f $@ ]; then
+        git difftool --no-prompt --extcmd icdiff $@ | less
+    else
+        git diff $@ | less
+    fi
+}
 function gpl {
     V=$(git rev-parse HEAD)
     git pull
