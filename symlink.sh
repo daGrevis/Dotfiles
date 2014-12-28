@@ -8,7 +8,6 @@ ln -s ~/Dotfiles/.pentadactylrc ~/.pentadactylrc
 ln -s ~/Dotfiles/.vimrc ~/.vimrc
 ln -s ~/Dotfiles/.xinitrc ~/.xinitrc
 ln -s ~/Dotfiles/.zshenv ~/.zshenv
-ln -s ~/Dotfiles/.zshrc ~/.zshrc
 ln -s ~/Dotfiles/coffeelint.json ~/coffeelint.json
 ln -s ~/Dotfiles/keyboard_settings.sh ~/Scripts/keyboard_settings.sh
 ln -s ~/Dotfiles/lock.sh ~/Scripts/lock.sh
