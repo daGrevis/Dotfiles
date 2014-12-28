@@ -30,9 +30,6 @@ thunar --daemon &
 # Clipboard manager.
 clipit --daemon &
 
-# Starts Dropbox in background.
-dropboxd &
-
 # Adjust brighntess based on current location and other factors.
 redshift -l 57:24 &
 
