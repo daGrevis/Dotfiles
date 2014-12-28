@@ -24,6 +24,7 @@ ln -s ~/Dotfiles/passmenu ~/Scripts/passmenu
 ln -s ~/Dotfiles/profiles.clj ~/.lein/profiles.clj
 ln -s ~/Dotfiles/rc.lua ~/.config/awesome/rc.lua
 ln -s ~/Dotfiles/system_upgrade.sh ~/Scripts/system_upgrade.sh
+ln -s ~/Dotfiles/terminalrc ~/.config/xfce4/terminal/terminalrc
 ln -s ~/Dotfiles/theme.lua ~/.config/awesome/themes/default/theme.lua
 ln -s ~/Dotfiles/toggle_mute.sh ~/Scripts/toggle_mute.sh
 ln -s ~/Dotfiles/toggle_trackpad.sh ~/Scripts/toggle_trackpad.sh
