@@ -16,7 +16,11 @@ local menubar = require("menubar")
 local lain = require("lain")
 local vicious = require("vicious")
 
-naughty.config.defaults.screen = 2
+if screen.count() == 2 then
+    naughty.config.defaults.screen = 2
+else
+    naughty.config.defaults.screen = 1
+end
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
