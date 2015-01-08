@@ -88,6 +88,15 @@ export VISUAL=${EDITOR}
 
 bindkey "^Q" edit-command-line
 
+function m {
+    man $@ &> /dev/null
+    if [ "$?" != "0" ]; then
+        echo "No manual entry for $*"
+    else
+        vim -c "SuperMan $*"
+    fi
+}
+
 alias l='ls -lahtr'
 
 function mkcd {
@@ -122,7 +131,7 @@ function update-mirrors {
 alias gad='git add --ignore-removal'
 alias gbl='git blame'
 alias gbr='git branch'
-alias gcl='git clone'
+
 alias gcm='git commit -v'
 alias gco='git checkout'
 alias gcp='git cherry-pick'
@@ -140,6 +149,7 @@ alias gsh='git stash'
 alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
+alias gls='git ls-files'
 # See https://github.com/jeffkaufman/icdiff/blob/master/git-icdiff
 function gdf {
     echo $@
