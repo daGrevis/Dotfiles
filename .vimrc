@@ -11,16 +11,18 @@ Plugin 'gmarik/Vundle.vim'
 
 " Optional plugins.
 Plugin 'Raimondi/delimitMate'
+Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
-Plugin 'blerins/flattown'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
+Plugin 'haya14busa/incsearch.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
 Plugin 'mileszs/ack.vim'
+Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
@@ -66,7 +68,7 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#db402c
+    highlight HighlightNext guibg=#fb4934
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -139,8 +141,6 @@ nmap # #<C-o>
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
 
-nmap <C-x> :make!<CR>
-
 " TODO: What should I do know?
 nmap <C-q> <Nop>
 
@@ -149,8 +149,6 @@ vmap < <gv
 vmap > >gv
 
 " Sane regexes (aka very magic).
-nnoremap / /\v
-vnoremap / /\v
 cnoremap s/ s/\v
 cnoremap %s/ %s/\v
 
@@ -162,8 +160,10 @@ vmap <C-c> "+y
 imap <C-v> <S-Insert>
 cmap <C-v> <S-Insert>
 
-au filetype python set makeprg=python\ %
-au filetype clojure set makeprg=lein\ exec\ %
+au filetype python setlocal makeprg=python\ %
+au filetype clojure setlocal makeprg=lein\ exec\ %
+
+au filetype man setlocal nolist
 
 " Sets color-scheme.
 colorscheme slate
@@ -171,13 +171,13 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme flattown
+    colorscheme gruvbox
 
     " Removes all GUI stuff.
     set guioptions=c
 
     " Sets font.
-    set guifont=Inconsolata-g\ 9
+    set guifont=Fira\ Mono\ 9
 
 endif
 
@@ -219,3 +219,7 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'r'
 
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+
+" Incremental search.
+map / <Plug>(incsearch-forward)\v
+map ? <Plug>(incsearch-backward)\v
