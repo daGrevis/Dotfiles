@@ -13,7 +13,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
-Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
@@ -157,8 +156,8 @@ nmap + gg=G2<C-o>
 
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
-imap <C-v> <S-Insert>
-cmap <C-v> <S-Insert>
+nmap <C-v> "*p
+cmap <C-v> <C-r>+
 
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
@@ -177,7 +176,7 @@ if has('gui_running')
     set guioptions=c
 
     " Sets font.
-    set guifont=Fira\ Mono\ 9
+    set guifont=Fira\ Code\ 9
 
 endif
 
@@ -208,9 +207,9 @@ vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
 
 " Use Git to get files. Much faster and it respects .gitignore rules.
 let g:ctrlp_user_command = [
-    \ '.git/',
-    \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
-\ ]
+            \ '.git/',
+            \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
+            \ ]
 
 " Searches in files, buffers and MRU files at the same time.
 let g:ctrlp_cmd = 'CtrlPMixed'
