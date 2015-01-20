@@ -86,6 +86,7 @@ set relativenumber
 set cryptmethod=blowfish2
 
 set colorcolumn=100
+set textwidth=100
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
