@@ -180,7 +180,7 @@ if has('gui_running')
 endif
 
 nmap <Leader>a :Ack<Space>
-nmap // :Ack<Space><C-r>/<Backspace><Backspace><M-b><Right><Right><Backspace><Backspace><C-e>
+nmap // :<C-r>/<Backspace><Backspace><C-a><Right><Right><Backspace><Backspace>Ack<Space>
 
 " Linters for Python files.
 let g:syntastic_python_checkers = ['python', 'flake8']
