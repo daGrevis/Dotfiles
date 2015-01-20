@@ -10,6 +10,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Optional plugins.
+Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
@@ -115,9 +116,6 @@ nmap <M-l> <C-w>l
 
 " Maps Y to yank line from current position til the end.
 nmap Y y$
-
-" Joins line as J did.
-map <Leader>j :join<CR>
 
 " Wrap-friendly <j> and <k> keys.
 nmap j gj
