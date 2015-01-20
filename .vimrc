@@ -162,8 +162,6 @@ cmap <C-v> <C-r>+
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
 
-au filetype man setlocal nolist
-
 " Sets color-scheme.
 colorscheme slate
 
