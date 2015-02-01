@@ -44,7 +44,7 @@ Plugin 'wellle/targets.vim'
 call vundle#end()
 filetype plugin indent on
 
-" Disabls swap-files.
+" Disables swap-files.
 set noswapfile
 
 " Show some special chars, well, specially.
