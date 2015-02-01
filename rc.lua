@@ -455,8 +455,11 @@ globalkeys = awful.util.table.join(
             "-sf '" .. beautiful.fg_focus .. "' " ..
             "-fn 'Inconsolata\\-g-9'")
     end),
-    awful.key({modkey }, "v", function()
+    awful.key({ modkey }, "v", function()
         awful.util.spawn("gvim")
+    end),
+    awful.key({ modkey }, "i", function()
+        awful.util.spawn("firefox")
     end)
 )
 

@@ -202,5 +202,6 @@ function take-screenshot-of-windows {
     maim -s -c 1,0,0,0.1 -b 2 "Screenshots/${NAME}.png"
 }
 
-# Quickfix.
-unset GREP_OPTIONS
+function pip_upgrade {
+    pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs sudo pip install -U
+}
