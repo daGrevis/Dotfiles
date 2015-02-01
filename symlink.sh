@@ -1,5 +1,6 @@
 #!/bin/bash
 
+ln -s ~/Dotfiles/.ackrc ~/.ackrc
 ln -s ~/Dotfiles/.editorconfig ~/.editorconfig
 ln -s ~/Dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/Dotfiles/.gtkrc-2.0.mine ~/.gtkrc-2.0.mine

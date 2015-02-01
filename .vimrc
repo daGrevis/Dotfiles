@@ -5,12 +5,12 @@ filetype off
 " Loads Vundle.
 set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" TODO: Neobundle looks very promising, need to check it out.
 
 " Required plugins.
 Plugin 'gmarik/Vundle.vim'
 
 " Optional plugins.
-Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
@@ -26,6 +26,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fireplace'
@@ -33,26 +34,22 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'vim-scripts/gitignore'
 Plugin 'wellle/targets.vim'
 
 " Required by Vundle.
 call vundle#end()
 filetype plugin indent on
 
-" Disables swap-files.
+" Disabls swap-files.
 set noswapfile
 
 " Show some special chars, well, specially.
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·
-
-" Sets how indentation works.
-set et
-set ts=4
-set sw=4
-set sts=4
 
 " Enables 'g' flag for search by default.
 set gdefault
@@ -118,6 +115,9 @@ nmap <M-l> <C-w>l
 " Maps Y to yank line from current position til the end.
 nmap Y y$
 
+" Joins line as J did.
+map <Leader>j :join<CR>
+
 " Wrap-friendly <j> and <k> keys.
 nmap j gj
 nmap k gk
@@ -126,8 +126,8 @@ nmap <Leader>q :wq!<CR>
 nmap <Leader>w :w<CR>
 nmap <M-q> :q!<CR>
 
-nmap <C-e> :edit<Space>
-nmap <C-t> :tabedit<Space>
+nmap <C-e> :e<Space>
+nmap <C-t> :tabe<Space>
 
 nmap H ^
 vmap H ^
@@ -158,6 +158,12 @@ nmap + gg=G2<C-o>
 vmap <C-c> "+y
 nmap <C-v> "*p
 cmap <C-v> <C-r>+
+
+" Auto-closes that window when using q: instead of :q for mistake.
+map q: :q
+
+" Word suggestions for typos.
+map <Leader>z :set spell<CR>z=
 
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
@@ -220,3 +226,16 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 " Incremental search.
 map / <Plug>(incsearch-forward)\v
 map ? <Plug>(incsearch-backward)\v
+
+" Improved selecting in visual mode.
+vmap v <Plug>(expand_region_expand)
+vmap <S-v> <Plug>(expand_region_shrink)
+
+" Improved yanking/pasting.
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+
+" Type 123<CR> to go to 123rd line.
+nnoremap <CR> G
+nnoremap <BS> gg
