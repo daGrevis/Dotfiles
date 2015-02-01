@@ -8,6 +8,7 @@ ln -s ~/Dotfiles/.vimrc ~/.vimrc
 ln -s ~/Dotfiles/.xinitrc ~/.xinitrc
 ln -s ~/Dotfiles/.zshenv ~/.zshenv
 ln -s ~/Dotfiles/coffeelint.json ~/coffeelint.json
+ln -s ~/Dotfiles/input.conf ~/.mpv/input.conf
 ln -s ~/Dotfiles/keyboard_settings.sh ~/Scripts/keyboard_settings.sh
 ln -s ~/Dotfiles/lock.sh ~/Scripts/lock.sh
 ln -s ~/Dotfiles/passmenu ~/Scripts/passmenu
