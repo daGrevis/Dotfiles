@@ -157,6 +157,7 @@ nmap + gg=G2<C-o>
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 nmap <C-v> "*p
+imap <C-v> <C-o><C-v>
 cmap <C-v> <C-r>+
 
 " Auto-closes that window when using q: instead of :q for mistake.
@@ -164,6 +165,9 @@ map q: :q
 
 " Word suggestions for typos.
 map <Leader>z :set spell<CR>z=
+
+map <Leader>f :set ft=
+map <Leader>n :%s///gn<Left><Left><Left><Left>
 
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
