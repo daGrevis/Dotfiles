@@ -51,6 +51,9 @@ set noswapfile
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·
 
+" Shown at the start of wrapped lines.
+let &showbreak = '↳ '
+
 " Enables 'g' flag for search by default.
 set gdefault
 
@@ -86,6 +89,9 @@ set cryptmethod=blowfish2
 
 set colorcolumn=100
 set textwidth=100
+
+" Keeps your cursor centered vertically on the screen whenever possible.
+set scrolloff=999
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
@@ -160,17 +166,34 @@ nmap <C-v> "*p
 imap <C-v> <C-o><C-v>
 cmap <C-v> <C-r>+
 
+" Type 123<CR> to go to 123rd line.
+nnoremap <CR> G
+nnoremap <BS> gg
+
 " Auto-closes that window when using q: instead of :q for mistake.
 map q: :q
+
+au filetype python setlocal makeprg=python\ %
+au filetype clojure setlocal makeprg=lein\ exec\ %
 
 " Word suggestions for typos.
 map <Leader>z :set spell<CR>z=
 
-map <Leader>f :set ft=
-map <Leader>n :%s///gn<Left><Left><Left><Left>
+" Shortcut for setting filetype.
+nmap <Leader>f :set ft=
 
-au filetype python setlocal makeprg=python\ %
-au filetype clojure setlocal makeprg=lein\ exec\ %
+" Count occurrences of a pattern in current buffer.
+nmap <Leader>n :%s///gn<Left><Left><Left><Left>
+
+" See registers.
+nmap <Leader>r :registers<CR>
+
+vmap <Leader>s :sort<CR>
+
+" Sources VimL.
+vmap <leader>x y:@"<CR>
+
+nmap <Leader>m :make<CR>
 
 " Sets color-scheme.
 colorscheme slate
@@ -234,12 +257,3 @@ map ? <Plug>(incsearch-backward)\v
 " Improved selecting in visual mode.
 vmap v <Plug>(expand_region_expand)
 vmap <S-v> <Plug>(expand_region_shrink)
-
-" Improved yanking/pasting.
-vnoremap <silent> y y`]
-vnoremap <silent> p p`]
-nnoremap <silent> p p`]
-
-" Type 123<CR> to go to 123rd line.
-nnoremap <CR> G
-nnoremap <BS> gg
