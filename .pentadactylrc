@@ -20,6 +20,7 @@ nmap <S-k> gt
 nmap <C-l> :nohlfind<CR>
 
 nmap d <pass>
+nmap <C-q> <Nop>
 
 nmap <C-c> <pass>
 imap <C-v> <pass>
