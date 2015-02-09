@@ -90,8 +90,8 @@ set cryptmethod=blowfish2
 set colorcolumn=100
 set textwidth=100
 
-" Keeps your cursor centered vertically on the screen whenever possible.
-set scrolloff=999
+" Minimal number of screen lines to keep above and below the cursor.
+set scrolloff=10
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
