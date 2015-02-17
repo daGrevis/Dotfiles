@@ -195,6 +195,8 @@ vmap <leader>x y:@"<CR>
 
 nmap <Leader>m :make<CR>
 
+nmap <Leader>b :Gblame<CR>
+
 " Sets color-scheme.
 colorscheme slate
 
@@ -202,6 +204,9 @@ if has('gui_running')
 
     " Sets your fave color-scheme.
     colorscheme gruvbox
+    " colorscheme base16-default
+    " colorscheme molokai
+    " colorscheme badwolf
 
     " Removes all GUI stuff.
     set guioptions=c
