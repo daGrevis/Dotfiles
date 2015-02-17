@@ -56,6 +56,7 @@ source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 PATH=$PATH:~/Scripts
 PATH=$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin
+PATH=$PATH:~/go/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
