@@ -197,6 +197,9 @@ nmap <Leader>m :make<CR>
 
 nmap <Leader>b :Gblame<CR>
 
+" Goes into visual-block mode.
+nmap <Leader>v v<C-v>
+
 " Sets color-scheme.
 colorscheme slate
 
