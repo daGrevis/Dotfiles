@@ -111,7 +111,10 @@ function mkcd {
 
 function aux {
     ps -aux | head -n 1
-    ps -aux | grep $1 | grep -v "grep $1"
+    for pid in `pgrep -f $@`;
+    do
+        ps aux -q $pid | sed -n 2p
+    done
 }
 
 function vim {
