@@ -99,6 +99,10 @@ function m {
 }
 
 alias l='ls -lahtr'
+# No idea why it doesn't sort by default when `-t` for ls is not specified.
+function ll {
+    ll | sort -k9,9
+}
 
 function mkcd {
     mkdir -p $@
