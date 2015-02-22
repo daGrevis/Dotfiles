@@ -98,10 +98,26 @@ function m {
     fi
 }
 
-alias l='ls -lahtr'
-# No idea why it doesn't sort by default when `-t` for ls is not specified.
+# See https://github.com/ogham/exa
+unalias l
+function l {
+    command -v exa &> /dev/null
+    if [ "$?" != "0" ]; then
+        ls -lahtr
+    else
+        exa -lagmr
+    fi
+}
+
+unalias ll
 function ll {
-    ll | sort -k9,9
+    command -v exa &> /dev/null
+    if [ "$?" != "0" ]; then
+        # No idea why it doesn't sort by default when `-t` for ls is not specified.
+        l | sort -k9,9
+    else
+        exa -lag
+    fi
 }
 
 function mkcd {
@@ -155,7 +171,7 @@ alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
 alias gls='git ls-files'
-# See https://github.com/jeffkaufman/icdiff/blob/master/git-icdiff
+# See https://github.com/jeffkaufman/icdiff
 function gdf {
     echo $@
     if [ -f $@ ]; then
