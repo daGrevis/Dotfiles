@@ -26,6 +26,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-eunuch'
@@ -50,6 +51,12 @@ set noswapfile
 " Show some special chars, well, specially.
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·
+
+" Sets how indentation works.
+set et
+set ts=4
+set sw=4
+set sts=4
 
 " Shown at the start of wrapped lines.
 let &showbreak = '↳ '
@@ -88,7 +95,6 @@ set relativenumber
 set cryptmethod=blowfish2
 
 set colorcolumn=100
-set textwidth=100
 
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=10
@@ -132,8 +138,8 @@ nmap <Leader>q :wq!<CR>
 nmap <Leader>w :w<CR>
 nmap <M-q> :q!<CR>
 
-nmap <C-e> :e<Space>
-nmap <C-t> :tabe<Space>
+nmap <Leader>e :e<Space>
+nmap <Leader>t :tabe<Space>
 
 nmap H ^
 vmap H ^
@@ -175,6 +181,8 @@ map q: :q
 
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
+
+au filetype text,markdown setlocal textwidth=100
 
 " Word suggestions for typos.
 map <Leader>z :set spell<CR>z=
@@ -268,3 +276,7 @@ map ? <Plug>(incsearch-backward)\v
 " Improved selecting in visual mode.
 vmap v <Plug>(expand_region_expand)
 vmap <S-v> <Plug>(expand_region_shrink)
+
+let g:ctrlp_funky_syntax_highlight = 1
+
+nmap <Backspace> :CtrlPFunky<CR>
