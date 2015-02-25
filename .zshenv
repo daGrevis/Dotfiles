@@ -88,6 +88,7 @@ export EDITOR='gvim -f'
 export VISUAL=${EDITOR}
 
 bindkey "^Q" edit-command-line
+bindkey "^R" history-incremental-pattern-search-backward
 
 function m {
     man $@ &> /dev/null
@@ -103,9 +104,9 @@ unalias l
 function l {
     command -v exa &> /dev/null
     if [ "$?" != "0" ]; then
-        ls -lahtr
+        ls -lahtr $@
     else
-        exa -lagmr
+        exa -lagmr $@
     fi
 }
 
@@ -114,9 +115,9 @@ function ll {
     command -v exa &> /dev/null
     if [ "$?" != "0" ]; then
         # No idea why it doesn't sort by default when `-t` for ls is not specified.
-        l | sort -k9,9
+        l $@ | sort -k9,9
     else
-        exa -lag
+        exa -lag $@
     fi
 }
 
