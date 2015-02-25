@@ -27,18 +27,12 @@ xrdb ~/.Xresources
 # Starts Thunar in background.
 thunar --daemon &
 
-# Clipboard manager.
-clipit --daemon &
-
 # Adjust brighntess based on current location and other factors.
 redshift -l 57:24 &
 
-# Starts GnuPG-agent.
-gpg-agent --daemon &
-
 xautolock -time 10 -locker lock &
 
-# To get my aliases working with awesome wm.
+# To get my aliases working with Awesome WM.
 source ~/.zshrc
 
 # Loads WM.
