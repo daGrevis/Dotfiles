@@ -14,6 +14,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
+Plugin 'blerins/flattown'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
@@ -76,7 +77,7 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#fb4934
+    highlight HighlightNext guibg=#db402c
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -179,6 +180,15 @@ nnoremap <BS> gg
 " Auto-closes that window when using q: instead of :q for mistake.
 map q: :q
 
+" Jump to next/previous class.
+nmap <PageDown> ]]
+nmap <PageUp> [[
+
+" Maps ]/[ to jump to next/previous function.
+" Very hacky, but this seems to be the only way that works as I want it to.
+au FileType * nmap <buffer> <nowait> [ <Esc>[m
+au FileType * nmap <buffer> <nowait> ] <Esc>]m
+
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
 
@@ -199,7 +209,7 @@ nmap <Leader>r :registers<CR>
 vmap <Leader>s :sort<CR>
 
 " Sources VimL.
-vmap <leader>x y:@"<CR>
+vmap <Leader>x y:@"<CR>
 
 nmap <Leader>m :make<CR>
 
@@ -214,10 +224,11 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme gruvbox
+    " colorscheme gruvbox
     " colorscheme base16-default
     " colorscheme molokai
     " colorscheme badwolf
+    colorscheme flattown
 
     " Removes all GUI stuff.
     set guioptions=c
@@ -273,7 +284,7 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 map / <Plug>(incsearch-forward)\v
 map ? <Plug>(incsearch-backward)\v
 
-" Improved selecting in visual mode.
+" Quick selection.
 vmap v <Plug>(expand_region_expand)
 vmap <S-v> <Plug>(expand_region_shrink)
 
