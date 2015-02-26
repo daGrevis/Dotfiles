@@ -181,13 +181,12 @@ nnoremap <BS> gg
 map q: :q
 
 " Jump to next/previous class.
-nmap <PageDown> ]]
-nmap <PageUp> [[
+nmap <Home> [[
+nmap <End> ]]
 
-" Maps ]/[ to jump to next/previous function.
-" Very hacky, but this seems to be the only way that works as I want it to.
-au FileType * nmap <buffer> <nowait> [ <Esc>[m
-au FileType * nmap <buffer> <nowait> ] <Esc>]m
+" Jump to next/previous function.
+nmap <PageUp> [m
+nmap <PageDown> ]m
 
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
