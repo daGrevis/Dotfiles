@@ -106,7 +106,7 @@ function l {
     if [ "$?" != "0" ]; then
         ls -lahtr $@
     else
-        exa -lagmr $@
+        exa -lag -s modified $@
     fi
 }
 
