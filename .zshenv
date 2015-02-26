@@ -167,7 +167,7 @@ alias gmr='git merge'
 alias gmv='git mv'
 alias gpu='git push --set-upstream'
 alias grm='git rm'
-alias grs='git reset'
+alias grst='git reset'
 alias grv='git revert'
 alias gs=gst
 alias gsh='git stash'
@@ -185,11 +185,13 @@ function gdf {
     fi
 }
 function gpl {
-    V=$(git rev-parse HEAD)
+    OLD_HASH=$(git rev-parse --short HEAD)
     git pull
-    if [[ "${V}" != $(git rev-parse HEAD) ]]; then
+    if [[ "${OLD_HASH}" != $(git rev-parse HEAD) ]]; then
+        CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         echo
-        git --no-pager log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative ${V}..HEAD
+        echo "${OLD_HASH}..${CURRENT_BRANCH}"
+        git --no-pager log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative ${OLD_HASH}..HEAD
     fi
 }
 
