@@ -57,6 +57,7 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/u
 PATH=$PATH:~/Scripts
 PATH=$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin
 PATH=$PATH:~/go/bin
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -156,13 +157,14 @@ function update-mirrors {
 alias gad='git add --ignore-removal'
 alias gbl='git blame'
 alias gbr='git branch'
-
+alias gcl='git clone'
 alias gcm='git commit -v'
 alias gco='git checkout'
 alias gcp='git cherry-pick'
 alias ggr='git grep --break --heading --line-number'
 alias gin='git init'
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
+alias gls='git ls-files'
 alias gmr='git merge'
 alias gmv='git mv'
 alias gpu='git push --set-upstream'
@@ -174,7 +176,6 @@ alias gsh='git stash'
 alias gst='git status -sb'
 alias gsw='git show'
 alias gtg='git tag'
-alias gls='git ls-files'
 # See https://github.com/jeffkaufman/icdiff
 function gdf {
     echo $@

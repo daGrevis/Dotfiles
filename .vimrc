@@ -29,16 +29,20 @@ Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'terryma/vim-expand-region'
+Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-leiningen'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'venantius/vim-eastwood'
 Plugin 'vim-scripts/gitignore'
 Plugin 'wellle/targets.vim'
 
@@ -205,6 +209,7 @@ nmap <Leader>n :%s///gn<Left><Left><Left><Left>
 " See registers.
 nmap <Leader>r :registers<CR>
 
+nmap <Leader>s :sort<CR>
 vmap <Leader>s :sort<CR>
 
 " Sources VimL.
