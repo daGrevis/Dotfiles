@@ -12,6 +12,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " Optional plugins.
 Plugin 'Raimondi/delimitMate'
+Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
 Plugin 'blerins/flattown'
@@ -19,6 +20,7 @@ Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'itchyny/lightline.vim'
+Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
@@ -197,6 +199,8 @@ au filetype clojure setlocal makeprg=lein\ exec\ %
 
 au filetype text,markdown setlocal textwidth=100
 
+au filetype css,scss,sass setlocal iskeyword+=-
+
 " Word suggestions for typos.
 map <Leader>z :set spell<CR>z=
 
@@ -295,3 +299,23 @@ vmap <S-v> <Plug>(expand_region_shrink)
 let g:ctrlp_funky_syntax_highlight = 1
 
 nmap <Backspace> :CtrlPFunky<CR>
+
+nmap <Enter> <Plug>Sneak_s
+nmap <S-Enter> <Plug>Sneak_S
+
+" Replaces `f` with 1-char Sneak.
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+xmap f <Plug>Sneak_f
+xmap F <Plug>Sneak_F
+omap f <Plug>Sneak_f
+omap F <Plug>Sneak_F
+" Replaces `t` with 1-char Sneak.
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+xmap t <Plug>Sneak_t
+xmap T <Plug>Sneak_T
+omap t <Plug>Sneak_t
+omap T <Plug>Sneak_T
+
+hi link SneakPluginTarget Search
