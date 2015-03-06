@@ -127,6 +127,16 @@ function mkcd {
     cd $@
 }
 
+function f {
+    find -name $@
+}
+function ff {
+    find -type f -name $@
+}
+function fd {
+    find -type d -name $@
+}
+
 function aux {
     ps -aux | head -n 1
     for pid in `pgrep -f $@`;
