@@ -96,7 +96,8 @@ function m {
     if [ "$?" != "0" ]; then
         echo "No manual entry for $*"
     else
-        vim -c "SuperMan $*"
+        vim -c "SuperMan $*" & disown
+        exit
     fi
 }
 
@@ -242,4 +243,22 @@ function take-screenshot-of-windows {
 
 function pip_upgrade {
     pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs sudo pip install -U
+}
+
+function generate-and-save-password {
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: generate-and-save-password [ OPTIONS ] [ location (like site or software) ]";
+        return
+    fi
+
+    loc=$1
+    pw=$(generate-password)
+
+    expect <(echo "spawn pass insert -e "${loc}"
+                   expect \"Enter password\"
+                   send \"${pw}\r\"
+                   interact" )
+
+    echo "${pw}" | xclip
+    echo "${pw}" | xclip -selection c
 }
