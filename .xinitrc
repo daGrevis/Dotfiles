@@ -24,14 +24,15 @@ fi
 
 ./Scripts/keyboard_settings.sh
 
-# Adjust brighntess based on current location and other factors.
+# Adjust brightness based on current location and other factors.
 redshift -l 57:24 &
 
 if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     xautolock -time 20 -locker lock &
 fi
 
-dunst -fn "$PANEL_FONT_FAMILY $PANEL_FONT_SIZE" -nb "#34322e" -geometry 0x1-5+23
+# Notification daemon.
+dunst &
 
 # Loads WM.
 sxhkd &
