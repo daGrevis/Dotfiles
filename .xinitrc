@@ -22,7 +22,9 @@ fi
 # Adjust brighntess based on current location and other factors.
 redshift -l 57:24 &
 
-xautolock -time 10 -locker lock &
+if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
+    xautolock -time 20 -locker lock &
+fi
 
 # Loads WM.
 export PANEL_FIFO="/tmp/panel-fifo"
