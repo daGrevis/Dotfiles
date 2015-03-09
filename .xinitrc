@@ -9,6 +9,11 @@ fi
 
 PATH=$PATH:~/Scripts
 
+export PANEL_FIFO="/tmp/panel-fifo"
+export PANEL_HEIGHT=18
+export PANEL_FONT_FAMILY="Andale Mono"
+export PANEL_FONT_SIZE="9"
+
 HOME_HOSTNAME="haze"
 WORK_HOSTNAME="rx-wks-44"
 
@@ -26,9 +31,8 @@ if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     xautolock -time 20 -locker lock &
 fi
 
+dunst -fn "$PANEL_FONT_FAMILY $PANEL_FONT_SIZE" -nb "#34322e" -geometry 0x1-5+23
+
 # Loads WM.
-export PANEL_FIFO="/tmp/panel-fifo"
-export PANEL_HEIGHT=18
-export PANEL_FONT_FAMILY="Andale Mono-9"
 sxhkd &
 exec bspwm

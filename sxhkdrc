@@ -87,10 +87,10 @@ super + Return
     xfce4-terminal
 
 super + p
-    dmenu_run -fn "$PANEL_FONT_FAMILY"
+    dmenu_run -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE"
 
 super + control + p
-    passmenu -fn "$PANEL_FONT_FAMILY"
+    passmenu -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE"
 
 super + F4
     xbacklight -dec 10 -time 0
