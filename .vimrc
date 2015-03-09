@@ -232,11 +232,11 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    " colorscheme gruvbox
+    colorscheme gruvbox
     " colorscheme base16-default
     " colorscheme molokai
     " colorscheme badwolf
-    colorscheme flattown
+    " colorscheme flattown
 
     " Removes all GUI stuff.
     set guioptions=c
@@ -318,4 +318,4 @@ xmap T <Plug>Sneak_T
 omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
 
-hi link SneakPluginTarget Search
+hi link SneakPluginTarget WarningMsg
