@@ -201,6 +201,13 @@ au filetype text,markdown setlocal textwidth=100
 
 au filetype css,scss,sass setlocal iskeyword+=-
 
+func! AuFtGitCommit()
+    setlocal colorcolumn=50
+    setlocal spell
+endfunc
+
+au filetype gitcommit call AuFtGitCommit()
+
 " Word suggestions for typos.
 map <Leader>z :set spell<CR>z=
 
