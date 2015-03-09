@@ -15,7 +15,6 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
-Plugin 'blerins/flattown'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
@@ -117,6 +116,7 @@ nmap <S-k> :tabnext<CR>
 let i = 1
 while i < 10
     execute 'nmap <M-' . i . '> :tabnext ' . i . '<CR>'
+    execute 'nmap <Leader>' . i . ' :tabnext ' . i . '<CR>'
     let i += 1
 endwhile
 
@@ -232,11 +232,11 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    " colorscheme gruvbox
+    colorscheme gruvbox
     " colorscheme base16-default
     " colorscheme molokai
     " colorscheme badwolf
-    colorscheme flattown
+    " colorscheme flattown
 
     " Removes all GUI stuff.
     set guioptions=c

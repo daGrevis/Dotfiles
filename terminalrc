@@ -20,8 +20,8 @@ TitleMode=TERMINAL_TITLE_HIDE
 ShortcutsNoMenukey=TRUE
 ShortcutsNoMnemonics=TRUE
 ScrollingBar=TERMINAL_SCROLLBAR_NONE
-ColorCursor=#c0c5ce
-ColorForeground=#c0c5ce
-ColorBackground=#2b303b
-ColorPalette=#181818;#ab4642;#a1b56c;#f7ca88;#7cafc2;#ba8baf;#86c1b9;#d8d8d8;#585858;#ab4642;#a1b56c;#f7ca88;#7cafc2;#ba8baf;#86c1b9;#f8f8f8
+ColorCursor=#d3d0c8
+ColorForeground=#d3d0c8
+ColorBackground=#2d2d2d
+ColorPalette=#2d2d2d;#f2777a;#99cc99;#ffcc66;#6699cc;#cc99cc;#66cccc;#d3d0c8;#747369;#f2777a;#99cc99;#ffcc66;#6699cc;#cc99cc;#66cccc;#f2f0ec
 

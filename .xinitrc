@@ -1,11 +1,13 @@
-#!/bin/bash
+#! /bin/bash
 
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
-  for f in /etc/X11/xinit/xinitrc.d/*; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
+    for f in /etc/X11/xinit/xinitrc.d/*; do
+        [ -x "$f" ] && . "$f"
+    done
+    unset f
 fi
+
+PATH=$PATH:~/Scripts
 
 HOME_HOSTNAME="haze"
 WORK_HOSTNAME="rx-wks-44"
@@ -23,9 +25,8 @@ redshift -l 57:24 &
 xautolock -time 10 -locker lock &
 
 # Loads WM.
-# export PANEL_FIFO="/tmp/panel-fifo"
-# PATH=$PATH:~/Scripts
-# env > ~/bspwm_log
-# sxhkd &
-# exec bspwm
-exec awesome
+export PANEL_FIFO="/tmp/panel-fifo"
+export PANEL_HEIGHT=18
+export PANEL_FONT_FAMILY="Andale Mono-9"
+sxhkd &
+exec bspwm
