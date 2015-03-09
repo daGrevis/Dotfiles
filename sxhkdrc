@@ -87,13 +87,19 @@ super + Return
     xfce4-terminal
 
 super + p
-    dmenu_run -fn "Andale Mono-9"
+    dmenu_run -fn "$PANEL_FONT_FAMILY"
+
+super + control + p
+    passmenu -fn "$PANEL_FONT_FAMILY"
 
 super + F4
     xbacklight -dec 10 -time 0
 
 super + F5
     xbacklight -inc 10 -time 0
+
+F7
+    ~/Scripts/lock.sh
 
 super + F11
     amixer set Master 5%-
