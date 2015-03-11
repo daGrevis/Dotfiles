@@ -2,12 +2,19 @@
 # bspwm hotkeys
 #
 
+# Quit bspwm.
 super + alt + Escape
     killall panel; bspc quit
 
-super + Escape
-    pkill -USR1 -x sxhkd
+# Restart panel.
+super + shift + Escape
+    killall panel && ~/Dotfiles/panel &; notify-send "panel restarted"
 
+# Restart sxhkd.
+super + Escape
+    pkill -USR1 -x sxhkd && notify-send "sxhkd restarted"
+
+# Close window.
 super + w
     bspc window -c
 
@@ -72,6 +79,10 @@ super + grave
 super + Tab
     bspc window -f next
 
+# Focus on urgent monitor.
+super + u
+    bspc desktop -f next.urgent
+
 ~button1
     bspc pointer -g focus
 
@@ -111,3 +122,6 @@ super + F11
 
 super + F12
     amixer set Master 5%+
+
+super + shift + m
+    pavucontrol
