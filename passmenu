@@ -11,5 +11,5 @@ password=$(printf '%s\n' "${password_files[@]}" | dmenu "$@")
 pass -c "$password"
 
 if [[ "$password" != "" ]]; then
-    notify-send 'Password copied' "$password"
+    notify-send -u low 'Password copied' "$password"
 fi;
