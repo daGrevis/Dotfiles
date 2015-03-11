@@ -20,9 +20,6 @@ super + b
 super + {s,f}
     bspc window -t {floating,fullscreen}
 
-super + {grave,Tab}
-    bspc {window,desktop} -f last
-
 super + apostrophe
     bspc window -s last
 
@@ -66,6 +63,14 @@ super + ctrl + {1-9}
 
 super + {_,shift + }{1-9,0}
     bspc {desktop -f,window -d} ^{1-9,10}
+
+# Switch to last desktop.
+super + grave
+    bspc desktop -f last
+
+# Switch to last window.
+super + Tab
+    bspc window -f next
 
 ~button1
     bspc pointer -g focus

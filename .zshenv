@@ -262,3 +262,23 @@ function generate-and-save-password {
     echo "${pw}" | xclip
     echo "${pw}" | xclip -selection c
 }
+
+function change-wallpaper {
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: change-wallpaper [ OPTIONS ] [ path ]";
+        return
+    fi
+
+    user=$(whoami)
+    from=$1
+    to="/home/$user/Pictures/wallpaper"
+
+    rm -f $to
+    ln -s $from $to
+
+    echo "$from -> $to"
+}
+
+function delete-pyco {
+    find -name '*.py[co]' -delete
+}

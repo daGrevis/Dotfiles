@@ -19,7 +19,7 @@ WORK_HOSTNAME="rx-wks-44"
 
 if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     # Sets 2nd monitor usable.
-    xrandr --output HDMI2 --auto --rotate left --output HDMI3 --auto --right-of HDMI2
+    xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3 --rotate left
 fi
 
 ./Scripts/keyboard_settings.sh
