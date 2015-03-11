@@ -234,6 +234,9 @@ nmap <Leader>b :Gblame<CR>
 " Goes into visual-block mode.
 nmap <Leader>v v<C-v>
 
+" Replace word under the cursor.
+nmap <Leader>k yiw:%s/<C-r>0/
+
 " Sets color-scheme.
 colorscheme slate
 
