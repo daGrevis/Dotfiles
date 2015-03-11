@@ -282,3 +282,7 @@ function change-wallpaper {
 function delete-pyco {
     find -name '*.py[co]' -delete
 }
+
+function focus-desktop {
+    wmctrl -r '' -b add,demands_attention
+}
