@@ -117,6 +117,15 @@ super + F5
 F7
     ~/Scripts/lock.sh
 
+super + F8
+    playerctl previous
+
+super + F9
+    playerctl play-pause
+
+super + F10
+    playerctl next
+
 super + F11
     amixer set Master 5%-
 
