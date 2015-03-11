@@ -42,7 +42,7 @@
     # Show age of message if message is older than show_age_threshold
     # seconds.
     # Set to -1 to disable.
-    show_age_threshold = 60
+    show_age_threshold = -1
     
     # Split notifications into multiple lines if they don't fit into
     # geometry.
@@ -78,7 +78,7 @@
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
     # Set to 0 to disable.
-    idle_threshold = 9999
+    idle_threshold = 0
     
     # Which monitor should the notifications be displayed on.
     monitor = 0
@@ -94,14 +94,14 @@
     # 
     # If this option is set to mouse or keyboard, the monitor option
     # will be ignored.
-    follow = mouse
+    follow = none
     
     # Should a notification popped up from history be sticky or timeout
     # as if it would normally do.
     sticky_history = yes
     
     # Maximum amount of notifications kept in history
-    history_length = 20
+    history_length = 100
     
     # Display indicators for URLs (U) and actions (A).
     show_indicators = yes
@@ -133,7 +133,7 @@
     # Print a notification on startup.
     # This is mainly for error detection, since dbus (re-)starts dunst
     # automatically after a crash.
-    startup_notification = false
+    startup_notification = true
     
     # dmenu path.
     dmenu = /usr/bin/dmenu -p dunst:
@@ -149,7 +149,7 @@
 
 [frame]
     width = 2
-    color = "#7e7f89"
+    color = "#505050"
 
 [shortcuts]
 
@@ -175,17 +175,17 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#222222"
-    foreground = "#888888"
+    background = "#303030"
+    foreground = "#B0B0B0"
     timeout = 10
 
 [urgency_normal]
-    background = "#34322e"
+    background = "#505050"
     foreground = "#ffffff"
-    timeout = 10
+    timeout = 0
 
 [urgency_critical]
-    background = "#900000"
+    background = "#AC4142"
     foreground = "#ffffff"
     timeout = 0
 
