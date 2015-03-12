@@ -86,7 +86,7 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    highlight HighlightNext guibg=#db402c
+    hi HighlightNext guibg=#F2777A
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -231,6 +231,10 @@ func! AuBigFile()
 endfunc
 autocmd BufReadPre * call AuBigFile()
 
+"
+" Leader mappings.
+"
+
 " Word suggestions for typos.
 map <Leader>z :set spell<CR>z=
 
@@ -259,6 +263,8 @@ nmap <Leader>v v<C-v>
 " Replace word under the cursor.
 nmap <Leader>k yiw:%s/<C-r>0/
 
+nmap <Leader>h :help<Space>
+
 " Sets color-scheme.
 colorscheme slate
 
@@ -270,21 +276,35 @@ if has('gui_running')
     " colorscheme molokai
     " colorscheme badwolf
     " colorscheme flattown
-    colorscheme base16-default
+    colorscheme base16-eighties
 
     " Removes all GUI stuff.
     set guioptions=c
 
     " Sets font.
-    set guifont=Inconsolata-g\ 9
+    set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 9
 
 endif
+
+"
+" Airline configuration.
+"
+
+let g:airline_powerline_fonts = 1
+
+"
+" Ack configuration.
+"
 
 nmap <Leader>a :Ack<Space>
 nmap // :<C-r>/<Backspace><Backspace><C-a><Right><Right><Backspace><Backspace>Ack<Space>
 
 " Fixes <Enter> not working in Ack.vim quickfix-list when <Enter> is mapped globally.
 au filetype qf nmap <buffer> <CR> o
+
+"
+" Syntastic configuration.
+"
 
 " Linters for Python files.
 let g:syntastic_python_checkers = ['python', 'flake8']
@@ -295,6 +315,10 @@ let g:syntastic_python_flake8_exec = 'flake8-python2'
 let g:syntastic_coffee_checkers = ['coffee', 'coffeelint']
 let g:syntastic_coffee_coffeelint_post_args = '--file ~/coffeelint.json'
 
+"
+" NERDTree configuration.
+"
+
 " Opens NERDTree with <Tab>.
 nmap <Tab> :NERDTreeToggle<CR>
 
@@ -304,9 +328,17 @@ let NERDTreeWinSize = 50
 " Makes NERDTree show hidden files as well.
 let NERDTreeShowHidden = 1
 
+"
+" Gist configuration.
+"
+
 " Anonymous gists.
 nmap <Leader>pg :Gist -a<CR>
 vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
+
+"
+" CtrlP configuration.
+"
 
 " Use Git to get files. Much faster and it respects .gitignore rules.
 let g:ctrlp_user_command = [
@@ -322,17 +354,33 @@ let g:ctrlp_working_path_mode = 'r'
 
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
-" Incremental search.
-map / <Plug>(incsearch-forward)\v
-map ? <Plug>(incsearch-backward)\v
-
-" Quick selection.
-vmap v <Plug>(expand_region_expand)
-vmap <S-v> <Plug>(expand_region_shrink)
+"
+" CtrlPFunky configuration.
+"
 
 let g:ctrlp_funky_syntax_highlight = 1
 
 nmap <Backspace> :CtrlPFunky<CR>
+
+"
+" Incsearch configuration.
+"
+
+map / <Plug>(incsearch-forward)\v
+map ? <Plug>(incsearch-backward)\v
+
+"
+" Expand-region configuration.
+"
+
+vmap v <Plug>(expand_region_expand)
+vmap <S-v> <Plug>(expand_region_shrink)
+
+"
+" Sneak configuration.
+"
+
+let g:sneak#prompt = ''
 
 nmap <Enter> <Plug>Sneak_s
 nmap <S-Enter> <Plug>Sneak_S
@@ -352,4 +400,4 @@ xmap T <Plug>Sneak_T
 omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
 
-hi link SneakPluginTarget WarningMsg
+au ColorScheme * hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red

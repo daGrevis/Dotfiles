@@ -286,3 +286,7 @@ function delete-pyco {
 function focus-desktop {
     wmctrl -r '' -b add,demands_attention
 }
+
+function update-fonts {
+    fc-cache -vf
+}
