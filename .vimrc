@@ -15,10 +15,11 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
+Plugin 'bling/vim-airline'
+Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
-Plugin 'itchyny/lightline.vim'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'lilydjwg/colorizer'
@@ -243,11 +244,12 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    colorscheme gruvbox
+    " colorscheme gruvbox
     " colorscheme base16-default
     " colorscheme molokai
     " colorscheme badwolf
     " colorscheme flattown
+    colorscheme base16-default
 
     " Removes all GUI stuff.
     set guioptions=c
@@ -330,3 +332,7 @@ omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
 
 hi link SneakPluginTarget WarningMsg
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline_powerline_fonts = 1
