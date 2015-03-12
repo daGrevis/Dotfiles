@@ -108,28 +108,28 @@ super + p
 super + control + p
     passmenu -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE"
 
-super + F4
+F4
     xbacklight -dec 10 -time 0
 
-super + F5
+F5
     xbacklight -inc 10 -time 0
 
 F7
     ~/Scripts/lock.sh
 
-super + F8
+F8
     playerctl previous
 
-super + F9
+F9
     playerctl play-pause
 
-super + F10
+F10
     playerctl next
 
-super + F11
+F11
     amixer set Master 5%-
 
-super + F12
+F12
     amixer set Master 5%+
 
 super + shift + m

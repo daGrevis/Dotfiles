@@ -53,18 +53,20 @@ Plugin 'wellle/targets.vim'
 call vundle#end()
 filetype plugin indent on
 
+" Sets how indentation works.
+func! ResetIndentation ()
+    setlocal et
+    setlocal ts=4
+    setlocal sw=4
+    setlocal sts=4
+endfunc
+
 " Disables swap-files.
 set noswapfile
 
 " Show some special chars, well, specially.
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·
-
-" Sets how indentation works.
-set et
-set ts=4
-set sw=4
-set sts=4
 
 " Shown at the start of wrapped lines.
 let &showbreak = '↳ '
@@ -196,6 +198,16 @@ nmap <End> ]]
 nmap <PageUp> [m
 nmap <PageDown> ]m
 
+"
+" Commands.
+"
+
+command! -nargs=* ResetIndentation call ResetIndentation()
+
+"
+" Auto-commands.
+"
+
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
 
@@ -207,8 +219,17 @@ func! AuFtGitCommit()
     setlocal colorcolumn=50
     setlocal spell
 endfunc
-
 au filetype gitcommit call AuFtGitCommit()
+
+func! AuBigFile()
+    let ext = expand('%:e')
+    if ext == "css" || ext == "js"
+        if getfsize(expand("%")) > 20 * 1024
+            syntax off
+        endif
+    endif
+endfunc
+autocmd BufReadPre * call AuBigFile()
 
 " Word suggestions for typos.
 map <Leader>z :set spell<CR>z=
@@ -255,7 +276,7 @@ if has('gui_running')
     set guioptions=c
 
     " Sets font.
-    set guifont=Fira\ Code\ 9
+    set guifont=Inconsolata-g\ 9
 
 endif
 
@@ -332,7 +353,3 @@ omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
 
 hi link SneakPluginTarget WarningMsg
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline_powerline_fonts = 1
