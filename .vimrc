@@ -213,7 +213,7 @@ au filetype clojure setlocal makeprg=lein\ exec\ %
 
 au filetype text,markdown setlocal textwidth=100
 
-au filetype css,scss,sass setlocal iskeyword+=-
+au filetype html,css,scss,sass setlocal iskeyword+=-
 
 func! AuFtGitCommit()
     setlocal colorcolumn=50
@@ -221,15 +221,18 @@ func! AuFtGitCommit()
 endfunc
 au filetype gitcommit call AuFtGitCommit()
 
-func! AuBigFile()
+func! AuBufReadPre()
     let ext = expand('%:e')
     if ext == "css" || ext == "js"
         if getfsize(expand("%")) > 20 * 1024
             syntax off
+            setlocal nowrap
+            setlocal nohlsearch
+            execute "ColorClear"
         endif
     endif
 endfunc
-autocmd BufReadPre * call AuBigFile()
+autocmd BufReadPre * call AuBufReadPre()
 
 "
 " Leader mappings.
