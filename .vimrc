@@ -241,7 +241,7 @@ func! AuBufReadPre()
         execute "ColorClear"
     endif
 endfunc
-autocmd BufReadPre * call AuBufReadPre()
+au BufReadPre * call AuBufReadPre()
 
 func! AuBufReadPost()
     " Restore last cursor position.
@@ -255,7 +255,7 @@ func! AuBufReadPost()
         setlocal syntax=ON
     endif
 endfunc
-autocmd BufReadPost * call AuBufReadPost()
+au BufReadPost * call AuBufReadPost()
 
 " Minor adjustments to colorschemes.
 func! AuColorScheme()
@@ -265,7 +265,7 @@ func! AuColorScheme()
         hi Comment guifg=#A09F93
     endif
 endfunc
-autocmd ColorScheme * call AuColorScheme()
+au ColorScheme * call AuColorScheme()
 
 "
 " Leader mappings.
