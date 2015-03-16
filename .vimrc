@@ -217,6 +217,8 @@ au filetype text,markdown setlocal textwidth=100
 
 au filetype html,css,scss,sass,javascript,coffee setlocal iskeyword+=-
 
+au filetype man setlocal nowrap
+
 func! AuFtGitCommit()
     setlocal colorcolumn=50
     setlocal spell
@@ -227,7 +229,7 @@ func! ShouldDisableBlingBling()
     let ext = expand('%:e')
 
     let should = 0
-    if ext == "css" || ext == "js" && getfsize(expand("%")) > 20 * 1024
+    if (ext == "css" || ext == "js") && getfsize(expand("%")) > 20 * 1024
         let should = 1
     endif
 
@@ -263,6 +265,7 @@ func! AuColorScheme()
 
     if colo == "base16-eighties"
         hi Comment guifg=#A09F93
+        hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red
     endif
 endfunc
 au ColorScheme * call AuColorScheme()
@@ -435,5 +438,3 @@ xmap t <Plug>Sneak_t
 xmap T <Plug>Sneak_T
 omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
-
-au ColorScheme * hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red
