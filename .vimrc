@@ -257,6 +257,16 @@ func! AuBufReadPost()
 endfunc
 autocmd BufReadPost * call AuBufReadPost()
 
+" Minor adjustments to colorschemes.
+func! AuColorScheme()
+    let colo = g:colors_name
+
+    if colo == "base16-eighties"
+        hi Comment guifg=#A09F93
+    endif
+endfunc
+autocmd ColorScheme * call AuColorScheme()
+
 "
 " Leader mappings.
 "
