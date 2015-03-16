@@ -23,7 +23,6 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'lilydjwg/colorizer'
-Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
 Plugin 'mileszs/ack.vim'
@@ -109,6 +108,8 @@ set colorcolumn=100
 
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=10
+
+syntax manual
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
@@ -214,7 +215,7 @@ au filetype clojure setlocal makeprg=lein\ exec\ %
 
 au filetype text,markdown setlocal textwidth=100
 
-au filetype html,css,scss,sass setlocal iskeyword+=-
+au filetype html,css,scss,sass,javascript,coffee setlocal iskeyword+=-
 
 func! AuFtGitCommit()
     setlocal colorcolumn=50
@@ -222,18 +223,39 @@ func! AuFtGitCommit()
 endfunc
 au filetype gitcommit call AuFtGitCommit()
 
-func! AuBufReadPre()
+func! ShouldDisableBlingBling()
     let ext = expand('%:e')
-    if ext == "css" || ext == "js"
-        if getfsize(expand("%")) > 20 * 1024
-            syntax off
-            setlocal nowrap
-            setlocal nohlsearch
-            execute "ColorClear"
-        endif
+
+    let should = 0
+    if ext == "css" || ext == "js" && getfsize(expand("%")) > 20 * 1024
+        let should = 1
+    endif
+
+    return should
+endfunc
+
+func! AuBufReadPre()
+    if ShouldDisableBlingBling()
+        setlocal nowrap
+        setlocal nohlsearch
+        execute "ColorClear"
     endif
 endfunc
 autocmd BufReadPre * call AuBufReadPre()
+
+func! AuBufReadPost()
+    " Restore last cursor position.
+    if line("'\"") > 1 && line("'\"") <= line("$")
+        exe "normal! g'\""
+    endif
+
+    if ShouldDisableBlingBling()
+        setlocal syntax=OFF
+    else
+        setlocal syntax=ON
+    endif
+endfunc
+autocmd BufReadPost * call AuBufReadPost()
 
 "
 " Leader mappings.
