@@ -16,9 +16,9 @@ is_muted = re.search(r"\[off\]", amixer_output) is not None
 volume_left, volume_right = volumes
 
 if volume_left == volume_right:
-    volumes_output = "{}%".format(volume_left)
+    output_volumes = "{}%".format(volume_left)
 else:
-    volumes_output = "L/R {}%/{}%".format(*volumes)
+    output_volumes = "L/R {}%/{}%".format(*volumes)
 
 volume_total = sum([int(x) for x in volumes])
 if is_muted or volume_total == 0:
@@ -26,9 +26,9 @@ if is_muted or volume_total == 0:
 else:
     output_icon = ICONS["fa-volume-up"]
 
-output = "{output_icon} {volumes_output}".format(
+output = "{output_icon} {output_volumes}".format(
     output_icon=output_icon,
-    volumes_output=volumes_output,
+    output_volumes=output_volumes,
 )
 
 print(output)
