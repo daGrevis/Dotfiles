@@ -4,12 +4,16 @@
 
 num_mon=$(bspc query -M | wc -l)
 
-get-sound-widget() {
-    python ~/Scripts/sound_widget.py
+get-network-widget() {
+    python ~/Scripts/network_widget.py
 }
 
 get-battery-widget() {
     python ~/Scripts/battery_widget.py
+}
+
+get-sound-widget() {
+    python ~/Scripts/sound_widget.py
 }
 
 get-datetime-widget() {
@@ -19,7 +23,7 @@ get-datetime-widget() {
 while read -r line ; do
     case $line in
         S*)
-            sys_infos="$(get-sound-widget)  $(get-battery-widget)  $(get-datetime-widget)"
+            sys_infos="$(get-network-widget)  $(get-battery-widget)  $(get-sound-widget)  $(get-datetime-widget)"
             ;;
         T*)
             # xtitle output
