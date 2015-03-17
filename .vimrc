@@ -16,10 +16,11 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
 Plugin 'bling/vim-airline'
-Plugin 'chriskempson/base16-vim'
+" Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
+Plugin 'jordwalke/flatlandia'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'lilydjwg/colorizer'
@@ -86,7 +87,6 @@ set hlsearch
 
 " Highlights next found match.
 func! HighlightNext (blinktime)
-    hi HighlightNext guibg=#F2777A
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -108,8 +108,6 @@ set colorcolumn=100
 
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=10
-
-syntax manual
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
@@ -217,7 +215,7 @@ au filetype text,markdown setlocal textwidth=100
 
 au filetype html,css,scss,sass,javascript,coffee setlocal iskeyword+=-
 
-au filetype man setlocal nowrap
+au filetype man,html,htmldjango setlocal nowrap
 
 func! AuFtGitCommit()
     setlocal colorcolumn=50
@@ -250,12 +248,6 @@ func! AuBufReadPost()
     if line("'\"") > 1 && line("'\"") <= line("$")
         exe "normal! g'\""
     endif
-
-    if ShouldDisableBlingBling()
-        setlocal syntax=OFF
-    else
-        setlocal syntax=ON
-    endif
 endfunc
 au BufReadPost * call AuBufReadPost()
 
@@ -264,8 +256,15 @@ func! AuColorScheme()
     let colo = g:colors_name
 
     if colo == "base16-eighties"
+        hi HighlightNext guibg=#F2777A
         hi Comment guifg=#A09F93
         hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red
+    endif
+    if colo == "flatlandia"
+        hi HighlightNext guibg=#aa2915
+        hi Comment guifg=#798188
+        hi SignColumn guibg=#3b3e40
+        hi SneakPluginTarget guifg=black guibg=#aa2915 ctermfg=black ctermbg=red
     endif
 endfunc
 au ColorScheme * call AuColorScheme()
@@ -310,12 +309,13 @@ colorscheme slate
 if has('gui_running')
 
     " Sets your fave color-scheme.
-    " colorscheme gruvbox
-    " colorscheme base16-default
-    " colorscheme molokai
     " colorscheme badwolf
+    " colorscheme base16-default
+    " colorscheme base16-eighties
     " colorscheme flattown
-    colorscheme base16-eighties
+    " colorscheme gruvbox
+    " colorscheme molokai
+    colorscheme flatlandia
 
     " Removes all GUI stuff.
     set guioptions=c
