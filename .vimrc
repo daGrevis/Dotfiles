@@ -62,6 +62,10 @@ func! ResetIndentation ()
     setlocal sts=4
 endfunc
 
+syntax on
+
+call ResetIndentation()
+
 " Disables swap-files.
 set noswapfile
 
@@ -213,7 +217,8 @@ au filetype clojure setlocal makeprg=lein\ exec\ %
 
 au filetype text,markdown setlocal textwidth=100
 
-au filetype html,css,scss,sass,javascript,coffee setlocal iskeyword+=-
+" Languages in which completion that includes `-` symbol makes sense.
+au filetype html,css,scss,sass,javascript,coffee,sh setlocal iskeyword+=-
 
 au filetype man,html,htmldjango setlocal nowrap
 
