@@ -16,11 +16,10 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
 Plugin 'bling/vim-airline'
-" Plugin 'chriskempson/base16-vim'
+Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
-Plugin 'jordwalke/flatlandia'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'lilydjwg/colorizer'
@@ -316,11 +315,11 @@ if has('gui_running')
     " Sets your fave color-scheme.
     " colorscheme badwolf
     " colorscheme base16-default
-    " colorscheme base16-eighties
+    colorscheme base16-eighties
     " colorscheme flattown
     " colorscheme gruvbox
     " colorscheme molokai
-    colorscheme flatlandia
+    " colorscheme flatlandia
 
     " Removes all GUI stuff.
     set guioptions=c
