@@ -162,6 +162,8 @@ vmap L $
 
 nmap * *<C-o>
 nmap # #<C-o>
+vmap * "ty/<C-r>t<CR><C-o>
+vmap # "ty?<C-r>t<CR><C-o>
 
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
