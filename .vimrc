@@ -112,12 +112,15 @@ set colorcolumn=100
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=10
 
+" Don't update the display while executing macros.
+set lazyredraw
+
 " Map leader to <Space>.
 let mapleader = "\<Space>"
 
 " Mappings for controlling tabs.
-nmap <S-j> :tabprevious<CR>
-nmap <S-k> :tabnext<CR>
+nmap <S-h> :tabprevious<CR>
+nmap <S-l> :tabnext<CR>
 
 " Maps <M-1> to go to the first tab and so until <M-9>.
 let i = 1
@@ -140,9 +143,6 @@ nmap <M-l> <C-w>l
 
 " Maps Y to yank line from current position til the end.
 nmap Y y$
-
-" Joins line as J did.
-map <Leader>j :join<CR>
 
 " Wrap-friendly <j> and <k> keys.
 nmap j gj
