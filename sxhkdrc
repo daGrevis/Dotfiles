@@ -63,7 +63,7 @@ super + alt + {h,j,k,l}
     bspc window -e {left -10,down +10,up -10,right +10}
 
 super + alt + shift + {h,j,k,l}
-    bspc window -e {right -10,up +10,down -10,left +10}
+    bspc window -e {right -50,up +50,down -50,left +50}
 
 super + ctrl + {1-9}
     bspc window -r 0.{1-9}
