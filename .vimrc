@@ -118,10 +118,6 @@ set lazyredraw
 " Map leader to <Space>.
 let mapleader = "\<Space>"
 
-" Mappings for controlling tabs.
-nmap <S-h> :tabprevious<CR>
-nmap <S-l> :tabnext<CR>
-
 " Maps <M-1> to go to the first tab and so until <M-9>.
 let i = 1
 while i < 10
@@ -202,6 +198,9 @@ nmap <End> ]]
 " Jump to next/previous function.
 nmap <PageUp> [m
 nmap <PageDown> ]m
+
+" Always go to exact position of the mark.
+nmap ' `
 
 "
 " Commands.

@@ -14,9 +14,6 @@ nmap <C-r> :forward<CR>
 " View source.
 nmap <S-u> gF<CR>
 
-nmap <S-j> gT
-nmap <S-k> gt
-
 nmap <C-l> :nohlfind<CR>
 
 nmap d <pass>
