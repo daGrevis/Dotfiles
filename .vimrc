@@ -288,7 +288,7 @@ endfunc
 au ColorScheme * call AuColorScheme()
 
 func! AuFocusLost()
-    exe ":wa"
+    exe ":wall"
 endfunc
 au FocusLost * call AuFocusLost()
 

@@ -134,3 +134,6 @@ F12
 
 super + shift + m
     pavucontrol
+
+super + shift + v
+    vim ~/Dotfiles/.vimrc
