@@ -10,6 +10,7 @@ ln -s ~/Dotfiles/.xinitrc ~/.xinitrc
 ln -s ~/Dotfiles/.zshenv ~/.zshenv
 ln -s ~/Dotfiles/battery_widget.py ~/Scripts/battery_widget.py
 ln -s ~/Dotfiles/coffeelint.json ~/coffeelint.json
+ln -s ~/Dotfiles/colors.sh ~/Scripts/colors.sh
 ln -s ~/Dotfiles/custom.zsh-theme ~/.oh-my-zsh/themes/custom.zsh-theme
 ln -s ~/Dotfiles/datetime_widget.py ~/Scripts/datetime_widget.py
 ln -s ~/Dotfiles/input.conf ~/.mpv/input.conf
