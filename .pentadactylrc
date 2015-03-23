@@ -35,6 +35,9 @@ cmap <C-e> <End>
 cmap <A-b> <C-Left>
 cmap <A-f> <C-Right>
 
+nmap \- gT
+nmap = gt
+
 nmap <Space><Space> <C-^>
 
 nmap s :stop<CR>

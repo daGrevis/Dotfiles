@@ -12,6 +12,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " Optional plugins.
 Plugin 'Raimondi/delimitMate'
+Plugin 'SirVer/ultisnips'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'amdt/vim-niji'
@@ -20,6 +21,7 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
 Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
+Plugin 'honza/vim-snippets'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'lilydjwg/colorizer'
@@ -117,6 +119,9 @@ set lazyredraw
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
+
+nmap - gT
+nmap = gt
 
 " Maps <M-1> to go to the first tab and so until <M-9>.
 let i = 1
@@ -228,6 +233,14 @@ func! AuFtGitCommit()
 endfunc
 au filetype gitcommit call AuFtGitCommit()
 
+func! AuFtQuickFix()
+    " Fixes <Enter> not working in Ack.vim quickfix-list when <Enter> is mapped globally.
+    nmap <buffer> <CR> o
+
+    setlocal nowrap
+endfunc
+au filetype qf call AuFtQuickFix()
+
 func! ShouldDisableBlingBling()
     let ext = expand('%:e')
 
@@ -273,6 +286,16 @@ func! AuColorScheme()
     endif
 endfunc
 au ColorScheme * call AuColorScheme()
+
+func! AuFocusLost()
+    exe ":wa"
+endfunc
+au FocusLost * call AuFocusLost()
+
+func! AuBufLeave()
+    exe ":update"
+endfunc
+au BufLeave * call AuBufLeave()
 
 "
 " Leader mappings.
@@ -336,15 +359,18 @@ endif
 
 let g:airline_powerline_fonts = 1
 
+" Fine-tune tabline.
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
+
 "
 " Ack configuration.
 "
 
 nmap <Leader>a :Ack<Space>
 nmap // :<C-r>/<Backspace><Backspace><C-a><Right><Right><Backspace><Backspace>Ack<Space>
-
-" Fixes <Enter> not working in Ack.vim quickfix-list when <Enter> is mapped globally.
-au filetype qf nmap <buffer> <CR> o
 
 "
 " Syntastic configuration.
