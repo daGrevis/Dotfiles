@@ -227,6 +227,12 @@ au filetype html,css,scss,sass,javascript,coffee,sh setlocal iskeyword+=-
 
 au filetype man,html,htmldjango setlocal nowrap
 
+func! AuFtVim()
+    setlocal cc=78
+    setlocal tw=78
+endfunc
+au filetype vim call AuFtVim()
+
 func! AuFtGitCommit()
     setlocal colorcolumn=50
     setlocal spell
@@ -234,10 +240,11 @@ endfunc
 au filetype gitcommit call AuFtGitCommit()
 
 func! AuFtQuickFix()
-    " Fixes <Enter> not working in Ack.vim quickfix-list when <Enter> is mapped globally.
-    nmap <buffer> <CR> o
-
     setlocal nowrap
+
+    " Fixes <CR> not working in Ack.vim quickfix-list
+    " when <CR> is mapped globally.
+    nmap <buffer> <CR> o
 endfunc
 au filetype qf call AuFtQuickFix()
 
@@ -277,6 +284,8 @@ func! AuColorScheme()
         hi HighlightNext guibg=#F2777A
         hi Comment guifg=#A09F93
         hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red
+
+        " TODO: Airlineline theme based on https://github.com/bling/vim-airline/blob/master/autoload/airline/themes/base16.vim.
     endif
     if colo == "flatlandia"
         hi HighlightNext guibg=#aa2915
@@ -288,6 +297,8 @@ endfunc
 au ColorScheme * call AuColorScheme()
 
 func! AuFocusLost()
+    " TODO: Fix this giving error when Vim is opened, text is enetered, file
+    " is *not* saved and focus is lost.
     exe ":wall"
 endfunc
 au FocusLost * call AuFocusLost()

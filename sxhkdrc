@@ -103,7 +103,7 @@ super + Return
     xfce4-terminal
 
 super + p
-    dmenu_run -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE"
+    dmenu-custom
 
 super + control + p
     passmenu -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE"
@@ -132,8 +132,19 @@ F11
 F12
     amixer set Master 5%+
 
+# Convenience shortcuts.
+
 super + shift + m
     pavucontrol
 
 super + shift + v
     vim ~/Dotfiles/.vimrc
+
+super + shift + e
+    mousepad
+
+super + shift + i
+    firefox
+
+super + shift + y
+    google-chrome-stable --incognito

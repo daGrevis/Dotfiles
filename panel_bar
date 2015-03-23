@@ -1,5 +1,7 @@
 #! /bin/bash
 
+. ~/Scripts/colors.sh
+
 . panel_colors
 
 num_mon=$(bspc query -M | wc -l)
