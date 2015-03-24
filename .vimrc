@@ -227,6 +227,13 @@ au filetype html,css,scss,sass,javascript,coffee,sh setlocal iskeyword+=-
 
 au filetype man,html,htmldjango setlocal nowrap
 
+func! AuFtMarkdown()
+    setlocal spell
+    setlocal cc=80
+    setlocal tw=80
+endfunc
+au filetype markdown call AuFtMarkdown()
+
 func! AuFtVim()
     setlocal cc=78
     setlocal tw=78
@@ -341,6 +348,9 @@ nmap <Leader>v v<C-v>
 nmap <Leader>k yiw:%s/<C-r>0/
 
 nmap <Leader>h :help<Space>
+
+" Restructures text so it doesn't go over `textwidth`.
+nmap <Leader>gq mtggvGgq`t
 
 " Sets color-scheme.
 colorscheme slate
