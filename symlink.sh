@@ -16,6 +16,7 @@ ln -s ~/Dotfiles/datetime_widget.py ~/Scripts/datetime_widget.py
 ln -s ~/Dotfiles/input.conf ~/.mpv/input.conf
 ln -s ~/Dotfiles/keyboard_settings.sh ~/Scripts/keyboard_settings.sh
 ln -s ~/Dotfiles/lock.sh ~/Scripts/lock.sh
+ln -s ~/Dotfiles/mimeapps.list ~/.local/share/applications/mimeapps.list
 ln -s ~/Dotfiles/passmenu ~/Scripts/passmenu
 ln -s ~/Dotfiles/profiles.clj ~/.lein/profiles.clj
 ln -s ~/Dotfiles/rc.lua ~/.config/awesome/rc.lua

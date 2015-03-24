@@ -29,9 +29,11 @@ Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'suan/vim-instant-markdown'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-abolish'
@@ -66,6 +68,9 @@ endfunc
 syntax on
 
 call ResetIndentation()
+
+" Disables folds.
+set nofoldenable
 
 " Disables swap-files.
 set noswapfile
