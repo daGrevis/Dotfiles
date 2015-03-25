@@ -103,7 +103,7 @@ super + Return
     xfce4-terminal
 
 super + p
-    dmenu-custom
+    find /usr/bin -maxdepth 1 -printf '%f\n' | dmenu-custom
 
 super + control + p
     passmenu -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE"

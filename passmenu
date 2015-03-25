@@ -1,12 +1,10 @@
-#!/bin/bash
-
-shopt -s nullglob globstar
+#!/bin/zsh
 
 password_files=( ~/.password-store/**/*.gpg )
 password_files=( "${password_files[@]##*/.password-store/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
-password=$(printf '%s\n' "${password_files[@]}" | dmenu "$@")
+password=$(printf '%s\n' "${password_files[@]}" | dmenu-custom "$@")
 
 pass -c "$password"
 

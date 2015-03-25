@@ -292,5 +292,5 @@ function update-fonts {
 }
 
 function dmenu-custom {
-    dmenu_run -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE" -p ">" -nb "#303030" -nf "#D0D0D0" -sb "#69C"
+    dmenu -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE" -p ">" -nb "#303030" -nf "#D0D0D0" -sb "#69C"
 }
