@@ -4,10 +4,11 @@ password_files=( ~/.password-store/**/*.gpg )
 password_files=( "${password_files[@]##*/.password-store/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
-password=$(printf '%s\n' "${password_files[@]}" | dmenu-custom "$@")
+loc=$(printf '%s\n' "${password_files[@]}" | dmenu-custom "$@")
 
-pass -c "$password"
+pass -c "$loc"
+rc=$?
 
-if [[ "$password" != "" ]]; then
-    notify-send -u low 'Password copied' "$password"
+if [[ "$loc" != "" ]] && [[ $rc -eq 0 ]]; then
+    notify-send -u low "Password copied" "$loc"
 fi;
