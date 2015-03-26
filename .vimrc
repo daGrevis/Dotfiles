@@ -125,8 +125,13 @@ set lazyredraw
 " Map leader to <Space>.
 let mapleader = "\<Space>"
 
+" Go to next/prev tab.
 nmap - gT
 nmap = gt
+
+" Move tabs. Idiomatic <S-{-,=}>.
+nmap _ :tabm -1<CR>
+nmap + :tabm +1<CR>
 
 " Maps <M-1> to go to the first tab and so until <M-9>.
 let i = 1

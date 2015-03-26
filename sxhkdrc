@@ -53,6 +53,14 @@ super + {comma,period}
 super + bracket{left,right}
     bspc desktop -f {prev,next}
 
+# Go to prev window.
+super + minus
+    bspc desktop -f prev
+
+# Go to next window.
+super + equal
+    bspc desktop -f next
+
 super + ctrl + {h,j,k,l}
     bspc window -p {left,down,up,right}
 

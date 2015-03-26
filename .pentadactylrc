@@ -35,8 +35,13 @@ cmap <C-e> <End>
 cmap <A-b> <C-Left>
 cmap <A-f> <C-Right>
 
+" Go to next/prev tab.
 nmap \- gT
 nmap = gt
+
+" Move tabs. Idiomatic <S-{-,=}>.
+nmap _ :tabm -1<CR>
+nmap + :tabm +1<CR>
 
 nmap <Space><Space> <C-^>
 
