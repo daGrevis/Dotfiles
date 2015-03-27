@@ -117,7 +117,7 @@ set cryptmethod=blowfish2
 set colorcolumn=100
 
 " Minimal number of screen lines to keep above and below the cursor.
-set scrolloff=10
+set scrolloff=40
 
 " Don't update the display while executing macros.
 set lazyredraw
@@ -287,7 +287,7 @@ au BufReadPre * call AuBufReadPre()
 
 func! AuBufReadPost()
     " Restore last cursor position.
-    if line("'\"") > 1 && line("'\"") <= line("$")
+    if &ft != "gitcommit" && line("'\"") > 1 && line("'\"") <= line("$")
         exe "normal! g'\""
     endif
 endfunc
