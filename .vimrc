@@ -314,14 +314,12 @@ endfunc
 au ColorScheme * call AuColorScheme()
 
 func! AuFocusLost()
-    " TODO: Fix this giving error when Vim is opened, text is enetered, file
-    " is *not* saved and focus is lost.
-    exe ":wall"
+    exe ":silent! wall"
 endfunc
 au FocusLost * call AuFocusLost()
 
 func! AuBufLeave()
-    exe ":update"
+    exe ":silent! update"
 endfunc
 au BufLeave * call AuBufLeave()
 

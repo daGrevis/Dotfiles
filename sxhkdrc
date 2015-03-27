@@ -50,9 +50,6 @@ super + {_,shift + }c
 super + {comma,period}
     bspc desktop -C {backward,forward}
 
-super + bracket{left,right}
-    bspc desktop -f {prev,next}
-
 # Go to prev window.
 super + minus
     bspc desktop -f prev
