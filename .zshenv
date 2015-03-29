@@ -58,6 +58,8 @@ PATH=$PATH:~/Scripts
 PATH=$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin
 PATH=$PATH:~/go/bin
 
+. ~/Scripts/colors.sh
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -100,6 +102,8 @@ function m {
         exit
     fi
 }
+
+alias time=/usr/bin/time
 
 # See https://github.com/ogham/exa
 unalias l
@@ -291,6 +295,76 @@ function update-fonts {
     fc-cache -vf
 }
 
-function dmenu-custom {
-    dmenu -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE" -p ">" -nb "#303030" -nf "#D0D0D0" -sb "#69C"
+dmenu-go() {
+    dmenu_run -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE" -p ">" -nb $COLOR_01 -nf $COLOR_07 -sb $COLOR_0D
+}
+
+brightness-dec-by-5() {
+    notify-send -u low "Brightness" -- "-5"
+
+    xbacklight -dec 5 -time 0
+}
+
+brightness-inc-by-5() {
+    notify-send -u low "Brightness" -- "+5"
+
+    xbacklight -inc 5 -time 0
+}
+
+volume-dec-by-5() {
+    step=$(python ~/Scripts/change_volume.py "-5")
+
+    notify-send -u low "Volume" -- "$step"
+}
+
+volume-inc-by-5() {
+    step=$(python ~/Scripts/change_volume.py 5)
+
+    notify-send -u low "Volume" -- "+$step"
+}
+
+notify-executing() {
+    notify-send -u low "Executing..." -- "$1"
+}
+
+open-pavucontrol() {
+    notify-executing "pavucontrol"
+
+    pavucontrol
+}
+
+open-vim() {
+    notify-executing "gvim ~/Dotfiles/"
+
+    gvim ~/Dotfiles/
+}
+
+open-mousepad() {
+    notify-executing "mousepad"
+
+    mousepad
+}
+
+open-firefox() {
+    notify-executing "firefox"
+
+    firefox > ~/var/"firefox-log-on-$(date +%s)"
+}
+
+open-chrome-incognito() {
+    notify-executing "chrome-stable --incognito"
+
+    google-chrome-stable --incognito
+}
+
+open-spotify() {
+    notify-executing "spotify"
+
+    spotify
+}
+
+open-transmission() {
+    notify-executing "transmission-gtk"
+
+    transmission-gtk
 }

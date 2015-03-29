@@ -11,9 +11,15 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 mkfifo "$PANEL_FIFO"
 
 bspc config top_padding $PANEL_HEIGHT
+
 bspc control --subscribe > "$PANEL_FIFO" &
+
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
-clock -sf 'S' > "$PANEL_FIFO" &
+
+while true; do
+    echo "S" > "$PANEL_FIFO"
+    sleep 5
+done &
 
 . panel_colors
 

@@ -11,6 +11,9 @@ set hlfind
 nmap u :back<CR>
 nmap <C-r> :forward<CR>
 
+nmap <C-d> 20j
+nmap <C-u> 20k
+
 " View source.
 nmap <S-u> gF<CR>
 

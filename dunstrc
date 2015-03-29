@@ -42,7 +42,7 @@
     # Show age of message if message is older than show_age_threshold
     # seconds.
     # Set to -1 to disable.
-    show_age_threshold = -1
+    show_age_threshold = 10
     
     # Split notifications into multiple lines if they don't fit into
     # geometry.
@@ -98,7 +98,7 @@
     
     # Should a notification popped up from history be sticky or timeout
     # as if it would normally do.
-    sticky_history = yes
+    sticky_history = no
     
     # Maximum amount of notifications kept in history
     history_length = 100
@@ -149,7 +149,7 @@
 
 [frame]
     width = 2
-    color = "#505050"
+    color = "#393939"
 
 [shortcuts]
 
@@ -175,18 +175,18 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#303030"
-    foreground = "#B0B0B0"
-    timeout = 10
+    background = "#2D2D2D"
+    foreground = "#A09F93"
+    timeout = 2
 
 [urgency_normal]
-    background = "#505050"
-    foreground = "#ffffff"
+    background = "#515151"
+    foreground = "#F2F0EC"
     timeout = 0
 
 [urgency_critical]
-    background = "#AC4142"
-    foreground = "#ffffff"
+    background = "#F2777A"
+    foreground = "#F2F0EC"
     timeout = 0
 
 

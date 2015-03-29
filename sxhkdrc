@@ -4,15 +4,11 @@
 
 # Quit bspwm.
 super + alt + Escape
-    killall panel; bspc quit
+    bspc quit
 
-# Restart panel.
-super + shift + Escape
-    killall panel && ~/Dotfiles/panel &; notify-send -u low "panel restarted"
-
-# Restart sxhkd.
+# Restart WM.
 super + Escape
-    pkill -USR1 -x sxhkd && notify-send -u low "sxhkd restarted"
+    ~/Scripts/restart-wm.sh
 
 # Close window.
 super + w
@@ -108,16 +104,16 @@ super + Return
     xfce4-terminal
 
 super + p
-    find /usr/bin -maxdepth 1 -printf '%f\n' | dmenu-custom
+    dmenu-go
 
 super + control + p
-    passmenu -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE"
+    passmenu
 
 F4
-    xbacklight -dec 10 -time 0
+    brightness-dec-by-5
 
 F5
-    xbacklight -inc 10 -time 0
+    brightness-inc-by-5
 
 F7
     ~/Scripts/lock.sh
@@ -132,24 +128,31 @@ F10
     playerctl next
 
 F11
-    amixer set Master 5%-
+    volume-dec-by-5
 
 F12
-    amixer set Master 5%+
+    volume-inc-by-5
 
 # Convenience shortcuts.
 
 super + shift + m
-    pavucontrol
+    open-pavucontrol
 
 super + shift + v
-    vim ~/Dotfiles/.vimrc
+    open-vim
 
 super + shift + e
-    mousepad
+    open-mousepad
 
 super + shift + i
-    firefox
+    open-firefox
 
 super + shift + y
-    google-chrome-stable --incognito
+    open-chrome-incognito
+
+super + shift + s
+    open-spotify
+
+super + shift + b
+    open-transmission
+# vim: iskeyword+=-

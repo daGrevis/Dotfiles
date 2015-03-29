@@ -14,6 +14,10 @@ get-battery-widget() {
     python ~/Scripts/battery_widget.py
 }
 
+get-monitor-widget() {
+    python ~/Scripts/monitor_widget.py
+}
+
 get-sound-widget() {
     python ~/Scripts/sound_widget.py
 }
@@ -23,7 +27,7 @@ get-datetime-widget() {
 }
 
 get-panel-right() {
-    echo "$(get-network-widget)  $(get-battery-widget)  $(get-sound-widget)  $(get-datetime-widget)"
+    echo "$(get-network-widget)  $(get-battery-widget)  $(get-monitor-widget)  $(get-sound-widget)  $(get-datetime-widget)"
 }
 
 while read -r line ; do
@@ -43,19 +47,6 @@ while read -r line ; do
                 item=$1
                 name=${item#?}
                 case $item in
-                    M*)
-                        # active monitor
-                        if [ $num_mon -gt 1 ] ; then
-                            wm_infos="$wm_infos %{F$COLOR_ACTIVE_MONITOR_FG}%{B$COLOR_ACTIVE_MONITOR_BG} ${name} %{B-}%{F-}  "
-                        fi
-                        ;;
-                    m*)
-                        # inactive monitor
-                        if [ $num_mon -gt 1 ] ; then
-                            wm_infos="$wm_infos %{F$COLOR_INACTIVE_MONITOR_FG}%{B$COLOR_INACTIVE_MONITOR_BG} ${name} %{B-}%{F-}  "
-                        fi
-                        ;;
-
                     O*)
                         # focused occupied desktop
                         # TODO: Underline color based on selected desktop.
@@ -65,10 +56,9 @@ while read -r line ; do
                         # focused free desktop
                         wm_infos="${wm_infos}%{F$COLOR_FOCUSED_FG}%{B$COLOR_FOCUSED_BG}%{U$COLOR_UNDERLINE}%{+u} X %{-u}%{B-}%{F-}"
                         ;;
-
                     U*)
                         # focused urgent desktop
-                        wm_infos="${wm_infos}%{F$COLOR_FOCUSED_URGENT_FG}%{B$COLOR_FOCUSED_URGENT_BG}%{U$COLOR_UNDERLINE}%{+u} ${name} %{-u}%{B-}%{F-}"
+                        wm_infos="${wm_infos}%{F$COLOR_FOCUSED_FG}%{B$COLOR_FOCUSED_BG}%{U$COLOR_UNDERLINE}%{+u} X %{-u}%{B-}%{F-}"
                         ;;
                     o*)
                         # occupied desktop
@@ -81,11 +71,6 @@ while read -r line ; do
                     u*)
                         # urgent desktop
                         wm_infos="${wm_infos}%{F$COLOR_URGENT_FG}%{B$COLOR_URGENT_BG} ${name} %{B-}%{F-}"
-                        ;;
-
-                    L*)
-                        # layout
-                        wm_infos="$wm_infos  %{F$COLOR_LAYOUT_FG}%{B$COLOR_LAYOUT_BG} ${name} %{B-}%{F-}"
                         ;;
                 esac
                 shift
