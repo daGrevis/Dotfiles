@@ -58,7 +58,7 @@ call vundle#end()
 filetype plugin indent on
 
 " Sets how indentation works.
-func! ResetIndentation ()
+func! ResetIndentation()
     setlocal et
     setlocal ts=4
     setlocal sw=4
@@ -96,7 +96,7 @@ set cursorline
 set hlsearch
 
 " Highlights next found match.
-func! HighlightNext (blinktime)
+func! HighlightNext(blinktime)
     let [bufnum, lnum, col, off] = getpos('.')
     let matchlen = strlen(matchstr(strpart(getline('.'), col - 1), @/))
     let target_pat = '\c\%#'.@/
@@ -117,7 +117,7 @@ set cryptmethod=blowfish2
 set colorcolumn=100
 
 " Minimal number of screen lines to keep above and below the cursor.
-set scrolloff=40
+set scrolloff=20
 
 " Don't update the display while executing macros.
 set lazyredraw
@@ -393,6 +393,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#tabline#formatter = "unique_tail"
+let g:airline#extensions#tabline#show_close_button = 0
 
 "
 " Ack configuration.
@@ -452,6 +454,10 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'r'
 
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+
+let g:ctrlp_prompt_mappings = {
+            \ "PrtClearCache()": ["<C-r>"],
+            \ }
 
 "
 " CtrlPFunky configuration.
