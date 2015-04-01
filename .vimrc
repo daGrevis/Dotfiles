@@ -250,6 +250,11 @@ func! AuFtVim()
 endfunc
 au filetype vim call AuFtVim()
 
+func! AuFtPo()
+    setlocal commentstring=#~\ %s
+endfunc
+au filetype po call AuFtPo()
+
 func! AuFtGitCommit()
     setlocal colorcolumn=50
     setlocal spell
@@ -393,7 +398,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
-let g:airline#extensions#tabline#formatter = "unique_tail"
+let g:airline#extensions#tabline#formatter = "unique_tail_improved"
 let g:airline#extensions#tabline#show_close_button = 0
 
 "
