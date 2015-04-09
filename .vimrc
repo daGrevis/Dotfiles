@@ -233,7 +233,7 @@ au filetype clojure setlocal makeprg=lein\ exec\ %
 au filetype text,markdown setlocal textwidth=100
 
 " Languages in which completion that includes `-` symbol makes sense.
-au filetype html,css,scss,sass,javascript,coffee,sh setlocal iskeyword+=-
+au filetype html,htmldjango,css,scss,sass,javascript,coffee,sh setlocal iskeyword+=-
 
 au filetype man,html,htmldjango setlocal nowrap
 
@@ -357,8 +357,9 @@ nmap <Leader>b :Gblame<CR>
 " Goes into visual-block mode.
 nmap <Leader>v v<C-v>
 
-" Replace word under the cursor.
+" Replace text.
 nmap <Leader>k yiw:%s/<C-r>0/
+vmap <Leader>k y:%s/<C-r>0/
 
 nmap <Leader>h :help<Space>
 
