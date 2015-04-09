@@ -334,9 +334,9 @@ open-pavucontrol() {
 }
 
 open-vim() {
-    notify-executing "gvim ~/Dotfiles/"
+    notify-executing "gvim"
 
-    gvim ~/Dotfiles/
+    gvim
 }
 
 open-mousepad() {
