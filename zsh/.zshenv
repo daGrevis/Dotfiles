@@ -149,11 +149,21 @@ function aux {
     done
 }
 
-function t {
+t() {
     command tree -a -I '.git' $@
 }
 
+alias o=xdg-open
+
 alias g=grep
+
+copy-to-clipboard() {
+    echo "${1}" | xclip
+    echo "${1}" | xclip -selection c
+
+    echo "Copied..."
+    echo "${1}"
+}
 
 function vim {
     if ! xset q &> /dev/null; then
@@ -243,15 +253,6 @@ function clean-pyc {
     find -type f -name '*.pyc' -delete
 }
 
-function take-screenshot {
-    NAME=$(date +%F-%T)
-    maim "Screenshots/${NAME}.png"
-}
-function take-screenshot-of-windows {
-    NAME=$(date +%F-%T)
-    maim -s -c 1,0,0,0.1 -b 2 "Screenshots/${NAME}.png"
-}
-
 function pip_upgrade {
     pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs sudo pip install -U
 }
@@ -270,8 +271,7 @@ function generate-and-save-password {
                    send \"${pw}\r\"
                    interact" )
 
-    echo "${pw}" | xclip
-    echo "${pw}" | xclip -selection c
+    copy-to-clipboard "${pw}"
 }
 
 function change-wallpaper {
@@ -332,6 +332,31 @@ volume-inc-by-5() {
     step=$(python ~/Utils/change_volume.py 5)
 
     notify-send -u low "Volume" -- "+$step"
+}
+
+take-screenshot() {
+    name=$(date +%F-%T)
+    pth="Screenshots/$name.png" # It doesn't work with ~.
+
+    (cd; maim $pth)
+
+    echo "Saved to ~/$pth"
+
+    notify-send -u low "Taking screenshot of monitor"
+
+    copy-to-clipboard $pth
+}
+take-screenshot-of-window() {
+    name=$(date +%F-%T)
+    pth="Screenshots/$name.png" # It doesn't work with ~.
+
+    (cd; maim -s -c 1,0,0,0.1 -b 2 $pth)
+
+    echo "Saved to ~/$pth"
+
+    notify-send -u low "Taking screenshot of window"
+
+    copy-to-clipboard $pth
 }
 
 notify-executing() {

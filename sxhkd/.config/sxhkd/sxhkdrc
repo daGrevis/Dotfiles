@@ -133,6 +133,12 @@ F11
 F12
     volume-inc-by-5
 
+Print
+    take-screenshot
+
+super + Print
+    take-screenshot-of-window
+
 # Convenience shortcuts.
 
 super + shift + m
