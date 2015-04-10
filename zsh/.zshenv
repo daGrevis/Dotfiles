@@ -334,6 +334,12 @@ volume-inc-by-5() {
     notify-send -u low "Volume" -- "+$step"
 }
 
+volume-toggle() {
+    volume_toggle.sh
+
+    notify-send -u low "Volume" -- "Toggling"
+}
+
 take-screenshot() {
     name=$(date +%F-%T)
     pth="Screenshots/$name.png" # It doesn't work with ~.
