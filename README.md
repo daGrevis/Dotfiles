@@ -16,7 +16,7 @@
 
 ![Browser](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-browser.png)
 
-## Information
+## Stats
 
 ### Fonts used
 
