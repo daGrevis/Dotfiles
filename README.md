@@ -4,15 +4,17 @@
 
 ## Screenshots
 
-**Warning**: these screenshots show repo state as it was in [f3c79b1](https://github.com/daGrevis/Dotfiles/tree/f3c79b1dceaf280193f759cf95cc4b640e0cee79).
+**Warning**: these screenshots show repo state as it was in [189666b](https://github.com/daGrevis/Dotfiles/tree/189666b).
 
-![Clean](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/clean.png)
+![Clean](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/dotifiles-clean.png)
 
-![Git](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/git.png)
+![Terminal](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/dotifiles-terminal.png)
 
-![Vim](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/vim.png)
+![Git](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/dotifiles-using-git.png)
 
-![Browser](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/browser.png)
+![Vim](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/dotifiles-vim.png)
+
+![Browser](https://raw.github.com/daGrevis/Dotfiles/master/Screenshots/dotifiles-browser.png)
 
 ### Fonts used
 
