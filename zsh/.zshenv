@@ -215,7 +215,8 @@ alias gsw='git show'
 alias gtg='git tag'
 # See https://github.com/jeffkaufman/icdiff
 function gdf {
-    git diff $@
+    what=${1:-HEAD}
+    git diff $what
 }
 function gpl {
     OLD_HASH=$(git rev-parse --short HEAD)
