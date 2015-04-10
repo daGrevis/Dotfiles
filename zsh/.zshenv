@@ -54,11 +54,11 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
-PATH=$PATH:~/Scripts
+PATH=$PATH:~/Utils
 PATH=$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin
 PATH=$PATH:~/go/bin
 
-. ~/Scripts/colors.sh
+. ~/Utils/colors.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -98,8 +98,7 @@ function m {
     if [ "$?" != "0" ]; then
         echo "No manual entry for $*"
     else
-        vim -c "SuperMan $*" & disown
-        exit
+        vim -c "SuperMan $*"
     fi
 }
 
@@ -150,6 +149,12 @@ function aux {
     done
 }
 
+function t {
+    command tree -a -I '.git' $@
+}
+
+alias g=grep
+
 function vim {
     if ! xset q &> /dev/null; then
         command vim -p $@
@@ -169,7 +174,9 @@ function update-mirrors {
     sudo reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
 }
 
-alias gad='git add --ignore-removal'
+function gad {
+    git add -u $@
+}
 alias gbl='git blame'
 alias gbr='git branch'
 alias gcl='git clone'
@@ -295,6 +302,10 @@ function update-fonts {
     fc-cache -vf
 }
 
+function remove-broken-symlinks-recursively {
+    find -L $@ -type l -delete
+}
+
 dmenu-go() {
     dmenu_run -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE" -p ">" -nb $COLOR_01 -nf $COLOR_07 -sb $COLOR_0D
 }
@@ -312,13 +323,13 @@ brightness-inc-by-5() {
 }
 
 volume-dec-by-5() {
-    step=$(python ~/Scripts/change_volume.py "-5")
+    step=$(python ~/Utils/change_volume.py "-5")
 
     notify-send -u low "Volume" -- "$step"
 }
 
 volume-inc-by-5() {
-    step=$(python ~/Scripts/change_volume.py 5)
+    step=$(python ~/Utils/change_volume.py 5)
 
     notify-send -u low "Volume" -- "+$step"
 }

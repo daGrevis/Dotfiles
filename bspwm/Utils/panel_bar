@@ -1,29 +1,29 @@
 #! /bin/bash
 
-. ~/Scripts/colors.sh
+. ~/Utils/colors.sh
 
 . panel_colors
 
 num_mon=$(bspc query -M | wc -l)
 
 get-network-widget() {
-    python ~/Scripts/network_widget.py
+    python ~/Utils/network_widget.py
 }
 
 get-battery-widget() {
-    python ~/Scripts/battery_widget.py
+    python ~/Utils/battery_widget.py
 }
 
 get-monitor-widget() {
-    python ~/Scripts/monitor_widget.py
+    python ~/Utils/monitor_widget.py
 }
 
 get-sound-widget() {
-    python ~/Scripts/sound_widget.py
+    python ~/Utils/sound_widget.py
 }
 
 get-datetime-widget() {
-    python ~/Scripts/datetime_widget.py
+    python ~/Utils/datetime_widget.py
 }
 
 get-panel-right() {

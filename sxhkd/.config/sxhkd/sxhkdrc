@@ -8,7 +8,7 @@ super + alt + Escape
 
 # Restart WM.
 super + Escape
-    ~/Scripts/restart-wm.sh
+    ~/Utils/restart_wm.sh
 
 # Close window.
 super + w

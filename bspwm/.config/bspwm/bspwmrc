@@ -27,4 +27,4 @@ else
     feh --bg-center ~/Pictures/wallpaper &
 fi
 
-panel &
+~/Utils/panel &

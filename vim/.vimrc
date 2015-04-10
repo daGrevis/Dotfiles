@@ -15,7 +15,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'SirVer/ultisnips'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
-Plugin 'amdt/vim-niji'
+Plugin 'luochen1990/rainbow'
 Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
@@ -510,3 +510,9 @@ xmap t <Plug>Sneak_t
 xmap T <Plug>Sneak_T
 omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
+
+"
+" Rainbow configuration.
+"
+
+let g:rainbow_active = 1

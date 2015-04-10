@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+
+# Copyright 2012,2013 Dima Kogan
+# License: GPL 3 or later
+
+use strict;
+use warnings;
+use feature qw(say);
+
+use X11::Protocol;
+use X11::Protocol::WM;
+use X11::WindowHierarchy;
+
+# if no arguments are given, sets urgency on the current window
+#
+# if an argument is given, uses it as a regex on the window name (all matches
+# are set as urgent)
+
+my $usage = "$0 [regex on the window name]";
+die $usage if @ARGV > 1;
+
+
+my $x = X11::Protocol->new()
+  or die "Couldn't open display";
+
+my @ids;
+if( ! @ARGV )
+{
+  @ids = ($ENV{WINDOWID});
+}
+else
+{
+  my @windows = x11_filter_hierarchy( filter => qr{$ARGV[0]} )
+    or die "No matching windows found";
+
+  say "Found " . scalar(@windows) . " matching windows";
+  @ids = map {$_->{id}} @windows;
+}
+
+foreach my $id(@ids)
+{
+  die "No window id" unless $id;
+  X11::Protocol::WM::change_wm_hints( $x, $id,
+                                      urgency => 1 );
+}

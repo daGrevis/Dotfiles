@@ -7,7 +7,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
-PATH=$PATH:~/Scripts
+PATH=$PATH:~/Utils
 
 export PANEL_FIFO="/tmp/panel-fifo"
 export PANEL_HEIGHT=18
@@ -22,7 +22,7 @@ if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3 --rotate left
 fi
 
-./Scripts/keyboard_settings.sh
+./Utils/keyboard_settings.sh
 
 # Adjust brightness based on current location and other factors.
 redshift -l 57:24 &

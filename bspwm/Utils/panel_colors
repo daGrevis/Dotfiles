@@ -1,6 +1,6 @@
 #! /bin/zsh
 
-. ~/Scripts/colors.sh
+. ~/Utils/colors.sh
 
 COLOR_BACKGROUND=$COLOR_01a
 COLOR_FOREGROUND=$COLOR_04a
