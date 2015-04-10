@@ -30,7 +30,7 @@
 
     symlink_everything.sh
 
-### Installing Parts
+### Installing Packages
 
     stow zsh
     stow vim
