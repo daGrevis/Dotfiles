@@ -175,7 +175,10 @@ function update-mirrors {
 }
 
 function gad {
-    git add -u $@
+    pth=${1:-.}
+
+    git add --ignore-removal $pth
+    git add -u $pth
 }
 alias gbl='git blame'
 alias gbr='git branch'

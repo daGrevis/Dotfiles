@@ -6,7 +6,6 @@ declare -a pkgs=(
     "editorconfig"
     "flake8"
     "git"
-    ".git"
     "gtk"
     "lein"
     "mpv"
