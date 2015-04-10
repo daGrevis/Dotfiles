@@ -516,3 +516,19 @@ omap T <Plug>Sneak_T
 "
 
 let g:rainbow_active = 1
+
+"
+" Instant Markdown configuration.
+"
+
+" Actually don't be instant.
+let g:instant_markdown_slow = 1
+
+" Autostart is too of a surprise.
+let g:instant_markdown_autostart = 0
+
+" It just make sense to open preview like this.
+func! AuFtMarkdownInstantMarkdown()
+    nmap <buffer> <Space>m :InstantMarkdownPreview<CR>
+endfunc
+au filetype markdown call AuFtMarkdownInstantMarkdown()
