@@ -325,14 +325,16 @@ brightness-inc-by-5() {
 
 volume-dec-by-5() {
     step=$(python ~/Utils/change_volume.py "-5")
+    volume=$(python ~/Utils/get_volume.py)
 
-    notify-send -u low "Volume" -- "$step"
+    notify-send -u low "Volume" -- "$step ($volume)"
 }
 
 volume-inc-by-5() {
     step=$(python ~/Utils/change_volume.py 5)
+    volume=$(python ~/Utils/get_volume.py)
 
-    notify-send -u low "Volume" -- "+$step"
+    notify-send -u low "Volume" -- "+$step ($volume)"
 }
 
 volume-toggle() {
