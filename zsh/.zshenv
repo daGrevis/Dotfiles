@@ -174,12 +174,6 @@ function update-mirrors {
     sudo reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
 }
 
-function gad {
-    pth=${1:-.}
-
-    git add --ignore-removal $pth
-    git add -u $pth
-}
 alias gbl='git blame'
 alias gbr='git branch'
 alias gcl='git clone'
@@ -199,16 +193,19 @@ alias grv='git revert'
 alias gs=gst
 alias gsh='git stash'
 alias gst='git status -sb'
+function gad {
+    pth=${1:-.}
+
+    git add --ignore-removal $pth
+    git add -u $pth
+
+    gst
+}
 alias gsw='git show'
 alias gtg='git tag'
 # See https://github.com/jeffkaufman/icdiff
 function gdf {
-    echo $@
-    if [ -f $@ ]; then
-        git difftool --no-prompt --extcmd icdiff $@ | less
-    else
-        git diff $@ | less
-    fi
+    git diff $@
 }
 function gpl {
     OLD_HASH=$(git rev-parse --short HEAD)
