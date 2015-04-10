@@ -10,7 +10,12 @@ ICONS = {
 xbacklight_output = check_output(["xbacklight"]).decode("utf-8")
 brightness = Decimal(xbacklight_output).quantize(Decimal("1"))
 
-redshift_output = check_output(["redshift", "-p"]).decode("utf-8")
+redshift_output = check_output([
+    "redshift",
+    "-l",
+    "57:24",
+    "-p",
+]).decode("utf-8")
 temperature = re.findall(r"(\d+)K", redshift_output)[0]
 
 output = "{icon} {brightness}% ({temperature}K)".format(
