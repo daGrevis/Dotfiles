@@ -28,7 +28,7 @@
 
 ### Installing Everything
 
-    symlink_everything.sh
+    utils/Utils/stow_everything.sh
 
 ### Installing Packages
 
