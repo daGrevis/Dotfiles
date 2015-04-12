@@ -53,6 +53,10 @@ work properly.
 
     ./install.sh
 
+You may want to set Zsh as the default shell.
+
+    chsh -s /bin/zsh
+
 #### Vim
 
 It needs [gmarik/Vundle.vim](https://github.com/gmarik/Vundle.vim) to manage
