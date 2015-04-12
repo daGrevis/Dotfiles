@@ -55,7 +55,9 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 PATH=$PATH:~/Utils
-PATH=$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin
+if hash ruby 2> /dev/null; then
+    PATH=$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin
+fi
 PATH=$PATH:~/go/bin
 
 . ~/Utils/colors.sh
@@ -87,7 +89,11 @@ PATH=$PATH:~/go/bin
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export EDITOR='gvim -f'
+if hash gvim 2> /dev/null; then
+    export EDITOR='gvim -f'
+else
+    export EDITOR='vim'
+fi
 export VISUAL=${EDITOR}
 
 bindkey "^Q" edit-command-line
