@@ -200,9 +200,9 @@ alias gpu='git push --set-upstream'
 alias grm='git rm'
 alias grst='git reset'
 alias grv='git revert'
+alias gst='git -c color.status=always status -sb | less'
 alias gs=gst
 alias gsh='git stash'
-alias gst='git status -sb'
 function gad {
     pth=${1:-.}
 
@@ -213,7 +213,6 @@ function gad {
 }
 alias gsw='git show'
 alias gtg='git tag'
-# See https://github.com/jeffkaufman/icdiff
 function gdf {
     what=${1:-HEAD}
     git diff $what
