@@ -111,7 +111,7 @@ function l {
     if [ "$?" != "0" ]; then
         ls -lahtr $@
     else
-        exa -lag -s modified $@
+        exa -lag -s modified $@ | less +G
     fi
 }
 
@@ -122,7 +122,7 @@ function ll {
         # No idea why it doesn't sort by default when `-t` for ls is not specified.
         l $@ | sort -k9,9
     else
-        exa -lag $@
+        exa -lag $@ | less +G
     fi
 }
 
