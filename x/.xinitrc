@@ -24,7 +24,11 @@ fi
 
 ./Utils/keyboard_settings.sh
 
-# Adjust brightness based on current location and other factors.
+
+# Sets brightness to something sane.
+xbacklight -set 75 -time 0
+
+# Adjusts warmth based on current location and other factors.
 redshift -l 57:24 &
 
 if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
