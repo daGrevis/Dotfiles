@@ -2,7 +2,6 @@
     name = Raitis Stengrevics
     email = dagrevis@gmail.com
 [core]
-    editor = gvim -f
     pager = less -+F
 [color]
     ui = true

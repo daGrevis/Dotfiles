@@ -112,7 +112,11 @@ nmap <silent> N N:call HighlightNext(0.2)<CR>
 " Set line-numbers to start from 0 based on current position.
 set relativenumber
 
-set cryptmethod=blowfish2
+try
+    set cryptmethod=blowfish2
+catch
+    set cryptmethod=blowfish
+endtry
 
 set colorcolumn=100
 
@@ -302,6 +306,10 @@ au BufReadPost * call AuBufReadPost()
 func! AuColorScheme()
     let colo = g:colors_name
 
+    if colo == "slate"
+        hi def link HighlightNext WarningMsg
+    endif
+
     if colo == "base16-eighties"
         hi HighlightNext guibg=#F2777A
         hi Comment guifg=#A09F93
@@ -309,6 +317,7 @@ func! AuColorScheme()
 
         " TODO: Airlineline theme based on https://github.com/bling/vim-airline/blob/master/autoload/airline/themes/base16.vim.
     endif
+
     if colo == "flatlandia"
         hi HighlightNext guibg=#aa2915
         hi Comment guifg=#798188
@@ -392,7 +401,9 @@ endif
 " Airline configuration.
 "
 
-let g:airline_powerline_fonts = 1
+if has('gui_running')
+    let g:airline_powerline_fonts = 1
+endif
 
 " Fine-tune tabline.
 let g:airline#extensions#tabline#enabled = 1
