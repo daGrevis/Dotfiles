@@ -116,7 +116,7 @@ F5
     brightness-inc-by-5
 
 F7
-    ~/Scripts/lock.sh
+    lock.sh
 
 F8
     playerctl previous

@@ -274,6 +274,11 @@ func! AuFtQuickFix()
 endfunc
 au filetype qf call AuFtQuickFix()
 
+func! AuFtHtmlDjango()
+    set ft=html
+endfunc
+au filetype htmldjango call AuFtHtmlDjango()
+
 func! ShouldDisableBlingBling()
     let ext = expand('%:e')
 
@@ -527,6 +532,19 @@ omap T <Plug>Sneak_T
 "
 
 let g:rainbow_active = 1
+
+let g:rainbow_conf = {
+            \ 'guifgs': [
+            \ "#F2777A",
+            \ "#F99157",
+            \ "#FFCC66",
+            \ "#99CC99",
+            \ "#66CCCC",
+            \ "#6699CC",
+            \ "#CC99CC",
+            \ "#D27B53",
+            \ ]
+            \ }
 
 "
 " Instant Markdown configuration.
