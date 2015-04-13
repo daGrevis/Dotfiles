@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-. ~/Scripts/colors.sh
+. ~/Utils/colors.sh
 
 password_files=( ~/.password-store/**/*.gpg )
 password_files=( "${password_files[@]##*/.password-store/}" )
