@@ -164,4 +164,10 @@ super + shift + s
 
 super + shift + b
     open-transmission
+
+super + shift + q
+    open-ipython
+
+super + shift + w
+    open-ipython2
 # vim: iskeyword+=-

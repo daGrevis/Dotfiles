@@ -418,3 +418,15 @@ open-transmission() {
 
     transmission-gtk
 }
+
+open-ipython() {
+    notify-executing "ipython"
+
+    xfce4-terminal -x ipython
+}
+
+open-ipython2() {
+    notify-executing "ipython2"
+
+    xfce4-terminal -x ipython2
+}
