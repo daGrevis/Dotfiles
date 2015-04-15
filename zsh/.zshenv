@@ -117,7 +117,7 @@ function l {
     if [ "$?" != "0" ]; then
         ls -lahtr $@
     else
-        exa -lag -s modified $@ | less +G
+        exa -lag -s modified $@
     fi
 }
 
@@ -128,7 +128,7 @@ function ll {
         # No idea why it doesn't sort by default when `-t` for ls is not specified.
         l $@ | sort -k9,9
     else
-        exa -lag $@ | less +G
+        exa -lag $@
     fi
 }
 
@@ -206,7 +206,7 @@ alias gpu='git push --set-upstream'
 alias grm='git rm'
 alias grst='git reset'
 alias grv='git revert'
-alias gst='git -c color.status=always status -sb | less'
+alias gst='git -c color.status=always status -sb'
 alias gs=gst
 alias gsh='git stash'
 function gad {
