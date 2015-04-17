@@ -309,21 +309,20 @@ au BufReadPost * call AuBufReadPost()
 
 " Minor adjustments to colorschemes.
 func! AuColorScheme()
-    let colo = g:colors_name
 
-    if colo == "slate"
+    if g:colors_name == "slate"
         hi def link HighlightNext WarningMsg
     endif
 
-    if colo == "base16-eighties"
+    if g:colors_name == "base16-eighties"
         hi HighlightNext guibg=#F2777A
         hi Comment guifg=#A09F93
         hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red
 
-        " TODO: Airlineline theme based on https://github.com/bling/vim-airline/blob/master/autoload/airline/themes/base16.vim.
+        let g:airline_theme = "base16eighties"
     endif
 
-    if colo == "flatlandia"
+    if g:colors_name == "flatlandia"
         hi HighlightNext guibg=#aa2915
         hi Comment guifg=#798188
         hi SignColumn guibg=#3b3e40
