@@ -75,7 +75,7 @@ let g:airline#themes#base16eighties#palette.replace_modified = g:airline#themes#
 
 let s:V1 = [ s:color_00 , s:color_0a, 17  , 45  ]
 let s:V2 = [ s:color_07 , s:color_00 , 255 , 27  ]
-let s:I3 = [ s:color_07 , s:color_01 , 15  , 17  ]
+let s:V3 = [ s:color_07 , s:color_01 , 15  , 17  ]
 let g:airline#themes#base16eighties#palette.visual = airline#themes#generate_color_map(s:V1, s:V2, s:V3)
 let g:airline#themes#base16eighties#palette.visual_modified = {
       \ 'airline_c': [ s:color_07 , s:color_01 , 255     , 53      , ''     ] ,
