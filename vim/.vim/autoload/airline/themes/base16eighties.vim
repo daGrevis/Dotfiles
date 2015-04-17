@@ -111,7 +111,6 @@ if !get(g:, 'loaded_ctrlp', 0)
   finish
 endif
 let g:airline#themes#base16eighties#palette.ctrlp = airline#extensions#ctrlp#generate_color_map(
-      \ [ '#d7d7ff' , '#5f00af' , 189 , 55  , ''     ],
-      \ [ '#ffffff' , '#875fd7' , 231 , 98  , ''     ],
-      \ [ '#5f00af' , '#ffffff' , 55  , 231 , 'bold' ])
-
+      \ [ s:color_05 , s:color_01 , 189 , 55  , ''     ],
+      \ [ s:color_05 , s:color_01 , 231 , 98  , ''     ],
+      \ [ s:color_01 , s:color_0d, 55  , 231 , 'bold' ])
