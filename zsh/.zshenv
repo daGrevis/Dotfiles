@@ -159,6 +159,10 @@ t() {
     command tree -a -I '.git' $@
 }
 
+c() {
+    awk "{print \$$@}"
+}
+
 alias o=xdg-open
 
 alias g=grep
