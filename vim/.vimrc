@@ -15,7 +15,6 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'SirVer/ultisnips'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
-Plugin 'luochen1990/rainbow'
 Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
@@ -25,14 +24,15 @@ Plugin 'honza/vim-snippets'
 Plugin 'justinmk/vim-sneak'
 Plugin 'kien/ctrlp.vim'
 Plugin 'lilydjwg/colorizer'
+Plugin 'luochen1990/rainbow'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
+Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
-Plugin 'sheerun/vim-polyglot'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'terryma/vim-expand-region'
@@ -177,8 +177,6 @@ vmap L $
 
 nmap * *<C-o>
 nmap # #<C-o>
-vmap * "ty/<C-r>t<CR><C-o>
-vmap # "ty?<C-r>t<CR><C-o>
 
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
@@ -294,7 +292,6 @@ func! AuBufReadPre()
     if ShouldDisableBlingBling()
         setlocal nowrap
         setlocal nohlsearch
-        execute "ColorClear"
     endif
 endfunc
 au BufReadPre * call AuBufReadPre()
@@ -317,7 +314,11 @@ func! AuColorScheme()
     if g:colors_name == "base16-eighties"
         hi HighlightNext guibg=#F2777A
         hi Comment guifg=#A09F93
+
         hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red
+
+        hi SyntasticErrorSign guibg=#F2777A guifg=#393939
+        hi SyntasticStyleErrorSign guibg=#FFCC66 guifg=#2D2D2D
 
         let g:airline_theme = "base16eighties"
     endif
@@ -428,10 +429,17 @@ nmap // :<C-r>/<Backspace><Backspace><C-a><Right><Right><Backspace><Backspace>Ac
 " Syntastic configuration.
 "
 
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+nmap <Leader><Tab> :SyntasticCheck<CR>
+nmap <Leader><S-Tab> :SyntasticReset<CR>
+
 " Linters for Python files.
-let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_python_checkers = ['python']
 let g:syntastic_python_python_exec = 'python2'
-let g:syntastic_python_flake8_exec = 'flake8-python2'
 
 " Linters for CoffeeScript files.
 let g:syntastic_coffee_checkers = ['coffee', 'coffeelint']
@@ -560,3 +568,9 @@ func! AuFtMarkdownInstantMarkdown()
     nmap <buffer> <Space>m :InstantMarkdownPreview<CR>
 endfunc
 au filetype markdown call AuFtMarkdownInstantMarkdown()
+
+"
+" Colorized configuration.
+"
+
+let g:colorizer_startup = 0
