@@ -38,7 +38,7 @@
 
 ### Notes on Some Packages
 
-### Zsh
+#### Zsh
 
 It needs [robbyrussell/oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) to
 work properly.
@@ -67,3 +67,13 @@ plugins.
 Plugins should be installed and later updated.
 
     vim +PluginUpdate +qall
+
+#### Firefox
+
+[Pentadactyl add-on](http://5digits.org/home) makes your browser more like Vim!
+
+You may want to compile it yourself to get it working with the latest Firefox.
+
+    hg clone http://dactyl.googlecode.com/hg/ dactyl
+    cd dactyl
+    make -C pentadactyl install

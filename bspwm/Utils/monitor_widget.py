@@ -28,10 +28,11 @@ output_brightness = Decimal(xbacklight_output).quantize(Decimal("1"))
 # 5000K -> 25%
 # 5500K -> 0%
 temperature_warmth = (
-    100 - ((temperature - TEMPERATURE_MIN) /
-           (TEMPERATURE_MAX - TEMPERATURE_MIN) * 100)
+    (TEMPERATURE_MAX - temperature) /
+    Decimal((TEMPERATURE_MAX - TEMPERATURE_MIN) / 100)
 )
-output_temperature = "{temperature_warmth}%w".format(
+
+output_temperature = "{temperature_warmth}%".format(
     temperature_warmth=temperature_warmth,
 )
 
