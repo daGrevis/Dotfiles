@@ -22,6 +22,7 @@ Plugin 'guns/vim-clojure-static'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'justinmk/vim-sneak'
+Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'lilydjwg/colorizer'
 Plugin 'luochen1990/rainbow'
@@ -254,6 +255,7 @@ au filetype vim call AuFtVim()
 
 func! AuFtPo()
     setlocal commentstring=#~\ %s
+    setlocal cc=80
 endfunc
 au filetype po call AuFtPo()
 
@@ -438,7 +440,7 @@ nmap <Leader><Tab> :SyntasticCheck<CR>
 nmap <Leader><S-Tab> :SyntasticReset<CR>
 
 " Linters for Python files.
-let g:syntastic_python_checkers = ['python']
+let g:syntastic_python_checkers = ['python', 'frosted']
 let g:syntastic_python_python_exec = 'python2'
 
 " Linters for CoffeeScript files.
