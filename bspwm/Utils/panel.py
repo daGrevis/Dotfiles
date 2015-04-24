@@ -1,9 +1,48 @@
+import os
 import subprocess
 import re
 
 from datetime import datetime
 from decimal import Decimal
 
+
+try:
+    COLORS = {
+        k[len("COLOR_"):]: os.environ[k]
+        for k
+        in (
+            "COLOR_00",
+            "COLOR_01",
+            "COLOR_02",
+            "COLOR_03",
+            "COLOR_04",
+            "COLOR_05",
+            "COLOR_06",
+            "COLOR_07",
+
+            "COLOR_08",
+            "COLOR_09",
+            "COLOR_0A",
+            "COLOR_0B",
+            "COLOR_0C",
+            "COLOR_0D",
+            "COLOR_0E",
+            "COLOR_0F",
+        )
+    }
+except KeyError:
+    print("COLOR_* variables are missing!")
+    exit(-1)
+
+# Some aliases.
+COLORS["red"] = COLORS["08"]
+COLORS["orange"] = COLORS["09"]
+COLORS["yellow"] = COLORS["0A"]
+COLORS["green"] = COLORS["0B"]
+COLORS["teal"] = COLORS["0C"]
+COLORS["blue"] = COLORS["0D"]
+COLORS["purple"] = COLORS["0E"]
+COLORS["brown"] = COLORS["0F"]
 
 ICONS = {
     "fa-bolt": "\uf0e7",
@@ -49,7 +88,7 @@ def battery_widget():
 
     if is_full:
         output = "{icon} 100%".format(
-            icon=ICONS["fa-bolt"],
+            icon=set_foreground_color(ICONS["fa-bolt"], COLORS["yellow"]),
         )
     else:
         percentage = re.search(r"(\d+)\%", acpi_output).group(1)
