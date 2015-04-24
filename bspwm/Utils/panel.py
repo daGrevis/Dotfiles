@@ -20,6 +20,28 @@ def draw_line_over(text):
     return "%{+o}" + text + "%{-o}"
 
 
+def to_bar_color_format(color):
+    """
+    From #RRGGBB to #FFRRGGBB if it's hex, otherwise pass-through.
+    """
+    if color[0] == "#":
+        return "#FF" + color[1:]
+    else:
+        return color
+
+
+def set_foreground_color(text, hex_color):
+    return ("%{F" + to_bar_color_format(hex_color) + "}" +
+            text +
+            "%{F-}")
+
+
+def set_background_color(text, hex_color):
+    return ("%{B" + to_bar_color_format(hex_color) + "}" +
+            text +
+            "%{B-}")
+
+
 def battery_widget():
     acpi_output = subprocess.check_output(["acpi", "-b"]).decode("utf-8")
 
