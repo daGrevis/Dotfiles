@@ -13,7 +13,6 @@ Plugin 'gmarik/Vundle.vim'
 " Optional plugins.
 Plugin 'Raimondi/delimitMate'
 Plugin 'SirVer/ultisnips'
-Plugin 'Yggdroot/indentLine'
 Plugin 'Z1MM32M4N/vim-superman'
 Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim'
@@ -30,6 +29,7 @@ Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
@@ -258,6 +258,11 @@ func! AuFtPo()
     setlocal cc=80
 endfunc
 au filetype po call AuFtPo()
+
+func! AuFtSql()
+    setlocal commentstring=--\ %s
+endfunc
+au filetype sql call AuFtSql()
 
 func! AuFtGitCommit()
     setlocal colorcolumn=50
@@ -576,3 +581,11 @@ au filetype markdown call AuFtMarkdownInstantMarkdown()
 "
 
 let g:colorizer_startup = 0
+
+"
+" Indent guides configuration.
+"
+
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_default_mapping = 0
+let g:indent_guides_color_change_percent = 3
