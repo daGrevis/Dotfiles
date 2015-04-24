@@ -35,6 +35,7 @@ except KeyError:
     exit(-1)
 
 # Some aliases.
+COLORS["on_grey"] = COLORS["04"]
 COLORS["red"] = COLORS["08"]
 COLORS["orange"] = COLORS["09"]
 COLORS["yellow"] = COLORS["0A"]
@@ -46,12 +47,13 @@ COLORS["brown"] = COLORS["0F"]
 
 ICONS = {
     "fa-bolt": "\uf0e7",
+    "fa-clock": "\uf017",
     "fa-desktop": "\uf108",
-    "fa-toggle-off ": "\uf204",
     "fa-plug": "\uf1e6",
-    "fa-wifi": "\uf1eb",
-    "fa-volume-up": "\uf028",
+    "fa-toggle-off": "\uf204",
     "fa-volume-off": "\uf026",
+    "fa-volume-up": "\uf028",
+    "fa-wifi": "\uf1eb",
 }
 
 
@@ -90,13 +92,13 @@ def network_widget():
     if is_wireless:
         network_name = re.search(r"Connected to (\S+)", wicd_output).group(1)
 
-        output_icon = ICONS["fa-wifi"]
+        output_icon = set_foreground_color(ICONS["fa-wifi"], COLORS["blue"])
         output_text = network_name
     elif is_wired:
-        output_icon = ICONS["fa-plug"]
+        output_icon = set_foreground_color(ICONS["fa-plug"], COLORS["brown"])
         output_text = "Ethernet"
     else:
-        output_icon = ICONS["fa-toggle-off"]
+        output_icon = set_foreground_color(ICONS["fa-toggle-off"], COLORS["red"])
         output_text = "No network"
 
     output = "{} {}".format(output_icon, output_text)
@@ -114,12 +116,19 @@ def battery_widget():
             icon=set_foreground_color(ICONS["fa-bolt"], COLORS["yellow"]),
         )
     else:
-        percentage = re.search(r"(\d+)\%", acpi_output).group(1)
+        percentage = Decimal(re.search(r"(\d+)\%", acpi_output).group(1))
         time_til = re.search(r"\d+:\d+:\d+", acpi_output).group(0)
         is_charging = re.search(r"Charging", acpi_output) is not None
 
+        if is_charging:
+            color = COLORS["yellow"]
+        elif not is_charging and percentage > 20:
+            color = COLORS["green"]
+        elif percentage <= 20:
+            color = COLORS["red"]
+
         output = "{icon} {percentage}%{is_charging} ({time_til})".format(
-            icon=ICONS["fa-bolt"],
+            icon=set_foreground_color(ICONS["fa-bolt"], color),
             percentage=percentage,
             is_charging="+" if is_charging else "",
             time_til=time_til,
@@ -140,19 +149,26 @@ def monitor_widget():
         "57:24",
         "-p",
     ]).decode("utf-8")
-    temperature = Decimal(re.findall(r"(\d+)", redshift_output)[0])
-
-    output_icon = ICONS["fa-desktop"]
-
-    output_brightness = Decimal(xbacklight_output).quantize(Decimal("1"))
+    temperature = Decimal(re.findall(r"(\d+)K", redshift_output)[0])
 
     # 3500K -> 100%
     # 5000K -> 25%
     # 5500K -> 0%
-    temperature_warmth = (
-        (TEMPERATURE_MAX - temperature) /
-        Decimal((TEMPERATURE_MAX - TEMPERATURE_MIN) / 100)
-    )
+    temperature_warmth = (((TEMPERATURE_MAX - TEMPERATURE_MIN) - (temperature - TEMPERATURE_MIN)) /
+                          (TEMPERATURE_MAX - TEMPERATURE_MIN) *
+                          100)
+    temperature_warmth = temperature_warmth.quantize(Decimal("1"))
+
+    if 0 <= temperature_warmth < 40:
+        color = COLORS["blue"]
+    elif 50 <= temperature_warmth < 80:
+        color = COLORS["brown"]
+    else:
+        color = COLORS["orange"]
+
+    output_icon = set_foreground_color(ICONS["fa-desktop"], color)
+
+    output_brightness = Decimal(xbacklight_output).quantize(Decimal("1"))
 
     output_temperature = "{temperature_warmth}%".format(
         temperature_warmth=temperature_warmth,
@@ -186,9 +202,9 @@ def sound_widget():
     output_volumes = output_volumes.strip()
 
     if is_muted or volume_total == 0:
-        output_icon = ICONS["fa-volume-off"]
+        output_icon = set_foreground_color(ICONS["fa-volume-off"], COLORS["red"])
     else:
-        output_icon = ICONS["fa-volume-up"]
+        output_icon = set_foreground_color(ICONS["fa-volume-up"], COLORS["brown"])
 
     output = "{output_icon} {output_volumes}".format(
         output_icon=output_icon,
@@ -213,7 +229,22 @@ def datetime_widget():
     elif day_position == "3":
         day_postfix = "rd"
 
-    output = "\uf017 {}".format(now.strftime("%H:%M, %B %-d{}".format(day_postfix)))
+    # We choose color of clock based on daytime.
+    h = now.hour
+    if 6 <= h < 12:
+        color = COLORS["green"]
+    elif 12 <= h < 18:
+        color = COLORS["yellow"]
+    elif 18 <= h < 21:
+        color = COLORS["orange"]
+    elif 21 <= h < 23:
+        color = COLORS["teal"]
+    elif 23 <= h < 6:
+        color = COLORS["purple"]
+
+    output = set_foreground_color(ICONS["fa-clock"], color)
+    output += " "
+    output += now.strftime("%H:%M, %B %-d{}".format(day_postfix))
 
     return output
 
