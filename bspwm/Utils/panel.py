@@ -81,6 +81,29 @@ def set_background_color(text, hex_color):
             "%{B-}")
 
 
+def network_widget():
+    wicd_output = subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
+
+    is_wireless = re.search(r"Wireless", wicd_output) is not None
+    is_wired = re.search(r"Wired", wicd_output) is not None
+
+    if is_wireless:
+        network_name = re.search(r"Connected to (\S+)", wicd_output).group(1)
+
+        output_icon = ICONS["fa-wifi"]
+        output_text = network_name
+    elif is_wired:
+        output_icon = ICONS["fa-plug"]
+        output_text = "Ethernet"
+    else:
+        output_icon = ICONS["fa-toggle-off"]
+        output_text = "No network"
+
+    output = "{} {}".format(output_icon, output_text)
+
+    return output
+
+
 def battery_widget():
     acpi_output = subprocess.check_output(["acpi", "-b"]).decode("utf-8")
 
@@ -101,23 +124,6 @@ def battery_widget():
             is_charging="+" if is_charging else "",
             time_til=time_til,
         )
-
-    return output
-
-
-def datetime_widget():
-    now = datetime.now()
-
-    day_position = str(now.day)[-1:]
-    day_postfix = "th"
-    if day_position == "1":
-        day_postfix = "st"
-    elif day_position == "2":
-        day_postfix = "nd"
-    elif day_position == "3":
-        day_postfix = "rd"
-
-    output = "\uf017 {}".format(now.strftime("%H:%M, %B %-d{}".format(day_postfix)))
 
     return output
 
@@ -161,29 +167,6 @@ def monitor_widget():
     return output
 
 
-def network_widget():
-    wicd_output = subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
-
-    is_wireless = re.search(r"Wireless", wicd_output) is not None
-    is_wired = re.search(r"Wired", wicd_output) is not None
-
-    if is_wireless:
-        network_name = re.search(r"Connected to (\S+)", wicd_output).group(1)
-
-        output_icon = ICONS["fa-wifi"]
-        output_text = network_name
-    elif is_wired:
-        output_icon = ICONS["fa-plug"]
-        output_text = "Ethernet"
-    else:
-        output_icon = ICONS["fa-toggle-off"]
-        output_text = "No network"
-
-    output = "{} {}".format(output_icon, output_text)
-
-    return output
-
-
 def sound_widget():
     amixer_output = subprocess.check_output([
         "amixer",
@@ -214,6 +197,23 @@ def sound_widget():
 
     if is_muted:
         output = draw_line_over(output)
+
+    return output
+
+
+def datetime_widget():
+    now = datetime.now()
+
+    day_position = str(now.day)[-1:]
+    day_postfix = "th"
+    if day_position == "1":
+        day_postfix = "st"
+    elif day_position == "2":
+        day_postfix = "nd"
+    elif day_position == "3":
+        day_postfix = "rd"
+
+    output = "\uf017 {}".format(now.strftime("%H:%M, %B %-d{}".format(day_postfix)))
 
     return output
 
