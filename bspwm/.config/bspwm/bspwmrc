@@ -1,7 +1,4 @@
-#! /bin/sh
-
-HOME_HOSTNAME="haze"
-WORK_HOSTNAME="rx-wks-44"
+#! /bin/zsh
 
 bspc config border_width 2
 bspc config window_gap 24
@@ -21,10 +18,6 @@ fi
 bspc rule -a Gimp follow=on floating=on
 # bspc rule -a Firefox desktop=^2 focus=on
 
-if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
-    feh --bg-fill ~/Pictures/wallpaper --no-xinerama &
-else
-    feh --bg-center ~/Pictures/wallpaper &
-fi
+set_wallpaper.sh
 
 ~/Utils/panel &

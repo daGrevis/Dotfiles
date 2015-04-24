@@ -60,6 +60,9 @@ if hash ruby 2> /dev/null; then
 fi
 PATH=$PATH:~/go/bin
 
+export HOME_HOSTNAME="haze"
+export WORK_HOSTNAME="rx-wks-44"
+
 . ~/Utils/colors.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -282,22 +285,6 @@ function generate-and-save-password {
                    interact" )
 
     copy-to-clipboard "${pw}"
-}
-
-function change-wallpaper {
-    if [ "$#" -ne 1 ]; then
-        echo "Usage: change-wallpaper [ OPTIONS ] [ path ]";
-        return
-    fi
-
-    user=$(whoami)
-    from=$1
-    to="/home/$user/Pictures/wallpaper"
-
-    rm -f $to
-    ln -s $from $to
-
-    echo "$from -> $to"
 }
 
 function delete-pyco {

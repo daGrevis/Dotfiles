@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/zsh
 
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
     for f in /etc/X11/xinit/xinitrc.d/*; do
@@ -14,16 +14,12 @@ export PANEL_HEIGHT=18
 export PANEL_FONT_FAMILY="Andale Mono"
 export PANEL_FONT_SIZE="9"
 
-HOME_HOSTNAME="haze"
-WORK_HOSTNAME="rx-wks-44"
-
 if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     # Sets 2nd monitor usable.
     xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3 --rotate left
 fi
 
 ./Utils/keyboard_settings.sh
-
 
 # Sets brightness to something sane.
 xbacklight -set 75 -time 0
@@ -37,6 +33,8 @@ fi
 
 # Notification daemon.
 dunst &
+
+set_wallpaper.sh
 
 # Loads WM.
 sxhkd &
