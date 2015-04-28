@@ -14,6 +14,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'SirVer/ultisnips'
 Plugin 'Z1MM32M4N/vim-superman'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim'
 Plugin 'ervandew/supertab'
@@ -319,13 +320,23 @@ func! AuColorScheme()
     endif
 
     if g:colors_name == "base16-eighties"
-        hi HighlightNext guibg=#F2777A
         hi Comment guifg=#A09F93
+        hi StatusLine guifg=#F2F0EC guibg=#515151
+        hi Wildmenu guifg=#2D2D2D guibg=#6699CC
+        hi Pmenu guifg=#F2F0EC guibg=#515151
+        hi PmenuSel guifg=#2D2D2D guibg=#6699CC
+
+        hi HighlightNext guibg=#F2777A
 
         hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red
 
         hi SyntasticErrorSign guibg=#F2777A guifg=#393939
         hi SyntasticStyleErrorSign guibg=#FFCC66 guifg=#2D2D2D
+
+        hi GitGutterAdd guifg=#99CC99
+        hi GitGutterChange guifg=#FFCC66
+        hi GitGutterDelete guifg=#F2777A
+        hi GitGutterChangeDelete guifg=#F99157
 
         let g:airline_theme = "base16eighties"
     endif
@@ -387,6 +398,8 @@ nmap <Leader>h :help<Space>
 " Restructures text so it doesn't go over `textwidth`.
 nmap <Leader>gq mtggvGgq`t
 
+nmap <Leader>c :ColorToggle<CR>
+
 " Sets color-scheme.
 colorscheme slate
 
@@ -436,10 +449,10 @@ nmap // :<C-r>/<Backspace><Backspace><C-a><Right><Right><Backspace><Backspace>Ac
 " Syntastic configuration.
 "
 
-let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 
 nmap <Leader><Tab> :SyntasticCheck<CR>
 nmap <Leader><S-Tab> :SyntasticReset<CR>
@@ -589,3 +602,11 @@ let g:colorizer_startup = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_color_change_percent = 3
+
+"
+" GitGutter configuration.
+"
+
+" It should never lag.
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
