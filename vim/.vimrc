@@ -51,7 +51,6 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'venantius/vim-eastwood'
 Plugin 'vim-scripts/gitignore'
 Plugin 'wellle/targets.vim'
 
