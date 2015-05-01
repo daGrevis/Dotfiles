@@ -28,6 +28,9 @@
     
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
+
+    # Stack duplicate Messages or show them individually
+    stack_duplicates = no
     
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
