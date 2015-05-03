@@ -204,7 +204,7 @@ def sound_widget():
     if is_muted or volume_total == 0:
         output_icon = set_foreground_color(ICONS["fa-volume-off"], COLORS["red"])
     else:
-        output_icon = set_foreground_color(ICONS["fa-volume-up"], COLORS["brown"])
+        output_icon = set_foreground_color(ICONS["fa-volume-up"], COLORS["green"])
 
     output = "{output_icon} {output_volumes}".format(
         output_icon=output_icon,
@@ -230,16 +230,14 @@ def datetime_widget():
         day_postfix = "rd"
 
     # We choose color of clock based on daytime.
-    # Doing datetime range checks is pain in the ass to get right.
-    if now.replace(hour=6, second=0) <= now > now.replace(hour=12, second=0):
+    h = now.hour
+    if 6 <= h < 12:
         color = COLORS["green"]
-    elif now.replace(hour=12, second=0) <= now > now.replace(hour=18, second=0):
+    elif 12 <= h < 18:
         color = COLORS["yellow"]
-    elif now.replace(hour=18, second=0) <= now > now.replace(hour=21, second=0):
+    elif 18 <= h < 21:
         color = COLORS["orange"]
-    elif now.replace(hour=21, second=0) <= now > now.replace(hour=23, second=0):
-        color = COLORS["teal"]
-    elif now.replace(hour=23, second=0) <= now > now.replace(hour=6, second=0):
+    elif 21 <= h < 23 or 0 <= h < 6:
         color = COLORS["purple"]
 
     output = set_foreground_color(ICONS["fa-clock"], color)
