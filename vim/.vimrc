@@ -35,6 +35,7 @@ Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
+Plugin 'sjl/gundo.vim'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'terryma/vim-expand-region'
@@ -609,3 +610,9 @@ let g:indent_guides_color_change_percent = 3
 " It should never lag.
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
+
+"
+" Gundo configuration.
+"
+
+nmap <Leader>gu :GundoToggle<CR>
