@@ -7,6 +7,7 @@ declare -a pkgs=(
     "flake8"
     "git"
     "gtk"
+    "ipython"
     "lein"
     "mpv"
     "pentadactyl"
