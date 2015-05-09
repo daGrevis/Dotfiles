@@ -95,7 +95,7 @@ def network_widget():
         output_icon = set_foreground_color(ICONS["fa-wifi"], COLORS["blue"])
         output_text = network_name
     elif is_wired:
-        output_icon = set_foreground_color(ICONS["fa-plug"], COLORS["brown"])
+        output_icon = set_foreground_color(ICONS["fa-plug"], COLORS["green"])
         output_text = "Ethernet"
     else:
         output_icon = set_foreground_color(ICONS["fa-toggle-off"], COLORS["red"])

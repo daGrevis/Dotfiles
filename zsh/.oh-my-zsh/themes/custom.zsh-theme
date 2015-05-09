@@ -1,12 +1,60 @@
-if [ -n "$SSH_CLIENT" ]; then
-    local ssh="%{$fg[yellow]%}●%{$reset_color%} "
-else
-    local ssh=""
-fi
-local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ %s)"
-PROMPT='${ssh}${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+#! /bin/zsh
 
-ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+# http://superuser.com/questions/655607/removing-the-useless-space-at-the-end-of-the-right-prompt-of-zsh-rprompt
+ZLE_RPROMPT_INDENT=0
+
+reset_color() {
+    echo "%{$reset_color%}"
+}
+
+fg() {
+    echo "%{$fg[$@]%}"
+}
+
+fg_bold() {
+    echo "%{$fg_bold[$@]%}"
+}
+
+return_status() {
+    s="%(?:$(fg_bold green)✓:$(fg_bold red)✗)"
+    s+="$(reset_color)"
+    echo $s
+}
+
+who_and_where() {
+    host="$(fg magenta)%m$(reset_color)"
+    if [ -n "$SSH_CLIENT" ]; then
+        s="$(fg yellow)%n$(reset_color)"
+        s+="@"
+        s+="$host"
+    else
+        s="@"
+        s+="$host"
+    fi
+    echo $s
+}
+
+git_info() {
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "$(git_prompt_info)"
+    else
+        echo ""
+    fi
+}
+
+current_directory() {
+    echo "$(fg cyan)${PWD/#$HOME/~}$(reset_color)"
+}
+
+
+datetime() {
+    echo "$(fg_bold black)$(date '+%H:%M:%S')"
+}
+
+PROMPT='$(return_status)  $(who_and_where) $(current_directory)$(git_prompt_info)  '
+RPROMPT='$(datetime) $(fg_bold black)↑$(reset_color)'
+
+ZSH_THEME_GIT_PROMPT_PREFIX=" $(fg red)"
+ZSH_THEME_GIT_PROMPT_DIRTY="$(fg_bold yellow)±"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_SUFFIX="$(reset_color)"
