@@ -237,7 +237,7 @@ def datetime_widget():
         color = COLORS["yellow"]
     elif 18 <= h < 21:
         color = COLORS["orange"]
-    elif 21 <= h < 23 or 0 <= h < 6:
+    elif 21 <= h <= 23 or 0 <= h < 6:
         color = COLORS["purple"]
 
     output = set_foreground_color(ICONS["fa-clock"], color)
