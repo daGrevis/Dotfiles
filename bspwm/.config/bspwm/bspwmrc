@@ -1,7 +1,11 @@
 #! /bin/zsh
 
+source ~/Utils/colors.sh
+
 bspc config border_width 2
 bspc config window_gap 24
+bspc config normal_border_color $COLOR_01
+bspc config focused_border_color $COLOR_04
 
 bspc config split_ratio 0.382 # Golden ratio.
 bspc config borderless_monocle true
@@ -21,3 +25,5 @@ bspc rule -a Gimp follow=on floating=on
 set_wallpaper.sh
 
 ~/Utils/panel &
+
+compton --config ~/.compton.conf
