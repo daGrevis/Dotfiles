@@ -22,14 +22,12 @@ return_status() {
 }
 
 who_and_where() {
-    host="$(fg magenta)%m$(reset_color)"
     if [ -n "$SSH_CLIENT" ]; then
         s="$(fg yellow)%n$(reset_color)"
         s+="@"
-        s+="$host"
+        s+="$(fg magenta)%m$(reset_color)"
     else
-        s="@"
-        s+="$host"
+        s=""
     fi
     echo $s
 }
@@ -51,7 +49,7 @@ datetime() {
     echo "$(fg_bold black)$(date '+%H:%M:%S')"
 }
 
-PROMPT='$(return_status)  $(who_and_where) $(current_directory)$(git_prompt_info)  '
+PROMPT='$(return_status) $(who_and_where) $(current_directory)$(git_prompt_info)  '
 RPROMPT='$(datetime) $(fg_bold black)↑$(reset_color)'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" $(fg red)"
