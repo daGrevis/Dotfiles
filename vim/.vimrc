@@ -240,7 +240,7 @@ au filetype text,markdown setlocal textwidth=100
 " Languages in which completion that includes `-` symbol makes sense.
 au filetype html,htmldjango,css,scss,sass,javascript,coffee,sh setlocal iskeyword+=-
 
-au filetype man,html,htmldjango setlocal nowrap
+au filetype man setlocal nowrap
 
 func! AuFtMarkdown()
     setlocal spell
