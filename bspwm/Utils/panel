@@ -18,7 +18,7 @@ xtitle -sf 'T%s' > "$PANEL_FIFO" &
 
 while true; do
     echo "S" > "$PANEL_FIFO"
-    sleep 5
+    sleep 0.25
 done &
 
 . ~/Utils/panel_colors
