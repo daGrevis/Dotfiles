@@ -18,7 +18,7 @@ nmap H 9999h
 nmap L 9999l
 
 " View source.
-nmap <C-u> gF<CR>
+nmap <S-u> gF<CR>
 
 nmap <C-l> :nohlfind<CR>
 
@@ -28,8 +28,6 @@ nmap <C-q> <Nop>
 nmap <C-c> <pass>
 imap <C-v> <pass>
 cmap <C-v> <pass>
-
-nmap <S-u> :tab viewsource<CR>
 
 " <C-i> will open $EDITOR with contents of current input/textarea.
 imap <C-q> <C-i>
