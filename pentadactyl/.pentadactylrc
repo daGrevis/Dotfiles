@@ -1,5 +1,3 @@
-" vim: set filetype=vim :
-
 loadplugins '\.(js|penta)$'
 
 set guioptions=bns
@@ -8,8 +6,14 @@ set defsearch=google
 set hintkeys=asdfghjkl
 set hlfind
 
-nmap u :back<CR>
-nmap <C-r> :forward<CR>
+"
+" No-ops.
+"
+
+nmap d <pass>
+nmap <C-q> <Nop>
+
+" Normal maps.
 
 nmap <C-d> 20j
 nmap <C-u> 20k
@@ -17,13 +21,7 @@ nmap <C-u> 20k
 nmap H 9999h
 nmap L 9999l
 
-" View source.
-nmap <Space>u gF<CR>
-
 nmap <C-l> :nohlfind<CR>
-
-nmap d <pass>
-nmap <C-q> <Nop>
 
 nmap <C-c> <pass>
 imap <C-v> <pass>
@@ -32,35 +30,51 @@ cmap <C-v> <pass>
 " <C-i> will open $EDITOR with contents of current input/textarea.
 imap <C-q> <C-i>
 
-map -builtin <silent> b :toolbartoggle Bookmarks Toolbar<CR>
+nmap <A-q> :q!<CR>
+nmap <A-w> :q<CR>
+
+" Move tabs. Idiomatic <S-{-,=}>.
+nmap _ :tabm -1<CR>
+nmap + :tabm +1<CR>
+
+" Go to next/prev tab.
+nmap \- gT
+nmap = gt
+
+nmap u :back<CR>
+nmap <C-r> :forward<CR>
+nmap s :stop<CR>
+
+nmap i o
 
 cmap <C-a> <Home>
 cmap <C-e> <End>
 cmap <A-b> <C-Left>
 cmap <A-f> <C-Right>
 
-" Go to next/prev tab.
-nmap \- gT
-nmap = gt
+"
+" Leader maps.
+"
 
-" Move tabs. Idiomatic <S-{-,=}>.
-nmap _ :tabm -1<CR>
-nmap + :tabm +1<CR>
-
+" Switch to last tab.
 nmap <Space><Space> <C-^>
 
-nmap s :stop<CR>
+" View source.
+nmap <Space>u gF<CR>
 
-hi Hint -append font-size: 12px !important;
-hi HintElem -append background: none !important;
-hi StatusLine -append font-size: 12px !important;
-
-nmap i o
-
+" View history.
 nmap <Space>h :history<CR>
 
+nmap <Space>e o
+nmap <Space>t t
+
+" hi Hint -append font-size: 12px !important;
+" hi HintElem -append background: none !important;
+" hi StatusLine -append font-size: 12px !important;
+colorscheme base16-eighties
+
+" For pinboard.in.
 nmap <a> :open javascript:(function(){q=location.href;if(document.getSelection){d=document.getSelection();}else{d='';};p=document.title;void(open('https://pinboard.in/add?showtags=yes&url='+encodeURIComponent(q)+'&description='+encodeURIComponent(d)+'&title='+encodeURIComponent(p),'Pinboard',%20'toolbar=no,width=700,height=600'))})()<CR>
 nmap <b> :tabopen https://pinboard.in/u:daGrevis<CR>
 
-nmap <A-q> :q!<CR>
-nmap <A-w> :q<CR>
+" vim: set filetype=vim :
