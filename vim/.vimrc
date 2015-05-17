@@ -129,6 +129,8 @@ set scrolloff=20
 " Don't update the display while executing macros.
 set lazyredraw
 
+set wildmode=longest,full
+
 " Map leader to <Space>.
 let mapleader = "\<Space>"
 
