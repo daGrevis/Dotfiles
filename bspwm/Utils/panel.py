@@ -109,7 +109,8 @@ def network_widget():
 def battery_widget():
     acpi_output = subprocess.check_output(["acpi", "-b"]).decode("utf-8")
 
-    is_full = re.search(r"Full", acpi_output) is not None
+    is_full = (re.search(r"Full", acpi_output) is not None or
+               re.search(r"100%", acpi_output) is not None)
 
     if is_full:
         output = "{icon} 100%".format(
