@@ -427,3 +427,15 @@ open-ipython2() {
 
     xfce4-terminal -x ipython2
 }
+
+open-glances() {
+    notify-executing "glances"
+
+    xfce4-terminal -x glances
+}
+
+open-ranger() {
+    notify-executing "ranger"
+
+    xfce4-terminal -x ranger
+}

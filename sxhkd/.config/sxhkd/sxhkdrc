@@ -170,4 +170,10 @@ super + shift + q
 
 super + shift + w
     open-ipython2
+
+super + shift + g
+    open-glances
+
+super + shift + r
+    open-ranger
 # vim: iskeyword+=-
