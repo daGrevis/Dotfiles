@@ -196,6 +196,12 @@ alias serve-http='python -m http.server'
 function update-mirrors {
     sudo reflector --verbose -l 5 --sort rate --save /etc/pacman.d/mirrorlist
 }
+pacman-import-gpg-key() {
+    # https://wiki.archlinux.org/index.php/Pacman-key#Adding_unofficial_keys
+    pacman-key -f keyid && \
+        sudo pacman-key -r $1 && \
+        sudo pacman-key --lsign-key $1
+}
 
 alias gbl='git blame'
 alias gbr='git branch'
