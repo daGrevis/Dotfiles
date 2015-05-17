@@ -1,3 +1,5 @@
+#!/bin/bash
+
 declare -a pkgs=(
     "ack"
     "bspwm"

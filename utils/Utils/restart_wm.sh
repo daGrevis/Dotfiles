@@ -1,3 +1,5 @@
+#!/bin/bash
+
 killall panel
 ~/Utils/panel &
 

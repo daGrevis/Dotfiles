@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Base16-eighties pallet.
 
 export COLOR_00a="#FF2D2D2D" # #2D2D2D
