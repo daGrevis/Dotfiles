@@ -198,9 +198,11 @@ function update-mirrors {
 }
 pacman-import-gpg-key() {
     # https://wiki.archlinux.org/index.php/Pacman-key#Adding_unofficial_keys
-    pacman-key -f keyid && \
-        sudo pacman-key -r $1 && \
+    sudo pacman-key -r $1 && \
         sudo pacman-key --lsign-key $1
+}
+json-prettify() {
+    cat $1 | python -m json.tool |& pygmentize -s -l json
 }
 
 alias gbl='git blame'
