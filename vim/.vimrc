@@ -168,12 +168,7 @@ nmap Y y$
 nmap j gj
 nmap k gk
 
-nmap <Leader>q :wq!<CR>
-nmap <Leader>w :w<CR>
 nmap <M-q> :q!<CR>
-
-nmap <Leader>e :e<Space>
-nmap <Leader>t :tabe<Space>
 
 nmap H ^
 vmap H ^
@@ -366,6 +361,13 @@ au BufLeave * call AuBufLeave()
 "
 " Leader mappings.
 "
+
+nmap <Leader>q :wq!<CR>
+nmap <Leader>w :w<CR>
+
+nmap <Leader>e :e<Space>
+nmap <Leader>ee :e!<CR>
+nmap <Leader>t :tabe<Space>
 
 " Word suggestions for typos.
 map <Leader>z :set spell<CR>z=
