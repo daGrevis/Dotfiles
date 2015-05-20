@@ -73,8 +73,11 @@ nmap <Space>t t
 " hi StatusLine -append font-size: 12px !important;
 colorscheme base16-eighties
 
-" For pinboard.in.
+" For Pinboard.
 nmap <a> :open javascript:(function(){q=location.href;if(document.getSelection){d=document.getSelection();}else{d='';};p=document.title;void(open('https://pinboard.in/add?showtags=yes&url='+encodeURIComponent(q)+'&description='+encodeURIComponent(d)+'&title='+encodeURIComponent(p),'Pinboard',%20'toolbar=no,width=700,height=600'))})()<CR>
 nmap <b> :tabopen https://pinboard.in/u:daGrevis<CR>
+
+" For Readability.
+nmap <Space>r :open javascript:((function(){window.baseUrl='//www.readability.com';window.readabilityToken='';var s=document.createElement('script');s.setAttribute('type','text/javascript');s.setAttribute('charset','UTF-8');s.setAttribute('src',baseUrl+'/bookmarklet/read.js');document.documentElement.appendChild(s);})())<CR>
 
 " vim: set filetype=vim :
