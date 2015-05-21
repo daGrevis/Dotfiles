@@ -316,29 +316,19 @@ dmenu-go() {
 }
 
 brightness-dec-by-5() {
-    notify-send -u low "Brightness" -- "-5"
-
     xbacklight -dec 5 -time 0
 }
 
 brightness-inc-by-5() {
-    notify-send -u low "Brightness" -- "+5"
-
     xbacklight -inc 5 -time 0
 }
 
 volume-dec-by-5() {
-    step=$(python ~/Utils/change_volume.py "-5")
-    volume=$(python ~/Utils/get_volume.py)
-
-    notify-send -u low "Volume" -- "$step ($volume)"
+    python ~/Utils/change_volume.py "-5"
 }
 
 volume-inc-by-5() {
-    step=$(python ~/Utils/change_volume.py 5)
-    volume=$(python ~/Utils/get_volume.py)
-
-    notify-send -u low "Volume" -- "+$step ($volume)"
+    python ~/Utils/change_volume.py 5
 }
 
 volume-toggle() {
