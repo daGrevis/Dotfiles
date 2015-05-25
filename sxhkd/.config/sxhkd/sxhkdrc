@@ -34,8 +34,9 @@ super + {o,i}
 super + y
     bspc window -w last.manual
 
+# Enable/disable gaps for desktop.
 super + m
-    bspc window -s biggest
+    bspc desktop --layout next monocle
 
 super + {_,shift + }{h,j,k,l}
     bspc window -{f,s} {left,down,up,right}
