@@ -1,6 +1,7 @@
 import os
 import subprocess
 import re
+import shutil
 
 from datetime import datetime
 from decimal import Decimal
@@ -83,178 +84,224 @@ def set_background_color(text, hex_color):
             "%{B-}")
 
 
-def network_widget():
-    wicd_output = subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
+class Widget(object):
 
-    is_wireless = re.search(r"Wireless", wicd_output) is not None
-    is_wired = re.search(r"Wired", wicd_output) is not None
+    def get_output(self):
+        raise NotImplementedError()
 
-    if is_wireless:
-        network_name = re.search(r"Connected to (\S+)", wicd_output).group(1)
-
-        output_icon = set_foreground_color(ICONS["fa-wifi"], COLORS["blue"])
-        output_text = network_name
-    elif is_wired:
-        output_icon = set_foreground_color(ICONS["fa-plug"], COLORS["green"])
-        output_text = "Ethernet"
-    else:
-        output_icon = set_foreground_color(ICONS["fa-toggle-off"], COLORS["red"])
-        output_text = "No network"
-
-    output = "{} {}".format(output_icon, output_text)
-
-    return output
+    def is_available(self):
+        return True
 
 
-def battery_widget():
-    acpi_output = subprocess.check_output(["acpi", "-b"]).decode("utf-8")
+class NetworkWidget(Widget):
 
-    is_full = (re.search(r"Full", acpi_output) is not None or
-               re.search(r"100%", acpi_output) is not None)
+    def get_output(self):
+        wicd_output = subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
 
-    if is_full:
-        output = "{icon} 100%".format(
-            icon=set_foreground_color(ICONS["fa-bolt"], COLORS["yellow"]),
+        is_wireless = re.search(r"Wireless", wicd_output) is not None
+        is_wired = re.search(r"Wired", wicd_output) is not None
+
+        if is_wireless:
+            network_name = re.search(r"Connected to (\S+)", wicd_output).group(1)
+
+            output_icon = set_foreground_color(ICONS["fa-wifi"], COLORS["blue"])
+            output_text = network_name
+        elif is_wired:
+            output_icon = set_foreground_color(ICONS["fa-plug"], COLORS["green"])
+            output_text = "Ethernet"
+        else:
+            output_icon = set_foreground_color(ICONS["fa-toggle-off"], COLORS["red"])
+            output_text = "No network"
+
+        output = "{} {}".format(output_icon, output_text)
+
+        return output
+
+    def is_available(self):
+        return shutil.which("wicd-cli") is not None
+
+
+class BatteryWidget(Widget):
+
+    def get_output(self):
+        acpi_output = subprocess.check_output(["acpi", "-b"]).decode("utf-8")
+
+        is_full = (re.search(r"Full", acpi_output) is not None or
+                   re.search(r"100%", acpi_output) is not None)
+
+        if is_full:
+            output = "{icon} 100%".format(
+                icon=set_foreground_color(ICONS["fa-bolt"], COLORS["yellow"]),
+            )
+        else:
+            percentage = Decimal(re.search(r"(\d+)\%", acpi_output).group(1))
+            time_til = re.search(r"\d+:\d+:\d+", acpi_output).group(0)
+            is_charging = re.search(r"Charging", acpi_output) is not None
+
+            if is_charging:
+                color = COLORS["yellow"]
+            elif not is_charging and percentage > 20:
+                color = COLORS["green"]
+            elif percentage <= 20:
+                color = COLORS["red"]
+
+            output = "{icon} {percentage}%{is_charging} ({time_til})".format(
+                icon=set_foreground_color(ICONS["fa-bolt"], color),
+                percentage=percentage,
+                is_charging="+" if is_charging else "",
+                time_til=time_til,
+            )
+
+        return output
+
+    def is_available(self):
+        return shutil.which("acpi") is not None
+
+
+class SoundWidget(Widget):
+
+    def get_output(self):
+        amixer_output = subprocess.check_output([
+            "amixer",
+            "sget",
+            "Master",
+        ]).decode("utf-8")
+
+        volumes = [int(x) for x in re.findall(r"(\d+)\%", amixer_output)]
+        is_muted = re.search(r"\[off\]", amixer_output) is not None
+
+        volume_total = sum([int(x) for x in volumes])
+
+        output_volumes = subprocess.check_output([
+            "python",
+            "Utils/get_volume.py",
+        ]).decode("utf-8")
+        output_volumes = output_volumes.strip()
+
+        if is_muted or volume_total == 0:
+            output_icon = set_foreground_color(ICONS["fa-volume-off"], COLORS["red"])
+        else:
+            output_icon = set_foreground_color(ICONS["fa-volume-up"], COLORS["green"])
+
+        output = "{output_icon} {output_volumes}".format(
+            output_icon=output_icon,
+            output_volumes=output_volumes,
         )
-    else:
-        percentage = Decimal(re.search(r"(\d+)\%", acpi_output).group(1))
-        time_til = re.search(r"\d+:\d+:\d+", acpi_output).group(0)
-        is_charging = re.search(r"Charging", acpi_output) is not None
 
-        if is_charging:
-            color = COLORS["yellow"]
-        elif not is_charging and percentage > 20:
-            color = COLORS["green"]
-        elif percentage <= 20:
-            color = COLORS["red"]
+        if is_muted:
+            output = draw_line_over(output)
 
-        output = "{icon} {percentage}%{is_charging} ({time_til})".format(
-            icon=set_foreground_color(ICONS["fa-bolt"], color),
-            percentage=percentage,
-            is_charging="+" if is_charging else "",
-            time_til=time_til,
-        )
+        return output
 
-    return output
+    def is_available(self):
+        return shutil.which("amixer") is not None
 
 
-def monitor_widget():
+class MonitorWidget(Widget):
     TEMPERATURE_MIN = 3500
     TEMPERATURE_MAX = 5500
 
-    xbacklight_output = subprocess.check_output(["xbacklight"]).decode("utf-8")
+    def get_output(self):
+        xbacklight_output = subprocess.check_output(["xbacklight"]).decode("utf-8")
 
-    redshift_output = subprocess.check_output([
-        "redshift",
-        "-l",
-        "57:24",
-        "-p",
-    ]).decode("utf-8")
-    temperature = Decimal(re.findall(r"(\d+)K", redshift_output)[0])
+        redshift_output = subprocess.check_output([
+            "redshift",
+            "-l",
+            "57:24",
+            "-p",
+        ]).decode("utf-8")
+        temperature = Decimal(re.findall(r"(\d+)K", redshift_output)[0])
 
-    # 3500K -> 100%
-    # 5000K -> 25%
-    # 5500K -> 0%
-    temperature_warmth = (((TEMPERATURE_MAX - TEMPERATURE_MIN) - (temperature - TEMPERATURE_MIN)) /
-                          (TEMPERATURE_MAX - TEMPERATURE_MIN) *
-                          100)
-    temperature_warmth = temperature_warmth.quantize(Decimal("1"))
+        # 3500K -> 100%
+        # 5000K -> 25%
+        # 5500K -> 0%
+        temperature_warmth = (((self.TEMPERATURE_MAX - self.TEMPERATURE_MIN) -
+                               (temperature - self.TEMPERATURE_MIN)) /
+                              (self.TEMPERATURE_MAX - self.TEMPERATURE_MIN) *
+                              100)
+        temperature_warmth = temperature_warmth.quantize(Decimal("1"))
 
-    if 0 <= temperature_warmth < 40:
-        color = COLORS["blue"]
-    elif 50 <= temperature_warmth < 80:
-        color = COLORS["brown"]
-    else:
-        color = COLORS["orange"]
+        if 0 <= temperature_warmth < 40:
+            color = COLORS["blue"]
+        elif 50 <= temperature_warmth < 80:
+            color = COLORS["brown"]
+        else:
+            color = COLORS["orange"]
 
-    output_icon = set_foreground_color(ICONS["fa-desktop"], color)
+        output_icon = set_foreground_color(ICONS["fa-desktop"], color)
 
-    output_brightness = Decimal(xbacklight_output).quantize(Decimal("1"))
+        output_brightness = Decimal(xbacklight_output).quantize(Decimal("1"))
 
-    output_temperature = "{temperature_warmth}%".format(
-        temperature_warmth=temperature_warmth,
-    )
+        output_temperature = "{temperature_warmth}%".format(
+            temperature_warmth=temperature_warmth,
+        )
 
-    output = "{icon} {brightness}% ({temperature})".format(
-        icon=output_icon,
-        brightness=output_brightness,
-        temperature=output_temperature,
-    )
+        output = "{icon} {brightness}% ({temperature})".format(
+            icon=output_icon,
+            brightness=output_brightness,
+            temperature=output_temperature,
+        )
 
-    return output
+        return output
 
-
-def sound_widget():
-    amixer_output = subprocess.check_output([
-        "amixer",
-        "sget",
-        "Master",
-    ]).decode("utf-8")
-
-    volumes = [int(x) for x in re.findall(r"(\d+)\%", amixer_output)]
-    is_muted = re.search(r"\[off\]", amixer_output) is not None
-
-    volume_total = sum([int(x) for x in volumes])
-
-    output_volumes = subprocess.check_output([
-        "python",
-        "Utils/get_volume.py",
-    ]).decode("utf-8")
-    output_volumes = output_volumes.strip()
-
-    if is_muted or volume_total == 0:
-        output_icon = set_foreground_color(ICONS["fa-volume-off"], COLORS["red"])
-    else:
-        output_icon = set_foreground_color(ICONS["fa-volume-up"], COLORS["green"])
-
-    output = "{output_icon} {output_volumes}".format(
-        output_icon=output_icon,
-        output_volumes=output_volumes,
-    )
-
-    if is_muted:
-        output = draw_line_over(output)
-
-    return output
+    def is_available(self):
+        return (
+            shutil.which("xbacklight") is not None and
+            shutil.which("redshift") is not None
+        )
 
 
-def datetime_widget():
-    now = datetime.now()
+class DatetimeWidget(Widget):
 
-    day_position = str(now.day)[-1:]
-    day_postfix = "th"
-    if day_position == "1":
-        day_postfix = "st"
-    elif day_position == "2":
-        day_postfix = "nd"
-    elif day_position == "3":
-        day_postfix = "rd"
+    def _get_color(self, h):
+        # We choose color of clock based on daytime.
+        if 6 <= h < 12:
+            color = COLORS["green"]
+        elif 12 <= h < 18:
+            color = COLORS["yellow"]
+        elif 18 <= h < 21:
+            color = COLORS["orange"]
+        elif 21 <= h <= 23 or 0 <= h < 6:
+            color = COLORS["purple"]
 
-    # We choose color of clock based on daytime.
-    h = now.hour
-    if 6 <= h < 12:
-        color = COLORS["green"]
-    elif 12 <= h < 18:
-        color = COLORS["yellow"]
-    elif 18 <= h < 21:
-        color = COLORS["orange"]
-    elif 21 <= h <= 23 or 0 <= h < 6:
-        color = COLORS["purple"]
+        return color
 
-    output = set_foreground_color(ICONS["fa-clock"], color)
-    output += " "
-    output += now.strftime("%H:%M, %B %-d{}".format(day_postfix))
+    def _get_postfix(self, day):
+        position = str(day)[-1:]
 
-    return output
+        postfix = "th"
+        if position == "1":
+            postfix = "st"
+        elif position == "2":
+            postfix = "nd"
+        elif position == "3":
+            postfix = "rd"
+
+        return postfix
+
+    def get_output(self):
+        now = datetime.now()
+
+        output = "{icon} {text}".format(
+            icon=set_foreground_color(ICONS["fa-clock"], self._get_color(now.hour)),
+            text=now.strftime("%H:%M, %B %-d{}".format(self._get_postfix(now.day))),
+        )
+
+        return output
 
 
 widgets = [
-    network_widget(),
-    battery_widget(),
-    monitor_widget(),
-    sound_widget(),
-    datetime_widget(),
+    NetworkWidget(),
+    BatteryWidget(),
+    MonitorWidget(),
+    SoundWidget(),
+    DatetimeWidget(),
 ]
-output = "  ".join(widgets)
+
+output = "  ".join([
+    w.get_output()
+    for w in widgets
+    if w.is_available()
+])
 
 print(output)
