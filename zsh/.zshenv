@@ -102,10 +102,10 @@ export VISUAL=${EDITOR}
 bindkey "^Q" edit-command-line
 bindkey "^R" history-incremental-pattern-search-backward
 
-function m {
-    man $@ &> /dev/null
+m() {
+    output=$(man $@)
     if [ "$?" != "0" ]; then
-        echo "No manual entry for $*"
+        echo -n $output
     else
         vim -c "SuperMan $*"
     fi
