@@ -34,6 +34,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -54,6 +55,7 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'vim-scripts/SQLUtilities'
 Plugin 'vim-scripts/gitignore'
 Plugin 'wellle/targets.vim'
 
@@ -131,6 +133,9 @@ set scrolloff=20
 set lazyredraw
 
 set wildmode=longest,full
+
+" Startup message is irritating.
+set shortmess+=I
 
 " Map leader to <Space>.
 let mapleader = "\<Space>"
