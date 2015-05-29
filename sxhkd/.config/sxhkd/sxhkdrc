@@ -157,6 +157,9 @@ super + shift + e
 super + shift + i
     open-firefox
 
+super + shift + u
+    open-chrome
+
 super + shift + y
     open-chrome-incognito
 

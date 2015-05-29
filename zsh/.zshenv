@@ -390,6 +390,12 @@ open-firefox() {
     firefox > ~/var/"firefox-log-on-$(date +%s)"
 }
 
+open-chrome() {
+    notify-executing "chrome-stable"
+
+    google-chrome-stable
+}
+
 open-chrome-incognito() {
     notify-executing "chrome-stable --incognito"
 
