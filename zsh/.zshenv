@@ -437,3 +437,7 @@ open-ranger() {
 
     xfce4-terminal -x ranger
 }
+
+check-network() {
+    wget -q -T 1 --spider google.com | grep '<html'
+}

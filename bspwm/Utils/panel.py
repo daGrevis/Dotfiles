@@ -3,8 +3,13 @@ import subprocess
 import re
 import shutil
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
+
+
+# To silence damn linter.
+if False:
+    FileNotFoundError = None
 
 
 try:
@@ -58,6 +63,17 @@ ICONS = {
 }
 
 
+ISO_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+
+def parse_from_iso(datestr):
+    return datetime.strptime(datestr, ISO_FORMAT)
+
+
+def convert_to_iso(dt):
+    return datetime.strftime(dt, ISO_FORMAT)
+
+
 def draw_line_over(text):
     return "%{+o}" + text + "%{-o}"
 
@@ -84,10 +100,86 @@ def set_background_color(text, hex_color):
             "%{B-}")
 
 
-class Widget(object):
+class InFilesystemWidgetCache(object):
+
+    def get_cache_time_path(self):
+        return "/tmp/widgets/{}.cache_time".format(self.WIDGET_NAME)
+
+    def get_cache_data_path(self):
+        return "/tmp/widgets/{}.cache_data".format(self.WIDGET_NAME)
+
+    def _get_cache_time(self):
+        cache_time = None
+
+        output = None
+        try:
+            with open(self.get_cache_time_path()) as f:
+                output = f.read()
+        except FileNotFoundError:
+            pass
+
+        if output is not None:
+            cache_time = parse_from_iso(output)
+
+        return cache_time
+
+    def _get_cache_data(self):
+        with open(self.get_cache_data_path()) as f:
+            output = f.read()
+
+        return output
+
+    def _save_to_cache(self):
+        with open(self.get_cache_time_path(), "w") as f:
+            inpt = convert_to_iso(self._cache_time)
+            f.write(inpt)
+
+        with open(self.get_cache_data_path(), "w") as f:
+            f.write(self._cache_data)
+
+
+class InRedisWidgetCache(object):
+
+    def _get_cache_time(self):
+        raise NotImplementedError()
+
+    def _get_cache_data(self):
+        raise NotImplementedError()
+
+
+class Widget(InFilesystemWidgetCache):
+
+    def __init__(self, cache_ttl=None):
+        self.cache_ttl = cache_ttl
+
+        self._cache_time = None
+        self._cache_data = None
+
+    def is_cache_enabled(self):
+        return self.cache_ttl is not None
+
+    def is_cache_expired(self):
+        return self._cache_time is None or datetime.now() - self._cache_time > self.cache_ttl
+
+    def render(self):
+        if self.is_cache_enabled():
+            self._cache_time = self._get_cache_time()
+
+            if self.is_cache_expired():
+                self._cache_time = datetime.now()
+                self._cache_data = self.get_output()
+
+                self._save_to_cache()
+            else:
+                self._cache_data = self._get_cache_data()
+
+            return self._cache_data
+        else:
+            return self.get_output()
 
     def get_output(self):
-        raise NotImplementedError()
+        if self._cache_data is not None:
+            return self._cache_data
 
     def is_available(self):
         return True
@@ -95,25 +187,36 @@ class Widget(object):
 
 class NetworkWidget(Widget):
 
+    WIDGET_NAME = "NetworkWidget"
+
     def get_output(self):
-        wicd_output = subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
+        # Not on until proven otherwise.
+        output_icon = set_foreground_color(ICONS["fa-toggle-off"], COLORS["red"])
+        output_text = "No network"
 
-        is_wireless = re.search(r"Wireless", wicd_output) is not None
-        is_wired = re.search(r"Wired", wicd_output) is not None
+        is_up = os.system("zsh -c check-network") == 0
+        if is_up:
+            wicd_output = subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
 
-        if is_wireless:
-            network_name = re.search(r"Connected to (\S+)", wicd_output).group(1)
+            is_wireless = re.search(r"Wireless", wicd_output) is not None
+            is_wired = re.search(r"Wired", wicd_output) is not None
 
-            output_icon = set_foreground_color(ICONS["fa-wifi"], COLORS["blue"])
-            output_text = network_name
-        elif is_wired:
-            output_icon = set_foreground_color(ICONS["fa-plug"], COLORS["green"])
-            output_text = "Ethernet"
-        else:
-            output_icon = set_foreground_color(ICONS["fa-toggle-off"], COLORS["red"])
-            output_text = "No network"
+            if is_wireless:
+                network_name = re.search(r"Connected to (\S+)", wicd_output).group(1)
+
+                output_icon = set_foreground_color(ICONS["fa-wifi"], COLORS["blue"])
+                output_text = network_name
+            elif is_wired:
+                output_icon = set_foreground_color(ICONS["fa-plug"], COLORS["green"])
+                output_text = "Ethernet"
+            else:
+                # Is up? Not really.
+                is_up = False
 
         output = "{} {}".format(output_icon, output_text)
+
+        if not is_up:
+            output = draw_line_over(output)
 
         return output
 
@@ -122,6 +225,8 @@ class NetworkWidget(Widget):
 
 
 class BatteryWidget(Widget):
+
+    WIDGET_NAME = "BatteryWidget"
 
     def get_output(self):
         acpi_output = subprocess.check_output(["acpi", "-b"]).decode("utf-8")
@@ -159,6 +264,8 @@ class BatteryWidget(Widget):
 
 
 class SoundWidget(Widget):
+
+    WIDGET_NAME = "SoundWidget"
 
     def get_output(self):
         amixer_output = subprocess.check_output([
@@ -198,6 +305,9 @@ class SoundWidget(Widget):
 
 
 class MonitorWidget(Widget):
+
+    WIDGET_NAME = "MonitorWidget"
+
     TEMPERATURE_MIN = 3500
     TEMPERATURE_MAX = 5500
 
@@ -253,6 +363,8 @@ class MonitorWidget(Widget):
 
 class DatetimeWidget(Widget):
 
+    WIDGET_NAME = "DatetimeWidget"
+
     def _get_color(self, h):
         # We choose color of clock based on daytime.
         if 6 <= h < 12:
@@ -291,7 +403,7 @@ class DatetimeWidget(Widget):
 
 
 widgets = [
-    NetworkWidget(),
+    NetworkWidget(cache_ttl=timedelta(seconds=5)),
     BatteryWidget(),
     MonitorWidget(),
     SoundWidget(),
@@ -299,7 +411,7 @@ widgets = [
 ]
 
 output = "  ".join([
-    w.get_output()
+    w.render()
     for w in widgets
     if w.is_available()
 ])
