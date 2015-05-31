@@ -1,5 +1,5 @@
 [Configuration]
-FontName=Fira Code 9
+FontName=Inconsolata-g for Powerline Medium 9
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
 MiscBordersDefault=FALSE
@@ -25,4 +25,6 @@ ColorForeground=#d3d0c8
 ColorBackground=#2d2d2d
 ColorPalette=#2d2d2d;#f2777a;#99cc99;#ffcc66;#6699cc;#cc99cc;#66cccc;#d3d0c8;#747369;#f2777a;#99cc99;#ffcc66;#6699cc;#cc99cc;#66cccc;#f2f0ec
 ScrollingOnOutput=FALSE
+BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
+BackgroundDarkness=0.750000
 
