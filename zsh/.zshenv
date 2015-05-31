@@ -439,5 +439,5 @@ open-ranger() {
 }
 
 check-network() {
-    wget -q -T 1 --spider google.com | grep '<html'
+    wget -q -T 1 --spider google.com
 }

@@ -9,6 +9,7 @@ from decimal import Decimal
 
 # To silence damn linter.
 if False:
+    FileExistsError = None
     FileNotFoundError = None
 
 
@@ -60,6 +61,7 @@ ICONS = {
     "fa-volume-off": "\uf026",
     "fa-volume-up": "\uf028",
     "fa-wifi": "\uf1eb",
+    "fa-server": "\uf233",
 }
 
 
@@ -102,6 +104,12 @@ def set_background_color(text, hex_color):
 
 class InFilesystemWidgetCache(object):
 
+    def _create_dir(self):
+        try:
+            os.mkdir("/tmp/widgets/")
+        except FileExistsError:
+            pass
+
     def get_cache_time_path(self):
         return "/tmp/widgets/{}.cache_time".format(self.WIDGET_NAME)
 
@@ -109,6 +117,8 @@ class InFilesystemWidgetCache(object):
         return "/tmp/widgets/{}.cache_data".format(self.WIDGET_NAME)
 
     def _get_cache_time(self):
+        self._create_dir()
+
         cache_time = None
 
         output = None
@@ -124,12 +134,16 @@ class InFilesystemWidgetCache(object):
         return cache_time
 
     def _get_cache_data(self):
+        self._create_dir()
+
         with open(self.get_cache_data_path()) as f:
             output = f.read()
 
         return output
 
     def _save_to_cache(self):
+        self._create_dir()
+
         with open(self.get_cache_time_path(), "w") as f:
             inpt = convert_to_iso(self._cache_time)
             f.write(inpt)
@@ -183,6 +197,43 @@ class Widget(InFilesystemWidgetCache):
 
     def is_available(self):
         return True
+
+
+class MemoryWidget(Widget):
+
+    WIDGET_NAME = "MemoryWidget"
+
+    def _get_total_and_used(self):
+        free_output = subprocess.check_output(["free", "-m"]).decode("utf-8")
+        total, used = [int(x) for x in
+                       re.search(r"Mem:\s+(\d+)\s+(\d+)", free_output).groups()]
+
+        return total, used
+
+    def get_output(self):
+        total, used = self._get_total_and_used()
+        percantage = used * 100 / total
+
+        icon_color = COLORS["green"]
+        if percantage >= 90:
+            icon_color = COLORS["red"]
+        elif percantage >= 75:
+            icon_color = COLORS["brown"]
+        elif percantage >= 15:
+            icon_color = COLORS["blue"]
+
+        total_output = "{}GB".format(round(total / 1024, 1))
+        if used < 1024:
+            used_output = "{}MB".format(used)
+        else:
+            used_output = "{}GB".format(round(used / 1024, 1))
+
+        return "{icon} {used} of {total} ({percantage}%)".format(
+            used=used_output,
+            total=total_output,
+            percantage=round(percantage),
+            icon=set_foreground_color(ICONS["fa-server"], icon_color),
+        )
 
 
 class NetworkWidget(Widget):
@@ -403,8 +454,9 @@ class DatetimeWidget(Widget):
 
 
 widgets = [
+    MemoryWidget(cache_ttl=timedelta(seconds=2)),
     NetworkWidget(cache_ttl=timedelta(seconds=5)),
-    BatteryWidget(),
+    BatteryWidget(cache_ttl=timedelta(seconds=10)),
     MonitorWidget(),
     SoundWidget(),
     DatetimeWidget(),
