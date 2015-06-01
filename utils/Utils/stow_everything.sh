@@ -14,6 +14,7 @@ declare -a pkgs=(
     "mpv"
     "pentadactyl"
     "sxhkd"
+    "systemd"
     "utils"
     "vim"
     "x"
