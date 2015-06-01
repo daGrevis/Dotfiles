@@ -1,0 +1,11 @@
+[Unit]
+Description=wicd-gtk
+
+[Service]
+ExecStart=/usr/bin/wicd-gtk
+ExecStop=/usr/bin/pkill gpg-agent
+Restart=on-failure
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=default.target
