@@ -157,6 +157,10 @@ super + shift + e
 super + shift + i
     open-firefox
 
+# Shortcut for opening it with single hand.
+super + shift + z
+    open-firefox
+
 super + shift + u
     open-chrome
 
