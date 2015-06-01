@@ -311,6 +311,18 @@ function remove-broken-symlinks-recursively {
     find -L $@ -type l -delete
 }
 
+get-gpg-public-key() {
+    gpg --armor --export ${1:-$USER}
+}
+
+gpg-encrypt() {
+    gpg --encrypt -o $1.gpg $1
+}
+
+import-gpg-public-key() {
+    gpg --import $@
+}
+
 dmenu-go() {
     dmenu_run -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE" -p ">" -nb $COLOR_01 -nf $COLOR_07 -sb $COLOR_0D
 }
