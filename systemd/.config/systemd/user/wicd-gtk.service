@@ -3,7 +3,7 @@ Description=wicd-gtk
 
 [Service]
 ExecStart=/usr/bin/wicd-gtk
-ExecStop=/usr/bin/pkill gpg-agent
+ExecStop=/usr/bin/pkill wicd-gtk
 Restart=on-failure
 Environment=DISPLAY=:0
 
