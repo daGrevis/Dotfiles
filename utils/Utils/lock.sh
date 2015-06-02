@@ -1,8 +1,10 @@
 #!/bin/bash
 
+# I don't want notification in screensaver.
+scrot /tmp/screenshot.jpg
+
 notify-send 'Locking screen' 'Right now'
 
-scrot -q 100 /tmp/screenshot.png
-convert /tmp/screenshot.png -scale 25% -scale 400% /tmp/screenshot-pixelated.png
+convert -colorspace gray /tmp/screenshot.jpg -scale 25% -scale 400% /tmp/screensaver.png
 
-i3lock -u -i /tmp/screenshot-pixelated.png
+i3lock -u -i /tmp/screensaver.png
