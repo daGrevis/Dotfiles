@@ -225,6 +225,9 @@ nmap <PageDown> ]m
 " Always go to exact position of the mark.
 nmap ' `
 
+" Quick access to yank register.
+nmap "" "0
+
 "
 " Commands.
 "
