@@ -77,3 +77,12 @@ You may want to compile it yourself to get it working with the latest Firefox.
     hg clone http://dactyl.googlecode.com/hg/ dactyl
     cd dactyl
     make -C pentadactyl install
+
+##### Other Add-ons You Might Enjoy
+
+* [Adblock Plus](https://addons.mozilla.org/En-us/firefox/addon/adblock-plus/),
+* [Disconnect](https://addons.mozilla.org/en-us/firefox/addon/disconnect/),
+* [HTTPS Everywhere](https://addons.mozilla.org/en-us/firefox/addon/https-everywhere/),
+* [Reddit Enhancement Suite](https://addons.mozilla.org/en-US/firefox/addon/reddit-enhancement-suite/),
+* [Self-Destructing Cookies](https://addons.mozilla.org/En-us/firefox/addon/self-destructing-cookies/),
+* [YouTube High Definition](https://addons.mozilla.org/En-us/firefox/addon/youtube-high-definition/);
