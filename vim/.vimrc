@@ -204,7 +204,7 @@ nmap + gg=G2<C-o>
 " Copy/pasting from/to system clipboard.
 vmap <C-c> "+y
 nmap <C-v> "*p
-imap <C-v> <C-o><C-v>
+imap <C-v> <C-o>"*P
 cmap <C-v> <C-r>+
 
 " Type 123<CR> to go to 123rd line.
