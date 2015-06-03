@@ -72,6 +72,18 @@ hi FontFixed -a font: 12px "Inconsolata-g" !important;
 hi StatusCmdLine -a font: 12px "Inconsolata-g" !important;
 hi Hint -a font: 12px "Inconsolata-g" !important;
 
+hi StatusLineBroken -a background: #F2777A !important;
+hi StatusLineNormal -a background: #393939 !important;
+hi StatusLineSecure -a background: #99CC99 !important;
+hi StatusLineExtended -a background: #99CC99 !important;
+
+hi Hint -a background: white !important; padding: 2px !important; text-transform: uppercase !important; font-size: 11px !important; font-weight: bold !important;
+hi Hint[active] -a background: #FFCC66 !important;
+" #FFDD99 = lighten(#FFCC66, 10%)
+hi HintElem -a background: #FFDD99 !important;
+" #FFDD99 = lighten(#FFCC66, 10%)
+hi HintActive -a background: #FFDD99 !important;
+
 " For Pinboard.
 nmap <a> :open javascript:(function(){q=location.href;if(document.getSelection){d=document.getSelection();}else{d='';};p=document.title;void(open('https://pinboard.in/add?showtags=yes&url='+encodeURIComponent(q)+'&description='+encodeURIComponent(d)+'&title='+encodeURIComponent(p),'Pinboard',%20'toolbar=no,width=700,height=600'))})()<CR>
 nmap <b> :tabopen https://pinboard.in/u:daGrevis<CR>
