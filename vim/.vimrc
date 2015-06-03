@@ -29,6 +29,7 @@ Plugin 'lilydjwg/colorizer'
 Plugin 'luochen1990/rainbow'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
+Plugin 'mhinz/vim-startify'
 Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'mxw/vim-jsx'
@@ -630,3 +631,11 @@ let g:gitgutter_eager = 0
 "
 
 nmap <Leader>gu :GundoToggle<CR>
+
+"
+" Startify configuration.
+"
+
+nmap <Leader><Enter> :Startify<CR>
+
+let g:startify_files_number = 25
