@@ -415,6 +415,9 @@ nmap <Leader>gq mtggvGgq`t
 
 nmap <Leader>c :ColorToggle<CR>
 
+" Search for diff markers.
+nmap <Leader>d /\v[<>=]{3,}
+
 " Sets color-scheme.
 colorscheme slate
 
