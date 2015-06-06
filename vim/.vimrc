@@ -369,54 +369,77 @@ endfunc
 au BufLeave * call AuBufLeave()
 
 "
-" Leader mappings.
+" Leader mappings (leaders).
+" They are sorted alphabetically.
 "
 
-nmap <Leader>q :wq!<CR>
-nmap <Leader>w :w<CR>
+" Go to start buffer (Startify).
+nmap <Leader><Backspace> :Startify<CR>
 
-nmap <Leader>e :e<Space>
-nmap <Leader>ee :e!<CR>
-nmap <Leader>t :tabe<Space>
+" Edit history.
+nmap <Leader><Tab> :GundoToggle<CR>
 
-" Word suggestions for typos.
-map <Leader>z :set spell<CR>z=
+" Find in files (alternative grep).
+nmap <Leader>a :Ack<Space>
 
-" Shortcut for setting filetype.
-nmap <Leader>f :set ft=
-
-" Count occurrences of a pattern in current buffer.
-nmap <Leader>n :%s///gn<Left><Left><Left><Left>
-
-" See registers.
-nmap <Leader>r :registers<CR>
-
-nmap <Leader>s :sort<CR>
-vmap <Leader>s :sort<CR>
-
-" Sources VimL.
-vmap <Leader>x y:@"<CR>
-
-nmap <Leader>m :make<CR>
-
+" Blaming is always fun and it's useful for teaching. Be polite tho!
 nmap <Leader>b :Gblame<CR>
 
-" Goes into visual-block mode.
-nmap <Leader>v v<C-v>
-
-" Replace text.
-nmap <Leader>k yiw:%s/<C-r>0/
-vmap <Leader>k y:%s/<C-r>0/
-
-nmap <Leader>h :help<Space>
-
-" Restructures text so it doesn't go over `textwidth`.
-nmap <Leader>gq mtggvGgq`t
-
+" Colorize strings that are colors! Disabled by default because it's slow.
 nmap <Leader>c :ColorToggle<CR>
 
 " Search for diff markers.
 nmap <Leader>d /\v[<>=]{3,}
+
+" Open file.
+nmap <Leader>e :e<Space>
+
+" Reload file.
+nmap <Leader>ee :e!<CR>
+
+" Shortcut for setting filetype.
+nmap <Leader>f :set ft=
+
+" Restructures text so it doesn't go over `textwidth`.
+nmap <Leader>gq mtggvGgq`t
+
+nmap <Leader>h :help<Space>
+
+" Replace word or selected text in current buffer.
+nmap <Leader>k yiw:%s/<C-r>0/
+vmap <Leader>k y:%s/<C-r>0/
+
+nmap <Leader>m :make<CR>
+
+" Shows registers.
+nmap <Leader>r :registers<CR>
+
+" Count occurrences of a pattern in current buffer.
+nmap <Leader>n :%s///gn<Left><Left><Left><Left>
+
+" Anonymous gists.
+nmap <Leader>pg :Gist -a<CR>
+vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
+
+" Save and close buffer.
+nmap <Leader>q :wq!<CR>
+
+" Sort everything or selected text in current buffer.
+nmap <Leader>s :sort<CR>
+vmap <Leader>s :sort<CR>
+
+nmap <Leader>t :tabe<Space>
+
+" Start selecting in visual-block mode.
+nmap <Leader>v v<C-v>
+
+nmap <Leader>w :w<CR>
+
+" Sources what you have selected as Vimscript.
+vmap <Leader>x y:@"<CR>
+
+" Correct word under the cursor.
+map <Leader>z :set spell<CR>z=
 
 " Sets color-scheme.
 colorscheme slate
@@ -460,7 +483,6 @@ let g:airline#extensions#tabline#show_close_button = 0
 " Ack configuration.
 "
 
-nmap <Leader>a :Ack<Space>
 nmap // :<C-r>/<Backspace><Backspace><C-a><Right><Right><Backspace><Backspace>Ack<Space>
 
 "
@@ -471,9 +493,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
-
-nmap <Leader><Tab> :SyntasticCheck<CR>
-nmap <Leader><S-Tab> :SyntasticReset<CR>
 
 " Linters for Python files.
 let g:syntastic_python_checkers = ['python', 'frosted']
@@ -499,10 +518,6 @@ let NERDTreeShowHidden = 1
 "
 " Gist configuration.
 "
-
-" Anonymous gists.
-nmap <Leader>pg :Gist -a<CR>
-vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
 
 "
 " CtrlP configuration.
@@ -601,7 +616,7 @@ let g:instant_markdown_slow = 1
 " Autostart is too of a surprise.
 let g:instant_markdown_autostart = 0
 
-" It just make sense to open preview like this.
+" It just makes sense to open preview like this.
 func! AuFtMarkdownInstantMarkdown()
     nmap <buffer> <Space>m :InstantMarkdownPreview<CR>
 endfunc
@@ -630,15 +645,7 @@ let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
 "
-" Gundo configuration.
-"
-
-nmap <Leader>gu :GundoToggle<CR>
-
-"
 " Startify configuration.
 "
-
-nmap <Leader><Enter> :Startify<CR>
 
 let g:startify_files_number = 25
