@@ -1,68 +1,62 @@
-" Required by Vundle.
+" Required.
 set nocompatible
 filetype off
 
-" Loads Vundle.
-set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" TODO: Neobundle looks very promising, need to check it out.
-
-" Required plugins.
-Plugin 'gmarik/Vundle.vim'
+" Loads vim-plug.
+call plug#begin('~/.vim/plugged')
 
 " Optional plugins.
-Plugin 'Raimondi/delimitMate'
-Plugin 'SirVer/ultisnips'
-Plugin 'Z1MM32M4N/vim-superman'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bling/vim-airline'
-Plugin 'chriskempson/base16-vim'
-Plugin 'ervandew/supertab'
-Plugin 'guns/vim-clojure-static'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'honza/vim-snippets'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'justinmk/vim-sneak'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'kien/ctrlp.vim'
-Plugin 'lilydjwg/colorizer'
-Plugin 'luochen1990/rainbow'
-Plugin 'mattn/gist-vim'
-Plugin 'mattn/webapi-vim'
-Plugin 'mhinz/vim-startify'
-Plugin 'mileszs/ack.vim'
-Plugin 'morhetz/gruvbox'
-Plugin 'mxw/vim-jsx'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'pangloss/vim-javascript'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'sjl/gundo.vim'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'terryma/vim-expand-region'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fireplace'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-leiningen'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'vim-scripts/SQLUtilities'
-Plugin 'vim-scripts/gitignore'
-Plugin 'wellle/targets.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'SirVer/ultisnips'
+Plug 'Z1MM32M4N/vim-superman'
+Plug 'airblade/vim-gitgutter'
+Plug 'bling/vim-airline'
+Plug 'chriskempson/base16-vim'
+Plug 'ervandew/supertab'
+Plug 'guns/vim-clojure-static'
+Plug 'haya14busa/incsearch.vim'
+Plug 'honza/vim-snippets'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'justinmk/vim-sneak'
+Plug 'kchmck/vim-coffee-script'
+Plug 'kien/ctrlp.vim'
+Plug 'lilydjwg/colorizer'
+Plug 'luochen1990/rainbow'
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+Plug 'mhinz/vim-startify'
+Plug 'mileszs/ack.vim'
+Plug 'morhetz/gruvbox'
+Plug 'mxw/vim-jsx'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'pangloss/vim-javascript'
+Plug 'plasticboy/vim-markdown'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'sjl/gundo.vim'
+Plug 'suan/vim-instant-markdown'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'terryma/vim-expand-region'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-leiningen'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-scripts/SQLUtilities'
+Plug 'vim-scripts/gitignore'
+Plug 'wellle/targets.vim'
 
-" Required by Vundle.
-call vundle#end()
-filetype plugin indent on
+" Required by vim-plug.
+call plug#end()
 
 " Sets how indentation works.
 func! ResetIndentation()
