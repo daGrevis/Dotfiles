@@ -59,14 +59,15 @@ You may want to set Zsh as the default shell.
 
 #### Vim
 
-It needs [gmarik/Vundle.vim](https://github.com/gmarik/Vundle.vim) to manage
+It needs [junegunn/vim-plug](https://github.com/junegunn/vim-plug) to manage
 plugins.
 
-    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 Plugins should be installed and later updated.
 
-    vim +PluginUpdate +qall
+    vim +PlugUpdate +qall
 
 #### Firefox
 
