@@ -327,6 +327,18 @@ dmenu-go() {
     dmenu_run -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE" -p ">" -nb $COLOR_01 -nf $COLOR_07 -sb $COLOR_0D
 }
 
+disable-sreen() {
+    xset dpms force off
+}
+
+disable-screen-from-sleeping() {
+    xset -dpms
+}
+
+enable-screen-to-sleep() {
+    xset +dpms
+}
+
 brightness-dec-by-5() {
     xbacklight -dec 5 -time 0
 }

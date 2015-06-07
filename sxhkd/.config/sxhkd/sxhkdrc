@@ -110,6 +110,9 @@ super + p
 super + control + p
     passmenu
 
+F3
+    disable-sreen
+
 F4
     brightness-dec-by-5
 
