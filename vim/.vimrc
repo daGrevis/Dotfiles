@@ -6,6 +6,7 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " Optional plugins.
+Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
 Plug 'Z1MM32M4N/vim-superman'
@@ -201,6 +202,7 @@ vmap <C-c> "+y
 nmap <C-v> "*p
 imap <C-v> <C-o>"*P
 cmap <C-v> <C-r>+
+cmap <S-Insert> <C-r>+
 
 " Type 123<CR> to go to 123rd line.
 nnoremap <CR> G
@@ -411,6 +413,8 @@ nmap <Leader>r :registers<CR>
 " Count occurrences of a pattern in current buffer.
 nmap <Leader>n :%s///gn<Left><Left><Left><Left>
 
+nmap <Leader>p :CtrlPSmartTabs<CR>
+
 " Anonymous gists.
 nmap <Leader>pg :Gist -a<CR>
 vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
@@ -535,6 +539,8 @@ let g:ctrlp_prompt_mappings = {
             \ "PrtClearCache()": ["<C-r>"],
             \ }
 
+let g:ctrlp_reuse_window  = 'startify'
+
 "
 " CtrlPFunky configuration.
 "
@@ -542,6 +548,12 @@ let g:ctrlp_prompt_mappings = {
 let g:ctrlp_funky_syntax_highlight = 1
 
 nmap <Backspace> :CtrlPFunky<CR>
+
+"
+" CtrlPSmartTabs configuration.
+"
+
+let g:ctrlp_smarttabs_modify_tabline = 0
 
 "
 " Incsearch configuration.
