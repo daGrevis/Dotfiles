@@ -205,6 +205,11 @@ json-prettify() {
     cat $1 | python -m json.tool |& pygmentize -s -l json
 }
 
+get-ip() {
+    curl -s 'https://api.ipify.org'
+    echo
+}
+
 alias gbl='git blame'
 alias gbr='git branch'
 alias gcl='git clone'
