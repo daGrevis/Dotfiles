@@ -533,7 +533,7 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 " Don't reload CtrlP cache when opening file outside project.
 let g:ctrlp_working_path_mode = 'r'
 
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:40'
 
 let g:ctrlp_prompt_mappings = {
             \ "PrtClearCache()": ["<C-r>"],
