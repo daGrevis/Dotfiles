@@ -1,7 +1,8 @@
 #!/bin/bash
 
-killall panel
+killall panel bar
 ~/Utils/panel &
+~/Utils/bar2 &
 
 killall sxhkd
 sxhkd &
