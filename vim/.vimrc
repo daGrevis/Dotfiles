@@ -238,8 +238,6 @@ command! -nargs=* ResetIndentation call ResetIndentation()
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
 
-au filetype text,markdown setlocal textwidth=100
-
 " Languages in which completion that includes `-` symbol makes sense.
 au filetype html,htmldjango,css,scss,sass,javascript,coffee,sh,gitcommit setlocal iskeyword+=-
 
