@@ -201,9 +201,12 @@ pacman-import-gpg-key() {
     sudo pacman-key -r $1 && \
         sudo pacman-key --lsign-key $1
 }
+
 json-prettify() {
     cat $1 | python -m json.tool |& pygmentize -s -l json
 }
+
+alias ccat='pygmentize -g'
 
 get-ip() {
     curl -s 'https://api.ipify.org'
@@ -275,10 +278,6 @@ function clean-images {
     docker rmi -f $(docker images -q)
 }
 
-function clean-pyc {
-    find -type f -name '*.pyc' -delete
-}
-
 function pip_upgrade {
     pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs sudo pip install -U
 }
@@ -300,8 +299,12 @@ function generate-and-save-password {
     copy-to-clipboard "${pw}"
 }
 
+function show-password {
+    pass show $1 | gedit - 2> /dev/null & disown
+}
+
 function delete-pyco {
-    find -name '*.py[co]' -delete
+    find -type f -name '*.py[co]' -delete
 }
 
 function focus-desktop {

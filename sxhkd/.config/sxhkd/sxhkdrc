@@ -108,7 +108,7 @@ super + p
     dmenu-go
 
 super + control + p
-    passmenu
+    passmenu.sh
 
 F3
     disable-sreen

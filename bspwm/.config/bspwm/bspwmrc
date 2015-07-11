@@ -32,4 +32,4 @@ set_wallpaper.sh
 ~/Utils/panel &
 ~/Utils/bar2 &
 compton --config ~/.compton.conf &
-trayer --height 16 --transparent true --alpha 0 --tint 0x393939 --widthtype request --align right &
+~/Utils/trayer.sh &

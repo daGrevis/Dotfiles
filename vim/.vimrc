@@ -8,12 +8,13 @@ call plug#begin('~/.vim/plugged')
 " Optional plugins.
 Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'Raimondi/delimitMate'
+Plug 'Shougo/neocomplete.vim'
 Plug 'SirVer/ultisnips'
 Plug 'Z1MM32M4N/vim-superman'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chriskempson/base16-vim'
-Plug 'ervandew/supertab'
+Plug 'davidhalter/jedi-vim'
 Plug 'guns/vim-clojure-static'
 Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
@@ -52,6 +53,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'ujihisa/neco-look'
 Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/gitignore'
 Plug 'wellle/targets.vim'
@@ -133,6 +135,12 @@ set wildmode=longest,full
 " Startup message is irritating.
 set shortmess+=I
 
+" The completion menu will show only when there is more than one match.
+set completeopt=menuone
+
+" Enables Vim built-in completion.
+set omnifunc=syntaxcomplete#Complete
+
 " Map leader to <Space>.
 let mapleader = "\<Space>"
 
@@ -177,8 +185,8 @@ vmap H ^
 nmap L $
 vmap L $
 
-nmap * *<C-o>
-nmap # #<C-o>
+nmap * g*<C-o>
+nmap # g#<C-o>
 
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
@@ -234,6 +242,12 @@ command! -nargs=* ResetIndentation call ResetIndentation()
 "
 " Auto-commands.
 "
+
+" Enables Vim built-in completion.
+autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript,javascript.jsx,coffee setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
@@ -325,12 +339,19 @@ func! AuColorScheme()
         hi Comment guifg=#A09F93
         hi StatusLine guifg=#F2F0EC guibg=#515151
         hi Wildmenu guifg=#2D2D2D guibg=#6699CC
+
+        hi Cursor guibg=#6699CC
+
+        " Completion menu.
         hi Pmenu guifg=#F2F0EC guibg=#515151
         hi PmenuSel guifg=#2D2D2D guibg=#6699CC
+        " Blends out right sidebar.
+        hi PmenuThumb guibg=#2D2D2D
+        hi PmenuSbar guibg=#2D2D2D
 
         hi HighlightNext guibg=#F2777A
 
-        hi SneakPluginTarget guifg=black guibg=#F2777A ctermfg=black ctermbg=red
+        hi SneakPluginTarget guifg=black guibg=#A09F93 ctermfg=black ctermbg=white
 
         hi SyntasticErrorSign guibg=#F2777A guifg=#393939
         hi SyntasticStyleErrorSign guibg=#FFCC66 guifg=#2D2D2D
@@ -383,7 +404,7 @@ nmap <Leader>b :Gblame<CR>
 nmap <Leader>c :ColorToggle<CR>
 
 " Search for diff markers.
-nmap <Leader>d /\v[<>=]{3,}
+nmap <Leader>d /\v[<>=]{3,}<CR>
 
 " Open file.
 nmap <Leader>e :e<Space>
@@ -397,6 +418,7 @@ nmap <Leader>f :set ft=
 " Restructures text so it doesn't go over `textwidth`.
 nmap <Leader>gq mtggvGgq`t
 
+" Don't underestimate Vim help -- it is top notch!
 nmap <Leader>h :help<Space>
 
 " Replace word or selected text in current buffer.
@@ -456,6 +478,9 @@ if has('gui_running')
 
     " Sets font.
     set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 9
+
+    " Blink faster!
+    set guicursor+=n-v-c:blinkon200
 
 endif
 
@@ -653,3 +678,66 @@ let g:gitgutter_eager = 0
 "
 
 let g:startify_files_number = 25
+
+"
+" UltiSnips configuration.
+"
+
+let g:UltiSnipsExpandTrigger = "<C-\\>"
+
+"
+" NeoComplete configuration.
+"
+
+let g:neocomplete#enable_at_startup = 1
+
+let g:neocomplete#max_list = 20
+
+let g:neocomplete#max_keyword_width = 50
+
+let g:neocomplete#enable_fuzzy_completion = 0
+
+let g:neocomplete#skip_auto_completion_time = "0.2"
+
+let g:enable_cursor_hold_i = 1
+let g:neocomplete#cursor_hold_i_time = 1000 " ms
+
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<TAB>"
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+" Close completion with <Enter> w/o breaking indentation by entering a line.
+function! s:cr_event()
+    return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+inoremap <silent> <CR> <C-r>=<SID>cr_event()<CR>
+
+if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+
+" Enables English dictionary completion using look command and
+" /usr/share/dict/words word-list in specified filetypes.
+let g:neocomplete#text_mode_filetypes = get(g:, 'neocomplete#text_mode_filetypes', {})
+let g:neocomplete#text_mode_filetypes.text = 1
+let g:neocomplete#text_mode_filetypes.markdown = 1
+let g:neocomplete#text_mode_filetypes.gitcommit = 1
+
+"
+" Jedi configuration.
+"
+
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+
+let g:jedi#goto_command = ""
+let g:jedi#goto_assignments_command = ""
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = ""
+let g:jedi#usages_command = ""
+let g:jedi#completions_command = ""
+let g:jedi#rename_command = ""
+
+autocmd FileType python setlocal omnifunc=jedi#completions

@@ -10,6 +10,9 @@ sxhkd &
 killall dunst
 dunst &
 
+killall trayer
+~/Utils/trayer.sh
+
 # TODO: Make it actually work.
 # aux dunst
 # until $? != 0; do
