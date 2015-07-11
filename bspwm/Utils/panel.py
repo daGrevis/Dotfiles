@@ -455,10 +455,10 @@ class DatetimeWidget(Widget):
 
 widgets = [
     MemoryWidget(cache_ttl=timedelta(seconds=2)),
-    # NetworkWidget(cache_ttl=timedelta(seconds=5)),
-    # BatteryWidget(cache_ttl=timedelta(seconds=10)),
-    # MonitorWidget(),
-    # SoundWidget(),
+    NetworkWidget(cache_ttl=timedelta(seconds=5)),
+    BatteryWidget(cache_ttl=timedelta(seconds=10)),
+    MonitorWidget(),
+    SoundWidget(),
     DatetimeWidget(),
 ]
 
