@@ -83,6 +83,7 @@ You may want to compile it yourself to get it working with the latest Firefox.
 
 * [Disconnect](https://addons.mozilla.org/en-us/firefox/addon/disconnect/),
 * [HTTPS Everywhere](https://addons.mozilla.org/en-us/firefox/addon/https-everywhere/),
+* [JSONView](https://addons.mozilla.org/en-us/firefox/addon/jsonview/),
 * [Reddit Enhancement Suite](https://addons.mozilla.org/en-US/firefox/addon/reddit-enhancement-suite/),
 * [Self-Destructing Cookies](https://addons.mozilla.org/En-us/firefox/addon/self-destructing-cookies/),
 * [YouTube High Definition](https://addons.mozilla.org/En-us/firefox/addon/youtube-high-definition/);
