@@ -7,5 +7,5 @@ while read -r line ; do
             ;;
     esac
 
-    printf "%s\n" "%{l}${output}"
+    printf "%s\n" "%{l}%{B#FF515151}%{F#FF6699CC} $(echo -e '\ue600') %{F-}%{B-} ${output}%{r}%{F#FFA09F93}$(echo -e '\uf142')%{F-} "
 done

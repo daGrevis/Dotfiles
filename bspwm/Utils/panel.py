@@ -62,6 +62,8 @@ ICONS = {
     "fa-volume-up": "\uf028",
     "fa-wifi": "\uf1eb",
     "fa-server": "\uf233",
+    "fa-server": "\uf233",
+    "fa-ellipsis-v": "\uf142",
 }
 
 
@@ -467,5 +469,6 @@ output = "  ".join([
     for w in widgets
     if w.is_available()
 ])
+output += "  {icon} ".format(icon=set_foreground_color(ICONS["fa-ellipsis-v"], COLORS["on_grey"]))
 
 print(output)

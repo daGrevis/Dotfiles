@@ -5,7 +5,7 @@ p=~/bar2
 [ -e "$p" ] && rm "$p"
 mkfifo "$p"
 
-xtitle -sf 'X%{F#FF6699CC}%{B#FF515151}  %{B-}%{F-} %s' > "$p" &
+xtitle -sf 'X%s' > "$p" &
 
 . ~/Utils/panel_colors
 
