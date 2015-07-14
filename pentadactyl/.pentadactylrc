@@ -82,6 +82,9 @@ hi StatusLineNormal -a background: #393939 !important;
 hi StatusLineSecure -a background: #99CC99 !important;
 hi StatusLineExtended -a background: #99CC99 !important;
 
+hi CompItem[selected] -a background: #FFCC66 !important;
+
+" When you press <f|F>.
 hi Hint -a background: white !important; padding: 2px !important; text-transform: uppercase !important; font-size: 11px !important; font-weight: bold !important;
 hi Hint[active] -a background: #FFCC66 !important;
 " #FFDD99 = lighten(#FFCC66, 10%)
