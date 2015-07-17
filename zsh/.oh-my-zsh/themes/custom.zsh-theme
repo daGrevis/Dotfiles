@@ -26,6 +26,7 @@ who_and_where() {
         s="$(fg yellow)%n$(reset_color)"
         s+="@"
         s+="$(fg magenta)%m$(reset_color)"
+        s+=" "
     else
         s=""
     fi
@@ -41,16 +42,31 @@ git_info() {
 }
 
 current_directory() {
-    echo "$(fg cyan)${PWD/#$HOME/~}$(reset_color)"
-}
+    dir="${PWD/#$HOME/~}"
+    parts=("${(@s:/:)dir}")
 
+    s=""
+    for part in $parts; do
+        x=${part:0:20}
+        if [ "$x" != "$part" ]; then
+            x="$x…"
+        fi
+        s="$s$x/";
+    done
+
+    if [ "$s" = "~/" ]; then
+        s="~"
+    fi
+
+    echo "$(fg cyan)$s$(reset_color)"
+}
 
 datetime() {
     echo "$(fg_bold black)$(date '+%H:%M:%S')"
 }
 
-PROMPT='$(return_status) $(who_and_where) $(current_directory)$(git_prompt_info)  '
-RPROMPT='$(datetime) $(fg_bold black)↑$(reset_color)'
+PROMPT='$(return_status) $(who_and_where)$(current_directory)$(git_prompt_info)  '
+RPROMPT='$(datetime)$(reset_color)'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" $(fg red)"
 ZSH_THEME_GIT_PROMPT_DIRTY="$(fg_bold yellow)±"
