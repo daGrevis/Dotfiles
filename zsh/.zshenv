@@ -473,3 +473,15 @@ open-ranger() {
 check-network() {
     wget -q -T 1 --spider google.com
 }
+
+7x() {
+    # Unzips archives into an empty directory.
+    pth=$1
+    pth_no_ext="${pth%.*}"
+
+    mkdir -p $pth_no_ext
+    mv $pth "$pth_no_ext/$pth"
+    cd $pth_no_ext
+    7z x $pth
+    l
+}
