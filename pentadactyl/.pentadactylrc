@@ -72,13 +72,13 @@ hi FontFixed -a font: 12px "Inconsolata-g" !important;
 hi StatusCmdLine -a font: 12px "Inconsolata-g" !important;
 hi Hint -a font: 12px "Inconsolata-g" !important;
 
-hi StatusLineBroken -a color: #2D2D2D important;
+hi StatusLineNormal -a color: #D3D0C8 !important;
+hi StatusLineBroken -a color: #2D2D2D !important;
 hi StatusLineSecure -a color: #2D2D2D !important;
 hi StatusLineExtended -a color: #2D2D2D !important;
-hi StatusLineNormal -a color: #D3D0C8 !important;
 
-hi StatusLineBroken -a background: #F2777A !important;
 hi StatusLineNormal -a background: #393939 !important;
+hi StatusLineBroken -a background: #F2777A !important;
 hi StatusLineSecure -a background: #99CC99 !important;
 hi StatusLineExtended -a background: #99CC99 !important;
 
