@@ -9,6 +9,9 @@ setopt interactivecomments
 # time that oh-my-zsh is loaded.
 ZSH_THEME="custom"
 
+touch ~/settings.sh
+source ~/settings.sh
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 

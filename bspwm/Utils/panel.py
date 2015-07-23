@@ -6,6 +6,9 @@ import shutil
 from datetime import datetime, timedelta
 from decimal import Decimal
 
+import forecastio
+import sweetcache
+
 
 # To silence damn linter.
 if False:
@@ -41,8 +44,13 @@ except KeyError:
     print("COLOR_* variables are missing!")
     exit(-1)
 
+FORECAST_IO_API_KEY = os.environ["FORECAST_IO_API_KEY"]
+LOCATION_LAT = float(os.environ["LOCATION_LAT"])
+LOCATION_LNG = float(os.environ["LOCATION_LNG"])
+
 # Some aliases.
 COLORS["on_grey"] = COLORS["04"]
+COLORS["grey"] = COLORS["05"]
 COLORS["red"] = COLORS["08"]
 COLORS["orange"] = COLORS["09"]
 COLORS["yellow"] = COLORS["0A"]
@@ -55,19 +63,30 @@ COLORS["brown"] = COLORS["0F"]
 ICONS = {
     "fa-bolt": "\uf0e7",
     "fa-clock": "\uf017",
+    "fa-cloud": "\uf0c2",
     "fa-desktop": "\uf108",
+    "fa-ellipsis-v": "\uf142",
+    "fa-moon-o":"\uf186",
     "fa-plug": "\uf1e6",
+    "fa-server": "\uf233",
+    "fa-sun-o":"\uf185",
     "fa-toggle-off": "\uf204",
     "fa-volume-off": "\uf026",
     "fa-volume-up": "\uf028",
     "fa-wifi": "\uf1eb",
-    "fa-server": "\uf233",
-    "fa-server": "\uf233",
-    "fa-ellipsis-v": "\uf142",
 }
 
 
 ISO_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+
+cache = sweetcache.Cache(sweetcache.RedisBackend)
+
+
+def is_night(dt):
+    h = dt.hour
+
+    return 21 <= h <= 23 or 0 <= h < 6
 
 
 def parse_from_iso(datestr):
@@ -102,6 +121,16 @@ def set_background_color(text, hex_color):
     return ("%{B" + to_bar_color_format(hex_color) + "}" +
             text +
             "%{B-}")
+
+
+def get_forecast():
+    forecast = forecastio.load_forecast(
+        FORECAST_IO_API_KEY,
+        LOCATION_LAT,
+        LOCATION_LNG,
+    )
+
+    return forecast
 
 
 class InFilesystemWidgetCache(object):
@@ -152,15 +181,6 @@ class InFilesystemWidgetCache(object):
 
         with open(self.get_cache_data_path(), "w") as f:
             f.write(self._cache_data)
-
-
-class InRedisWidgetCache(object):
-
-    def _get_cache_time(self):
-        raise NotImplementedError()
-
-    def _get_cache_data(self):
-        raise NotImplementedError()
 
 
 class Widget(InFilesystemWidgetCache):
@@ -414,11 +434,55 @@ class MonitorWidget(Widget):
         )
 
 
+class WeatherWidget(Widget):
+
+    WIDGET_NAME = "WeatherWidget"
+
+    def get_output(self):
+        key = "widgets.weather.output"
+        output = cache.get(key, None)
+        if output is None:
+            forecast_currently = get_forecast().currently()
+
+            try:
+                forecast_currently.d["precipType"]
+                has_precipitation = True
+            except KeyError:
+                has_precipitation = False
+
+            if has_precipitation:
+                icon = ICONS["fa-cloud"]
+                icon_color = COLORS["grey"]
+            else:
+                if is_night(datetime.now()):
+                    icon = ICONS["fa-moon-o"]
+                    icon_color = COLORS["grey"]
+                else:
+                    icon = ICONS["fa-sun-o"]
+                    icon_color = COLORS["yellow"]
+
+            text = "{temperature}C ({apparentTemperature}C)".format(
+                temperature=forecast_currently.temperature,
+                apparentTemperature=forecast_currently.apparentTemperature,
+            )
+
+            output = "{icon} {text}".format(
+                icon=set_foreground_color(icon, icon_color),
+                text=text,
+            )
+
+            cache.set(key, output, expires=timedelta(seconds=100))
+
+        return output
+
+
 class DatetimeWidget(Widget):
 
     WIDGET_NAME = "DatetimeWidget"
 
-    def _get_color(self, h):
+    def _get_color(self, dt):
+        h = dt.hour
+
         # We choose color of clock based on daytime.
         if 6 <= h < 12:
             color = COLORS["green"]
@@ -426,13 +490,13 @@ class DatetimeWidget(Widget):
             color = COLORS["yellow"]
         elif 18 <= h < 21:
             color = COLORS["orange"]
-        elif 21 <= h <= 23 or 0 <= h < 6:
+        elif is_night(dt):
             color = COLORS["purple"]
 
         return color
 
-    def _get_postfix(self, day):
-        position = str(day)[-1:]
+    def _get_postfix(self, dt):
+        position = str(dt.day)[-1:]
 
         postfix = "th"
         if position == "1":
@@ -448,8 +512,8 @@ class DatetimeWidget(Widget):
         now = datetime.now()
 
         output = "{icon} {text}".format(
-            icon=set_foreground_color(ICONS["fa-clock"], self._get_color(now.hour)),
-            text=now.strftime("%H:%M, %B %-d{}".format(self._get_postfix(now.day))),
+            icon=set_foreground_color(ICONS["fa-clock"], self._get_color(now)),
+            text=now.strftime("%H:%M, %B %-d{}".format(self._get_postfix(now))),
         )
 
         return output
@@ -461,6 +525,7 @@ widgets = [
     BatteryWidget(cache_ttl=timedelta(seconds=10)),
     MonitorWidget(),
     SoundWidget(),
+    WeatherWidget(),
     DatetimeWidget(),
 ]
 
