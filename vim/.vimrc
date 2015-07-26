@@ -14,6 +14,8 @@ Plug 'Z1MM32M4N/vim-superman'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chriskempson/base16-vim'
+Plug 'coot/CRDispatcher'
+Plug 'coot/EnchantedVim'
 Plug 'davidhalter/jedi-vim'
 Plug 'guns/vim-clojure-static'
 Plug 'haya14busa/incsearch.vim'
@@ -197,10 +199,6 @@ nmap <C-q> <Nop>
 " Reselect text when indenting.
 vmap < <gv
 vmap > >gv
-
-" Sane regexes (aka very magic).
-cnoremap s/ s/\v
-cnoremap %s/ %s/\v
 
 " Indent all the things!
 nmap + gg=G2<C-o>
@@ -504,7 +502,7 @@ let g:airline#extensions#tabline#show_close_button = 0
 " Ack configuration.
 "
 
-nmap // :<C-r>/<Backspace><Backspace><C-a><Right><Right><Backspace><Backspace>Ack<Space>
+nmap // :'<C-r>/'<C-a><Right><Right><Right><Backspace><Backspace><C-a>Ack<Space><Left>
 
 "
 " Syntastic configuration.
@@ -582,8 +580,8 @@ let g:ctrlp_smarttabs_modify_tabline = 0
 " Incsearch configuration.
 "
 
-map / <Plug>(incsearch-forward)\v
-map ? <Plug>(incsearch-backward)\v
+nmap / <Plug>(incsearch-forward)\v
+nmap ? <Plug>(incsearch-backward)\v
 
 "
 " Expand-region configuration.
@@ -741,3 +739,18 @@ let g:jedi#completions_command = ""
 let g:jedi#rename_command = ""
 
 autocmd FileType python setlocal omnifunc=jedi#completions
+
+"
+" Enchanted configuration.
+"
+
+let g:VeryMagic = 1
+let g:VeryMagicSubstitute = 1
+let g:VeryMagicGlobal = 1
+let g:VeryMagicVimGrep = 1
+let g:VeryMagicSearchArg = 1
+let g:VeryMagicFunction = 1
+let g:VeryMagicHelpgrep = 1
+let g:VeryMagicRange = 1
+let g:VeryMagicEscapeBackslashesInSearchArg = 1
+let g:SortEditArgs = 1

@@ -62,8 +62,8 @@ nmap <Space><Space> <C-^>
 " View source.
 nmap <Space>u gF<CR>
 
-" View history.
 nmap <Space>h :history<CR>
+nmap <Space>j :downloads<CR>
 
 nmap <Space>e o
 nmap <Space>t t
