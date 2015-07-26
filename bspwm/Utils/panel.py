@@ -456,15 +456,28 @@ class WeatherWidget(Widget):
             else:
                 if is_night(datetime.now()):
                     icon = ICONS["fa-moon-o"]
-                    icon_color = COLORS["grey"]
+                    icon_color = COLORS["purple"]
                 else:
                     icon = ICONS["fa-sun-o"]
                     icon_color = COLORS["yellow"]
 
-            text = "{temperature}C ({apparentTemperature}C)".format(
-                temperature=forecast_currently.temperature,
-                apparentTemperature=forecast_currently.apparentTemperature,
-            )
+            temperature_apparent = round(forecast_currently.apparentTemperature, 1)
+            temperature = round(forecast_currently.temperature, 1)
+            pressure = round(forecast_currently.pressure)
+
+            if temperature_apparent == temperature:
+                text_temperature = "{temperature}C".format(
+                    temperature=temperature,
+                )
+            else:
+                text_temperature = "{temperature_apparent}C ({temperature}C)".format(
+                    temperature_apparent=temperature_apparent,
+                    temperature=temperature,
+                )
+
+            text_pressure = "{}hPa".format(pressure)
+
+            text = "{} / {}".format(text_temperature, text_pressure)
 
             output = "{icon} {text}".format(
                 icon=set_foreground_color(icon, icon_color),
