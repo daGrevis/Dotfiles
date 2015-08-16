@@ -19,6 +19,6 @@ done &
 
 . ~/Utils/panel_colors
 
-cat "$PANEL_FIFO" | ~/Utils/panel_bar | bar -g "x$PANEL_HEIGHT" -f "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE,FontAwesome-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
+cat "$PANEL_FIFO" | ~/Utils/panel_bar | bar -g "x$PANEL_HEIGHT" -f "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE,FontAwesome-12,iconvault-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
 
 wait

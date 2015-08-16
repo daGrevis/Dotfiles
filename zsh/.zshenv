@@ -413,10 +413,10 @@ open-vim() {
     gvim
 }
 
-open-mousepad() {
-    notify-executing "mousepad"
+open-gedit() {
+    notify-executing "gedit"
 
-    mousepad
+    gedit
 }
 
 open-firefox() {
@@ -478,7 +478,7 @@ check-network() {
 }
 
 7x() {
-    # Unzips archives into an empty directory.
+    # Unzips archive into an empty directory.
     pth=$1
     pth_no_ext="${pth%.*}"
 

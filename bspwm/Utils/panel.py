@@ -6,8 +6,9 @@ import shutil
 from datetime import datetime, timedelta
 from decimal import Decimal
 
-import forecastio
 import sweetcache
+import sweetcache_redis
+import requests
 
 
 # To silence damn linter.
@@ -16,71 +17,7 @@ if False:
     FileNotFoundError = None
 
 
-try:
-    COLORS = {
-        k[len("COLOR_"):]: os.environ[k]
-        for k
-        in (
-            "COLOR_00",
-            "COLOR_01",
-            "COLOR_02",
-            "COLOR_03",
-            "COLOR_04",
-            "COLOR_05",
-            "COLOR_06",
-            "COLOR_07",
-
-            "COLOR_08",
-            "COLOR_09",
-            "COLOR_0A",
-            "COLOR_0B",
-            "COLOR_0C",
-            "COLOR_0D",
-            "COLOR_0E",
-            "COLOR_0F",
-        )
-    }
-except KeyError:
-    print("COLOR_* variables are missing!")
-    exit(-1)
-
-FORECAST_IO_API_KEY = os.environ["FORECAST_IO_API_KEY"]
-LOCATION_LAT = float(os.environ["LOCATION_LAT"])
-LOCATION_LNG = float(os.environ["LOCATION_LNG"])
-
-# Some aliases.
-COLORS["on_grey"] = COLORS["04"]
-COLORS["grey"] = COLORS["05"]
-COLORS["red"] = COLORS["08"]
-COLORS["orange"] = COLORS["09"]
-COLORS["yellow"] = COLORS["0A"]
-COLORS["green"] = COLORS["0B"]
-COLORS["teal"] = COLORS["0C"]
-COLORS["blue"] = COLORS["0D"]
-COLORS["purple"] = COLORS["0E"]
-COLORS["brown"] = COLORS["0F"]
-
-ICONS = {
-    "fa-bolt": "\uf0e7",
-    "fa-clock": "\uf017",
-    "fa-cloud": "\uf0c2",
-    "fa-desktop": "\uf108",
-    "fa-ellipsis-v": "\uf142",
-    "fa-moon-o":"\uf186",
-    "fa-plug": "\uf1e6",
-    "fa-server": "\uf233",
-    "fa-sun-o":"\uf185",
-    "fa-toggle-off": "\uf204",
-    "fa-volume-off": "\uf026",
-    "fa-volume-up": "\uf028",
-    "fa-wifi": "\uf1eb",
-}
-
-
 ISO_FORMAT = "%Y-%m-%d %H:%M:%S"
-
-
-cache = sweetcache.Cache(sweetcache.RedisBackend)
 
 
 def is_night(dt):
@@ -123,14 +60,74 @@ def set_background_color(text, hex_color):
             "%{B-}")
 
 
-def get_forecast():
-    forecast = forecastio.load_forecast(
-        FORECAST_IO_API_KEY,
-        LOCATION_LAT,
-        LOCATION_LNG,
-    )
+def set_font(text, font_index):
+    return ("%{T" + str(font_index) + "}" +
+            text +
+            "%{T-}")
 
-    return forecast
+
+try:
+    COLORS = {
+        k[len("COLOR_"):]: os.environ[k]
+        for k
+        in (
+            "COLOR_00",
+            "COLOR_01",
+            "COLOR_02",
+            "COLOR_03",
+            "COLOR_04",
+            "COLOR_05",
+            "COLOR_06",
+            "COLOR_07",
+
+            "COLOR_08",
+            "COLOR_09",
+            "COLOR_0A",
+            "COLOR_0B",
+            "COLOR_0C",
+            "COLOR_0D",
+            "COLOR_0E",
+            "COLOR_0F",
+        )
+    }
+except KeyError:
+    print("COLOR_* variables are missing!")
+    exit(-1)
+
+WUNDERGROUND_API_KEY = os.environ["WUNDERGROUND_API_KEY"]
+WUNDERGROUND_LOCATION = os.environ["WUNDERGROUND_LOCATION"]
+
+# Some aliases.
+COLORS["on_grey"] = COLORS["04"]
+COLORS["grey"] = COLORS["05"]
+COLORS["red"] = COLORS["08"]
+COLORS["orange"] = COLORS["09"]
+COLORS["yellow"] = COLORS["0A"]
+COLORS["green"] = COLORS["0B"]
+COLORS["teal"] = COLORS["0C"]
+COLORS["blue"] = COLORS["0D"]
+COLORS["purple"] = COLORS["0E"]
+COLORS["brown"] = COLORS["0F"]
+
+ICONS = {
+    "fa-bolt": "\uf0e7",
+    "fa-clock": "\uf017",
+    "fa-cloud": "\uf0c2",
+    "fa-desktop": "\uf108",
+    "fa-ellipsis-v": "\uf142",
+    "fa-moon-o":"\uf186",
+    "fa-plug": "\uf1e6",
+    "fa-server": "\uf233",
+    "fa-sun-o":"\uf185",
+    "fa-toggle-off": "\uf204",
+    "fa-volume-off": "\uf026",
+    "fa-volume-up": "\uf028",
+    "fa-wifi": "\uf1eb",
+    "sun": set_font("\uf113", 3),
+}
+
+
+cache = sweetcache.Cache(sweetcache_redis.RedisBackend)
 
 
 class InFilesystemWidgetCache(object):
@@ -438,53 +435,48 @@ class WeatherWidget(Widget):
 
     WIDGET_NAME = "WeatherWidget"
 
+    @cache.it("widgets.weather.output", expires=timedelta(minutes=5))
     def get_output(self):
-        key = "widgets.weather.output"
-        output = cache.get(key, None)
-        if output is None:
-            forecast_currently = get_forecast().currently()
+        link = "http://api.wunderground.com/api/{api_key}/conditions/q/{location}.json"
+        link = link.format(
+            api_key=WUNDERGROUND_API_KEY,
+            location=WUNDERGROUND_LOCATION,
+        )
+        forecast = requests.get(link)
+        forecast = forecast.json()["current_observation"]
 
-            try:
-                forecast_currently.d["precipType"]
-                has_precipitation = True
-            except KeyError:
-                has_precipitation = False
+        temperature_feelslike = Decimal(forecast["feelslike_c"])
+        temperature = Decimal(forecast["temp_c"])
+        wind = Decimal(forecast["wind_kph"])
 
-            if has_precipitation:
-                icon = ICONS["fa-cloud"]
-                icon_color = COLORS["grey"]
-            else:
-                if is_night(datetime.now()):
-                    icon = ICONS["fa-moon-o"]
-                    icon_color = COLORS["purple"]
-                else:
-                    icon = ICONS["fa-sun-o"]
-                    icon_color = COLORS["yellow"]
+        icon = ICONS["sun"]
+        icon_color = COLORS["yellow"]
 
-            temperature_apparent = round(forecast_currently.apparentTemperature, 1)
-            temperature = round(forecast_currently.temperature, 1)
-            pressure = round(forecast_currently.pressure)
-
-            if temperature_apparent == temperature:
-                text_temperature = "{temperature}C".format(
-                    temperature=temperature,
-                )
-            else:
-                text_temperature = "{temperature_apparent}C ({temperature}C)".format(
-                    temperature_apparent=temperature_apparent,
-                    temperature=temperature,
-                )
-
-            text_pressure = "{}hPa".format(pressure)
-
-            text = "{} / {}".format(text_temperature, text_pressure)
-
-            output = "{icon} {text}".format(
-                icon=set_foreground_color(icon, icon_color),
-                text=text,
+        if temperature_feelslike == temperature:
+            text_temperature = "{temperature}C".format(
+                temperature=temperature,
+            )
+        else:
+            text_temperature = "{temperature_feelslike}C ({temperature}C)".format(
+                temperature_feelslike=temperature_feelslike,
+                temperature=temperature,
             )
 
-            cache.set(key, output, expires=timedelta(seconds=100))
+        text_humidity = "{}RH".format(forecast["relative_humidity"])
+
+        text_wind = "{}km/h".format(wind)
+
+        text = "{}, {}, {}".format(text_temperature, text_humidity, text_wind)
+
+        output_icon = set_foreground_color(icon, icon_color)
+        # Some kind of bug with color not resetting.
+        output_icon = output_icon[:-4]
+        output_icon += "%{F-}"
+
+        output = "{icon} {text}".format(
+            icon=output_icon,
+            text=text,
+        )
 
         return output
 
@@ -542,11 +534,17 @@ widgets = [
     DatetimeWidget(),
 ]
 
-output = "  ".join([
-    w.render()
-    for w in widgets
-    if w.is_available()
-])
+widgets_rendered = []
+for w in widgets:
+    if not w.is_available():
+        continue
+
+    try:
+        widgets_rendered.append(w.render())
+    except:
+        pass
+
+output = "  ".join(widgets_rendered)
 output += "  {icon} ".format(icon=set_foreground_color(ICONS["fa-ellipsis-v"], COLORS["on_grey"]))
 
 print(output)
