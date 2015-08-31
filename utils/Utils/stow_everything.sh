@@ -20,7 +20,6 @@ declare -a pkgs=(
     "vim"
     "x"
     "xdg-open"
-    "xfce4-terminal"
     "zsh"
 )
 
