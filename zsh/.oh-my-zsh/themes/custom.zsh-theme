@@ -7,25 +7,25 @@ reset_color() {
     echo "%{$reset_color%}"
 }
 
-fg() {
+set_fg() {
     echo "%{$fg[$@]%}"
 }
 
-fg_bold() {
+set_fg_bold() {
     echo "%{$fg_bold[$@]%}"
 }
 
 return_status() {
-    s="%(?:$(fg_bold green)✓:$(fg_bold red)✗)"
+    s="%(?:$(set_fg_bold green)✓:$(set_fg_bold red)✗)"
     s+="$(reset_color)"
     echo $s
 }
 
 who_and_where() {
     if [ -n "$SSH_CLIENT" ]; then
-        s="$(fg yellow)%n$(reset_color)"
+        s="$(set_fg yellow)%n$(reset_color)"
         s+="@"
-        s+="$(fg magenta)%m$(reset_color)"
+        s+="$(set_fg magenta)%m$(reset_color)"
         s+=" "
     else
         s=""
@@ -58,17 +58,17 @@ current_directory() {
         s="~"
     fi
 
-    echo "$(fg cyan)$s$(reset_color)"
+    echo "$(set_fg cyan)$s$(reset_color)"
 }
 
 datetime() {
-    echo "$(fg_bold black)$(date '+%H:%M:%S')"
+    echo "$(set_fg_bold black)$(date '+%H:%M:%S')"
 }
 
 PROMPT='$(return_status) $(who_and_where)$(current_directory)$(git_prompt_info)  '
 RPROMPT='$(datetime)$(reset_color)'
 
-ZSH_THEME_GIT_PROMPT_PREFIX=" $(fg red)"
-ZSH_THEME_GIT_PROMPT_DIRTY="$(fg_bold yellow)±"
+ZSH_THEME_GIT_PROMPT_PREFIX=" $(set_fg red)"
+ZSH_THEME_GIT_PROMPT_DIRTY="$(set_fg_bold yellow)±"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_SUFFIX="$(reset_color)"

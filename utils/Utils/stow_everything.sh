@@ -12,6 +12,7 @@ declare -a pkgs=(
     "ipython"
     "lein"
     "mpv"
+    "neovim"
     "pentadactyl"
     "sxhkd"
     "systemd"

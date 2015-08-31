@@ -9,6 +9,6 @@ xtitle -sf 'X%s' > "$p" &
 
 . ~/Utils/panel_colors
 
-cat "$p" | ~/Utils/bar2_reader | bar -g "x$PANEL_HEIGHT" -f "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE,FontAwesome-12,icomoon-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -b &
+cat "$p" | ~/Utils/bar2_reader | lemonbar -g "x24" -f "Panic Sans-9" -f "Panic Sans-9:style=Bold" -f "fontello-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -b &
 
 wait

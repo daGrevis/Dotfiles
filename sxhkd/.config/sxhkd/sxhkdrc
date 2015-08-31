@@ -101,8 +101,8 @@ super + @button{1-3}
 # wm independent hotkeys
 #
 
-super + Return
-    xfce4-terminal
+super + shift + Return
+    st
 
 super + p
     dmenu-go
