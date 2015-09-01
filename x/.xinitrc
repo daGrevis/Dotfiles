@@ -22,7 +22,14 @@ fi
 ./Utils/keyboard_settings.sh
 
 # Sets brightness to something sane.
-xbacklight -set 75 -time 0
+h=$(date "+%k")
+if ((h < 9)); then
+    xbacklight -set 20 -time 0
+elif ((h < 18 )); then
+    xbacklight -set 80 -time 0
+else
+    xbacklight -set 60 -time 0
+fi
 
 # Adjusts warmth based on current location and other factors.
 redshift -l 57:24 &

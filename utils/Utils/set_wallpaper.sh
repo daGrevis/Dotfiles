@@ -15,6 +15,6 @@ if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     feh --bg-fill ~/Pictures/wallpaper --no-xinerama &
     echo "feh --bg-fill ~/Pictures/wallpaper --no-xinerama &"
 else
-    feh --bg-center ~/Pictures/wallpaper &
+    feh --bg-fill ~/Pictures/wallpaper &
     echo "feh --bg-center ~/Pictures/wallpaper &"
 fi

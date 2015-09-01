@@ -11,10 +11,8 @@ volumes_count = len(volumes)
 is_volumes_equal = volume_total // volumes_count == volumes[0]
 
 if is_volumes_equal:
-    output_volumes = "{}%".format(volumes[0])
-elif volumes_count == 2:
-    output_volumes = "L/R {}%/{}%".format(*volumes)
+    output_volumes = volumes[0]
 else:
-    output_volumes = "/".join(volumes)
+    output_volumes = sum(volumes) / len(volumes)
 
 print(output_volumes)

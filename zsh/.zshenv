@@ -12,6 +12,10 @@ ZSH_THEME="custom"
 touch ~/settings.sh
 source ~/settings.sh
 
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -95,11 +99,7 @@ export WORK_HOSTNAME="rx-wks-44"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if hash gvim 2> /dev/null; then
-    export EDITOR='gvim -f'
-else
-    export EDITOR='vim'
-fi
+export EDITOR='nvim'
 export VISUAL=${EDITOR}
 
 bindkey "^Q" edit-command-line
@@ -182,14 +182,7 @@ copy-to-clipboard() {
 }
 
 function vim {
-    if ! xset q &> /dev/null; then
-        command vim -p $@
-    else
-        command gvim -p $@ & disown
-    fi
-}
-function vimd {
-    vim -p $@ && exit
+    command nvim -p $@
 }
 
 alias generate-password='pwgen -By1 16'
@@ -408,9 +401,9 @@ open-pavucontrol() {
 }
 
 open-vim() {
-    notify-executing "gvim"
+    notify-executing "vim"
 
-    gvim
+    st -e nvim
 }
 
 open-gedit() {
