@@ -295,8 +295,11 @@ class NetworkWidget(Widget):
 class BatteryWidget(Widget):
 
     @cache.it("widgets.battery", expires=timedelta(minutes=1))
+    def get_acpi_output(self):
+        return subprocess.check_output(["acpi", "-b"]).decode("utf-8")
+
     def render(self):
-        acpi_output = subprocess.check_output(["acpi", "-b"]).decode("utf-8")
+        acpi_output = self.get_acpi_output()
 
         is_full = (re.search(r"Full", acpi_output) is not None or
                    re.search(r"100%", acpi_output) is not None)
@@ -344,17 +347,21 @@ class BatteryWidget(Widget):
         return output
 
     def is_available(self):
-        return shutil.which("acpi") is not None
+        return (shutil.which("acpi") is not None
+                and self.get_acpi_output() != "")
 
 
 class SoundWidget(Widget):
 
-    def render(self):
-        amixer_output = subprocess.check_output([
+    def get_amixer_output(self):
+        return subprocess.check_output([
             "amixer",
             "sget",
             "Master",
         ]).decode("utf-8")
+
+    def render(self):
+        amixer_output = self.get_amixer_output()
 
         volumes = [int(x) for x in re.findall(r"(\d+)\%", amixer_output)]
         volume = volumes[0]
@@ -390,13 +397,24 @@ class SoundWidget(Widget):
         return output
 
     def is_available(self):
-        return shutil.which("amixer") is not None
+        if shutil.which("amixer") is None:
+            return False
+
+        try:
+            self.get_amixer_output()
+        except subprocess.CalledProcessError:
+            return False
+
+        return True
 
 
 class BrightnessWidget(Widget):
 
+    def get_xbacklight_output(self):
+        return subprocess.check_output(["xbacklight"]).decode("utf-8")
+
     def render(self):
-        xbacklight_output = subprocess.check_output(["xbacklight"]).decode("utf-8")
+        xbacklight_output = self.get_xbacklight_output()
 
         brightness = Decimal(xbacklight_output).quantize(Decimal("1"))
 
@@ -423,7 +441,15 @@ class BrightnessWidget(Widget):
         return output
 
     def is_available(self):
-        return shutil.which("xbacklight") is not None
+        if shutil.which("xbacklight") is None:
+            return False
+
+        try:
+            self.get_xbacklight_output()
+        except subprocess.CalledProcessError:
+            return False
+
+        return True
 
 
 def get_forecast():
