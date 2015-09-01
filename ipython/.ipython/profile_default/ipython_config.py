@@ -56,7 +56,10 @@ c = get_config()
 # lines of code to run at IPython startup.
 c.InteractiveShellApp.exec_lines = [
     "from datetime import date, datetime, timedelta",
-    "from decimal import Decimal"
+    "from decimal import Decimal",
+    "from random import randint, randrange, shuffle",
+    "from collections import namedtuple, defaultdict",
+    "from math import floor, ceil",
 ]
 
 # Should variables loaded at startup (by startup files, exec_lines, etc.) be
