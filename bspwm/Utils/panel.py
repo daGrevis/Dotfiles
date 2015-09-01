@@ -452,7 +452,7 @@ class WeatherWidget(Widget):
         icon = ICONS["sun"]
         icon_color = COLORS["yellow"]
 
-        if temperature_feelslike == temperature:
+        if True:
             text_temperature = "{temperature}C".format(
                 temperature=temperature,
             )
@@ -526,11 +526,11 @@ class DatetimeWidget(Widget):
 
 widgets = [
     MemoryWidget(cache_ttl=timedelta(seconds=2)),
-    NetworkWidget(cache_ttl=timedelta(seconds=5)),
-    BatteryWidget(cache_ttl=timedelta(seconds=10)),
-    MonitorWidget(),
-    SoundWidget(),
-    WeatherWidget(),
+    # NetworkWidget(cache_ttl=timedelta(seconds=5)),
+    # BatteryWidget(cache_ttl=timedelta(seconds=10)),
+    # MonitorWidget(),
+    # SoundWidget(),
+    # WeatherWidget(),
     DatetimeWidget(),
 ]
 

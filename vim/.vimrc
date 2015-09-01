@@ -8,7 +8,8 @@ call plug#begin('~/.vim/plugged')
 " Optional plugins.
 Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'Raimondi/delimitMate'
-Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/neocomplete.vim'
+Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
 Plug 'Z1MM32M4N/vim-superman'
 Plug 'airblade/vim-gitgutter'
@@ -17,7 +18,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'coot/CRDispatcher'
 Plug 'coot/EnchantedVim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'guns/vim-clojure-static'
 Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
@@ -55,7 +56,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'ujihisa/neco-look'
+" Plug 'ujihisa/neco-look'
 Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/gitignore'
 Plug 'wellle/targets.vim'
@@ -313,7 +314,7 @@ endfunc
 func! AuBufReadPre()
     if ShouldDisableBlingBling()
         setlocal nowrap
-        setlocal nohlsearch
+        " setlocal nohlsearch
     endif
 endfunc
 au BufReadPre * call AuBufReadPre()
@@ -683,33 +684,11 @@ let g:startify_files_number = 25
 
 let g:UltiSnipsExpandTrigger = "<C-\\>"
 
-"
-" NeoComplete configuration.
-"
-
-let g:neocomplete#enable_at_startup = 1
-
-let g:neocomplete#max_list = 20
-
-let g:neocomplete#max_keyword_width = 50
-
-let g:neocomplete#enable_fuzzy_completion = 0
-
-let g:neocomplete#skip_auto_completion_time = "0.2"
-
-let g:enable_cursor_hold_i = 1
-let g:neocomplete#cursor_hold_i_time = 1000 " ms
-
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<TAB>"
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
 " Close completion with <Enter> w/o breaking indentation by entering a line.
-function! s:cr_event()
-    return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-inoremap <silent> <CR> <C-r>=<SID>cr_event()<CR>
+" function! s:cr_event()
+"     return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+" endfunction
+" inoremap <silent> <CR> <C-r>=<SID>cr_event()<CR>
 
 if !exists('g:neocomplete#force_omni_input_patterns')
     let g:neocomplete#force_omni_input_patterns = {}
@@ -738,7 +717,7 @@ let g:jedi#usages_command = ""
 let g:jedi#completions_command = ""
 let g:jedi#rename_command = ""
 
-autocmd FileType python setlocal omnifunc=jedi#completions
+" autocmd FileType python setlocal omnifunc=jedi#completions
 
 "
 " Enchanted configuration.

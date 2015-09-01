@@ -63,7 +63,7 @@ nmap <Space><Space> <C-^>
 nmap <Space>u gF<CR>
 
 nmap <Space>h :history<CR>
-nmap <Space>j :downloads<CR>
+nmap <Space>j :tabopen about:downloads<CR>
 
 nmap <Space>e o
 nmap <Space>t t
