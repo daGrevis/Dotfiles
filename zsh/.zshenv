@@ -445,25 +445,25 @@ open-transmission() {
 open-ipython() {
     notify-executing "ipython"
 
-    xfce4-terminal -x ipython
+    st -e ipython
 }
 
 open-ipython2() {
     notify-executing "ipython2"
 
-    xfce4-terminal -x ipython2
+    st -e ipython2
 }
 
 open-glances() {
     notify-executing "glances"
 
-    xfce4-terminal -x glances
+    st -e glances
 }
 
 open-ranger() {
     notify-executing "ranger"
 
-    xfce4-terminal -x ranger
+    st -e ranger
 }
 
 check-network() {
