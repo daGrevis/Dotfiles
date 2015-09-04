@@ -1,7 +1,3 @@
-#
-# bspwm hotkeys
-#
-
 # Quit bspwm.
 super + alt + Escape
     bspc quit
@@ -14,38 +10,33 @@ super + Escape
 super + w
     bspc window -c
 
-super + t
-    bspc desktop -l next
+# Toggle fullscreen.
+super + f
+    bspc window -t fullscreen
 
-super + b
-    bspc desktop -B
-
-super + {s,f}
-    bspc window -t {floating,fullscreen}
-
-super + apostrophe
-    bspc window -s last
-
-super + {o,i}
-    bspc control --record-history off; \
-    bspc window {older,newer} -f; \
-    bspc control --record-history on
-
-super + y
-    bspc window -w last.manual
-
-# Enable/disable gaps for desktop.
+# Toggle monocle.
 super + m
     bspc desktop --layout next monocle
 
+# Go to previous window.
+super + apostrophe
+    bspc window -s last
+
+# Go to older window.
+super + {o}
+    bspc control --record-history off; \
+    bspc window older -f; \
+    bspc control --record-history on
+
+# Go to newer window.
+super + shift + o
+    bspc control --record-history off; \
+    bspc window newer -f; \
+    bspc control --record-history on
+
+# Swap windows.
 super + {_,shift + }{h,j,k,l}
     bspc window -{f,s} {left,down,up,right}
-
-super + {_,shift + }c
-    bspc window -f {next,prev}
-
-super + {comma,period}
-    bspc desktop -C {backward,forward}
 
 # Go to prev window.
 super + minus
@@ -55,21 +46,23 @@ super + minus
 super + equal
     bspc desktop -f next
 
+# Preselect window.
 super + ctrl + {h,j,k,l}
     bspc window -p {left,down,up,right}
 
-super + ctrl + {_,shift + }space
-    bspc {window -p cancel,desktop -c}
+# Cancel preselection.
+super + shift + c
+    bspc desktop -c
 
+# Resize window.
 super + alt + {h,j,k,l}
-    bspc window -e {left -10,down +10,up -10,right +10}
+    bspc window -e {left -100,down +100,up -100,right +100}
 
+# ...more resizing.
 super + alt + shift + {h,j,k,l}
-    bspc window -e {right -50,up +50,down -50,left +50}
+    bspc window -e {right -100,up +100,down -100,left +100}
 
-super + ctrl + {1-9}
-    bspc window -r 0.{1-9}
-
+# Move window to other desktop.
 super + {_,shift + }{1-9,0}
     bspc {desktop -f,window -d} ^{1-9,10}
 
@@ -85,21 +78,6 @@ super + Tab
 super + u
     bspc desktop -f next.urgent
 
-~button1
-    bspc pointer -g focus
-
-super + button{1-3}
-    bspc pointer -g {move,resize_side,resize_corner}
-
-super + !button{1-3}
-    bspc pointer -t %i %i
-
-super + @button{1-3}
-    bspc pointer -u
-
-#
-# wm independent hotkeys
-#
 
 super + shift + Return
     st
@@ -146,8 +124,6 @@ Print
 super + Print
     take-screenshot-of-window
 
-# Convenience shortcuts.
-
 super + shift + m
     open-pavucontrol
 
@@ -187,4 +163,5 @@ super + shift + g
 
 super + shift + r
     open-ranger
+
 # vim: iskeyword+=-
