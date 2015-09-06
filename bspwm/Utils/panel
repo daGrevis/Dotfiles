@@ -19,6 +19,6 @@ done &
 
 . ~/Utils/panel_colors
 
-cat "$PANEL_FIFO" | ~/Utils/panel_bar | lemonbar -g "x24" -f "Panic Sans-9" -f "Panic Sans-9:style=Bold" -f "fontello-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
+cat "$PANEL_FIFO" | ~/Utils/panel_bar | lemonbar -g "x24" -f "Fira Mono-9" -f "Fira Mono-9:style=Bold" -f "fontello-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
 
 wait

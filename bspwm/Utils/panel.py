@@ -197,8 +197,9 @@ def progress_bar(value, parts_total=5, used_char="=", empty_char="-"):
     parts_empty = parts_total - parts_used
 
 
-    parts = [used_char * parts_used] + [empty_char * parts_empty]
-    return "".join(parts)
+    empty_parts = [used_char * parts_used]
+    used_parts = [empty_char * parts_empty]
+    return "".join(empty_parts) + set_bold_font("".join(used_parts))
 
 
 class Widget(object):
