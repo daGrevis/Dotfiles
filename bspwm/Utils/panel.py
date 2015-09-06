@@ -104,6 +104,8 @@ def humanize_timedelta(delta):
             d -= duration_delta * count
             results.append((name, count))
 
+    # TODO: Next are cosmetics that should be moved out to other function.
+
     results = results[:2]
 
     name_mapping = {
@@ -233,10 +235,8 @@ class MemoryWidget(Widget):
 
         icon = ICONS["server"]
 
-        text = "{}/100%, {}/{} GB".format(
-            round(percantage),
-            round(used / 1024, 1),
-            round(total / 1024, 1),
+        text = "{}/100%".format(
+            set_bold_font(str(round(percantage))),
         )
 
         return (self.set_icon_foreground_color(icon) + " "
@@ -281,7 +281,7 @@ class NetworkWidget(Widget):
             text = "no network"
 
         output = (self.set_icon_foreground_color(icon) + " "
-                  + self.wrap_in_brackets([text]))
+                  + self.wrap_in_brackets([set_bold_font(text)]))
 
         if is_down:
             output = draw_line_over(output)
@@ -313,7 +313,7 @@ class BatteryWidget(Widget):
                 self.set_icon_foreground_color(icon),
                 " ",
                 self.wrap_in_brackets([
-                    percentage,
+                    set_bold_font(str(percentage)),
                     "/100%"
                 ]),
             ])
@@ -337,10 +337,10 @@ class BatteryWidget(Widget):
                 self.set_icon_foreground_color(icon),
                 " ",
                 self.wrap_in_brackets([
-                    percentage,
+                    set_bold_font(str(percentage)),
                     "/100%",
                     ", ",
-                    text,
+                    set_bold_font(text),
                 ]),
             ])
 
@@ -382,7 +382,7 @@ class SoundWidget(Widget):
             self.set_icon_foreground_color(icon),
             " ",
             self.wrap_in_brackets([
-                volume,
+                set_bold_font(str(volume)),
                 "/100%"
             ]),
             " ",
@@ -429,7 +429,7 @@ class BrightnessWidget(Widget):
             self.set_icon_foreground_color(icon),
             " ",
             self.wrap_in_brackets([
-                brightness,
+                set_bold_font(str(brightness)),
                 "/100%"
             ]),
             " ",
@@ -473,23 +473,37 @@ class WeatherWidget(Widget):
         forecast = self.get_forecast()
 
         temperature = float(forecast["temp_c"])
-        wind = float(forecast["wind_kph"])
-        wind_dir = forecast["wind_dir"]
-
         temperature = "{}C".format(
-            round(temperature),
+            set_bold_font(str(round(temperature))),
         )
 
         humidity = forecast["relative_humidity"]
+        humidity = set_bold_font(humidity)
 
-        wind = "{}km/h".format(
-            round(wind),
-        )
+        wind = float(forecast["wind_kph"])
+        wind_dir = forecast["wind_dir"]
 
-        wind_dir = wind_dir
+        if wind == 0:
+            wind = set_bold_font("0")
+        else:
+            wind = "{}km/h".format(
+                set_bold_font(str(round(wind))),
+            )
 
-        if wind_dir == "Variable":
-            wind_dir = "X"
+        wind_dir_to_abbr = {
+            "Variable": "X",
+            "North": "N",
+            "East": "E",
+            "South": "S",
+            "West": "W",
+        }
+
+        try:
+            wind_dir = wind_dir_to_abbr[wind_dir]
+        except KeyError:
+            pass
+
+        wind_dir = set_bold_font(wind_dir)
 
         icon = ICONS["cloud"]
 
@@ -512,9 +526,7 @@ class DatetimeWidget(Widget):
         now = datetime.now()
 
         icon = ICONS["clock"]
-        dt = (now.strftime("%Y-%m-%d ")
-              + set_bold_font(now.strftime("%H:%M"))
-              + now.strftime(":%S"))
+        dt = (now.strftime("%m-%d ") + set_bold_font(now.strftime("%H:%M")))
         weekday = now.strftime("%A")
 
         return (self.set_icon_foreground_color(icon) + " "
@@ -538,7 +550,7 @@ class UptimeWidget(Widget):
 
         icon = ICONS["back-in-time"]
         text = "up {}".format(
-            humanize_timedelta(since),
+            set_bold_font(humanize_timedelta(since)),
         )
 
         return (self.set_icon_foreground_color(icon) + " "
@@ -571,6 +583,5 @@ for w in widgets:
 
 output = (" " * 4).join(widgets_rendered)
 
-# logger.error(output)
 
 print(output)
