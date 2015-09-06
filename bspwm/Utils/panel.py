@@ -183,6 +183,7 @@ ICONS = {
     "volume-off": "\ue800",
     "volume-up": "\ue802",
     "wifi": "\ue80b",
+    "tasks": "\ue80a",
 }
 
 
@@ -558,10 +559,44 @@ class UptimeWidget(Widget):
                 + self.wrap_in_brackets([text]))
 
 
+class LoadWidget(Widget):
+
+    @cache.it("widgets.load.load_avg", expires=timedelta(seconds=2))
+    def get_load_avg(self):
+        load_avg_output = subprocess.check_output(["cat", "/proc/loadavg"]).decode("utf-8")
+        avgs = map(Decimal, load_avg_output.split(" ")[:3])
+
+        return avgs
+
+    @cache.it("widgets.load.core_count")
+    def get_core_count(self):
+        nproc_output = subprocess.check_output(["nproc"]).decode("utf-8")
+        core_count = int(nproc_output)
+
+        return core_count
+
+    def render(self):
+        icon = ICONS["tasks"]
+
+        core_count = self.get_core_count()
+        avgs = self.get_load_avg()
+
+        avgs_percentage = [round(x / core_count * 100) for x in avgs]
+
+        text = ", ".join([
+            "{}%".format(set_bold_font(str(x))) for x
+            in avgs_percentage
+        ])
+
+        return (self.set_icon_foreground_color(icon) + " "
+                + self.wrap_in_brackets([text]))
+
+
 widgets = [
     BatteryWidget(),
     BrightnessWidget(),
     SoundWidget(),
+    LoadWidget(),
     MemoryWidget(),
     NetworkWidget(),
     WeatherWidget(),
