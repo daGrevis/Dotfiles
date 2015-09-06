@@ -559,13 +559,13 @@ class UptimeWidget(Widget):
 
 
 widgets = [
-    UptimeWidget(),
-    NetworkWidget(),
-    MemoryWidget(),
     BatteryWidget(),
     BrightnessWidget(),
     SoundWidget(),
+    MemoryWidget(),
+    NetworkWidget(),
     WeatherWidget(),
+    UptimeWidget(),
     DatetimeWidget(),
 ]
 
