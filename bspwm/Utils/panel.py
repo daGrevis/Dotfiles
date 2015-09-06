@@ -217,7 +217,7 @@ class Widget(object):
         ])
 
     def set_icon_foreground_color(self, text):
-        return set_foreground_color(text, COLORS["04"])
+        return set_foreground_color(text, COLORS["05"])
 
 
 class MemoryWidget(Widget):
