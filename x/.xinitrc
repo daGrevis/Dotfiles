@@ -43,6 +43,8 @@ dunst &
 
 set_wallpaper.sh
 
+xbanish &
+
 # Loads WM.
 sxhkd &
 exec bspwm
