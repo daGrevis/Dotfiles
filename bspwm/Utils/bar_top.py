@@ -1,15 +1,24 @@
 import logging
 import os
+from os import path
 import subprocess
 import re
 import shutil
-from math import floor, ceil
 from datetime import datetime, timedelta
 from decimal import Decimal
 
 import sweetcache
 import sweetcache_redis
 import requests
+from lemony import set_bold_font, draw_line_over, progress_bar, align_center, render_widgets
+
+from widgets import Widget, ICONS, humanize_timedelta
+
+
+# try:
+#     line = argv[1]
+# except IndexError:
+#     line = ""
 
 
 # To silence damn linter.
@@ -18,12 +27,11 @@ if False:
     FileNotFoundError = None
 
 
-ISO_FORMAT = "%Y-%m-%d %H:%M:%S"
-
-
 logger = logging.getLogger()
 
-logger_handler = logging.FileHandler("tmp/panel.log")
+logger_handler = logging.FileHandler(
+    path.join(path.expanduser("~"), "tmp/panel.log"),
+)
 
 logger_formatter = logging.Formatter("%(asctime)s - %(message)s")
 logger_handler.setFormatter(logger_formatter)
@@ -31,194 +39,13 @@ logger_handler.setFormatter(logger_formatter)
 logger.addHandler(logger_handler)
 
 
-def is_night(dt):
-    h = dt.hour
-
-    return 21 <= h <= 23 or 0 <= h < 6
-
-
-def parse_from_iso(datestr):
-    return datetime.strptime(datestr, ISO_FORMAT)
-
-
-def convert_to_iso(dt):
-    return datetime.strftime(dt, ISO_FORMAT)
-
-
-def draw_line_over(text):
-    return "%{+o}" + text + "%{-o}"
-
-
-def draw_line_under(text):
-    return "%{+u}" + text + "%{-u}"
-
-
-def to_bar_color_format(color):
-    """
-    From #RRGGBB to #FFRRGGBB if it's hex, otherwise pass-through.
-    """
-    if color[0] == "#":
-        return "#FF" + color[1:]
-    else:
-        return color
-
-
-def set_foreground_color(text, hex_color):
-    return ("%{F" + to_bar_color_format(hex_color) + "}" +
-            text +
-            "%{F-}")
-
-
-def set_background_color(text, hex_color):
-    return ("%{B" + to_bar_color_format(hex_color) + "}" +
-            text +
-            "%{B-}")
-
-
-def set_font(text, font_index):
-    return ("%{T" + str(font_index) + "}" +
-            text +
-            "%{T-}")
-
-
-def set_bold_font(text):
-    return set_font(text, 2)
-
-
-def humanize_timedelta(delta):
-    mapping = (
-        ("year", timedelta(days=365.25)),
-        ("month", timedelta(days=30)),
-        ("week", timedelta(days=7)),
-        ("day", timedelta(days=1)),
-        ("hour", timedelta(hours=1)),
-        ("minute", timedelta(minutes=1)),
-        ("second", timedelta(seconds=1)),
-    )
-
-    results = []
-    d = delta
-    for name, duration_delta in mapping:
-        if duration_delta <= d:
-            count = floor(d / duration_delta)
-            d -= duration_delta * count
-            results.append((name, count))
-
-    # TODO: Next are cosmetics that should be moved out to other function.
-
-    results = results[:2]
-
-    name_mapping = {
-        "year": "y",
-        "month": "m",
-        "week": "w",
-        "day": "d",
-        "hour": "h",
-        "minute": "m",
-        "second": "s",
-    }
-
-    output = ["{}{}".format(count, name_mapping[name]) for name, count in results]
-
-    return " ".join(output)
-
-
-try:
-    COLORS = {
-        k[len("COLOR_"):]: os.environ[k]
-        for k
-        in (
-            "COLOR_00",
-            "COLOR_01",
-            "COLOR_02",
-            "COLOR_03",
-            "COLOR_04",
-            "COLOR_05",
-            "COLOR_06",
-            "COLOR_07",
-
-            "COLOR_08",
-            "COLOR_09",
-            "COLOR_0A",
-            "COLOR_0B",
-            "COLOR_0C",
-            "COLOR_0D",
-            "COLOR_0E",
-            "COLOR_0F",
-        )
-    }
-except KeyError:
-    print("COLOR_* variables are missing!")
-    exit(-1)
-
 DEBUG = bool(os.environ.get("PANEL_DEBUG", False))
 
 WUNDERGROUND_API_KEY = os.environ["WUNDERGROUND_API_KEY"]
 WUNDERGROUND_LOCATION = os.environ["WUNDERGROUND_LOCATION"]
 
-# Some aliases.
-COLORS["on_grey"] = COLORS["04"]
-COLORS["grey"] = COLORS["05"]
-COLORS["red"] = COLORS["08"]
-COLORS["orange"] = COLORS["09"]
-COLORS["yellow"] = COLORS["0A"]
-COLORS["green"] = COLORS["0B"]
-COLORS["teal"] = COLORS["0C"]
-COLORS["blue"] = COLORS["0D"]
-COLORS["purple"] = COLORS["0E"]
-COLORS["brown"] = COLORS["0F"]
-
-ICONS = {
-    "back-in-time": "\ue807",
-    "cancel": "\ue806",
-    "clock": "\ue805",
-    "cloud": "\ue813",
-    "flash": "\ue80e",
-    "light-down": "\ue803",
-    "light-up": "\ue804",
-    "plug": "\ue80c",
-    "plug": "\ue80c",
-    "server": "\ue80d",
-    "volume-down": "\ue801",
-    "volume-off": "\ue800",
-    "volume-up": "\ue802",
-    "wifi": "\ue80b",
-    "tasks": "\ue80a",
-}
-
 
 cache = sweetcache.Cache(sweetcache_redis.RedisBackend)
-
-
-def progress_bar(value, parts_total=5, used_char="=", empty_char="-"):
-    value = int(value)
-
-    step = 100 / parts_total
-    parts_used = ceil(value / step)
-    parts_empty = parts_total - parts_used
-
-
-    empty_parts = [used_char * parts_used]
-    used_parts = [empty_char * parts_empty]
-    return "".join(empty_parts) + set_bold_font("".join(used_parts))
-
-
-class Widget(object):
-
-    def is_available(self):
-        return True
-
-    def wrap_in_brackets(self, texts):
-        color = COLORS["04"]
-
-        return "".join([
-            set_foreground_color(set_bold_font("["), color),
-            "".join(map(str, texts)),
-            set_foreground_color(set_bold_font("]"), color),
-        ])
-
-    def set_icon_foreground_color(self, text):
-        return set_foreground_color(text, COLORS["05"])
 
 
 class MemoryWidget(Widget):
@@ -235,7 +62,7 @@ class MemoryWidget(Widget):
         total, used = self.get_total_and_used()
         percantage = used * 100 / total
 
-        icon = ICONS["server"]
+        icon = ICONS["font-awesome"]["server"]
 
         text = "{}/100%".format(
             set_bold_font(str(round(percantage))),
@@ -249,7 +76,7 @@ class NetworkWidget(Widget):
 
     def is_down(self):
         try:
-            response = requests.get("http://google.com")
+            response = requests.get("http://google.com", timeout=.5)
             response.raise_for_status()
 
             return False
@@ -269,17 +96,17 @@ class NetworkWidget(Widget):
 
         if is_wireless:
             is_down = False
-            icon = ICONS["wifi"]
+            icon = ICONS["entypo"]["signal"]
             text = re.search(r"Connected to (\S+)", wicd_output).group(1)
 
         if is_wired:
             is_down = False
-            icon = ICONS["plug"]
+            icon = ICONS["font-awesome"]["plug"]
             text = "ethernet"
 
         if (not is_wireless and not is_wired) or self.is_down():
             is_down = True
-            icon = ICONS["cancel"]
+            icon = ICONS["entypo"]["cancel"]
             text = "no network"
 
         output = (self.set_icon_foreground_color(icon) + " "
@@ -308,7 +135,7 @@ class BatteryWidget(Widget):
 
         percentage = Decimal(re.search(r"(\d+)\%", acpi_output).group(1))
 
-        icon = ICONS["flash"]
+        icon = ICONS["entypo"]["flash"]
 
         if is_full:
             output = "".join([
@@ -372,11 +199,11 @@ class SoundWidget(Widget):
         is_off = is_muted or volume_total == 0
 
         if is_off:
-            icon = ICONS["volume-off"]
+            icon = ICONS["font-awesome"]["volume-off"]
         elif volume < 50:
-            icon = ICONS["volume-down"]
+            icon = ICONS["font-awesome"]["volume-down"]
         else:
-            icon = ICONS["volume-up"]
+            icon = ICONS["font-awesome"]["volume-up"]
 
         bar = progress_bar(volume)
 
@@ -421,9 +248,9 @@ class BrightnessWidget(Widget):
         brightness = Decimal(xbacklight_output).quantize(Decimal("1"))
 
         if brightness < 50:
-            icon = ICONS["light-down"]
+            icon = ICONS["entypo"]["light-down"]
         else:
-            icon = ICONS["light-up"]
+            icon = ICONS["entypo"]["light-up"]
 
         bar = progress_bar(brightness)
 
@@ -460,7 +287,7 @@ def get_forecast():
         api_key=WUNDERGROUND_API_KEY,
         location=WUNDERGROUND_LOCATION,
     )
-    forecast = requests.get(link)
+    forecast = requests.get(link, timeout=.5)
 
     return forecast.json()
 
@@ -507,7 +334,7 @@ class WeatherWidget(Widget):
 
         wind_dir = set_bold_font(wind_dir)
 
-        icon = ICONS["cloud"]
+        icon = ICONS["meteocons"]["sun-inv"]
 
         in_brackets = [
             temperature,
@@ -527,7 +354,7 @@ class DatetimeWidget(Widget):
     def render(self):
         now = datetime.now()
 
-        icon = ICONS["clock"]
+        icon = ICONS["elusive"]["clock"]
         dt = (now.strftime("%m-%d ") + set_bold_font(now.strftime("%H:%M")))
         weekday = now.strftime("%A")
 
@@ -550,7 +377,7 @@ class UptimeWidget(Widget):
     def render(self):
         since = self.get_since()
 
-        icon = ICONS["back-in-time"]
+        icon = ICONS["entypo"]["back-in-time"]
         text = "up {}".format(
             set_bold_font(humanize_timedelta(since)),
         )
@@ -576,7 +403,7 @@ class LoadWidget(Widget):
         return core_count
 
     def render(self):
-        icon = ICONS["tasks"]
+        icon = ICONS["elusive"]["tasks"]
 
         core_count = self.get_core_count()
         avgs = self.get_load_avg()
@@ -592,10 +419,45 @@ class LoadWidget(Widget):
                 + self.wrap_in_brackets([text]))
 
 
+class CpuWidget(Widget):
+
+    @cache.it("widgets.cpu.core_count")
+    def get_core_count(self):
+        nproc_output = subprocess.check_output(["nproc"]).decode("utf-8")
+        core_count = int(nproc_output)
+
+        return core_count
+
+    @cache.it("widgets.cpu.cpu_usage", expires=timedelta(seconds=2))
+    def get_cpu_usage(self):
+        top_output = subprocess.check_output(["top", "-b", "-n 2"]).decode("utf-8")
+        core_count = self.get_core_count()
+
+        cpu_lines = [x for x in top_output.split("\n") if "Cpu" in x]
+
+        cpu_usages = [int(re.search(r"(\d+)\[", x).group(1)) for x
+                      in cpu_lines]
+
+        x = [0] * core_count
+        for i, usage in enumerate(cpu_usages):
+            x[i]
+
+        return x[core_count:]
+
+    def render(self):
+        icon = ICONS["entypo"]["gauge"]
+
+        text = self.get_cpu_usage()
+
+        return (self.set_icon_foreground_color(icon) + " "
+                + self.wrap_in_brackets([text]))
+
+
 widgets = [
     BatteryWidget(),
     BrightnessWidget(),
     SoundWidget(),
+    # CpuWidget(),
     LoadWidget(),
     MemoryWidget(),
     NetworkWidget(),
@@ -603,21 +465,9 @@ widgets = [
     UptimeWidget(),
     DatetimeWidget(),
 ]
+rendered_widgets = render_widgets(widgets)
 
-widgets_rendered = []
-for w in widgets:
-    if not w.is_available():
-        continue
-
-    try:
-        widgets_rendered.append(w.render())
-    except Exception as e:
-        if DEBUG:
-            raise
-        else:
-            logger.exception(e)
-
-output = (" " * 4).join(widgets_rendered)
-
+output = align_center((" " * 4).join(rendered_widgets))
 
 print(output)
+exit(0)

@@ -14,6 +14,7 @@ declare -a pkgs=(
     "mpv"
     "neovim"
     "pentadactyl"
+    "stalonetray"
     "sxhkd"
     "systemd"
     "utils"

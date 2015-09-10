@@ -33,7 +33,7 @@ bspc rule -a Gimp follow=on floating=on
 
 set_wallpaper.sh
 
-~/Utils/panel &
-~/Utils/bar2 &
+~/Utils/bar_top.sh &
+~/Utils/bar_bottom.sh &
 compton --config ~/.compton.conf &
 stalonetray &
