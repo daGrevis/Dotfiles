@@ -9,6 +9,6 @@ mkfifo "$p"
 
 . ~/Utils/panel_colors
 
-cat "$p" | ~/Utils/bar2_reader | lemonbar -g "x36" -f "Fira Mono-9" -f "Fira Mono-9:style=Bold" -f "fontello-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -b &
+cat "$p" | ~/Utils/bar2_reader | lemonbar -g "x24" -f "Fira Mono-9" -f "Fira Mono-9:style=Bold" -f "fontello-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -b &
 
 wait
