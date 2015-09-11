@@ -55,8 +55,6 @@ ICONS = {
         "volume-up": "\ue893",
         "plug": "\ue986",
         "server": "\ue97e",
-        "circle": "\ue91f",
-        "circle-empty": "\ue920",
     },
     "entypo": {
         "light-down": "\uea6c",

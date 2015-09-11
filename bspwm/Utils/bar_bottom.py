@@ -1,13 +1,14 @@
 from sys import argv, stdout
 
-from lemony import set_bold_font, set_foreground_color, set_monitor, render_widgets
+from lemony import set_bold_font, set_foreground_color, set_background_color, set_monitor, render_widgets
 
-from widgets import Widget, COLORS, ICONS
+from widgets import Widget, COLORS
 
 
 MONITOR_PREFIXES = ("M", "m")
 DESKTOP_OCCUPIED_PREFIXES = ("O", "o")
 DESKTOP_FOCUSED_PREFIXES = ("F", "O", "U")
+DESKTOP_URGENT_PREFIXES = ("U", "u")
 DESKTOP_PREFIXES = (
     "F",
     "O",
@@ -28,25 +29,27 @@ class DesktopWidget(Widget):
         self.focused_color = focused_color
 
     def render(self):
-        icon = "  "
+        d = self.desktop
 
-        if self.desktop["is_occupied"]:
-            icon = ICONS["font-awesome"]["circle-empty"]
+        text = " {} ".format(d["name"])
 
-        if self.desktop["is_focused"]:
-            icon = set_foreground_color(
-                ICONS["font-awesome"]["circle"],
-                self.focused_color,
-            )
+        color = COLORS["01"]
+        if d["is_occupied"]:
+            color = COLORS["02"]
+        if d["is_focused"]:
+            color = self.focused_color
+        if d["is_urgent"]:
+            color = COLORS["red"]
+        text = set_background_color(text, color)
 
-        text = "{}{}".format(
-            icon,
-            self.desktop["name"],
-        )
+        color = COLORS["05"]
+        if d["is_focused"] or d["is_urgent"]:
+            color = COLORS["01"]
+        text = set_foreground_color(text, color)
 
         text = set_bold_font(text)
 
-        return self.wrap_in_brackets([text])
+        return text
 
 
 try:
@@ -79,8 +82,8 @@ for part in parts:
             "name": content,
             "is_occupied": prefix in DESKTOP_OCCUPIED_PREFIXES,
             "is_focused": prefix in DESKTOP_FOCUSED_PREFIXES,
+            "is_urgent": prefix in DESKTOP_URGENT_PREFIXES,
         })
-
 
 for monitor in monitors:
     if monitor["nth"] == 0:
@@ -94,7 +97,7 @@ for monitor in monitors:
     ]
     rendered_widgets = render_widgets(widgets)
 
-    output = " ".join(rendered_widgets)
+    output = "".join(rendered_widgets)
 
     stdout.write(
         set_monitor(output, monitor["nth"])
