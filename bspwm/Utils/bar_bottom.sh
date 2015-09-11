@@ -30,6 +30,6 @@ reader() {
     done
 }
 
-reader < $pipe | lemonbar -b -g "x26" -f "Fira Mono-9" -f "Fira Mono-9:style=Bold" -f "fontello-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
+reader < $pipe | lemonbar -b -g "x24" -f "Fira Mono-9" -f "Fira Mono-9:style=Bold" -f "fontello-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
 
 wait
