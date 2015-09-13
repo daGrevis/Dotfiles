@@ -1,18 +1,17 @@
 import logging
 import os
-from os import path
 import subprocess
 import re
 import shutil
+from os import path
+from sys import stdout
 from datetime import datetime, timedelta
 from decimal import Decimal
 
-import sweetcache
-import sweetcache_redis
 import requests
-from lemony import set_bold_font, draw_line_over, progress_bar, align_center, render_widgets
+from lemony import set_bold, set_overline, set_line_color, progress_bar, align_center, render_widgets
 
-from widgets import Widget, ICONS, humanize_timedelta
+from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache
 
 
 # try:
@@ -45,9 +44,6 @@ WUNDERGROUND_API_KEY = os.environ["WUNDERGROUND_API_KEY"]
 WUNDERGROUND_LOCATION = os.environ["WUNDERGROUND_LOCATION"]
 
 
-cache = sweetcache.Cache(sweetcache_redis.RedisBackend)
-
-
 class MemoryWidget(Widget):
 
     @cache.it("widgets.memory", expires=timedelta(seconds=2))
@@ -65,14 +61,23 @@ class MemoryWidget(Widget):
         icon = ICONS["font-awesome"]["server"]
 
         text = "{}/100%".format(
-            set_bold_font(str(round(percantage))),
+            set_bold(str(round(percantage))),
         )
 
-        return (self.set_icon_foreground_color(icon) + " "
-                + self.wrap_in_brackets([text]))
+        output = (self.set_icon_foreground_color(icon) + " "
+                  + self.wrap_in_brackets([text]))
+
+        if percantage >= 80:
+            output = set_line_color(set_overline(output), COLORS["red"])
+
+        return output
 
 
 class NetworkWidget(Widget):
+
+    @cache.it("widgets.network", expires=timedelta(seconds=5))
+    def get_wicd_output(self):
+        return subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
 
     def is_down(self):
         try:
@@ -87,9 +92,8 @@ class NetworkWidget(Widget):
         ):
             return True
 
-    @cache.it("widgets.network", expires=timedelta(seconds=5))
     def render(self):
-        wicd_output = subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
+        wicd_output = self.get_wicd_output()
 
         is_wireless = re.search(r"Wireless", wicd_output) is not None
         is_wired = re.search(r"Wired", wicd_output) is not None
@@ -110,10 +114,10 @@ class NetworkWidget(Widget):
             text = "no network"
 
         output = (self.set_icon_foreground_color(icon) + " "
-                  + self.wrap_in_brackets([set_bold_font(text)]))
+                  + self.wrap_in_brackets([set_bold(text)]))
 
         if is_down:
-            output = draw_line_over(output)
+            output = set_line_color(set_overline(output), COLORS["red"])
 
         return output
 
@@ -142,10 +146,13 @@ class BatteryWidget(Widget):
                 self.set_icon_foreground_color(icon),
                 " ",
                 self.wrap_in_brackets([
-                    set_bold_font(str(percentage)),
+                    set_bold(str(percentage)),
                     "/100%"
                 ]),
             ])
+
+            if percentage < 20:
+                output = set_line_color(set_overline(output), COLORS["red"])
         else:
             is_charging = re.search(r"Charging", acpi_output) is not None
             duration_text = re.search(r"\d+:\d+:\d+", acpi_output).group(0)
@@ -166,10 +173,10 @@ class BatteryWidget(Widget):
                 self.set_icon_foreground_color(icon),
                 " ",
                 self.wrap_in_brackets([
-                    set_bold_font(str(percentage)),
+                    set_bold(str(percentage)),
                     "/100%",
                     ", ",
-                    set_bold_font(text),
+                    set_bold(text),
                 ]),
             ])
 
@@ -211,7 +218,7 @@ class SoundWidget(Widget):
             self.set_icon_foreground_color(icon),
             " ",
             self.wrap_in_brackets([
-                set_bold_font(str(volume)),
+                set_bold(str(volume)),
                 "/100%"
             ]),
             " ",
@@ -219,9 +226,6 @@ class SoundWidget(Widget):
                 bar
             ]),
         ])
-
-        if is_off:
-            output = draw_line_over(output)
 
         return output
 
@@ -258,7 +262,7 @@ class BrightnessWidget(Widget):
             self.set_icon_foreground_color(icon),
             " ",
             self.wrap_in_brackets([
-                set_bold_font(str(brightness)),
+                set_bold(str(brightness)),
                 "/100%"
             ]),
             " ",
@@ -303,20 +307,20 @@ class WeatherWidget(Widget):
 
         temperature = float(forecast["temp_c"])
         temperature = "{}C".format(
-            set_bold_font(str(round(temperature))),
+            set_bold(str(round(temperature))),
         )
 
         humidity = forecast["relative_humidity"]
-        humidity = set_bold_font(humidity)
+        humidity = set_bold(humidity)
 
         wind = float(forecast["wind_kph"])
         wind_dir = forecast["wind_dir"]
 
         if wind == 0:
-            wind = set_bold_font("0")
+            wind = set_bold("0")
         else:
             wind = "{}km/h".format(
-                set_bold_font(str(round(wind))),
+                set_bold(str(round(wind))),
             )
 
         wind_dir_to_abbr = {
@@ -332,7 +336,7 @@ class WeatherWidget(Widget):
         except KeyError:
             pass
 
-        wind_dir = set_bold_font(wind_dir)
+        wind_dir = set_bold(wind_dir)
 
         icon = ICONS["meteocons"]["sun-inv"]
 
@@ -355,7 +359,7 @@ class DatetimeWidget(Widget):
         now = datetime.now()
 
         icon = ICONS["elusive"]["clock"]
-        dt = (now.strftime("%m-%d ") + set_bold_font(now.strftime("%H:%M")))
+        dt = (now.strftime("%m-%d ") + set_bold(now.strftime("%H:%M")))
         weekday = now.strftime("%A")
 
         return (self.set_icon_foreground_color(icon) + " "
@@ -379,7 +383,7 @@ class UptimeWidget(Widget):
 
         icon = ICONS["entypo"]["back-in-time"]
         text = "up {}".format(
-            set_bold_font(humanize_timedelta(since)),
+            set_bold(humanize_timedelta(since)),
         )
 
         return (self.set_icon_foreground_color(icon) + " "
@@ -411,12 +415,17 @@ class LoadWidget(Widget):
         avgs_percentage = [round(x / core_count * 100) for x in avgs]
 
         text = ", ".join([
-            "{}%".format(set_bold_font(str(x))) for x
+            "{}%".format(set_bold(str(x))) for x
             in avgs_percentage
         ])
 
-        return (self.set_icon_foreground_color(icon) + " "
-                + self.wrap_in_brackets([text]))
+        output = (self.set_icon_foreground_color(icon) + " "
+                  + self.wrap_in_brackets([text]))
+
+        if sum(avgs_percentage) / 3 >= 80:
+            output = set_line_color(set_overline(output), COLORS["red"])
+
+        return output
 
 
 class CpuWidget(Widget):
@@ -469,5 +478,5 @@ rendered_widgets = render_widgets(widgets)
 
 output = align_center((" " * 4).join(rendered_widgets))
 
-print(output)
-exit(0)
+
+stdout.write(output)

@@ -2,7 +2,9 @@ import os
 from datetime import datetime, timedelta
 from math import floor
 
-from lemony import BaseWidget, set_foreground_color, set_bold_font
+import sweetcache
+import sweetcache_redis
+from lemony import BaseWidget, set_foreground_color, set_bold
 
 
 ISO_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -50,38 +52,41 @@ COLORS["brown"] = COLORS["0F"]
 
 ICONS = {
     "font-awesome": {
+        "plug": "\ue986",
+        "server": "\ue97e",
         "volume-down": "\ue892",
         "volume-off": "\ue891",
         "volume-up": "\ue893",
-        "plug": "\ue986",
-        "server": "\ue97e",
     },
     "entypo": {
+        "back-in-time": "\ueab1",
+        "cancel": "\uea1a",
+        "database": "\ueada",
+        "dot": "\ueac4",
+        "flash": "\ueabb",
+        "gauge": "\ueae5",
         "light-down": "\uea6c",
         "light-up": "\uea6d",
-        "cancel": "\uea1a",
-        "back-in-time": "\ueab1",
-        "gauge": "\ueae5",
-        "database": "\ueada",
         "signal": "\ueaae",
-        "flash": "\ueabb",
-        "dot": "\ueac4",
     },
     "elusive": {
         "clock": "\uebc6",
         "tasks": "\uec2c",
     },
     "meteocons": {
-        "hail-inv": "\ueb26",
-        "sun-inv": "\ueb2f",
-        "moon-inv": "\ueb30",
-        "cloud-sun-inv": "\ueb31",
-        "cloud-moon-inv": "\ueb32",
-        "cloud-inv": "\ueb33",
         "cloud-flash-inv": "\ueb34",
+        "cloud-inv": "\ueb33",
+        "cloud-moon-inv": "\ueb32",
+        "cloud-sun-inv": "\ueb31",
+        "hail-inv": "\ueb26",
+        "moon-inv": "\ueb30",
         "rain-inv": "\ueb36",
+        "sun-inv": "\ueb2f",
     }
 }
+
+
+cache = sweetcache.Cache(sweetcache_redis.RedisBackend)
 
 
 class Widget(BaseWidget):
@@ -90,9 +95,9 @@ class Widget(BaseWidget):
         color = COLORS["04"]
 
         return "".join([
-            set_foreground_color(set_bold_font("["), color),
+            set_foreground_color(set_bold("["), color),
             "".join(map(str, texts)),
-            set_foreground_color(set_bold_font("]"), color),
+            set_foreground_color(set_bold("]"), color),
         ])
 
     def set_icon_foreground_color(self, text):

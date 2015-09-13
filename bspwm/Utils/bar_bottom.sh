@@ -20,6 +20,11 @@ bspc control --subscribe > "$pipe" &
 
 . ~/Utils/bar_colors.sh
 
+while true; do
+    echo "" > "$pipe"
+    sleep .5
+done &
+
 reader() {
     while read -r line ; do
         (

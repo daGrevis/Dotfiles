@@ -21,7 +21,7 @@ bspc control --subscribe > "$pipe" &
 . ~/Utils/bar_colors.sh
 
 while true; do
-    echo "S" > "$pipe"
+    echo "" > "$pipe"
     sleep .5
 done &
 
