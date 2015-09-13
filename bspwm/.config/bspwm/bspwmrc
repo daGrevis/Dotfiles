@@ -3,18 +3,21 @@
 source ~/Utils/colors.sh
 
 bspc config border_width 3
-
 bspc config window_gap 24
 bspc config top_padding 24
 bspc config bottom_padding 24
+bspc config split_ratio 0.382 # Golden ratio.
 
 bspc config normal_border_color "$COLOR_00"
 bspc config focused_border_color "$COLOR_05"
-bspc config split_ratio 0.382 # Golden ratio.
+
 # Remove borders for tiled windows in monocle mode.
 bspc config borderless_monocle true
-# Remove gaps for tiled windows in monocle mode.
+# Remove gaps in monocle mode.
 bspc config gapless_monocle true
+# Go monocle if there’s only one tiled window in the desktop.
+bspc config leaf_monocle true
+
 bspc config focus_by_distance true
 # Focus the window under the pointer.
 bspc config focus_follows_pointer true

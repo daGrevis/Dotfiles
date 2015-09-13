@@ -22,10 +22,11 @@ DESKTOP_PREFIXES = (
 LAYOUT_PREFIX = "L"
 
 SHORT_TITLE_MAPPING = {
-    "firefox": [r".+ - Mozilla Firefox$", r".+Pentadactyl$"],
+    "firefox": [r".+ - Mozilla Firefox$", r".*Pentadactyl$"],
     "mpv": [r".+ - mpv$"],
     "skype": [r".+ - Skype™$"],
     "spotify": [r"^Spotify Premium - Linux Preview$"],
+    "transmission": [r"^Transmission$"],
 }
 
 
