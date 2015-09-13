@@ -463,20 +463,20 @@ class CpuWidget(Widget):
 
 
 widgets = [
-    BatteryWidget(),
-    BrightnessWidget(),
-    SoundWidget(),
-    # CpuWidget(),
-    LoadWidget(),
-    MemoryWidget(),
-    NetworkWidget(),
-    WeatherWidget(),
-    UptimeWidget(),
     DatetimeWidget(),
+    UptimeWidget(),
+    WeatherWidget(),
+    NetworkWidget(),
+    MemoryWidget(),
+    LoadWidget(),
+    # CpuWidget(),
+    SoundWidget(),
+    BrightnessWidget(),
+    BatteryWidget(),
 ]
 rendered_widgets = render_widgets(widgets)
 
-output = align_center((" " * 4).join(rendered_widgets))
+output = (" " * 4).join(rendered_widgets)
 
 
 stdout.write(output)
