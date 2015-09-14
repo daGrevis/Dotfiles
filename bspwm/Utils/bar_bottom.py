@@ -27,6 +27,7 @@ SHORT_TITLE_MAPPING = {
     "skype": [r".+ - Skype™$"],
     "spotify": [r"^Spotify Premium - Linux Preview$"],
     "transmission": [r"^Transmission$"],
+    "vim": [r"^.* - GVIM\d*$"],
 }
 
 
@@ -102,6 +103,15 @@ def get_focused_window_id():
     return window_id
 
 
+def get_focused_monitor_id():
+    output = subprocess.check_output([
+        "bspc query -m focused -M",
+    ], shell=True).decode("utf-8")
+    monitor_id = int(output.strip())
+
+    return monitor_id
+
+
 def get_window_ids_in_current_desktop():
     output = subprocess.check_output([
         "bspc query -d focused -W",
@@ -124,20 +134,20 @@ def get_monitors(line):
     parts = line[1:].split(":")
 
     monitors = []
-    monitor_nth = 0
+    monitor_id = 1
     for part in parts:
         prefix = part[0]
         content = part[1:]
 
         if prefix in MONITOR_PREFIXES:
             monitor = {
-                "nth": monitor_nth,
+                "monitor_id": monitor_id,
                 "name": content,
                 "desktops": [],
             }
             monitors.append(monitor)
 
-            monitor_nth += 1
+            monitor_id += 1
 
         if prefix == LAYOUT_PREFIX:
             monitor["is_tiled"] = content == "T"
@@ -177,6 +187,7 @@ for i, window in enumerate(windows):
 
                 break
 
+
 if line != "":
     monitors = get_monitors(line)
 
@@ -184,10 +195,12 @@ if line != "":
 else:
     monitors = cache.get("bar_bottom.monitors", [])
 
+
 # Renders and outputs widgets.
 
+focused_monitor_id = get_focused_monitor_id()
 for monitor in monitors:
-    if monitor["nth"] == 0:
+    if monitor["monitor_id"] == 1:
         focused_color = COLORS["blue"]
     else:
         focused_color = COLORS["green"]
@@ -199,15 +212,18 @@ for monitor in monitors:
         render_widgets(desktop_widgets)
     )
 
-    window_widgets = [
-        WindowWidget(w["title"], w["is_focused"])
-        for w in windows
-    ]
-    window_output = "".join(
-        render_widgets(window_widgets)
-    )
+    if monitor["monitor_id"] == focused_monitor_id:
+        window_widgets = [
+            WindowWidget(w["title"], w["is_focused"])
+            for w in windows
+        ]
+        window_output = "".join(
+            render_widgets(window_widgets)
+        )
+    else:
+        window_output = ""
 
     stdout.write(set_monitor(
         (desktop_output + "  " + window_output),
-        monitor["nth"]
+        monitor["monitor_id"] - 1
     ))
