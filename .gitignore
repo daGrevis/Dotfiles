@@ -1,1 +1,2 @@
 /systemd/.config/systemd/user/*.target.wants/
+__pycache__
