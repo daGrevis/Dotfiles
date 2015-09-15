@@ -118,8 +118,10 @@ def is_night(dt):
     return 21 <= h <= 23 or 0 <= h < 6
 
 
-def humanize_timedelta(delta):
-    mapping = (
+def humanize_timedelta(delta, discard_names=[]):
+    assert not delta < timedelta(), "Delta must not be negative"
+
+    durations_to_names = (
         ("year", timedelta(days=365.25)),
         ("month", timedelta(days=30)),
         ("week", timedelta(days=7)),
@@ -131,15 +133,21 @@ def humanize_timedelta(delta):
 
     results = []
     d = delta
-    for name, duration_delta in mapping:
+    for name, duration_delta in durations_to_names:
         if duration_delta <= d:
             count = floor(d / duration_delta)
+
             d -= duration_delta * count
+
+            # TODO: Also cosmetics. See below.
+            if name in discard_names:
+                continue
+
             results.append((name, count))
 
     # TODO: Next are cosmetics that should be moved out to other function.
 
-    results = results[:2]
+    # results = results[:2]
 
     name_mapping = {
         "year": "y",

@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 
 import requests
-from lemony import set_bold, set_overline, set_line_color, progress_bar, align_center, render_widgets
+from lemony import set_bold, set_overline, set_line_color, progress_bar
 
 from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache
 
@@ -20,7 +20,7 @@ from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache
 #     line = ""
 
 
-# To silence damn linter.
+# To silence the damn linter!
 if False:
     FileExistsError = None
     FileNotFoundError = None
@@ -75,13 +75,14 @@ class MemoryWidget(Widget):
 
 class NetworkWidget(Widget):
 
-    @cache.it("widgets.network", expires=timedelta(seconds=5))
+    @cache.it("widgets.network.wicd_output", expires=timedelta(seconds=5))
     def get_wicd_output(self):
         return subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
 
+    @cache.it("widgets.network.is_down", expires=timedelta(seconds=20))
     def is_down(self):
         try:
-            response = requests.get("http://google.com", timeout=.5)
+            response = requests.get("http://google.com", timeout=2)
             response.raise_for_status()
 
             return False
@@ -291,7 +292,7 @@ def get_forecast():
         api_key=WUNDERGROUND_API_KEY,
         location=WUNDERGROUND_LOCATION,
     )
-    forecast = requests.get(link, timeout=.5)
+    forecast = requests.get(link, timeout=2)
 
     return forecast.json()
 
@@ -355,6 +356,7 @@ class WeatherWidget(Widget):
 
 class DatetimeWidget(Widget):
 
+    @cache.it("widgets.datetime", expires=timedelta(seconds=1))
     def render(self):
         now = datetime.now()
 
@@ -381,10 +383,18 @@ class UptimeWidget(Widget):
     def render(self):
         since = self.get_since()
 
+        uptime_text = humanize_timedelta(since, discard_names=("second", ))
+
+        if uptime_text == "":
+            # We discard seconds to avoid second change (it's annoying). When there's nothing to
+            # show but seconds, just show text that doesn't change.
+            text = "seconds ago"
+        else:
+            text = "up {}".format(
+                set_bold(uptime_text),
+            )
+
         icon = ICONS["entypo"]["back-in-time"]
-        text = "up {}".format(
-            set_bold(humanize_timedelta(since)),
-        )
 
         return (self.set_icon_foreground_color(icon) + " "
                 + self.wrap_in_brackets([text]))
@@ -474,7 +484,16 @@ widgets = [
     BrightnessWidget(),
     BatteryWidget(),
 ]
-rendered_widgets = render_widgets(widgets)
+
+rendered_widgets = []
+for w in widgets:
+    if not w.is_available():
+        continue
+
+    try:
+        rendered_widgets.append(w.render())
+    except Exception as exc:
+        logger.exception(exc)
 
 output = (" " * 4).join(rendered_widgets)
 
