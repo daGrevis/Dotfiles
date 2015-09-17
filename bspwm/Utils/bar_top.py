@@ -299,7 +299,9 @@ def get_forecast():
 
 class WeatherWidget(Widget):
 
-    @cache.it("widgets.weather", expires=timedelta(minutes=5))
+    # Wunderground limits to 500 calls per day. Because I have two clients and I also want some
+    # extra calls, 200 calls per client should be decent number.
+    @cache.it("widgets.weather", expires=timedelta(days=1) / 200)
     def get_forecast(self):
         return get_forecast()["current_observation"]
 

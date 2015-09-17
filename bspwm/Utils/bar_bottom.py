@@ -2,7 +2,7 @@ import subprocess
 import re
 from sys import argv, stdout
 
-from lemony import set_foreground_color, set_background_color, set_bold, set_monitor, render_widgets
+from lemony import set_foreground_color, set_background_color, set_bold, set_line_color, set_underline, set_monitor, render_widgets
 
 from widgets import COLORS, Widget, cache
 
@@ -23,6 +23,7 @@ LAYOUT_PREFIX = "L"
 
 SHORT_TITLE_MAPPING = {
     "firefox": [r".+ - Mozilla Firefox$", r".*Pentadactyl$"],
+    "hipchat": [r"^HipChat$"],
     "mpv": [r".+ - mpv$"],
     "skype": [r".+ - Skype™$"],
     "spotify": [r"^Spotify Premium - Linux Preview$"],
@@ -121,6 +122,15 @@ def get_window_ids_in_current_desktop():
     return window_ids
 
 
+def get_window_ids():
+    output = subprocess.check_output([
+        "bspc query -d focused -W",
+    ], shell=True).decode("utf-8")
+    window_ids = output.split("\n")[:-1]
+
+    return window_ids
+
+
 def get_titles(window_ids):
     output = subprocess.check_output([
         "xtitle {}".format(" ".join(window_ids)),
@@ -175,7 +185,8 @@ focused_window_id = get_focused_window_id()
 titles = get_titles(window_ids)
 titles_by_window_id = dict(zip(window_ids, titles))
 
-windows = [{"title": titles_by_window_id[w],
+windows = [{"id": w,
+            "title": titles_by_window_id[w],
             "is_focused": w == focused_window_id,
             } for w in window_ids]
 
@@ -221,9 +232,17 @@ for monitor in monitors:
             render_widgets(window_widgets)
         )
     else:
-        window_output = ""
+        window_output = None
+
+    if window_output is None or not windows:
+        output = desktop_output
+    else:
+        output = desktop_output + "  " + window_output
+
+    if monitor["monitor_id"] == focused_monitor_id:
+        output = set_line_color(set_underline(output), focused_color)
 
     stdout.write(set_monitor(
-        (desktop_output + "  " + window_output),
+        output,
         monitor["monitor_id"] - 1
     ))

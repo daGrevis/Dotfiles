@@ -25,8 +25,8 @@ bspc config focus_follows_pointer true
 bspc config pointer_follows_monitor true
 
 if [[ "$(hostname)" == "$WORK_HOSTNAME" ]]; then
-    bspc monitor HDMI3 -n 1 -d 1 2 3 4 5
-    bspc monitor HDMI2 -n 2 -d 6 7 8 9 0
+    bspc monitor HDMI3 -n 1 -d 1 2 3 4 5 6 7
+    bspc monitor HDMI2 -n 2 -d 8 9 0
 else
     bspc monitor -d 1 2 3 4 5 6 7 8 9 0
 fi

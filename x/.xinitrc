@@ -16,7 +16,7 @@ export PANEL_FONT_SIZE="9"
 
 if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     # Sets 2nd monitor usable.
-    xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3 --rotate left
+    xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3
 fi
 
 ./Utils/keyboard_settings.sh

@@ -15,8 +15,6 @@ Plug 'Z1MM32M4N/vim-superman'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chriskempson/base16-vim'
-Plug 'coot/CRDispatcher'
-Plug 'coot/EnchantedVim'
 Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'davidhalter/jedi-vim'
 Plug 'guns/vim-clojure-static'
@@ -718,18 +716,3 @@ let g:jedi#completions_command = ""
 let g:jedi#rename_command = ""
 
 " autocmd FileType python setlocal omnifunc=jedi#completions
-
-"
-" Enchanted configuration.
-"
-
-let g:VeryMagic = 1
-let g:VeryMagicSubstitute = 1
-let g:VeryMagicGlobal = 1
-let g:VeryMagicVimGrep = 1
-let g:VeryMagicSearchArg = 1
-let g:VeryMagicFunction = 1
-let g:VeryMagicHelpgrep = 1
-let g:VeryMagicRange = 1
-let g:VeryMagicEscapeBackslashesInSearchArg = 1
-let g:SortEditArgs = 1

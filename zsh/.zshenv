@@ -9,7 +9,6 @@ setopt interactivecomments
 # time that oh-my-zsh is loaded.
 ZSH_THEME="custom"
 
-touch ~/settings.sh
 source ~/settings.sh
 
 # Base16 Shell
@@ -99,7 +98,7 @@ export WORK_HOSTNAME="rx-wks-44"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export EDITOR='nvim'
+export EDITOR='gvim -f'
 export VISUAL=${EDITOR}
 
 bindkey "^Q" edit-command-line
@@ -182,7 +181,7 @@ copy-to-clipboard() {
 }
 
 function vim {
-    command nvim -p $@
+    command gvim -p $@
 }
 
 alias generate-password='pwgen -By1 16'
@@ -480,4 +479,8 @@ check-network() {
     cd $pth_no_ext
     7z x $pth
     l
+}
+
+skype2() {
+    skype --dbpath=~/.Skype2
 }
