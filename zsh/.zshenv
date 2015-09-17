@@ -208,50 +208,6 @@ get-ip() {
     echo
 }
 
-alias gbl='git blame'
-alias gbr='git branch'
-alias gcl='git clone'
-alias gcm='git commit -v'
-alias gco='git checkout'
-alias gcp='git cherry-pick'
-alias ggr='git grep --break --heading --line-number'
-alias gin='git init'
-alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative"
-alias gls='git ls-files'
-alias gmr='git merge'
-alias gmv='git mv'
-alias gpu='git push --set-upstream'
-alias grm='git rm'
-alias grst='git reset'
-alias grv='git revert'
-alias gst='git -c color.status=always status -sb'
-alias gs=gst
-alias gsh='git stash'
-function gad {
-    pth=${1:-.}
-
-    git add --ignore-removal $pth
-    git add -u $pth
-
-    gst
-}
-alias gsw='git show'
-alias gtg='git tag'
-function gdf {
-    what=${1:-HEAD}
-    git diff $what
-}
-function gpl {
-    OLD_HASH=$(git rev-parse --short HEAD)
-    git pull
-    if [[ "${OLD_HASH}" != $(git rev-parse HEAD) ]]; then
-        CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-        echo
-        echo "${OLD_HASH}..${CURRENT_BRANCH}"
-        git --no-pager log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset <%an>' --abbrev-commit --date=relative ${OLD_HASH}..HEAD
-    fi
-}
-
 alias dpl='docker pull'
 alias dcli='docker rmi -f (docker images -q)'
 alias dim='docker images'

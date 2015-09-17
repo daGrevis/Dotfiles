@@ -128,7 +128,7 @@ super + shift + m
     open-pavucontrol
 
 super + shift + v
-    open-vim
+    gvim
 
 super + shift + e
     open-gedit

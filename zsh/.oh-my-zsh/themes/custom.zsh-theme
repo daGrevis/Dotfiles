@@ -1,4 +1,4 @@
-#! /bin/zsh
+#!/bin/zsh
 
 # http://superuser.com/questions/655607/removing-the-useless-space-at-the-end-of-the-right-prompt-of-zsh-rprompt
 ZLE_RPROMPT_INDENT=0
@@ -13,12 +13,6 @@ set_fg() {
 
 set_fg_bold() {
     echo "%{$fg_bold[$@]%}"
-}
-
-return_status() {
-    s="%(?:$(set_fg_bold green)✓:$(set_fg_bold red)✗)"
-    s+="$(reset_color)"
-    echo $s
 }
 
 who_and_where() {
@@ -58,17 +52,14 @@ current_directory() {
         s="~"
     fi
 
-    echo "$(set_fg cyan)$s$(reset_color)"
+    s="%(?:$(set_fg green)$s:$(set_fg red)$s)"
+
+    echo "$s$(reset_color)"
 }
 
-datetime() {
-    echo "$(set_fg_bold black)$(date '+%H:%M:%S')"
-}
+PROMPT='$(who_and_where)$(current_directory)$(git_prompt_info) '
 
-PROMPT='$(return_status) $(who_and_where)$(current_directory)$(git_prompt_info)  '
-RPROMPT='$(datetime)$(reset_color)'
-
-ZSH_THEME_GIT_PROMPT_PREFIX=" $(set_fg red)"
+ZSH_THEME_GIT_PROMPT_PREFIX=" $(set_fg blue)"
 ZSH_THEME_GIT_PROMPT_DIRTY="$(set_fg_bold yellow)±"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_SUFFIX="$(reset_color)"
