@@ -29,7 +29,7 @@ if False:
 logger = logging.getLogger()
 
 logger_handler = logging.FileHandler(
-    path.join(path.expanduser("~"), "tmp/panel.log"),
+    path.join(path.expanduser("~"), "tmp/bar_top.log"),
 )
 
 logger_formatter = logging.Formatter("%(asctime)s - %(message)s")

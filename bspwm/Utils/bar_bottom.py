@@ -1,10 +1,24 @@
+import logging
 import subprocess
 import re
+from os import path
 from sys import argv, stdout
 
-from lemony import set_foreground_color, set_background_color, set_bold, set_line_color, set_underline, set_monitor, render_widgets
+from lemony import set_foreground_color, set_background_color, set_bold, set_line_color, set_underline, set_monitor
 
 from widgets import COLORS, Widget, cache
+
+
+logger = logging.getLogger()
+
+logger_handler = logging.FileHandler(
+    path.join(path.expanduser("~"), "tmp/bar_bottom.log"),
+)
+
+logger_formatter = logging.Formatter("%(asctime)s - %(message)s")
+logger_handler.setFormatter(logger_formatter)
+
+logger.addHandler(logger_handler)
 
 
 MONITOR_PREFIXES = ("M", "m")
@@ -104,13 +118,13 @@ def get_focused_window_id():
     return window_id
 
 
-def get_focused_monitor_id():
+def get_focused_monitor_name():
     output = subprocess.check_output([
         "bspc query -m focused -M",
     ], shell=True).decode("utf-8")
-    monitor_id = int(output.strip())
+    monitor_name = output.strip()
 
-    return monitor_id
+    return monitor_name
 
 
 def get_window_ids_in_current_desktop():
@@ -152,7 +166,7 @@ def get_monitors(line):
         if prefix in MONITOR_PREFIXES:
             monitor = {
                 "monitor_id": monitor_id,
-                "name": content,
+                "monitor_name": content,
                 "desktops": [],
             }
             monitors.append(monitor)
@@ -209,7 +223,7 @@ else:
 
 # Renders and outputs widgets.
 
-focused_monitor_id = get_focused_monitor_id()
+focused_monitor_name = get_focused_monitor_name()
 for monitor in monitors:
     if monitor["monitor_id"] == 1:
         focused_color = COLORS["blue"]
@@ -219,27 +233,44 @@ for monitor in monitors:
         DesktopWidget(desktop, focused_color)
         for desktop in monitor["desktops"]
     ]
-    desktop_output = "".join(
-        render_widgets(desktop_widgets)
-    )
 
-    if monitor["monitor_id"] == focused_monitor_id:
+    rendered_widgets = []
+    for w in desktop_widgets:
+        if not w.is_available():
+            continue
+
+        try:
+            rendered_widgets.append(w.render())
+        except Exception as exc:
+            logger.exception(exc)
+
+    desktop_output = "".join(rendered_widgets)
+
+    window_output = None
+    if monitor["monitor_name"] == focused_monitor_name:
         window_widgets = [
             WindowWidget(w["title"], w["is_focused"])
             for w in windows
         ]
-        window_output = "".join(
-            render_widgets(window_widgets)
-        )
-    else:
-        window_output = None
+
+        rendered_widgets = []
+        for w in window_widgets:
+            if not w.is_available():
+                continue
+
+            try:
+                rendered_widgets.append(w.render())
+            except Exception as exc:
+                logger.exception(exc)
+
+            window_output = "".join(rendered_widgets)
 
     if window_output is None or not windows:
         output = desktop_output
     else:
         output = desktop_output + "  " + window_output
 
-    if monitor["monitor_id"] == focused_monitor_id:
+    if monitor["monitor_name"] == focused_monitor_name:
         output = set_line_color(set_underline(output), focused_color)
 
     stdout.write(set_monitor(

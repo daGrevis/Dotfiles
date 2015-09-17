@@ -1,8 +1,10 @@
 #!/bin/bash
 
-killall panel bar
-~/Utils/panel &
-~/Utils/bar2 &
+killall bar_top.sh
+~/Utils/bar_top.sh &
+
+killall bar_bottom.sh
+~/Utils/bar_bottom.sh &
 
 killall sxhkd
 sxhkd &
