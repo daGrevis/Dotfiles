@@ -5,8 +5,6 @@ if [ "$(pgrep -cx "bar_top.sh")" -gt 1 ] ; then
     exit 1
 fi
 
-trap "trap - TERM; kill 0" INT TERM QUIT EXIT
-
 logfile=~/tmp/bar_top.log
 pipe=~/tmp/bar_top.fifo
 
