@@ -377,7 +377,6 @@ class WeatherWidget(Widget):
 
 class DatetimeWidget(Widget):
 
-    @cache.it("widgets.datetime")
     def render(self):
         now = datetime.now()
 
