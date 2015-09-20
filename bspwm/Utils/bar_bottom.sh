@@ -14,14 +14,9 @@ touch $logfile
 rm -f $pipe
 mkfifo $pipe
 
-bspc control --subscribe > "$pipe" &
+bspc control --subscribe all > "$pipe" &
 
 . ~/Utils/bar_colors.sh
-
-while true; do
-    echo "" > "$pipe"
-    sleep .5
-done &
 
 reader() {
     while read -r line ; do
@@ -33,6 +28,6 @@ reader() {
     done
 }
 
-reader < $pipe | lemonbar -b -g "x24" -f "Fira Mono-9" -f "Fira Mono-9:style=Bold" -f "fontello-12" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
+reader < $pipe | lemonbar -b -g "x24" -f "Fira Mono-9" -f "Fira Mono-9:style=Bold" -f "fontello-12" -u 2 -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
 
 wait

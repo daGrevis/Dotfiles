@@ -146,10 +146,7 @@ function f {
     find -name $@
 }
 function ff {
-    find -type f -name $@
-}
-function fd {
-    find -type d -name $@
+    find -name "*$@*"
 }
 
 function aux {
@@ -283,7 +280,7 @@ import-gpg-public-key() {
 }
 
 dmenu-go() {
-    dmenu_run -fn "$PANEL_FONT_FAMILY-$PANEL_FONT_SIZE" -p ">" -nb $COLOR_01 -nf $COLOR_07 -sb $COLOR_0D
+    dmenu_run -b -i -fn "Fira Mono-9" -nb $COLOR_01 -nf $COLOR_07 -sb $COLOR_0D -sf $COLOR_01
 }
 
 disable-sreen() {
@@ -358,7 +355,7 @@ open-pavucontrol() {
 open-vim() {
     notify-executing "vim"
 
-    st -e nvim
+    gvim
 }
 
 open-gedit() {

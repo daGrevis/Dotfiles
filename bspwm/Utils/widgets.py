@@ -62,6 +62,7 @@ ICONS = {
         "back-in-time": "\ueab1",
         "cancel": "\uea1a",
         "database": "\ueada",
+        "database": "\ueada",
         "dot": "\ueac4",
         "flash": "\ueabb",
         "gauge": "\ueae5",

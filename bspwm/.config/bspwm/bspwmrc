@@ -34,9 +34,4 @@ fi
 bspc rule -a Gimp follow=on floating=on
 # bspc rule -a Firefox desktop=^2 focus=on
 
-set_wallpaper.sh
-
-~/Utils/bar_top.sh &
-~/Utils/bar_bottom.sh &
-compton --config ~/.compton.conf &
-stalonetray &
+restart_wm.sh &

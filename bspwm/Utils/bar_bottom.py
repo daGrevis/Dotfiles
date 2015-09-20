@@ -36,13 +36,13 @@ DESKTOP_PREFIXES = (
 LAYOUT_PREFIX = "L"
 
 SHORT_TITLE_MAPPING = {
-    "firefox": [r".+ - Mozilla Firefox$", r".*Pentadactyl$"],
+    "firefox": [r"(.+ - )?Mozilla Firefox$", r".*Pentadactyl$"],
     "hipchat": [r"^HipChat$"],
     "mpv": [r".+ - mpv$"],
     "skype": [r".+ - Skype™$"],
     "spotify": [r"^Spotify Premium - Linux Preview$"],
     "transmission": [r"^Transmission$"],
-    "vim": [r"^.* - GVIM\d*$"],
+    "vim": [r"^Vim$", r"^.* - GVIM\d*$"],
 }
 
 
@@ -191,7 +191,7 @@ def get_monitors(line):
 try:
     line = argv[1]
 except IndexError:
-    line = ""
+    line = None
 
 
 window_ids = get_window_ids_in_current_desktop()
@@ -212,14 +212,23 @@ for i, window in enumerate(windows):
 
                 break
 
-
-if line != "":
-    monitors = get_monitors(line)
-
-    cache.set("bar_bottom.monitors", monitors)
-else:
-    monitors = cache.get("bar_bottom.monitors", [])
-
+monitors = cache.get("bar_bottom.monitors", [])
+if line is not None:
+    if line.startswith("window_manage"):
+        pass
+    elif line.startswith("window_unmanage"):
+        pass
+    elif line.startswith("window_focus"):
+        pass
+    elif line.startswith("window_state"):
+        pass
+    elif line.startswith("desktop_focus"):
+        pass
+    elif line.startswith("desktop_layout"):
+        pass
+    else:
+        monitors = get_monitors(line)
+        cache.set("bar_bottom.monitors", monitors)
 
 # Renders and outputs widgets.
 

@@ -3,21 +3,16 @@ import os
 import subprocess
 import re
 import shutil
-from os import path
+from os import path as os_path
 from sys import stdout
 from datetime import datetime, timedelta
 from decimal import Decimal
 
 import requests
+import psutil
 from lemony import set_bold, set_overline, set_line_color, progress_bar
 
 from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache
-
-
-# try:
-#     line = argv[1]
-# except IndexError:
-#     line = ""
 
 
 # To silence the damn linter!
@@ -29,7 +24,7 @@ if False:
 logger = logging.getLogger()
 
 logger_handler = logging.FileHandler(
-    path.join(path.expanduser("~"), "tmp/bar_top.log"),
+    os_path.join(os_path.expanduser("~"), "tmp/bar_top.log"),
 )
 
 logger_formatter = logging.Formatter("%(asctime)s - %(message)s")
@@ -42,32 +37,29 @@ DEBUG = bool(os.environ.get("PANEL_DEBUG", False))
 
 WUNDERGROUND_API_KEY = os.environ["WUNDERGROUND_API_KEY"]
 WUNDERGROUND_LOCATION = os.environ["WUNDERGROUND_LOCATION"]
+FORECAST_IO_API_KEY = os.environ["FORECAST_IO_API_KEY"]
+LOCATION_LAT = os.environ["LOCATION_LAT"]
+LOCATION_LNG = os.environ["LOCATION_LNG"]
 
 
 class MemoryWidget(Widget):
 
-    @cache.it("widgets.memory", expires=timedelta(seconds=2))
-    def get_total_and_used(self):
-        free_output = subprocess.check_output(["free", "-m"]).decode("utf-8")
-        total, used = [int(x) for x in
-                       re.search(r"Mem:\s+(\d+)\s+(\d+)", free_output).groups()]
-
-        return total, used
-
     def render(self):
-        total, used = self.get_total_and_used()
-        percantage = used * 100 / total
+        memory = psutil.virtual_memory()
+
+        total_gb = memory.total / 1024 / 1024 / 1024
+        used_gb = (memory.total - memory.available) / 1024 / 1024 / 1024
 
         icon = ICONS["font-awesome"]["server"]
-
-        text = "{}/100%".format(
-            set_bold(str(round(percantage))),
+        text = "{}/{} GB".format(
+            set_bold(round(used_gb, 2)),
+            round(total_gb, 1),
         )
 
         output = (self.set_icon_foreground_color(icon) + " "
                   + self.wrap_in_brackets([text]))
 
-        if percantage >= 80:
+        if memory.percent >= 75:
             output = set_line_color(set_overline(output), COLORS["red"])
 
         return output
@@ -128,7 +120,7 @@ class NetworkWidget(Widget):
 
 class BatteryWidget(Widget):
 
-    @cache.it("widgets.battery", expires=timedelta(minutes=1))
+    @cache.it("widgets.battery", expires=timedelta(seconds=10))
     def get_acpi_output(self):
         return subprocess.check_output(["acpi", "-b"]).decode("utf-8")
 
@@ -147,7 +139,7 @@ class BatteryWidget(Widget):
                 self.set_icon_foreground_color(icon),
                 " ",
                 self.wrap_in_brackets([
-                    set_bold(str(percentage)),
+                    set_bold(percentage),
                     "/100%"
                 ]),
             ])
@@ -156,16 +148,21 @@ class BatteryWidget(Widget):
                 output = set_line_color(set_overline(output), COLORS["red"])
         else:
             is_charging = re.search(r"Charging", acpi_output) is not None
-            duration_text = re.search(r"\d+:\d+:\d+", acpi_output).group(0)
+            duration_groups = re.search(r"\d+:\d+:\d+", acpi_output).groups()
 
-            duration_parts = map(int, duration_text.split(":"))
+            if duration_groups:
+                duration_parts = map(int, duration_groups[0].split(":"))
+            else:
+                duration_parts = (0, 0, 0)
 
             h, m, s = duration_parts
             duration_timedelta = timedelta(hours=h, minutes=m, seconds=s)
 
-            duration = humanize_timedelta(duration_timedelta)
+            duration = humanize_timedelta(duration_timedelta, discard_names=("second", ))
 
-            if is_charging:
+            if duration == "":
+                text = "0"
+            elif is_charging:
                 text = "+{}".format(duration)
             else:
                 text = "-{}".format(duration)
@@ -174,12 +171,15 @@ class BatteryWidget(Widget):
                 self.set_icon_foreground_color(icon),
                 " ",
                 self.wrap_in_brackets([
-                    set_bold(str(percentage)),
+                    set_bold(percentage),
                     "/100%",
                     ", ",
                     set_bold(text),
                 ]),
             ])
+
+        if percentage < 40:
+            output = set_line_color(set_overline(output), COLORS["red"])
 
         return output
 
@@ -219,7 +219,7 @@ class SoundWidget(Widget):
             self.set_icon_foreground_color(icon),
             " ",
             self.wrap_in_brackets([
-                set_bold(str(volume)),
+                set_bold(volume),
                 "/100%"
             ]),
             " ",
@@ -263,7 +263,7 @@ class BrightnessWidget(Widget):
             self.set_icon_foreground_color(icon),
             " ",
             self.wrap_in_brackets([
-                set_bold(str(brightness)),
+                set_bold(brightness),
                 "/100%"
             ]),
             " ",
@@ -287,78 +287,97 @@ class BrightnessWidget(Widget):
 
 
 def get_forecast():
-    link = "http://api.wunderground.com/api/{api_key}/conditions/q/{location}.json"
-    link = link.format(
-        api_key=WUNDERGROUND_API_KEY,
-        location=WUNDERGROUND_LOCATION,
-    )
-    forecast = requests.get(link, timeout=2)
+    response = requests.get("https://api.forecast.io/forecast/{api_key}/{lat},{lng}".format(
+        api_key=FORECAST_IO_API_KEY,
+        lat=LOCATION_LAT,
+        lng=LOCATION_LNG,
+    ))
 
-    return forecast.json()
+    return response.json()
 
 
 class WeatherWidget(Widget):
 
-    # Wunderground limits to 500 calls per day. Because I have two clients and I also want some
-    # extra calls, 200 calls per client should be decent number.
-    @cache.it("widgets.weather", expires=timedelta(days=1) / 200)
+    @cache.it("widgets.weather", expires=timedelta(days=1) / 400)
     def get_forecast(self):
-        return get_forecast()["current_observation"]
+        return get_forecast()
 
     def render(self):
         forecast = self.get_forecast()
 
-        temperature = float(forecast["temp_c"])
-        temperature = "{}C".format(
-            set_bold(str(round(temperature))),
+        temperature_f = Decimal(forecast["currently"]["temperature"])
+        temperature_c = (temperature_f - Decimal(32)) / Decimal("1.8")
+        precipitation = Decimal(forecast["currently"]["precipProbability"]) * 100
+        wind_mph = Decimal(forecast["currently"]["windSpeed"])
+        wind_kmh = wind_mph * Decimal("1.60934")
+        wind_degrees = Decimal(forecast["currently"]["windBearing"])
+
+        wind_directions_to_ranges = {
+            "N": [(337.5, 360), (0, 22.5)],
+            "NE": [(22.5, 67.5)],
+            "E": [(67.5, 112.5)],
+            "SE": [(112.5, 157.5)],
+            "S": [(157.5, 202.5)],
+            "SW": [(202.5, 247.5)],
+            "W": [(247.5, 292.5)],
+            "NW": [(292.5, 337.5)],
+        }
+        wind_direction = None
+        for direction, degree_ranges in wind_directions_to_ranges.items():
+            for degrees_from, degrees_to in degree_ranges:
+                if wind_degrees >= degrees_from and wind_degrees <= degrees_to:
+                    wind_direction = direction
+
+                    break
+
+            if wind_direction is not None:
+                break
+
+        icon_mapping = {
+            "clear-day": "sun-inv",
+            "clear-night": "moon-inv",
+            "cloudy": "cloud-inv",
+            "fog": "cloud-inv",
+            "hail": "rain-inv",
+            "partly-cloudy-day": "cloud-sun-inv",
+            "partly-cloudy-night": "cloud-moon-inv",
+            "rain": "rain-inv",
+            "sleet": "snow-heavy-inv",
+            "snow": "snow-heavy-inv",
+            "thunderstorm": "cloud-flash-inv",
+            "tornado": None,
+            "wind": None,
+        }
+        icon = ICONS["meteocons"].get(
+            icon_mapping.get(forecast["currently"]["icon"], None),
+            "-",
         )
 
-        humidity = forecast["relative_humidity"]
-        humidity = set_bold(humidity)
-
-        wind = float(forecast["wind_kph"])
-        wind_dir = forecast["wind_dir"]
-
-        if wind == 0:
-            wind = set_bold("0")
-        else:
-            wind = "{}km/h".format(
-                set_bold(str(round(wind))),
-            )
-
-        wind_dir_to_abbr = {
-            "Variable": "X",
-            "North": "N",
-            "East": "E",
-            "South": "S",
-            "West": "W",
-        }
-
-        try:
-            wind_dir = wind_dir_to_abbr[wind_dir]
-        except KeyError:
-            pass
-
-        wind_dir = set_bold(wind_dir)
-
-        icon = ICONS["meteocons"]["sun-inv"]
-
-        in_brackets = [
-            temperature,
-            humidity,
-            wind,
-            wind_dir,
-        ]
+        text = ", ".join([
+            "{}C".format(
+                set_bold(round(temperature_c)),
+            ),
+            "{}%".format(
+                set_bold(round(precipitation)),
+            ),
+            "{}km/h".format(
+                set_bold(round(wind_kmh)),
+            ),
+            set_bold(wind_direction),
+        ])
 
         output = (self.set_icon_foreground_color(icon) + " "
-                  + self.wrap_in_brackets(", ".join(in_brackets)))
+                  + self.wrap_in_brackets(text))
+
+        if forecast.get("alerts", []):
+            output = set_line_color(set_overline(output), COLORS["red"])
 
         return output
 
 
 class DatetimeWidget(Widget):
 
-    @cache.it("widgets.datetime", expires=timedelta(seconds=1))
+    @cache.it("widgets.datetime")
     def render(self):
         now = datetime.now()
 
@@ -372,13 +391,9 @@ class DatetimeWidget(Widget):
 
 class UptimeWidget(Widget):
 
-    @cache.it("widgets.uptime", expires=timedelta(seconds=1))
     def get_since(self):
-        since_output = subprocess.check_output(["cat", "/proc/uptime"]).decode("utf-8")
-
-        since_seconds = float(since_output.split(" ")[0])
-
-        since_timedelta = timedelta(seconds=since_seconds)
+        boot_time = datetime.fromtimestamp(psutil.boot_time())
+        since_timedelta = datetime.now() - boot_time
 
         return since_timedelta
 
@@ -404,37 +419,26 @@ class UptimeWidget(Widget):
 
 class LoadWidget(Widget):
 
-    @cache.it("widgets.load.load_avg", expires=timedelta(seconds=2))
-    def get_load_avg(self):
-        load_avg_output = subprocess.check_output(["cat", "/proc/loadavg"]).decode("utf-8")
-        avgs = map(Decimal, load_avg_output.split(" ")[:3])
-
-        return avgs
-
-    @cache.it("widgets.load.core_count")
-    def get_core_count(self):
-        nproc_output = subprocess.check_output(["nproc"]).decode("utf-8")
-        core_count = int(nproc_output)
-
-        return core_count
+    @cache.it("widgets.load.cpu_count")
+    def get_cpu_count(self):
+        return psutil.cpu_count()
 
     def render(self):
+        cpu_count = 8
+        avgs = map(Decimal, os.getloadavg())
+
+        avgs_percentage = [round(x / cpu_count * 100) for x in avgs]
+
         icon = ICONS["elusive"]["tasks"]
-
-        core_count = self.get_core_count()
-        avgs = self.get_load_avg()
-
-        avgs_percentage = [round(x / core_count * 100) for x in avgs]
-
         text = ", ".join([
-            "{}%".format(set_bold(str(x))) for x
+            "{}%".format(set_bold(x)) for x
             in avgs_percentage
         ])
 
         output = (self.set_icon_foreground_color(icon) + " "
                   + self.wrap_in_brackets([text]))
 
-        if sum(avgs_percentage) / 3 >= 80:
+        if sum(avgs_percentage) / 3 >= 75:
             output = set_line_color(set_overline(output), COLORS["red"])
 
         return output
@@ -442,36 +446,66 @@ class LoadWidget(Widget):
 
 class CpuWidget(Widget):
 
-    @cache.it("widgets.cpu.core_count")
-    def get_core_count(self):
-        nproc_output = subprocess.check_output(["nproc"]).decode("utf-8")
-        core_count = int(nproc_output)
-
-        return core_count
-
-    @cache.it("widgets.cpu.cpu_usage", expires=timedelta(seconds=2))
-    def get_cpu_usage(self):
-        top_output = subprocess.check_output(["top", "-b", "-n 2"]).decode("utf-8")
-        core_count = self.get_core_count()
-
-        cpu_lines = [x for x in top_output.split("\n") if "Cpu" in x]
-
-        cpu_usages = [int(re.search(r"(\d+)\[", x).group(1)) for x
-                      in cpu_lines]
-
-        x = [0] * core_count
-        for i, usage in enumerate(cpu_usages):
-            x[i]
-
-        return x[core_count:]
-
     def render(self):
+        cpu_percentage = Decimal(psutil.cpu_percent(interval=1))
+
         icon = ICONS["entypo"]["gauge"]
+        text = "{}/100%".format(
+            set_bold(round(cpu_percentage)),
+        )
 
-        text = self.get_cpu_usage()
+        output = (self.set_icon_foreground_color(icon) + " "
+                  + self.wrap_in_brackets([text]))
 
-        return (self.set_icon_foreground_color(icon) + " "
-                + self.wrap_in_brackets([text]))
+        if cpu_percentage >= 75:
+            output = set_line_color(set_overline(output), COLORS["red"])
+
+        return output
+
+
+class DiskUsageWidget(Widget):
+
+    def __init__(self, paths=None):
+        if paths is None:
+            paths = [
+                "/",
+                os_path.expanduser("~"),
+            ]
+
+        self.paths = paths
+
+    @cache.it("widgets.disk_usage", expires=timedelta(seconds=5))
+    def render(self):
+        disk_usages = map(psutil.disk_usage, self.paths)
+
+        text_parts = []
+        is_critical = False
+        for disk_usage in disk_usages:
+            total_gb = disk_usage.total / 1024 / 1024 / 1024
+            used_gb = disk_usage.used / 1024 / 1024 / 1024
+
+            text = "{}/{} GB".format(
+                set_bold(round(used_gb)),
+                round(total_gb),
+            )
+
+            if disk_usage.percent >= 90:
+                is_critical = True
+
+                text = set_bold(text)
+
+            text_parts.append(text)
+
+        icon = ICONS["entypo"]["database"]
+        text = ", ".join(text_parts)
+
+        output = (self.set_icon_foreground_color(icon) + " "
+                  + self.wrap_in_brackets([text]))
+
+        if is_critical:
+            output = set_line_color(set_overline(output), COLORS["red"])
+
+        return output
 
 
 widgets = [
@@ -481,7 +515,8 @@ widgets = [
     NetworkWidget(),
     MemoryWidget(),
     LoadWidget(),
-    # CpuWidget(),
+    CpuWidget(),
+    DiskUsageWidget(),
     SoundWidget(),
     BrightnessWidget(),
     BatteryWidget(),

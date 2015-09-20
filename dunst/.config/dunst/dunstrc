@@ -45,7 +45,7 @@
     # Show age of message if message is older than show_age_threshold
     # seconds.
     # Set to -1 to disable.
-    show_age_threshold = 10
+    show_age_threshold = 60
     
     # Split notifications into multiple lines if they don't fit into
     # geometry.
@@ -67,7 +67,7 @@
     # the top and down respectevly.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-12+30"
+    geometry = "360x5-12+36"
     
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -180,15 +180,15 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#2D2D2D"
     foreground = "#A09F93"
-    timeout = 2
+    timeout = 3
 
 [urgency_normal]
-    background = "#515151"
-    foreground = "#F2F0EC"
+    background = "#393939"
+    foreground = "#E8E6DF"
     timeout = 0
 
 [urgency_critical]
-    background = "#F2777A"
+    background = "#515151"
     foreground = "#F2F0EC"
     timeout = 0
 
@@ -244,5 +244,6 @@
 #    appname = Pidgin
 #    summary = *twitter.com*
 #    urgency = normal
-#
+
+
 # vim: ft=cfg
