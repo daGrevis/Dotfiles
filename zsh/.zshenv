@@ -280,7 +280,7 @@ import-gpg-public-key() {
 }
 
 dmenu-go() {
-    dmenu_run -b -i -fn "Fira Mono-9" -nb $COLOR_01 -nf $COLOR_07 -sb $COLOR_0D -sf $COLOR_01
+    dmenu_run -b -i -fn "Fira Mono-9" -nb $COLOR_01 -nf $COLOR_05 -sb $COLOR_02 -sf $COLOR_06
 }
 
 disable-sreen() {
