@@ -226,6 +226,8 @@ if line is not None:
         pass
     elif line.startswith("desktop_layout"):
         pass
+    elif line.startswith("monitor_focus"):
+        pass
     else:
         monitors = get_monitors(line)
         cache.set("bar_bottom.monitors", monitors)
