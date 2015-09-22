@@ -91,17 +91,13 @@ class WindowWidget(Widget):
     def render(self):
         text = " {} ".format(self.title)
 
-        bold_text = False
         background_color = COLORS["01"]
         foreground_color = COLORS["05"]
         if self.is_focused:
             background_color = COLORS["02"]
-            bold_text = True
 
         text = set_background_color(text, background_color)
         text = set_foreground_color(text, foreground_color)
-        if bold_text:
-            text = set_bold(text)
 
         return text
 
