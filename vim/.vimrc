@@ -205,6 +205,8 @@ imap <C-v> <C-o>"*P
 cmap <C-v> <C-r>+
 cmap <S-Insert> <C-r>+
 
+cmap <C-t> <C-a>tabe \| <C-e>
+
 " Type 123<CR> to go to 123rd line.
 nnoremap <CR> G
 nnoremap <BS> gg
