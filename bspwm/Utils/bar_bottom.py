@@ -151,6 +151,31 @@ def get_titles(window_ids):
 
 
 def get_monitors(line):
+    """
+    monitors = [
+        {
+            monitor_id: int
+            monitor_name: str
+
+            is_monocle: bool
+            is_tiled: bool
+
+            desktops: [
+                {
+                    name: str
+
+                    is_focused: bool
+                    is_occupied: bool
+                    is_urgent: bool
+                },
+                ...
+            ]
+
+        },
+        ...
+    ]
+    """
+
     parts = line[1:].split(":")
 
     monitors = []
