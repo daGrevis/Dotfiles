@@ -8,7 +8,6 @@ call plug#begin('~/.vim/plugged')
 " Optional plugins.
 Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'Raimondi/delimitMate'
-" Plug 'Shougo/neocomplete.vim'
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
 Plug 'Z1MM32M4N/vim-superman'
@@ -16,7 +15,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'davidhalter/jedi-vim'
 Plug 'guns/vim-clojure-static'
 Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
@@ -27,7 +25,6 @@ Plug 'lilydjwg/colorizer'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
-Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
 Plug 'morhetz/gruvbox'
 Plug 'mxw/vim-jsx'
@@ -54,7 +51,6 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-" Plug 'ujihisa/neco-look'
 Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/gitignore'
 Plug 'wellle/targets.vim'
@@ -385,9 +381,6 @@ au BufLeave * call AuBufLeave()
 " They are sorted alphabetically.
 "
 
-" Go to start buffer (Startify).
-nmap <Leader><Backspace> :Startify<CR>
-
 " Edit history.
 nmap <Leader><Tab> :GundoToggle<CR>
 
@@ -559,8 +552,6 @@ let g:ctrlp_prompt_mappings = {
             \ "PrtClearCache()": ["<C-r>"],
             \ }
 
-let g:ctrlp_reuse_window  = 'startify'
-
 "
 " CtrlPFunky configuration.
 "
@@ -669,12 +660,6 @@ let g:indent_guides_color_change_percent = 3
 " It should never lag.
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
-
-"
-" Startify configuration.
-"
-
-let g:startify_files_number = 25
 
 "
 " UltiSnips configuration.
