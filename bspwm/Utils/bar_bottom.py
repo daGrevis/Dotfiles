@@ -57,7 +57,7 @@ class DesktopWidget(Widget):
     def render(self):
         d = self.desktop
 
-        text = " {} ".format(d["name"])
+        text = " {} ".format(d["desktop_name"])
 
         background_color = COLORS["01"]
         foreground_color = COLORS["05"]
@@ -155,14 +155,16 @@ def get_monitors(line):
     monitors = [
         {
             monitor_id: int
+
             monitor_name: str
 
             is_monocle: bool
             is_tiled: bool
+            is_active: bool
 
             desktops: [
                 {
-                    name: str
+                    desktop_name: str
 
                     is_focused: bool
                     is_occupied: bool
@@ -184,25 +186,33 @@ def get_monitors(line):
         prefix = part[0]
         content = part[1:]
 
+        # If it's a monitor...
         if prefix in MONITOR_PREFIXES:
             monitor = {
-                "monitor_id": monitor_id,
                 "monitor_name": content,
+
+                "is_active": prefix == "M",
+
                 "desktops": [],
             }
-            monitors.append(monitor)
 
+            monitor["monitor_id"] = monitor_id
             monitor_id += 1
 
+            monitors.append(monitor)
+
+        # Adds the layout options to monitor....
         if prefix == LAYOUT_PREFIX:
             monitor["is_tiled"] = content == "T"
             monitor["is_monocle"] = content == "M"
 
+        # If it's a desktop that belongs to monitor...
         if prefix in DESKTOP_PREFIXES:
             monitor["desktops"].append({
-                "name": content,
-                "is_occupied": prefix in DESKTOP_OCCUPIED_PREFIXES,
+                "desktop_name": content,
+
                 "is_focused": prefix in DESKTOP_FOCUSED_PREFIXES,
+                "is_occupied": prefix in DESKTOP_OCCUPIED_PREFIXES,
                 "is_urgent": prefix in DESKTOP_URGENT_PREFIXES,
             })
 
@@ -257,6 +267,10 @@ if line is not None:
 
 focused_monitor_name = get_focused_monitor_name()
 for monitor in monitors:
+    # TODO: Test it!
+    # if not monitor["is_active"]:
+    #     continue
+
     if monitor["monitor_id"] == 1:
         focused_color = COLORS["blue"]
     else:
