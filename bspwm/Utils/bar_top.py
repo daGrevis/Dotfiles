@@ -12,7 +12,7 @@ import requests
 import psutil
 from lemony import set_bold, set_overline, set_line_color, progress_bar
 
-from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache
+from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache, notify_exception
 
 
 # To silence the damn linter!
@@ -529,6 +529,7 @@ for w in widgets:
     try:
         rendered_widgets.append(w.render())
     except Exception as exc:
+        notify_exception()
         logger.exception(exc)
 
 output = (" " * 4).join(rendered_widgets)

@@ -6,7 +6,7 @@ from sys import argv, stdout
 
 from lemony import set_foreground_color, set_background_color, set_bold, set_line_color, set_underline, set_monitor
 
-from widgets import COLORS, Widget, cache
+from widgets import COLORS, Widget, cache, notify_exception, debug
 
 
 logger = logging.getLogger()
@@ -82,18 +82,21 @@ class DesktopWidget(Widget):
 
 class WindowWidget(Widget):
 
-    def __init__(self, title, is_focused=False):
+    def __init__(self, window):
         super()
 
-        self.title = title
-        self.is_focused = is_focused
+        self.window = window
 
     def render(self):
-        text = " {} ".format(self.title)
+        w = self.window
+
+        short_title = get_short_title(w["title"])
+
+        text = " {} ".format(short_title)
 
         background_color = COLORS["01"]
         foreground_color = COLORS["05"]
-        if self.is_focused:
+        if w["is_focused"]:
             background_color = COLORS["02"]
 
         text = set_background_color(text, background_color)
@@ -219,53 +222,30 @@ def get_monitors(line):
     return monitors
 
 
-try:
-    line = argv[1]
-except IndexError:
-    line = None
+def get_windows():
+    window_ids = get_window_ids_in_current_desktop()
+    focused_window_id = get_focused_window_id()
+    titles = get_titles(window_ids)
+    titles_by_window_id = dict(zip(window_ids, titles))
+
+    windows = [{"id": w,
+                "title": titles_by_window_id[w],
+                "is_focused": w == focused_window_id,
+                } for w in window_ids]
+
+    return windows
 
 
-window_ids = get_window_ids_in_current_desktop()
-focused_window_id = get_focused_window_id()
-titles = get_titles(window_ids)
-titles_by_window_id = dict(zip(window_ids, titles))
-
-windows = [{"id": w,
-            "title": titles_by_window_id[w],
-            "is_focused": w == focused_window_id,
-            } for w in window_ids]
-
-for i, window in enumerate(windows):
-    for new_title, regexs in SHORT_TITLE_MAPPING.items():
+def get_short_title(title):
+    for short_title, regexs in SHORT_TITLE_MAPPING.items():
         for regex in regexs:
-            if re.match(regex, window["title"]) is not None:
-                windows[i]["title"] = new_title
+            if re.match(regex, title) is not None:
+                return short_title
 
-                break
+    return title
 
-monitors = cache.get("bar_bottom.monitors", [])
-if line is not None:
-    if line.startswith("window_manage"):
-        pass
-    elif line.startswith("window_unmanage"):
-        pass
-    elif line.startswith("window_focus"):
-        pass
-    elif line.startswith("window_state"):
-        pass
-    elif line.startswith("desktop_focus"):
-        pass
-    elif line.startswith("desktop_layout"):
-        pass
-    elif line.startswith("monitor_focus"):
-        pass
-    else:
-        monitors = get_monitors(line)
-        cache.set("bar_bottom.monitors", monitors)
 
-# Renders and outputs widgets.
-
-for monitor in monitors:
+def render_monitor(monitor, windows):
     if monitor["monitor_id"] == 1:
         focused_color = COLORS["blue"]
     else:
@@ -280,17 +260,14 @@ for monitor in monitors:
         if not w.is_available():
             continue
 
-        try:
-            rendered_widgets.append(w.render())
-        except Exception as exc:
-            logger.exception(exc)
+        rendered_widgets.append(w.render())
 
     desktop_output = "".join(rendered_widgets)
 
     window_output = None
     if monitor["is_active"]:
         window_widgets = [
-            WindowWidget(w["title"], w["is_focused"])
+            WindowWidget(w)
             for w in windows
         ]
 
@@ -299,10 +276,7 @@ for monitor in monitors:
             if not w.is_available():
                 continue
 
-            try:
-                rendered_widgets.append(w.render())
-            except Exception as exc:
-                logger.exception(exc)
+            rendered_widgets.append(w.render())
 
             window_output = "".join(rendered_widgets)
 
@@ -318,3 +292,54 @@ for monitor in monitors:
         output,
         monitor["monitor_id"] - 1
     ))
+
+
+def render(monitors):
+    windows = get_windows()
+
+    for monitor in monitors:
+        render_monitor(monitor, windows)
+
+
+def main():
+    try:
+        line = argv[1]
+    except IndexError:
+        return
+
+    if line.startswith("W"):
+        monitors = get_monitors(line)
+
+        cache.set("bar_bottom.monitors", monitors)
+    else:
+        monitors = cache.get("bar_bottom.monitors", [])
+
+    # if line.startswith("monitor_focus"):
+    #     pass
+
+    # if line.startswith("desktop_focus"):
+    #     pass
+
+    # if line.startswith("desktop_layout"):
+    #     pass
+
+    # if line.startswith("window_state"):
+    #     pass
+
+    # if line.startswith("window_focus"):
+    #     pass
+
+    # if line.startswith("window_manage"):
+    #     pass
+
+    # if line.startswith("window_unmanage"):
+    #     pass
+
+    render(monitors)
+
+
+try:
+    main()
+except Exception as exc:
+    notify_exception()
+    logger.exception(exc)

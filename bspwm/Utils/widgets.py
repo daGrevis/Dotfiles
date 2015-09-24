@@ -1,4 +1,8 @@
 import os
+import subprocess
+import traceback
+import sys
+import pprint
 from datetime import datetime, timedelta
 from math import floor
 
@@ -163,3 +167,41 @@ def humanize_timedelta(delta, discard_names=[]):
     output = ["{}{}".format(count, name_mapping[name]) for name, count in results]
 
     return " ".join(output)
+
+
+def notify_send(summary, body, urgency="normal"):
+    assert urgency in ("low", "normal", "critical")
+
+    subprocess.call([
+        "notify-send",
+        "-u",
+        urgency,
+        "--",
+        summary,
+        body,
+    ])
+
+
+def notify_exception(urgency="normal"):
+    exc_info = sys.exc_info()
+    _, exc, tr = exc_info
+    traces = traceback.extract_tb(tr)
+    last_trace = traces[-1]
+    file_name, line_no, func, code = last_trace
+
+    summary = repr(exc)
+    body = "{file_name}:{line_no}".format(
+        file_name=file_name,
+        line_no=line_no,
+    )
+
+    notify_send(summary, body)
+
+
+def debug(message, cut_at=None):
+    message = pprint.pformat(message)
+    if cut_at is not None:
+        message = message[:cut_at]
+        message += "\n..."
+
+    notify_send("Debug", message)
