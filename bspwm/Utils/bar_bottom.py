@@ -265,12 +265,7 @@ if line is not None:
 
 # Renders and outputs widgets.
 
-focused_monitor_name = get_focused_monitor_name()
 for monitor in monitors:
-    # TODO: Test it!
-    # if not monitor["is_active"]:
-    #     continue
-
     if monitor["monitor_id"] == 1:
         focused_color = COLORS["blue"]
     else:
@@ -293,7 +288,7 @@ for monitor in monitors:
     desktop_output = "".join(rendered_widgets)
 
     window_output = None
-    if monitor["monitor_name"] == focused_monitor_name:
+    if monitor["is_active"]:
         window_widgets = [
             WindowWidget(w["title"], w["is_focused"])
             for w in windows
@@ -316,7 +311,7 @@ for monitor in monitors:
     else:
         output = desktop_output + "  " + window_output
 
-    if monitor["monitor_name"] == focused_monitor_name:
+    if monitor["is_active"]:
         output = set_line_color(set_underline(output), focused_color)
 
     stdout.write(set_monitor(
