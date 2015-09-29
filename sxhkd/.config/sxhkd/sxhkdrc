@@ -1,9 +1,9 @@
 # Quit bspwm.
-super + alt + Escape
+super + Escape + alt + q
     bspc quit
 
 # Restart WM.
-super + Escape
+super + Escape + q
     ~/Utils/restart_wm.sh
 
 # Close window.
