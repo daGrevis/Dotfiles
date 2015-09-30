@@ -290,6 +290,10 @@ def render_to_monitor(monitor, windows):
 
 def render(monitors):
     for monitor in monitors:
+        # Hack to disable bar for TV screen because it's acting real weird.
+        if monitor["monitor_name"] == "HDMI1":
+            continue
+
         windows = get_windows(monitor)
 
         render_to_monitor(
