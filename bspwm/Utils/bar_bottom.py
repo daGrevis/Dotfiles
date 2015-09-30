@@ -25,6 +25,8 @@ logger.addHandler(logger_handler)
 
 
 SHORT_WINDOW_NAME_MAPPING = {
+    "chrome": [r".+ - Google Chrome$"],
+    "chromium": [r".+ - Chromium$"],
     "firefox": [r"(.+ - )?Mozilla Firefox$", r".*Pentadactyl$"],
     "hipchat": [r"^HipChat$"],
     "mpv": [r".+ - mpv$"],
@@ -163,25 +165,12 @@ def get_monitors(line):
     return monitors
 
 
-def get_window_ids_in_monitor(monitor_id):
-    output = subprocess.check_output([
-        "bspc",
-        "query",
-        "-m",
-        "^{}".format(monitor_id),
-        "-W",
-    ]).decode("utf-8")
-    window_ids = output.split("\n")[:-1]
-
-    return window_ids
-
-
-def get_window_ids_in_focused_desktops():
+def get_window_ids_in_desktop(desktop_name):
     output = subprocess.check_output([
         "bspc",
         "query",
         "-d",
-        "focused",
+        desktop_name,
         "-W",
     ]).decode("utf-8")
     window_ids = output.split("\n")[:-1]
@@ -223,7 +212,7 @@ def get_short_window_name(name):
     return name
 
 
-def get_windows(monitor_id):
+def get_windows(monitor):
     """
     windows = [
         {
@@ -237,16 +226,8 @@ def get_windows(monitor_id):
     ]
     """
 
-    window_ids_in_focused_desktops = get_window_ids_in_focused_desktops()
-    window_ids_in_monitor = get_window_ids_in_monitor(monitor_id)
-
-    # Can't use sets here because need to maintain order.
-    window_ids = [
-        window_id
-        for window_id
-        in window_ids_in_focused_desktops
-        if window_id in window_ids_in_monitor
-    ]
+    focused_desktop = [d for d in monitor["desktops"] if d["is_focused"]][0]
+    window_ids = get_window_ids_in_desktop(focused_desktop["desktop_name"])
 
     focused_window_id = get_focused_window_id()
     window_id_to_window_names = dict(zip(window_ids, get_window_names(window_ids)))
@@ -279,20 +260,19 @@ def render_to_monitor(monitor, windows):
     desktop_output = "".join(rendered_widgets)
 
     window_output = None
-    if monitor["is_active"]:
-        window_widgets = [
-            WindowWidget(w)
-            for w in windows
-        ]
+    window_widgets = [
+        WindowWidget(w)
+        for w in windows
+    ]
 
-        rendered_widgets = []
-        for w in window_widgets:
-            if not w.is_available():
-                continue
+    rendered_widgets = []
+    for w in window_widgets:
+        if not w.is_available():
+            continue
 
-            rendered_widgets.append(w.render())
+        rendered_widgets.append(w.render())
 
-            window_output = "".join(rendered_widgets)
+        window_output = "".join(rendered_widgets)
 
     if window_output is None or not windows:
         output = desktop_output
@@ -310,9 +290,11 @@ def render_to_monitor(monitor, windows):
 
 def render(monitors):
     for monitor in monitors:
+        windows = get_windows(monitor)
+
         render_to_monitor(
             monitor,
-            get_windows(monitor["monitor_id"]),
+            windows,
         )
 
 
