@@ -122,7 +122,7 @@ endtry
 set colorcolumn=100
 
 " Minimal number of screen lines to keep above and below the cursor.
-set scrolloff=20
+set scrolloff=0
 
 " Don't update the display while executing macros.
 set lazyredraw
