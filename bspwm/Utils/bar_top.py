@@ -12,7 +12,7 @@ import requests
 import psutil
 from lemony import set_bold, set_overline, set_line_color, progress_bar
 
-from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache, notify_exception
+from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache, notify_exception, debug
 
 
 # To silence the damn linter!
@@ -148,10 +148,10 @@ class BatteryWidget(Widget):
                 output = set_line_color(set_overline(output), COLORS["red"])
         else:
             is_charging = re.search(r"Charging", acpi_output) is not None
-            duration_groups = re.search(r"\d+:\d+:\d+", acpi_output).groups()
+            duration_groups = re.search(r"(\d+):(\d+):(\d+)", acpi_output).groups()
 
             if duration_groups:
-                duration_parts = map(int, duration_groups[0].split(":"))
+                duration_parts = map(int, duration_groups)
             else:
                 duration_parts = (0, 0, 0)
 
@@ -160,12 +160,10 @@ class BatteryWidget(Widget):
 
             duration = humanize_timedelta(duration_timedelta, discard_names=("second", ))
 
-            if duration == "":
-                text = "0"
-            elif is_charging:
-                text = "+{}".format(duration)
+            if is_charging:
+                text = "{} til charged".format(duration)
             else:
-                text = "-{}".format(duration)
+                text = "{} til discharged".format(duration)
 
             output = "".join([
                 self.set_icon_foreground_color(icon),
