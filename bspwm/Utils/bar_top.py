@@ -463,33 +463,48 @@ class CpuWidget(Widget):
 class DiskUsageWidget(Widget):
 
     def __init__(self, paths=None):
-        if paths is None:
-            paths = [
-                "/",
-                os_path.expanduser("~"),
-            ]
-
         self.paths = paths
 
-    @cache.it("widgets.disk_usage", expires=timedelta(seconds=5))
+    @cache.it("widgets.disk_usages", expires=timedelta(seconds=5))
+    def get_disk_usages(self):
+        paths = self.paths
+
+        # Defaults.
+        if paths is None:
+            paths = [
+                "/",  # root
+                os_path.expanduser("~"),  # home dir
+            ]
+
+        return map(psutil.disk_usage, paths)
+
     def render(self):
-        disk_usages = map(psutil.disk_usage, self.paths)
+        disk_usages = self.get_disk_usages()
 
         text_parts = []
-        is_critical = False
         for disk_usage in disk_usages:
             total_gb = disk_usage.total / 1024 / 1024 / 1024
             used_gb = disk_usage.used / 1024 / 1024 / 1024
+            free_gb = disk_usage.free / 1024 / 1024 / 1024
 
             text = "{}/{} GB".format(
                 set_bold(round(used_gb)),
                 round(total_gb),
             )
 
-            if disk_usage.percent >= 90:
-                is_critical = True
+            is_critical = False
 
-                text = set_bold(text)
+            # Numbers below are pretty random and should be adjusted manually.
+            is_storage_drive = total_gb >= 80
+            if is_storage_drive:
+                if free_gb < 20:
+                    is_critical = True
+            else:
+                if disk_usage.percent >= 90:
+                    is_critical = True
+
+            if is_critical:
+                text = set_line_color(set_overline(text), COLORS["red"])
 
             text_parts.append(text)
 
@@ -498,9 +513,6 @@ class DiskUsageWidget(Widget):
 
         output = (self.set_icon_foreground_color(icon) + " "
                   + self.wrap_in_brackets([text]))
-
-        if is_critical:
-            output = set_line_color(set_overline(output), COLORS["red"])
 
         return output
 
