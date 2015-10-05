@@ -6,7 +6,7 @@ from sys import argv, stdout
 
 from lemony import (
     set_foreground_color, set_background_color, set_bold, set_line_color, set_underline,
-    set_monitor,
+    set_monitor, align_right,
 )
 
 from widgets import COLORS, Widget, cache, notify_exception, debug
@@ -281,6 +281,13 @@ def render_to_monitor(monitor, windows):
 
     if monitor["is_active"]:
         output = set_line_color(set_underline(output), focused_color)
+
+    if monitor["is_tiled"]:
+        mode = "tiled"
+    elif monitor["is_monocle"]:
+        mode = "monocle"
+
+    output += align_right(mode)
 
     stdout.write(set_monitor(
         output,
