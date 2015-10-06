@@ -6,7 +6,7 @@ from sys import argv, stdout
 
 from lemony import (
     set_foreground_color, set_background_color, set_bold, set_line_color, set_underline,
-    set_monitor, align_right,
+    set_monitor, align_left, align_right,
 )
 
 from widgets import COLORS, Widget, cache, notify_exception, debug
@@ -278,6 +278,8 @@ def render_to_monitor(monitor, windows):
         output = desktop_output
     else:
         output = desktop_output + "  " + window_output
+
+    output = align_left(output)
 
     if monitor["is_active"]:
         output = set_line_color(set_underline(output), focused_color)
