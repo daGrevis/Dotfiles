@@ -181,6 +181,10 @@ function vim {
     command gvim -p $@
 }
 
+function vimd {
+    command gvim -p $@ & disown && exit
+}
+
 alias generate-password='pwgen -By1 16'
 
 alias serve-http='python -m http.server'
