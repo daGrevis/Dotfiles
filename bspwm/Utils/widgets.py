@@ -3,6 +3,7 @@ import subprocess
 import traceback
 import sys
 import pprint
+from sys import stdout
 from datetime import datetime, timedelta
 from math import floor
 
@@ -12,6 +13,11 @@ from lemony import BaseWidget, set_foreground_color, set_bold
 
 
 ISO_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+
+def fatal_error(message):
+    stdout.write(message)
+    exit(-1)
 
 
 try:
@@ -39,8 +45,7 @@ try:
         )
     }
 except KeyError:
-    print("COLOR_* variables are missing!")
-    exit(-1)
+    fatal_error("COLOR_* variables are missing!")
 
 # Some aliases.
 COLORS["on_grey"] = COLORS["04"]
@@ -92,6 +97,9 @@ ICONS = {
 
 
 cache = sweetcache.Cache(sweetcache_redis.RedisBackend)
+
+if not cache.is_available():
+    fatal_error("{} is not available!".format(cache))
 
 
 class Widget(BaseWidget):
