@@ -25,11 +25,8 @@ done &
 
 reader() {
     while read -r line ; do
-        (
-        flock -n 9 || exit 1
-            output="$(PYTHONPATH=~/Python/lemony:~/Python/sweetcache-redis:~/Python/sweetcache python ~/Utils/bar_top.py "$line")"
-            printf "%s\n" "$output"
-        ) 9> ~/tmp/bar_top.lock
+        output="$(PYTHONPATH=~/Python/lemony:~/Python/sweetcache-redis:~/Python/sweetcache python ~/Utils/bar_top.py "$line")"
+        printf "%s\n" "$output"
     done
 }
 
