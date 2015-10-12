@@ -20,11 +20,8 @@ bspc control --subscribe all > "$pipe" &
 
 reader() {
     while read -r line ; do
-        (
-        flock -n 9 || exit 1
-            output="$(PYTHONPATH=~/Python/lemony:~/Python/sweetcache-redis:~/Python/sweetcache python ~/Utils/bar_bottom.py "$line")"
-            printf "%s\n" "$output"
-        ) 9> ~/tmp/bar_bottom.lock
+        output="$(PYTHONPATH=~/Python/lemony:~/Python/sweetcache-redis:~/Python/sweetcache python ~/Utils/bar_bottom.py "$line")"
+        printf "%s\n" "$output"
     done
 }
 
