@@ -129,6 +129,7 @@ class BatteryWidget(Widget):
 
         is_full = (re.search(r"Full", acpi_output) is not None or
                    re.search(r"100%", acpi_output) is not None)
+        is_charging = re.search(r"Charging", acpi_output) is not None
 
         percentage = Decimal(re.search(r"(\d+)\%", acpi_output).group(1))
 
@@ -147,7 +148,6 @@ class BatteryWidget(Widget):
             if percentage < 20:
                 output = set_line_color(set_overline(output), COLORS["red"])
         else:
-            is_charging = re.search(r"Charging", acpi_output) is not None
             duration_groups = re.search(r"(\d+):(\d+):(\d+)", acpi_output).groups()
 
             if duration_groups:
@@ -176,7 +176,7 @@ class BatteryWidget(Widget):
                 ]),
             ])
 
-        if percentage < 40:
+        if not is_charging and percentage < 40:
             output = set_line_color(set_overline(output), COLORS["red"])
 
         return output
