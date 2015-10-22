@@ -19,6 +19,9 @@ eval "$(thefuck --alias)"
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*'   force-list always
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
