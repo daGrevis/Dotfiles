@@ -443,3 +443,5 @@ check-network() {
 skype2() {
     skype --dbpath=~/.Skype2
 }
+
+alias pping="prettyping"
