@@ -51,7 +51,7 @@ super + ctrl + {h,j,k,l}
     bspc window -p {left,down,up,right}
 
 # Cancel preselection.
-super + shift + c
+super + ctrl + c
     bspc desktop -c
 
 # Resize window.
