@@ -15,6 +15,7 @@ Plug 'bling/vim-airline'
 Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
+Plug 'ggVGc/vim-fuzzysearch'
 Plug 'guns/vim-clojure-static'
 Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
@@ -55,6 +56,7 @@ Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/gitignore'
 Plug 'vim-utils/vim-husk'
 Plug 'wellle/targets.vim'
+Plug 'drmikehenry/vim-fontsize'
 
 " Required by vim-plug.
 call plug#end()
@@ -384,8 +386,10 @@ au BufLeave * call AuBufLeave()
 " They are sorted alphabetically.
 "
 
-" Edit history.
-nmap <Leader><Tab> :GundoToggle<CR>
+nmap <silent> <Leader>= <Plug>FontsizeBegin
+nmap <silent> <Leader>+ <Plug>FontsizeInc
+nmap <silent> <Leader>- <Plug>FontsizeDec
+nmap <silent> <Leader>0 <Plug>FontsizeDefault
 
 " Find in files (alternative grep).
 nmap <Leader>a :Ack<Space>
@@ -409,7 +413,7 @@ nmap <Leader>ee :e!<CR>
 nmap <Leader>f :set ft=
 
 " Restructures text so it doesn't go over `textwidth`.
-nmap <Leader>gq mtggvGgq`t
+nmap <Leader>q mtggvGgq`t
 
 " Don't underestimate Vim help -- it is top notch!
 nmap <Leader>h :help<Space>
@@ -440,6 +444,9 @@ nmap <Leader>s :sort<CR>
 vmap <Leader>s :sort<CR>
 
 nmap <Leader>t :tabe<Space>
+
+" Go back in time (tree-view history). Yes, Vim is awesome!
+nmap <Leader>u :GundoToggle<CR>
 
 " Start selecting in visual-block mode.
 nmap <Leader>v v<C-v>
@@ -704,3 +711,16 @@ let g:jedi#completions_command = ""
 let g:jedi#rename_command = ""
 
 " autocmd FileType python setlocal omnifunc=jedi#completions
+
+"
+" FuzzySearch configuration.
+"
+
+" Inverted search is just confusing to bother with (just search and go back
+" with N). Instead lets map it to something more useful like fuzzy search!
+nmap ? :FuzzySearch<CR>
+
+"
+" Fontsize configuration.
+"
+
