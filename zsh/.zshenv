@@ -450,3 +450,7 @@ skype2() {
 }
 
 alias pping="prettyping"
+
+df() {
+    colordiff -u $@ | less
+}
