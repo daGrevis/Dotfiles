@@ -122,8 +122,6 @@ catch
     set cryptmethod=blowfish
 endtry
 
-set colorcolumn=100
-
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=0
 
@@ -319,6 +317,12 @@ endfunc
 au BufReadPre * call AuBufReadPre()
 
 func! AuBufReadPost()
+    if has('gui_running')
+        setlocal colorcolumn=100
+    else
+        setlocal colorcolumn=
+    endif
+
     " Restore last cursor position.
     if &ft != "gitcommit" && line("'\"") > 1 && line("'\"") <= line("$")
         exe "normal! g'\""
@@ -488,8 +492,9 @@ endif
 " Airline configuration.
 "
 
-if has('gui_running')
-    let g:airline_powerline_fonts = 1
+" Hacky way to disable airline.
+if ! has("gui_running")
+    let g:loaded_airline = 1
 endif
 
 " Fine-tune tabline.
@@ -659,7 +664,9 @@ let g:colorizer_startup = 0
 " Indent guides configuration.
 "
 
-let g:indent_guides_enable_on_vim_startup = 1
+if has('gui_running')
+    let g:indent_guides_enable_on_vim_startup = 1
+endif
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_color_change_percent = 3
 
