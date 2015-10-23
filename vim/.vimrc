@@ -278,7 +278,6 @@ endfunc
 au filetype sql call AuFtSql()
 
 func! AuFtGitCommit()
-    setlocal colorcolumn=50
     setlocal spell
 endfunc
 au filetype gitcommit call AuFtGitCommit()
@@ -319,6 +318,10 @@ au BufReadPre * call AuBufReadPre()
 func! AuBufReadPost()
     if has('gui_running')
         setlocal colorcolumn=100
+
+        if &ft == "gitcommit"
+            setlocal colorcolumn=50
+        endif
     else
         setlocal colorcolumn=
     endif
