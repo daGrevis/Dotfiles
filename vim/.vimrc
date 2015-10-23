@@ -14,6 +14,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'drmikehenry/vim-fontsize'
 Plug 'ervandew/supertab'
 Plug 'ggVGc/vim-fuzzysearch'
 Plug 'guns/vim-clojure-static'
@@ -56,7 +57,6 @@ Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/gitignore'
 Plug 'vim-utils/vim-husk'
 Plug 'wellle/targets.vim'
-Plug 'drmikehenry/vim-fontsize'
 
 " Required by vim-plug.
 call plug#end()
@@ -242,10 +242,10 @@ command! -nargs=* ResetIndentation call ResetIndentation()
 "
 
 " Enables Vim built-in completion.
-autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript,javascript.jsx,coffee setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+au FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
+au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+au FileType javascript,javascript.jsx,coffee setlocal omnifunc=javascriptcomplete#CompleteJS
+au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 au filetype python setlocal makeprg=python\ %
 au filetype clojure setlocal makeprg=lein\ exec\ %
@@ -677,41 +677,6 @@ let g:gitgutter_eager = 0
 
 let g:UltiSnipsExpandTrigger = "<C-\\>"
 
-" Close completion with <Enter> w/o breaking indentation by entering a line.
-" function! s:cr_event()
-"     return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-" endfunction
-" inoremap <silent> <CR> <C-r>=<SID>cr_event()<CR>
-
-if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-
-" Enables English dictionary completion using look command and
-" /usr/share/dict/words word-list in specified filetypes.
-let g:neocomplete#text_mode_filetypes = get(g:, 'neocomplete#text_mode_filetypes', {})
-let g:neocomplete#text_mode_filetypes.text = 1
-let g:neocomplete#text_mode_filetypes.markdown = 1
-let g:neocomplete#text_mode_filetypes.gitcommit = 1
-
-"
-" Jedi configuration.
-"
-
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-
-let g:jedi#goto_command = ""
-let g:jedi#goto_assignments_command = ""
-let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = ""
-let g:jedi#usages_command = ""
-let g:jedi#completions_command = ""
-let g:jedi#rename_command = ""
-
-" autocmd FileType python setlocal omnifunc=jedi#completions
-
 "
 " FuzzySearch configuration.
 "
@@ -719,8 +684,3 @@ let g:jedi#rename_command = ""
 " Inverted search is just confusing to bother with (just search and go back
 " with N). Instead lets map it to something more useful like fuzzy search!
 nmap ? :FuzzySearch<CR>
-
-"
-" Fontsize configuration.
-"
-
