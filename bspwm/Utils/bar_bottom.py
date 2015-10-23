@@ -242,6 +242,29 @@ def get_windows(monitor):
     return windows
 
 
+def get_window_sizes():
+    try:
+        output = subprocess.check_output([
+            "wmctrl",
+            "-lG",
+        ]).decode("utf-8")
+    except subprocess.CalledProcessError:
+        return {}
+
+    lines = output.split("\n")[:-1]
+    window_sizes = {}
+    for line in lines:
+        line_parts = line.split()
+
+        window_id = "0x" + line_parts[0][3:].upper()
+        window_width = line_parts[4]
+        window_height = line_parts[5]
+
+        window_sizes[window_id] = (window_width, window_height)
+
+    return window_sizes
+
+
 def render_to_monitor(monitor, windows):
     if monitor["monitor_id"] == 1:
         focused_color = COLORS["blue"]
@@ -291,7 +314,22 @@ def render_to_monitor(monitor, windows):
     elif monitor["is_monocle"]:
         mode = "monocle"
 
-    output += align_right(mode)
+    focused_window = None
+    focused_windows = [w for w in windows if w["is_focused"]]
+    if focused_windows:
+        focused_window = focused_windows[0]
+
+    if focused_window is not None and focused_window["size"] is not None:
+        size = "{}x{}".format(*focused_window["size"])
+
+        status_bar = "{mode}, {size}".format(
+            mode=mode,
+            size=size,
+        )
+    else:
+        status_bar = mode
+
+    output += align_right(status_bar)
 
     stdout.write(set_monitor(
         output,
@@ -300,12 +338,16 @@ def render_to_monitor(monitor, windows):
 
 
 def render(monitors):
+    window_sizes = get_window_sizes()
+
     for monitor in monitors:
         # Hack to disable bar for TV screen because it's acting real weird.
         if monitor["monitor_name"] == "HDMI1":
             continue
 
         windows = get_windows(monitor)
+        for window in windows:
+            window["size"] = window_sizes.get(window["window_id"])
 
         render_to_monitor(
             monitor,
