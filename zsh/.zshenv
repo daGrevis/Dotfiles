@@ -461,8 +461,9 @@ df() {
 
 alias ga="git add -A"
 alias gaa="git add -A ."
-alias gc="git commit"
-alias gcm="git commit"
+alias gc!="git commit -v --am"
+alias gc="git commit -v"
+alias gcm="git commit -v"
 alias gco="git checkout"
 alias gcp="git cherry-pick"
 alias gd="git diff"
