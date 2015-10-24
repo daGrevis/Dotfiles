@@ -60,7 +60,7 @@ zstyle ':completion:*:kill:*'   force-list always
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump)
+plugins=(autojump)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -454,3 +454,25 @@ alias pping="prettyping"
 df() {
     colordiff -u $@ | less
 }
+
+#
+# Git alias.
+#
+
+alias ga="git add -A"
+alias gaa="git add -A ."
+alias gc="git commit"
+alias gcm="git commit"
+alias gco="git checkout"
+alias gcp="git cherry-pick"
+alias gd="git diff"
+alias gdf="git diff"
+alias gl="git pull"
+alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+alias gmr="git merge"
+alias gp="git push"
+alias grm="git remove"
+alias grs="git reset"
+alias grv="git revert"
+alias gs="git status -sb"
+alias gst="git status -sb"
