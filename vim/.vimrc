@@ -40,7 +40,6 @@ Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'suan/vim-instant-markdown'
 Plug 'tacahiroy/ctrlp-funky'
-Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
@@ -420,7 +419,7 @@ nmap <Leader>ee :e!<CR>
 nmap <Leader>f :set ft=
 
 " Restructures text so it doesn't go over `textwidth`.
-nmap <Leader>q mtggvGgq`t
+vmap <Leader>q mtggvGgq`t
 
 " Don't underestimate Vim help -- it is top notch!
 nmap <Leader>h :help<Space>
@@ -590,13 +589,6 @@ let g:ctrlp_smarttabs_modify_tabline = 0
 
 nmap / <Plug>(incsearch-forward)\v
 nmap ? <Plug>(incsearch-backward)\v
-
-"
-" Expand-region configuration.
-"
-
-vmap v <Plug>(expand_region_expand)
-vmap <S-v> <Plug>(expand_region_shrink)
 
 "
 " Sneak configuration.
