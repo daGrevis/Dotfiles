@@ -351,17 +351,31 @@ class WeatherWidget(Widget):
             "-",
         )
 
-        text = ", ".join([
-            "{}C".format(
-                set_bold(round(temperature_c)),
-            ),
-            "{}%".format(
-                set_bold(round(precipitation)),
-            ),
-            "{}km/h".format(
-                set_bold(round(wind_kmh)),
-            ),
+        temperature_text = "{}C".format(
+            set_bold(round(temperature_c)),
+        )
+
+        precipitation_text = "{}%".format(
+            set_bold(round(precipitation)),
+        )
+
+        wind_text = "{}km/h {}".format(
+            set_bold(round(wind_kmh)),
             set_bold(wind_direction),
+        )
+
+        # See https://en.wikipedia.org/wiki/Beaufort_scale#Modern_scale
+        if wind_kmh >= 29:
+            color = COLORS["orange"]
+            if wind_kmh >= 39:
+                color = COLORS["red"]
+
+            wind_text = set_line_color(set_overline(wind_text), color)
+
+        text = ", ".join([
+            temperature_text,
+            precipitation_text,
+            wind_text,
         ])
 
         output = (self.set_icon_foreground_color(icon) + " "
