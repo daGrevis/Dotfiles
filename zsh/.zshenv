@@ -429,6 +429,12 @@ open-ranger() {
     st -e ranger
 }
 
+open-thunar() {
+    notify-executing "thunar"
+
+    thunar
+}
+
 check-network() {
     wget -q -T 1 --spider google.com
 }

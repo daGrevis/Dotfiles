@@ -164,4 +164,7 @@ super + shift + g
 super + shift + r
     open-ranger
 
+super + shift + t
+    open-thunar
+
 # vim: iskeyword+=-
