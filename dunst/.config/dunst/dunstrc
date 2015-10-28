@@ -1,5 +1,5 @@
 [global]
-    font = Andale Mono 9
+    font = Fira Mono 9
     
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -67,7 +67,7 @@
     # the top and down respectevly.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "360x5-12+36"
+    geometry = "360x10-5+29"
     
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -117,7 +117,7 @@
     # Draw a line of "separatpr_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 2
+    separator_height = 0
     
     # Padding between text and separator.
     padding = 8
@@ -131,7 +131,7 @@
     #  * foreground: use the same color as the foreground;
     #  * frame: use the same color as the frame;
     #  * anything else will be interpreted as a X color.
-    separator_color = frame
+    separator_color = auto
     
     # Print a notification on startup.
     # This is mainly for error detection, since dbus (re-)starts dunst
