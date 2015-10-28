@@ -38,13 +38,13 @@ super + shift + o
 super + {_,shift + }{h,j,k,l}
     bspc window -{f,s} {left,down,up,right}
 
-# Go to prev window.
-super + minus
-    bspc desktop -f prev
-
-# Go to next window.
+# Go to next desktop.
 super + equal
     bspc desktop -f next
+
+# Go to prev desktop.
+super + minus
+    bspc desktop -f prev
 
 # Preselect window.
 super + ctrl + {h,j,k,l}
@@ -70,9 +70,13 @@ super + {_,shift + }{1-9,0}
 super + grave
     bspc desktop -f last
 
-# Switch to last window.
+# Go to next window.
 super + Tab
     bspc window -f next
+
+# Go to prev window.
+super + shift + Tab
+    bspc window -f prev
 
 # Focus on urgent monitor.
 super + u
