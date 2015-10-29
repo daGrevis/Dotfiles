@@ -18,9 +18,9 @@
 
 ### Fonts used
 
-* **Inconsolata-g** for Vim and terminal,
-* **Andale Mono 9** for panels and menus,
-* **San Francisco Display** for native windows;
+* *Inconsolata-g* for Vim and terminal,
+* *Andale Mono* for panels and menus,
+* *San Francisco Display* for native windows;
 
 ## Installation
 
