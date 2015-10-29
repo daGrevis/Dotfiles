@@ -1,10 +1,6 @@
 # Dotfiles for my Arch Linux workstation(s)
 
-Fonts used:
-
-* *Inconsolata-g* for Vim and terminal,
-* *Andale Mono* for panels and menus,
-* *San Francisco Display* for native windows;
+[Skip to Installation](https://github.com/daGrevis/Dotfiles#installation)
 
 ## Screenshots
 
@@ -37,15 +33,24 @@ This works for everything so just "stow" what you want and config should be in
 correct place. Be aware that some things may have manual setup described in
 `README.md` of that thing (ex. `firefox/README.md`).
 
-
 Examples:
 
 ~~~
+# Check https://github.com/daGrevis/Dotfiles/tree/master/vim
+stow --ignore=".md" vim
+# Check https://github.com/daGrevis/Dotfiles/tree/master/zsh
 stow --ignore=".md" zsh
-stow --ignore=".md" bspwm
 
-stow --delete bspwm # But don't...
+stow --delete vim # But don't...
 ~~~
 
 If you want everything like I do and fast, try `stow_everything.sh`. It
 not a good idea though.
+
+# Other
+
+Fonts used:
+
+* *Inconsolata-g* for Vim and terminal,
+* *Andale Mono* for panels and menus,
+* *San Francisco Display* for native windows;
