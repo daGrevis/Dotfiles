@@ -6,15 +6,13 @@
 
 **Warning**: these screenshots show repo state as it was in [189666b](https://github.com/daGrevis/Dotfiles/tree/189666b).
 
-![Clean](https://github.com/daGrevis/Dotfiles/raw/master/Screenshots/dotfiles-clean.png)
-
-![Terminal](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-terminal.png)
-
-![Git](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-using-git.png)
-
-![Vim](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-vim.png)
-
-![Browser](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-browser.png)
+[![](https://i.imgur.com/HWJv59e.jpg)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/r42gO7t.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/D00mKEn.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/nqO2GbG.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/JJqjOmy.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/BS5s9TL.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/sVXpghM.png)](https://imgur.com/a/zZFbo)
 
 ## Stats
 
