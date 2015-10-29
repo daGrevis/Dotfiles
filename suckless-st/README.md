@@ -12,14 +12,14 @@ Clone one of these repos:
 * https://github.com/daGrevis/suckless-st
 * http://git.suckless.org/st
 
+    git clone https://github.com/daGrevis/suckless-st
+
 Compile it:
 
     sudo make clean install
 
 ## Configuration
 
-Edit `config.h` and recompile! I'm not a fan of this myself.
+Edit `config.h` ([my config](https://github.com/daGrevis/suckless-st/blob/master/config.h)) and recompile! I'm not a fan of this myself.
 
 Good thing is that it recompiles instantly.
-
-[My config can be found here!](https://github.com/daGrevis/suckless-st/blob/master/config.h)
