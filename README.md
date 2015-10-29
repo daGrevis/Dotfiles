@@ -1,7 +1,5 @@
 # Dotfiles for my Arch Linux workstation(s)
 
-**So awesome they should be banned!**
-
 ## Screenshots
 
 **Warning**: these screenshots show repo state as it was in [297129a](https://github.com/daGrevis/Dotfiles/tree/297129a).
