@@ -12,11 +12,15 @@ Clone one of these repos:
 * https://github.com/daGrevis/suckless-st
 * http://git.suckless.org/st
 
-    git clone https://github.com/daGrevis/suckless-st
+~~~
+git clone https://github.com/daGrevis/suckless-st
+~~~
 
 Compile it:
 
-    sudo make clean install
+~~~
+sudo make clean install
+~~~
 
 ## Configuration
 
