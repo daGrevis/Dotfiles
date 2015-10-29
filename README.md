@@ -4,7 +4,7 @@
 
 ## Screenshots
 
-**Warning**: these screenshots show repo state as it was in [189666b](https://github.com/daGrevis/Dotfiles/tree/189666b).
+**Warning**: these screenshots show repo state as it was in [297129a](https://github.com/daGrevis/Dotfiles/tree/297129a).
 
 [![](https://i.imgur.com/HWJv59e.jpg)](https://imgur.com/a/zZFbo)
 [![](https://i.imgur.com/r42gO7t.png)](https://imgur.com/a/zZFbo)
