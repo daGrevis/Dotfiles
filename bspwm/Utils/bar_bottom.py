@@ -27,7 +27,7 @@ logger.addHandler(logger_handler)
 SHORT_WINDOW_NAME_MAPPING = {
     "chrome": [r".+ - Google Chrome$"],
     "chromium": [r".+ - Chromium$"],
-    "firefox": [r"(.+ - )?Mozilla Firefox$", r".*Pentadactyl$"],
+    "firefox": [r"(.+ - )?Mozilla Firefox$", r".*Pentadactyl$", r"^Inspector - https?.*"],
     "gedit": [r".+ - gedit$"],
     "hipchat": [r"^HipChat$"],
     "mpv": [r".+ - mpv$"],

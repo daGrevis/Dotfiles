@@ -12,8 +12,7 @@ declare -a pkgs=(
     "ipython"
     "lein"
     "mpv"
-    "neovim"
-    "pentadactyl"
+    "firefox"
     "stalonetray"
     "sxhkd"
     "systemd"
@@ -30,7 +29,7 @@ cd ~/Dotfiles
 echo
 for pkg in "${pkgs[@]}"
 do
-   stow -R "$pkg"
+   stow --ignore=".md" -R "$pkg"
    echo "(Re)stowing $pkg"
 done
 

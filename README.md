@@ -1,94 +1,56 @@
 # Dotfiles for my Arch Linux workstation(s)
 
-**So awesome they should be banned!**
+[Skip to Installation](https://github.com/daGrevis/Dotfiles#installation)
 
 ## Screenshots
 
-**Warning**: these screenshots show repo state as it was in [189666b](https://github.com/daGrevis/Dotfiles/tree/189666b).
+[![](https://i.imgur.com/HWJv59e.jpg)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/r42gO7t.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/D00mKEn.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/nqO2GbG.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/JJqjOmy.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/BS5s9TL.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/sVXpghM.png)](https://imgur.com/a/zZFbo)
 
-![Clean](https://github.com/daGrevis/Dotfiles/raw/master/Screenshots/dotfiles-clean.png)
+**Warning**: screenshots above show repo as in [commit 297129a](https://github.com/daGrevis/Dotfiles/tree/297129a).
 
-![Terminal](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-terminal.png)
+# Installation
 
-![Git](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-using-git.png)
+This repo is structured in a way that allows config to be symlinked
+by [GNU Stow](https://www.gnu.org/software/stow/) in a super simple yet powerful
+way.
 
-![Vim](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-vim.png)
+Any directory you see in root of this repo can be symlinked like this:
 
-![Browser](https://raw.githubusercontent.com/daGrevis/Dotfiles/master/Screenshots/dotfiles-browser.png)
+~~~
+stow --ignore=".md" vim
+~~~
 
-## Stats
+If we assume that `vim/` contains `vim/.vimrc`, running the command above will
+link from `~/.vimrc` to `$REPO/vim/.vimrc`.
 
-### Fonts used
+This works for everything so just "stow" what you want and config should be in
+correct place. Be aware that some things may have manual setup described in
+`README.md` of that thing (ex. `firefox/README.md`).
 
-* "Fira Code 9" for Vim and terminal,
-* "Andale Mono 9" for panels and menus,
-* "San Francisco Display" for native windows;
+Examples:
 
-## Installation
+~~~
+# Check https://github.com/daGrevis/Dotfiles/tree/master/vim
+stow --ignore=".md" vim
+# Check https://github.com/daGrevis/Dotfiles/tree/master/zsh
+stow --ignore=".md" zsh
 
-### Installing Everything
+stow --delete vim # But don't...
+~~~
 
-    utils/Utils/stow_everything.sh
+If you want everything like I do and fast, try `stow_everything.sh`. It
+not a good idea though.
 
-### Installing Packages
+# Other
 
-    stow zsh
-    stow vim
-    stow ...
+Fonts used:
 
-### Notes on Some Packages
-
-#### Zsh
-
-It needs [robbyrussell/oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) to
-work properly.
-
-    curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-
-**NB! When feeling paranoid, check contents of `install.sh` before.**
-
-    git clone https://github.com/robbyrussell/oh-my-zsh
-    cd oh-my-zsh
-    vim install.sh
-
-    ./install.sh
-
-You may want to set Zsh as the default shell.
-
-    chsh -s /bin/zsh
-
-#### Vim
-
-It needs [junegunn/vim-plug](https://github.com/junegunn/vim-plug) to manage
-plugins.
-
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-Plugins should be installed and later updated.
-
-    vim +PlugUpdate +qall
-
-#### Firefox
-
-[Pentadactyl add-on](http://5digits.org/home) makes your browser more like Vim!
-
-You may want to compile it yourself to get it working with the latest Firefox.
-
-    git clone https://github.com/5digits/dactyl
-    cd dactyl
-    make -C pentadactyl install
-
-##### Other Add-ons You Might Enjoy
-
-* [Disconnect](https://addons.mozilla.org/en-us/firefox/addon/disconnect/),
-* [HTTPS Everywhere](https://addons.mozilla.org/en-us/firefox/addon/https-everywhere/),
-* [JSONView](https://addons.mozilla.org/en-us/firefox/addon/jsonview/),
-* [Reddit Enhancement Suite](https://addons.mozilla.org/en-US/firefox/addon/reddit-enhancement-suite/),
-* [Self-Destructing Cookies](https://addons.mozilla.org/En-us/firefox/addon/self-destructing-cookies/),
-* [YouTube High Definition](https://addons.mozilla.org/En-us/firefox/addon/youtube-high-definition/);
-
-##### Config Flags
-
-    services.sync.enabled;false
-    signon.rememberSignons;false
+* *Inconsolata-g* for Vim and terminal,
+* *Andale Mono* for panels and menus,
+* *San Francisco Display* for native windows;
