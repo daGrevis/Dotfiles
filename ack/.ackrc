@@ -1,2 +1,3 @@
---ignore-dir=out/
 --ignore-dir=lib/
+--ignore-dir=out/
+--pager=less -R
