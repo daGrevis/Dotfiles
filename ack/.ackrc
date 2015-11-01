@@ -1,3 +1,8 @@
+--ignore-dir=bin/
+--ignore-dir=dist/
 --ignore-dir=lib/
 --ignore-dir=out/
+
+--ignore-file=is:browserify-cache.json
+
 --pager=less -R
