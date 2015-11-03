@@ -1,3 +1,4 @@
+--ignore-dir=COMPILED/
 --ignore-dir=bin/
 --ignore-dir=dist/
 --ignore-dir=lib/
