@@ -68,6 +68,11 @@ func! ResetIndentation()
     setlocal sts=4
 endfunc
 
+func! RemoveSpaces()
+    %s/\s\+$//e
+    w
+endfunc
+
 syntax on
 
 call ResetIndentation()
@@ -233,6 +238,8 @@ nmap "" "0
 "
 
 command! -nargs=* ResetIndentation call ResetIndentation()
+
+command! -nargs=* RemoveSpaces call RemoveSpaces()
 
 "
 " Auto-commands.
@@ -407,7 +414,7 @@ nmap <Leader>b :Gblame<CR>
 nmap <Leader>c :ColorToggle<CR>
 
 " Search for diff markers.
-nmap <Leader>d /\v[<>=]{3,}<CR>
+nmap <Leader>d /\v[<>=]{4,}<CR>
 
 " Open file.
 nmap <Leader>e :e<Space>
