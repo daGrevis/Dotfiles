@@ -9,6 +9,8 @@ fi
 
 PATH=$PATH:~/Utils
 
+eval $(ssh-agent)
+
 if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     # Sets 2nd monitor usable.
     xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3
