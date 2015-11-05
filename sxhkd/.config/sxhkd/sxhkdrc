@@ -135,7 +135,7 @@ super + shift + v
     open-vim
 
 super + shift + e
-    open-gedit
+    open-mousepad
 
 super + shift + i
     open-firefox

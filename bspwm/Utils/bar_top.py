@@ -35,8 +35,6 @@ logger.addHandler(logger_handler)
 
 DEBUG = bool(os.environ.get("PANEL_DEBUG", False))
 
-WUNDERGROUND_API_KEY = os.environ["WUNDERGROUND_API_KEY"]
-WUNDERGROUND_LOCATION = os.environ["WUNDERGROUND_LOCATION"]
 FORECAST_IO_API_KEY = os.environ["FORECAST_IO_API_KEY"]
 LOCATION_LAT = os.environ["LOCATION_LAT"]
 LOCATION_LNG = os.environ["LOCATION_LNG"]
@@ -303,9 +301,12 @@ class WeatherWidget(Widget):
     def render(self):
         forecast = self.get_forecast()
 
-        temperature_f = Decimal(forecast["currently"]["temperature"])
-        temperature_c = (temperature_f - Decimal(32)) / Decimal("1.8")
-        precipitation = Decimal(forecast["currently"]["precipProbability"]) * 100
+        to_c = lambda x: (x - Decimal(32)) / Decimal("1.8")
+
+        temperature = to_c(Decimal(forecast["currently"]["temperature"]))
+        apparent_temperature = to_c(Decimal(forecast["currently"]["apparentTemperature"]))
+        precipitation = Decimal(forecast["currently"]["precipProbability"])
+        humidity = Decimal(forecast["currently"]["humidity"])
         wind_mph = Decimal(forecast["currently"]["windSpeed"])
         wind_kmh = wind_mph * Decimal("1.60934")
         wind_degrees = Decimal(forecast["currently"]["windBearing"])
@@ -351,12 +352,22 @@ class WeatherWidget(Widget):
             "-",
         )
 
-        temperature_text = "{}C".format(
-            set_bold(round(temperature_c)),
+        if temperature == apparent_temperature:
+            temperature_text = "{}C".format(
+                set_bold(round(temperature)),
+            )
+        else:
+            temperature_text = "~{}°C".format(
+                set_bold(round(apparent_temperature)),
+                round(temperature),
+            )
+
+        precipitation_text = "{}% rain".format(
+            set_bold(round(precipitation * 100)),
         )
 
-        precipitation_text = "{}%".format(
-            set_bold(round(precipitation)),
+        humidity_text = "{}% RH".format(
+            set_bold(round(humidity * 100)),
         )
 
         wind_text = "{}km/h {}".format(
@@ -375,6 +386,7 @@ class WeatherWidget(Widget):
         text = ", ".join([
             temperature_text,
             precipitation_text,
+            humidity_text,
             wind_text,
         ])
 

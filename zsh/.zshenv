@@ -15,8 +15,6 @@ source ~/settings.sh
 BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
-eval "$(thefuck --alias)"
-
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 zstyle ':completion:*:*:kill:*' menu yes select
@@ -369,16 +367,16 @@ open-vim() {
     gvim
 }
 
-open-gedit() {
-    notify-executing "gedit"
+open-mousepad() {
+    notify-executing "mousepad"
 
-    gedit
+    mousepad
 }
 
 open-firefox() {
     notify-executing "firefox"
 
-    firefox > ~/var/"firefox-log-on-$(date +%s)"
+    firefox
 }
 
 open-chrome() {

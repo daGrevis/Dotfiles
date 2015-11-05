@@ -1,2 +1,4 @@
 /systemd/.config/systemd/user/*.target.wants/
+/vim/.vim/autoload/plug.vim
+/vim/.vim/plugged
 __pycache__

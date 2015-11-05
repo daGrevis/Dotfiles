@@ -24,4 +24,8 @@ else
     xbacklight -set 60 -time 0
 fi
 
+DISPLAY=:0 dropbox &
+
+wicd-client --tray &
+
 exec bspwm

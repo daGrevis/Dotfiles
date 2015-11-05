@@ -68,9 +68,9 @@ nmap <Space>j :tabopen about:downloads<CR>
 nmap <Space>e o
 nmap <Space>t t
 
-hi FontFixed -a font: 12px "Inconsolata-g" !important;
-hi StatusCmdLine -a font: 12px "Inconsolata-g" !important;
-hi Hint -a font: 12px "Inconsolata-g" !important;
+hi FontFixed -a font: 14px "Inconsolata" !important;
+hi StatusCmdLine -a font: 14px "Inconsolata" !important;
+hi Hint -a font: 14px "Inconsolata" !important;
 
 hi StatusLineNormal -a color: #D3D0C8 !important;
 hi StatusLineBroken -a color: #2D2D2D !important;
@@ -85,7 +85,7 @@ hi StatusLineExtended -a background: #99CC99 !important;
 hi CompItem[selected] -a background: #FFCC66 !important;
 
 " When you press <f|F>.
-hi Hint -a background: white !important; padding: 2px !important; text-transform: uppercase !important; font-size: 11px !important; font-weight: bold !important;
+hi Hint -a background: white !important; padding: 2px !important; text-transform: uppercase !important; font-size: 14px !important; font-weight: bold !important;
 hi Hint[active] -a background: #FFCC66 !important;
 " #FFDD99 = lighten(#FFCC66, 10%)
 hi HintElem -a background: #FFDD99 !important;
