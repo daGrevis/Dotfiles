@@ -28,6 +28,7 @@ Plug 'lilydjwg/colorizer'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
+Plug 'mhinz/vim-sayonara'
 Plug 'mileszs/ack.vim'
 Plug 'morhetz/gruvbox'
 Plug 'mxw/vim-jsx'
@@ -180,7 +181,7 @@ nmap Y y$
 nmap j gj
 nmap k gk
 
-nmap <M-q> :q!<CR>
+nmap <M-q> :Sayonara<CR>
 
 nmap H ^
 vmap H ^
