@@ -202,6 +202,10 @@ pacman-import-gpg-key() {
     sudo pacman-key -r $1 && \
         sudo pacman-key --lsign-key $1
 }
+update-packages() {
+    sudo pacman -Syu --noconfirm && \
+        yaourt -Syua --noconfirm
+}
 
 json-prettify() {
     cat $1 | python -m json.tool |& pygmentize -s -l json
