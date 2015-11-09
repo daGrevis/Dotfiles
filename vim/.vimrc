@@ -213,20 +213,16 @@ cmap <S-Insert> <C-r>+
 
 cmap <C-t> <C-a>tabe \| <C-e>
 
-" Type 123<CR> to go to 123rd line.
-nnoremap <CR> G
-nnoremap <BS> gg
-
 " Auto-closes that window when using q: instead of :q for mistake.
 map q: :q
 
 " Jump to next/previous class.
-nmap <Home> [[
-nmap <End> ]]
+nmap <Home> [[zz
+nmap <End> ]]zz
 
 " Jump to next/previous function.
-nmap <PageUp> [m
-nmap <PageDown> ]m
+nmap <PageUp> [mzz
+nmap <PageDown> ]mzz
 
 " Always go to exact position of the mark.
 nmap ' `
