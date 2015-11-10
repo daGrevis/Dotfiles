@@ -196,8 +196,7 @@ nmap # g#<C-o>
 " Default Q is very annoying. Maps it to something useful.
 nmap Q @q
 
-" TODO: What should I do know?
-nmap <C-q> <Nop>
+nmap <C-q> :e ~/Texts<CR>
 
 " Reselect text when indenting.
 vmap < <gv
