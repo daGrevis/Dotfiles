@@ -25,6 +25,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script'
 Plug 'kshenoy/vim-signature'
 Plug 'lilydjwg/colorizer'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
@@ -36,6 +37,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'pangloss/vim-javascript'
 Plug 'plasticboy/vim-markdown'
+Plug 'rhysd/devdocs.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
@@ -692,3 +694,9 @@ let g:UltiSnipsExpandTrigger = "<C-Space>"
 " Inverted search is just confusing to bother with (just search and go back
 " with N). Instead lets map it to something more useful like fuzzy search!
 nmap ? :FuzzySearch<CR>
+
+"
+" Devdocs configuration.
+"
+
+nmap K <Plug>(devdocs-under-cursor)
