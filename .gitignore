@@ -1,4 +1,5 @@
 /systemd/.config/systemd/user/*.target.wants/
+/tags
 /vim/.vim/autoload/plug.vim
 /vim/.vim/plugged
 /xdg-open/.local/share/applications/*.desktop

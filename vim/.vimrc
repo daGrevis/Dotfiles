@@ -518,7 +518,7 @@ let g:airline_right_sep = ""
 " Ack configuration.
 "
 
-nmap // :'<C-r>/'<C-a><Right><Right><Right><Backspace><Backspace><C-a>Ack<Space><Left>
+nmap // :<C-r>/'<C-a>Ack<Space>'<Left>
 
 "
 " Syntastic configuration.
