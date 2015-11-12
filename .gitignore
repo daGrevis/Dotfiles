@@ -1,3 +1,5 @@
+/ipython/.ipython/profile_default/history.sqlite
+/ipython/.ipython/profile_default/startup/README
 /systemd/.config/systemd/user/*.target.wants/
 /tags
 /vim/.vim/autoload/plug.vim

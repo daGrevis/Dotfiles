@@ -283,11 +283,14 @@ class BrightnessWidget(Widget):
 
 
 def get_forecast():
-    response = requests.get("https://api.forecast.io/forecast/{api_key}/{lat},{lng}".format(
-        api_key=FORECAST_IO_API_KEY,
-        lat=LOCATION_LAT,
-        lng=LOCATION_LNG,
-    ))
+    try:
+        response = requests.get("https://api.forecast.io/forecast/{api_key}/{lat},{lng}".format(
+            api_key=FORECAST_IO_API_KEY,
+            lat=LOCATION_LAT,
+            lng=LOCATION_LNG,
+        ), timeout=2)
+    except requests.ConnectionError:
+        return None
 
     return response.json()
 
@@ -300,6 +303,9 @@ class WeatherWidget(Widget):
 
     def render(self):
         forecast = self.get_forecast()
+
+        if forecast is None:
+            return
 
         to_c = lambda x: (x - Decimal(32)) / Decimal("1.8")
 
@@ -569,7 +575,9 @@ for w in widgets:
         continue
 
     try:
-        rendered_widgets.append(w.render())
+        rendered_widget = w.render()
+        if rendered_widget:
+            rendered_widgets.append(rendered_widget)
     except Exception as exc:
         notify_exception()
         logger.exception(exc)
