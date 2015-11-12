@@ -6,7 +6,6 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " Optional plugins.
-Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
 Plug 'Z1MM32M4N/vim-superman'
@@ -27,6 +26,7 @@ Plug 'kshenoy/vim-signature'
 Plug 'lilydjwg/colorizer'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'luochen1990/rainbow'
+Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'mhinz/vim-sayonara'
@@ -42,7 +42,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'suan/vim-instant-markdown'
-Plug 'tacahiroy/ctrlp-funky'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
@@ -441,8 +440,6 @@ nmap <Leader>r :registers<CR>
 " Count occurrences of a pattern in current buffer.
 nmap <Leader>n :%s///gn<Left><Left><Left><Left>
 
-nmap <Leader>p :CtrlPSmartTabs<CR>
-
 " Anonymous gists.
 nmap <Leader>pg :Gist -a<CR>
 vmap <Leader>pg <ESC>:'<,'>Gist -a<CR>
@@ -576,19 +573,7 @@ let g:ctrlp_prompt_mappings = {
             \ "PrtClearCache()": ["<C-r>"],
             \ }
 
-"
-" CtrlPFunky configuration.
-"
-
-let g:ctrlp_funky_syntax_highlight = 1
-
-nmap <Backspace> :CtrlPFunky<CR>
-
-"
-" CtrlPSmartTabs configuration.
-"
-
-let g:ctrlp_smarttabs_modify_tabline = 0
+nmap <Backspace> :CtrlPBufTag<CR>
 
 "
 " Incsearch configuration.
@@ -699,3 +684,14 @@ nmap ? :FuzzySearch<CR>
 "
 
 nmap K <Plug>(devdocs-under-cursor)
+
+"
+" Tagbar configuration.
+"
+
+let g:tagbar_width = 80
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose = 1
+let g:tagbar_sort = 0
+
+nmap <S-Tab> :TagbarToggle<CR>
