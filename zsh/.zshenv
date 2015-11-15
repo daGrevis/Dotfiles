@@ -183,11 +183,19 @@ copy-to-clipboard() {
 }
 
 function vim {
-    command gvim -p $@
+    if test -f Session.vim; then
+        command gvim -S -p $@
+    else
+        command gvim -p $@
+    fi
 }
 
 function vimd {
-    command gvim -p $@ & disown && exit
+    if test -f Session.vim; then
+        command gvim -S -p $@ & disown && exit
+    else
+        command gvim -p $@ & disown && exit
+    fi
 }
 
 alias generate-password="xkcdpass --valid_chars='[a-z]' --numwords=10"
