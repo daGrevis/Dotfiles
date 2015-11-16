@@ -616,12 +616,12 @@ let g:rainbow_active = 1
 let g:rainbow_conf = {
             \ 'guifgs': [
             \ "#F2777A",
-            \ "#F99157",
             \ "#FFCC66",
-            \ "#99CC99",
-            \ "#66CCCC",
             \ "#6699CC",
             \ "#CC99CC",
+            \ "#F99157",
+            \ "#66CCCC",
+            \ "#99CC99",
             \ "#D27B53",
             \ ]
             \ }
