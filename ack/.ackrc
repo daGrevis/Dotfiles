@@ -7,5 +7,7 @@
 
 --ignore-file=is:browserify-cache.json
 --ignore-file=is:tags
+--ignore-file=is:tags.lock
+--ignore-file=is:tags.temp
 
 --pager=less -R
