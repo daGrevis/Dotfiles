@@ -363,8 +363,9 @@ class WeatherWidget(Widget):
                 set_bold(round(temperature)),
             )
         else:
-            temperature_text = "~{}°C".format(
+            temperature_text = "{}C ({}C)".format(
                 set_bold(round(apparent_temperature)),
+                set_bold(round(temperature)),
                 round(temperature),
             )
 

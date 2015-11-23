@@ -527,13 +527,13 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
 
-" Linters for Python files.
-let g:syntastic_python_checkers = ['python', 'frosted']
-let g:syntastic_python_python_exec = 'python2'
+let g:syntastic_python_checkers = ["python", "frosted"]
+let g:syntastic_python_python_exec = "python2"
 
-" Linters for CoffeeScript files.
-let g:syntastic_coffee_checkers = ['coffee', 'coffeelint']
-let g:syntastic_coffee_coffeelint_post_args = '--file ~/coffeelint.json'
+let g:syntastic_coffee_checkers = ["coffee", "coffeelint"]
+let g:syntastic_coffee_coffeelint_post_args = "--file ~/coffeelint.json"
+
+let g:syntastic_javascript_checkers = ["eslint"]
 
 "
 " NERDTree configuration.
