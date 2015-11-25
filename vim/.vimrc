@@ -6,6 +6,7 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " Optional plugins.
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
 Plug 'Z1MM32M4N/vim-superman'
