@@ -77,6 +77,10 @@ func! RemoveSpaces()
     w
 endfunc
 
+func! UnDOS()
+    %s/\r//g
+endfunc
+
 syntax on
 
 call ResetIndentation()
@@ -239,6 +243,8 @@ nmap "" "0
 command! -nargs=* ResetIndentation call ResetIndentation()
 
 command! -nargs=* RemoveSpaces call RemoveSpaces()
+
+command! -nargs=* UnDOS call UnDOS()
 
 "
 " Auto-commands.
