@@ -1,8 +1,8 @@
 --ignore-dir=COMPILED/
 --ignore-dir=bin/
+--ignore-dir=bower_components/
 --ignore-dir=dist/
 --ignore-dir=lib/
---ignore-dir=out/
 --ignore-dir=out/
 
 --ignore-file=is:browserify-cache.json
