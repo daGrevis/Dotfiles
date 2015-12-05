@@ -214,6 +214,7 @@ json-prettify() {
 alias ccat='pygmentize -g'
 
 get-ip() {
+    ip route get 8.8.8.8 | awk '{print $NF; exit}'
     curl -s 'https://api.ipify.org'
     echo
 }
