@@ -105,6 +105,7 @@ export WORK_HOSTNAME="rx-wks-44"
 
 export EDITOR='gvim -f'
 export VISUAL=${EDITOR}
+export BROWSER=firefox
 
 bindkey "^Q" edit-command-line
 bindkey "^R" history-incremental-pattern-search-backward
@@ -411,31 +412,37 @@ open-transmission() {
 open-ipython() {
     notify-executing "ipython"
 
-    st -e ipython
+    termite -e ipython
 }
 
 open-ipython2() {
     notify-executing "ipython2"
 
-    st -e ipython2
+    termite -e ipython2
 }
 
 open-glances() {
     notify-executing "glances"
 
-    st -e glances
+    termite -e glances
 }
 
 open-ranger() {
     notify-executing "ranger"
 
-    st -e ranger
+    termite -e ranger
 }
 
 open-thunar() {
     notify-executing "thunar"
 
     thunar
+}
+
+open-irssi() {
+    notify-executing "irssi"
+
+    termite -e irssi
 }
 
 check-network() {

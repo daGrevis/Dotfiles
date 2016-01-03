@@ -82,9 +82,8 @@ super + shift + Tab
 super + u
     bspc desktop -f next.urgent
 
-
 super + shift + Return
-    st
+    termite
 
 super + p
     dmenu-go
@@ -170,5 +169,8 @@ super + shift + r
 
 super + shift + t
     open-thunar
+
+super + shift + x
+    open-irssi
 
 # vim: iskeyword+=-
