@@ -171,6 +171,6 @@ super + shift + t
     open-thunar
 
 super + shift + x
-    open-irssi
+    open-weechat
 
 # vim: iskeyword+=-

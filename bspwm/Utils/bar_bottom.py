@@ -37,6 +37,7 @@ SHORT_WINDOW_NAME_MAPPING = {
     "spotify": [r"^Spotify Premium - Linux Preview$"],
     "transmission": [r"^Transmission$"],
     "vim": [r"^Vim$", r"^.* - GVIM\d*$"],
+    "weechat": [r"^WeeChat"],
 }
 
 

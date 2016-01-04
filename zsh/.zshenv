@@ -12,8 +12,8 @@ ZSH_THEME="custom"
 source ~/settings.sh
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+# BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
+# [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -439,10 +439,10 @@ open-thunar() {
     thunar
 }
 
-open-irssi() {
-    notify-executing "irssi"
+open-weechat() {
+    notify-executing "weechat"
 
-    termite -e irssi
+    termite -e weechat
 }
 
 check-network() {
