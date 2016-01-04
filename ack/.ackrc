@@ -4,6 +4,7 @@
 --ignore-dir=dist/
 --ignore-dir=lib/
 --ignore-dir=out/
+--ignore-dir=bundles/
 
 --ignore-file=is:browserify-cache.json
 --ignore-file=is:main.bundle.js
