@@ -399,6 +399,8 @@ func! AuBufLeave()
 endfunc
 au BufLeave * call AuBufLeave()
 
+autocmd BufRead,BufNewFile *.conf setfiletype conf
+
 "
 " Leader mappings (leaders).
 " They are sorted alphabetically.
@@ -703,3 +705,12 @@ let g:tagbar_autoclose = 1
 let g:tagbar_sort = 0
 
 nmap <S-Tab> :TagbarToggle<CR>
+
+"
+" Gutentags configuration.
+"
+
+let g:gutentags_exclude = [
+            \ "node_modules",
+            \ "bower_components",
+            \ ]
