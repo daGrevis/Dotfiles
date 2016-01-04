@@ -19,6 +19,7 @@ declare -a pkgs=(
     "termite"
     "utils"
     "vim"
+    "weechat"
     "x"
     "xdg-open"
     "zsh"
