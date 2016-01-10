@@ -41,6 +41,8 @@ nmap + :tabm +1<CR>
 nmap \- gT
 nmap = gt
 
+nmap <BS> :tabbartoggle<CR>
+
 nmap u :back<CR>
 nmap <C-r> :forward<CR>
 nmap s :stop<CR>
