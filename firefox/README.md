@@ -10,6 +10,9 @@ You may want to compile it yourself to get it working with the latest Firefox.
     cd dactyl
     make -C pentadactyl install
 
+Unfortunately you will have to enable `xpinstall.signatures.required` config
+flag if you are using Firefox 43.
+
 ##### Other Add-ons You Might Enjoy
 
 * [Disconnect](https://addons.mozilla.org/en-us/firefox/addon/disconnect/),
