@@ -40,6 +40,8 @@ nmap + :tabm +1<CR>
 " Go to next/prev tab.
 nmap \- gT
 nmap = gt
+nmap <Up> gT
+nmap <Down> gt
 
 nmap <BS> :tabbartoggle<CR>
 
