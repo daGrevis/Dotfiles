@@ -85,6 +85,9 @@ syntax on
 
 call ResetIndentation()
 
+set timeoutlen=300
+set ttimeoutlen=50
+
 " Disables folds.
 set nofoldenable
 
@@ -207,6 +210,9 @@ nmap <C-q> :e ~/Texts<CR>
 vmap < <gv
 vmap > >gv
 
+" Reselect last pasted text.
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " Indent all the things!
 nmap + gg=G2<C-o>
 
@@ -235,6 +241,9 @@ nmap ' `
 
 " Quick access to yank register.
 nmap "" "0
+
+" Hides 'Type :quit to exit'.
+nnoremap <C-c> <C-c>:echo<CR>
 
 "
 " Commands.
