@@ -10,7 +10,7 @@ set hlfind
 " No-ops.
 "
 
-nmap d <pass>
+nmap d :tablast<CR>
 nmap <C-q> <Nop>
 
 " Normal maps.
