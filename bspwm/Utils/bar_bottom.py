@@ -30,6 +30,7 @@ SHORT_WINDOW_NAME_MAPPING = {
     "firefox": [r"(.+ - )?Mozilla Firefox$", r".*Pentadactyl$", r"^(Inspector|Console) - https?.*"],
     "gedit": [r".+ - gedit$"],
     "hipchat": [r"^HipChat$"],
+    "libreoffice-calc": [r"^.* - LibreOffice Calc$"],
     "mousepad": [r".+ - Mousepad$"],
     "mpv": [r".+ - mpv$"],
     "pavucontrol": [r"^Volume Control$"],
