@@ -19,9 +19,11 @@ Plug 'ervandew/supertab'
 Plug 'ggVGc/vim-fuzzysearch'
 Plug 'guns/vim-clojure-static'
 Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/vim-operator-flashy'
 Plug 'honza/vim-snippets'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'justinmk/vim-sneak'
+Plug 'kana/vim-operator-user'
 Plug 'kchmck/vim-coffee-script'
 Plug 'kshenoy/vim-signature'
 Plug 'lilydjwg/colorizer'
@@ -183,9 +185,6 @@ nmap <M-h> <C-w>h
 nmap <M-j> <C-w>j
 nmap <M-k> <C-w>k
 nmap <M-l> <C-w>l
-
-" Maps Y to yank line from current position til the end.
-nmap Y y$
 
 " Wrap-friendly <j> and <k> keys.
 nmap j gj
@@ -385,6 +384,8 @@ func! AuColorScheme()
         hi GitGutterChange guifg=#FFCC66
         hi GitGutterDelete guifg=#F2777A
         hi GitGutterChangeDelete guifg=#F99157
+
+        hi Flashy guibg=#FFCC66
 
         let g:airline_theme = "base16eighties"
     endif
@@ -723,3 +724,10 @@ let g:gutentags_exclude = [
             \ "node_modules",
             \ "bower_components",
             \ ]
+
+"
+" Flashy configuration.
+"
+
+map y <Plug>(operator-flashy)
+nmap Y <Plug>(operator-flashy)$
