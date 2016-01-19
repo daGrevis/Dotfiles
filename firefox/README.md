@@ -26,3 +26,4 @@ flag if you are using Firefox 43.
 
     services.sync.enabled;false
     signon.rememberSignons;false
+    browser.tabs.closeWindowWithLastTab;false
