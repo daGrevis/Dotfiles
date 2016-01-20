@@ -1,6 +1,6 @@
 loadplugins '\.(js|penta)$'
 
-set guioptions=bns
+set guioptions=bs
 set complete=location,suggestion
 set defsearch=google
 set hintkeys=asdfghjkl
@@ -10,7 +10,7 @@ set hlfind
 " No-ops.
 "
 
-nmap d :tablast<CR>
+nmap d :tabnext<CR>
 nmap <C-q> <Nop>
 
 " Normal maps.

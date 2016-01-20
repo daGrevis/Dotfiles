@@ -29,6 +29,7 @@ SHORT_WINDOW_NAME_MAPPING = {
     "chromium": [r".+ - Chromium$"],
     "firefox": [r"(.+ - )?Mozilla Firefox$", r".*Pentadactyl$", r"^(Inspector|Console) - https?.*"],
     "gedit": [r".+ - gedit$"],
+    "gimp": [r"^GNU Image Manipulation Program$", ".*GIMP"],
     "hipchat": [r"^HipChat$"],
     "libreoffice-calc": [r"^.* - LibreOffice Calc$"],
     "mousepad": [r".+ - Mousepad$"],
