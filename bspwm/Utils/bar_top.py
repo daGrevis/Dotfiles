@@ -209,7 +209,7 @@ class SoundWidget(Widget):
         else:
             icon = ICONS["font-awesome"]["volume-up"]
 
-        bar = progress_bar(volume)
+        bar = progress_bar(volume, 5)
 
         output = "".join([
             self.set_icon_foreground_color(icon),
@@ -253,7 +253,7 @@ class BrightnessWidget(Widget):
         else:
             icon = ICONS["entypo"]["light-up"]
 
-        bar = progress_bar(brightness)
+        bar = progress_bar(brightness, 5)
 
         output = "".join([
             self.set_icon_foreground_color(icon),
@@ -314,7 +314,8 @@ class WeatherWidget(Widget):
         precipitation = Decimal(forecast["currently"]["precipProbability"])
         humidity = Decimal(forecast["currently"]["humidity"])
         wind_mph = Decimal(forecast["currently"]["windSpeed"])
-        wind_kmh = wind_mph * Decimal("1.60934")
+        wind_ms = wind_mph * Decimal("0.44704")
+        # wind_kmh = wind_mph * Decimal("1.60934")
         wind_degrees = Decimal(forecast["currently"]["windBearing"])
 
         wind_directions_to_ranges = {
@@ -377,15 +378,15 @@ class WeatherWidget(Widget):
             set_bold(round(humidity * 100)),
         )
 
-        wind_text = "{}km/h {}".format(
-            set_bold(round(wind_kmh)),
+        wind_text = "{}m/s {}".format(
+            set_bold(round(wind_ms, 1)),
             set_bold(wind_direction),
         )
 
         # See https://en.wikipedia.org/wiki/Beaufort_scale#Modern_scale
-        if wind_kmh >= 29:
+        if wind_ms >= 8:
             color = COLORS["orange"]
-            if wind_kmh >= 39:
+            if wind_ms >= Decimal("10.8"):
                 color = COLORS["red"]
 
             wind_text = set_line_color(set_overline(wind_text), color)
