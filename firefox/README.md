@@ -25,6 +25,8 @@ Appearance -> Tab bar position [Right]
 Appearance -> Invert tab appearance [x]
 Appearance -> Fix position and width of tab bar [300]
 Appearance -> Allow to collapse/expand tree of tabs [ ]
+
+Auto hide -> Show tab bar automatically when -> * [ ]
 ~~~
 
 * [Tab Mix Plus](https://addons.mozilla.org/en-US/firefox/addon/tab-mix-plus/);
