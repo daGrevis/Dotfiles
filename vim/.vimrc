@@ -244,6 +244,9 @@ nmap "" "0
 " Hides 'Type :quit to exit'.
 nnoremap <C-c> <C-c>:echo<CR>
 
+" I don't see any reason to go a character ahead, so lets just go back.
+nmap ~ ~h
+
 "
 " Commands.
 "
