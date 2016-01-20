@@ -6,14 +6,22 @@ set defsearch=google
 set hintkeys=asdfghjkl
 set hlfind
 
-"
-" No-ops.
-"
-
-nmap d :tabnext<CR>
 nmap <C-q> <Nop>
 
-" Normal maps.
+" Here's a workflow I use all the time:
+"
+" * Open a new tab in background with <F-x>,
+" * Focus that opened tab with <d>,
+" * Jump back with <Space><Space>;
+
+nmap d :tabnext<CR>
+
+nmap <Space><Space> <C-^>
+
+" In case you want to move tab to the root (promoting)...
+" The code below expects that you have Tree Style Tab extension.
+
+nmap e -javascript dactyl.execute(":tabmove 9999") && dactyl.execute(":tabdetachfrom")
 
 nmap <C-d> 20j
 nmap <C-u> 20k
@@ -40,8 +48,9 @@ nmap + :tabm +1<CR>
 " Go to next/prev tab.
 nmap \- gT
 nmap = gt
-nmap <Up> gT
-nmap <Down> gt
+" Go to above/below tab (when treetabs are enabled).
+nmap J gt
+nmap K gT
 
 nmap <BS> :tabbartoggle<CR>
 
@@ -60,13 +69,10 @@ cmap <A-f> <C-Right>
 " Leader maps.
 "
 
-" Switch to last tab.
-nmap <Space><Space> <C-^>
-
 " View source.
 nmap <Space>u gF<CR>
 
-nmap <Space>h :history<CR>
+nmap -ex <Space>h history
 nmap <Space>j :tabopen about:downloads<CR>
 
 nmap <Space>e o

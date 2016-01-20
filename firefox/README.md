@@ -3,6 +3,7 @@
 ## Firefox
 
 [Pentadactyl add-on](http://5digits.org/home) makes your browser more like Vim!
+Add-ons like this is why I choose Firefox over any other browser I have tried.
 
 You may want to compile it yourself to get it working with the latest Firefox.
 
@@ -12,6 +13,31 @@ You may want to compile it yourself to get it working with the latest Firefox.
 
 Unfortunately you will have to enable `xpinstall.signatures.required` config
 flag if you are using Firefox 43.
+
+##### Required Add-ons
+
+* [Tree Style Tab](https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/),
+
+Go to add-on options and:
+
+~~~
+Appearance -> Tab bar position [Right]
+Appearance -> Invert tab appearance [x]
+Appearance -> Fix position and width of tab bar [300]
+Appearance -> Allow to collapse/expand tree of tabs [ ]
+~~~
+
+* [Tab Mix Plus](https://addons.mozilla.org/en-US/firefox/addon/tab-mix-plus/);
+
+Go to add-on options and:
+
+~~~
+Events -> Open New Tab next to current one [x]
+Events -> Open New Tab next to current one -> Change opening order [ ]
+
+Display -> Tab Bar -> Show on Tab bar -> * [ ]
+Display -> Tab -> Show on Tab -> Close tab button [ ]
+~~~
 
 ##### Other Add-ons You Might Enjoy
 
