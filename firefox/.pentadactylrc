@@ -73,10 +73,11 @@ cmap <A-f> <C-Right>
 nmap <Space>u gF<CR>
 
 nmap -ex <Space>h history
-nmap <Space>j :tabopen about:downloads<CR>
-
-nmap <Space>e o
-nmap <Space>t t
+nmap -ex <Space>j tabopen about:downloads
+nmap -ex <Space>a tabopen about:addons
+nmap -ex <Space>c tabopen about:config
+nmap -ex <Space>b tabopen https://pinboard.in/u:daGrevis
+nmap -ex <Space>t tabopen translate
 
 hi StatusLineNormal -a color: #D3D0C8 !important;
 hi StatusLineBroken -a color: #2D2D2D !important;
@@ -103,9 +104,5 @@ hi CompTitleSep -a height: 0 !important;
 
 " For Pinboard.
 nmap <a> :open javascript:(function(){q=location.href;if(document.getSelection){d=document.getSelection();}else{d='';};p=document.title;void(open('https://pinboard.in/add?showtags=yes&url='+encodeURIComponent(q)+'&description='+encodeURIComponent(d)+'&title='+encodeURIComponent(p),'Pinboard',%20'toolbar=no,width=700,height=600'))})()<CR>
-nmap <b> :tabopen https://pinboard.in/u:daGrevis<CR>
-
-" For Readability.
-nmap <Space>r :open javascript:((function(){window.baseUrl='//www.readability.com';window.readabilityToken='';var s=document.createElement('script');s.setAttribute('type','text/javascript');s.setAttribute('charset','UTF-8');s.setAttribute('src',baseUrl+'/bookmarklet/read.js');document.documentElement.appendChild(s);})())<CR>
 
 " vim: set filetype=vim :
