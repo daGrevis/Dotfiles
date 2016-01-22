@@ -40,6 +40,7 @@ SHORT_WINDOW_NAME_MAPPING = {
     "transmission": [r"^Transmission$"],
     "vim": [r"^Vim$", r"^.* - GVIM\d*$"],
     "weechat": [r"^WeeChat"],
+    "ristretto": [r"^.+ - Image Viewer \[\d+/\d+\]$"],
 }
 
 
