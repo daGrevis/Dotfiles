@@ -35,12 +35,13 @@ SHORT_WINDOW_NAME_MAPPING = {
     "mousepad": [r".+ - Mousepad$"],
     "mpv": [r".+ - mpv$"],
     "pavucontrol": [r"^Volume Control$"],
+    "ristretto": [r"^.+ - Image Viewer \[\d+/\d+\]$"],
     "skype": [r".+ - Skype™$"],
     "spotify": [r"^Spotify Premium - Linux Preview$"],
     "transmission": [r"^Transmission$"],
     "vim": [r"^Vim$", r"^.* - GVIM\d*$"],
+    "vlc": [r"^.+ - VLC media player$"],
     "weechat": [r"^WeeChat"],
-    "ristretto": [r"^.+ - Image Viewer \[\d+/\d+\]$"],
 }
 
 

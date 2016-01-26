@@ -73,10 +73,13 @@ cmap <A-f> <C-Right>
 nmap <Space>u gF<CR>
 
 nmap -ex <Space>h history
-nmap -ex <Space>j tabopen about:downloads
+
 nmap -ex <Space>a tabopen about:addons
 nmap -ex <Space>c tabopen about:config
-nmap -ex <Space>b tabopen https://pinboard.in/u:daGrevis
+nmap -ex <Space>j tabopen about:downloads
+
+nmap -ex <Space>b tabopen pinboard.in/u:daGrevis
+nmap -ex <Space>d tabopen devdocs.io
 nmap -ex <Space>t tabopen translate
 
 hi StatusLineNormal -a color: #D3D0C8 !important;
