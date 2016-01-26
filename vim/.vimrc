@@ -32,7 +32,6 @@ Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
-Plug 'mhinz/vim-sayonara'
 Plug 'mileszs/ack.vim'
 Plug 'morhetz/gruvbox'
 Plug 'mxw/vim-jsx'
@@ -190,7 +189,7 @@ nmap <M-l> <C-w>l
 nmap j gj
 nmap k gk
 
-nmap <M-q> :Sayonara<CR>
+nmap <M-q> :q!<CR>
 
 nmap H ^
 vmap H ^
@@ -577,6 +576,8 @@ let NERDTreeShowHidden = 1
 "
 " CtrlP configuration.
 "
+
+nmap <C-p> :w \| CtrlP<CR>
 
 " Use Git to get files. Much faster and it respects .gitignore rules.
 let g:ctrlp_user_command = [
