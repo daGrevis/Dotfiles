@@ -246,6 +246,9 @@ nnoremap <C-c> <C-c>:echo<CR>
 " I don't see any reason to go a character ahead, so lets just go back.
 nmap ~ ~h
 
+" Goes to definition in a new tab (requires ctags).
+nmap <C-]> :tab tag <C-r><C-w><CR>
+
 "
 " Commands.
 "
