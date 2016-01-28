@@ -65,6 +65,9 @@ cmap <C-e> <End>
 cmap <A-b> <C-Left>
 cmap <A-f> <C-Right>
 
+" CtrlP for tabs!
+nmap <C-p> b
+
 "
 " Leader maps.
 "
