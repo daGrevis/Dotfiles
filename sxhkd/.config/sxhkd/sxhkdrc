@@ -139,6 +139,9 @@ super + shift + e
 super + shift + i
     open-firefox
 
+super + shift + p
+    open-firefox-private
+
 # Shortcut for opening it with single hand.
 super + shift + z
     open-firefox
