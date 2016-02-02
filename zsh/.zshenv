@@ -385,6 +385,12 @@ open-firefox() {
     firefox
 }
 
+open-firefox-private() {
+    notify-executing "firefox -private"
+
+    firefox -private
+}
+
 open-chrome() {
     notify-executing "chrome-stable"
 
