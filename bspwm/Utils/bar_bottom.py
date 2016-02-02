@@ -42,6 +42,7 @@ SHORT_WINDOW_NAME_MAPPING = {
     "vim": [r"^Vim$", r"^.* - GVIM\d*$"],
     "vlc": [r"^.+ - VLC media player$"],
     "weechat": [r"^WeeChat"],
+    "wicd": [r"^Wicd Network Manager$"],
 }
 
 
