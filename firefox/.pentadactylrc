@@ -84,6 +84,7 @@ nmap -ex <Space>j tabopen about:downloads
 nmap -ex <Space>b tabopen pinboard.in/u:daGrevis
 nmap -ex <Space>d tabopen devdocs.io
 nmap -ex <Space>t tabopen translate
+nmap -ex <Space>s tabopen https://github.com/honza/vim-snippets/tree/master/snippets
 
 hi StatusLineNormal -a color: #D3D0C8 !important;
 hi StatusLineBroken -a color: #2D2D2D !important;

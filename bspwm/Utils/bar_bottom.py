@@ -27,11 +27,13 @@ logger.addHandler(logger_handler)
 SHORT_WINDOW_NAME_MAPPING = {
     "chrome": [r".+ - Google Chrome$"],
     "chromium": [r".+ - Chromium$"],
+    "firefox devtools": [r"Browser Console"],
     "firefox": [r"(.+ - )?Mozilla Firefox$", r".*Pentadactyl$", r"^(Inspector|Console) - https?.*"],
     "gedit": [r".+ - gedit$"],
     "gimp": [r"^GNU Image Manipulation Program$", ".*GIMP"],
     "hipchat": [r"^HipChat$"],
     "libreoffice-calc": [r"^.* - LibreOffice Calc$"],
+    "libreoffice-writer": [r"^.* - LibreOffice Writer$"],
     "mousepad": [r".+ - Mousepad$"],
     "mpv": [r".+ - mpv$"],
     "pavucontrol": [r"^Volume Control$"],

@@ -698,6 +698,7 @@ let g:gitgutter_eager = 0
 "
 
 let g:UltiSnipsExpandTrigger = "<C-Space>"
+let g:UltiSnipsJumpForwardTrigger = "<C-Space>"
 
 "
 " FuzzySearch configuration.
