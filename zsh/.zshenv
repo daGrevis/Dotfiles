@@ -164,7 +164,12 @@ function aux {
 }
 
 t() {
-    command tree -a -I '.git' $@
+    command -v exa &> /dev/null
+    if [ "$?" != "0" ]; then
+        tree -a -I '.git' $@
+    else
+        exa -T $@
+    fi
 }
 
 c() {
