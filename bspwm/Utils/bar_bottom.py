@@ -38,7 +38,7 @@ SHORT_WINDOW_NAME_MAPPING = {
     "mpv": [r".+ - mpv$"],
     "pavucontrol": [r"^Volume Control$"],
     "ristretto": [r"^.+ - Image Viewer \[\d+/\d+\]$"],
-    "skype": [r".+ - Skype™$"],
+    "skype": [r".+ - Skype™$", r"^Skype™ \d+\.\d+ for Linux$"],
     "spotify": [r"^Spotify Premium - Linux Preview$"],
     "transmission": [r"^Transmission$"],
     "vim": [r"^Vim$", r"^.* - GVIM\d*$"],
