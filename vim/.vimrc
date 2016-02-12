@@ -583,6 +583,8 @@ let NERDTreeShowHidden = 1
 
 nmap <C-p> :w \| CtrlP<CR>
 
+nmap <Backspace> :w \| CtrlPBufTag<CR>
+
 " Use Git to get files. Much faster and it respects .gitignore rules.
 let g:ctrlp_user_command = [
             \ '.git/',
@@ -600,8 +602,6 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:40'
 let g:ctrlp_prompt_mappings = {
             \ "PrtClearCache()": ["<C-r>"],
             \ }
-
-nmap <Backspace> :CtrlPBufTag<CR>
 
 "
 " Incsearch configuration.
