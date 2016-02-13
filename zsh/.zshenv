@@ -226,23 +226,21 @@ get-ip() {
 }
 
 alias dpl='docker pull'
-alias dcli='docker rmi -f (docker images -q)'
 alias dim='docker images'
-alias dkl='docker rm -f'
 function dlg {
     docker logs $@ 2>&1
 }
 alias dps='docker ps'
 alias dpsa='docker ps -a'
-alias drm='docker rm'
+alias drm='docker rm -f'
 alias drmi='docker rmi'
 alias drs='docker restart'
-alias dstp='docker stop'
-alias dstr='docker start'
-function clean-containers {
+alias dsp='docker stop'
+alias dst='docker start'
+function docker-rmcs {
     docker rm -f $(docker ps -aq)
 }
-function clean-images {
+function docker-rmis {
     docker rmi -f $(docker images -q)
 }
 
