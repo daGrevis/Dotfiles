@@ -481,7 +481,7 @@ function gl {
     output="$(git pull)"
     echo "$output"
 
-    rev_range=$(echo "$output" | grep -Po 'Updating \K(.+)$')
+    rev_range=$(echo "$output" | grep -Po '\K(\w+\.\.\w+)')
     if [ "$?" = "0" ]; then
         echo
         git --no-pager log "$rev_range" --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
