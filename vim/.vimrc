@@ -607,8 +607,8 @@ let g:ctrlp_prompt_mappings = {
 " Incsearch configuration.
 "
 
-nmap / <Plug>(incsearch-forward)\v
-nmap ? <Plug>(incsearch-backward)\v
+nmap / <Plug>(incsearch-forward)
+nmap ? <Plug>(incsearch-backward)
 
 "
 " Sneak configuration.
