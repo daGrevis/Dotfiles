@@ -225,25 +225,6 @@ get-ip() {
     echo
 }
 
-alias dpl='docker pull'
-alias dim='docker images'
-function dlg {
-    docker logs $@ 2>&1
-}
-alias dps='docker ps'
-alias dpsa='docker ps -a'
-alias drm='docker rm -f'
-alias drmi='docker rmi'
-alias drs='docker restart'
-alias dsp='docker stop'
-alias dst='docker start'
-function docker-rmcs {
-    docker rm -f $(docker ps -aq)
-}
-function docker-rmis {
-    docker rmi -f $(docker images -q)
-}
-
 function pip_upgrade {
     pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs sudo pip install -U
 }
@@ -496,8 +477,20 @@ alias gco="git checkout"
 alias gcp="git cherry-pick"
 alias gd="git diff"
 alias gdf="git diff"
-alias gl="git pull"
-alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+function gl {
+    output="$(git pull)"
+    echo "$output"
+
+    rev_range=$(echo "$output" | grep -Po 'Updating \K(.+)$')
+    if [ "$?" = "0" ]; then
+        echo
+        git --no-pager log "$rev_range" --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+        echo
+    fi
+}
+function glg {
+    git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+}
 alias gmr="git merge"
 alias gp="git push"
 alias grm="git rm"
@@ -508,3 +501,26 @@ alias gsb="git status -sb"
 alias gst="git status -sb"
 alias gsw="git show"
 alias gtg="git tag"
+
+#
+# Docker alias.
+#
+
+alias dpl='docker pull'
+alias dim='docker images'
+function dlg {
+    docker logs $@ 2>&1
+}
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias drm='docker rm -f'
+alias drmi='docker rmi'
+alias drs='docker restart'
+alias dsp='docker stop'
+alias dst='docker start'
+function docker-rmcs {
+    docker rm -f $(docker ps -aq)
+}
+function docker-rmis {
+    docker rmi -f $(docker images -q)
+}
