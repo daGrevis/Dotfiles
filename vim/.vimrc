@@ -581,15 +581,14 @@ let NERDTreeShowHidden = 1
 " CtrlP configuration.
 "
 
-nmap <C-p> :w \| CtrlP<CR>
-
-nmap <Backspace> :w \| CtrlPBufTag<CR>
-
 " Use Git to get files. Much faster and it respects .gitignore rules.
 let g:ctrlp_user_command = [
             \ '.git/',
             \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
             \ ]
+
+" Disables auto-map because we are setting it manually.
+let g:ctrlp_map = ''
 
 " Searches in files, buffers and MRU files at the same time.
 let g:ctrlp_cmd = 'CtrlPMixed'
@@ -602,6 +601,10 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:40'
 let g:ctrlp_prompt_mappings = {
             \ "PrtClearCache()": ["<C-r>"],
             \ }
+
+nmap <C-p> :update \| CtrlP<CR>
+
+nmap <Backspace> :update \| CtrlPBufTag<CR>
 
 "
 " Incsearch configuration.
