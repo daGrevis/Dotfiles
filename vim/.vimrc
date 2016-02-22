@@ -485,7 +485,7 @@ nmap <Leader>u :GundoToggle<CR>
 " Start selecting in visual-block mode.
 nmap <Leader>v v<C-v>
 
-nmap <Leader>w :w<CR>
+nmap <Leader>w :update<CR>
 
 " Sources what you have selected as Vimscript.
 vmap <Leader>x y:@"<CR>
