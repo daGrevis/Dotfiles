@@ -133,11 +133,13 @@ nmap <silent> N N:call HighlightNext(0.2)<CR>
 " Set line-numbers to start from 0 based on current position.
 set relativenumber
 
-try
-    set cryptmethod=blowfish2
-catch
-    set cryptmethod=blowfish
-endtry
+if exists('+cryptmethod')
+    try
+        set cryptmethod=blowfish2
+    catch
+        set cryptmethod=blowfish
+    endtry
+endif
 
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=0
