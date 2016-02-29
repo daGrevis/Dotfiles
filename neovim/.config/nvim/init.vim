@@ -22,6 +22,7 @@ Plug 'benekastah/neomake'
 
 Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
 Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
+Plug 'pangloss/vim-javascript', {'for': ['javascript', 'json', 'javascript.jsx']}
 
 Plug 'chriskempson/base16-vim'
 
@@ -70,23 +71,22 @@ vnoremap H ^
 noremap L $
 vnoremap L $
 
+noremap Y y$
+
 vnoremap < <gv
 vnoremap > >gv
 
 noremap gp `[v`]
 
-noremap J :tabnext<CR>
-noremap K :tabprevious<CR>
-
 let i = 1
 while i < 10
-    execute 'nmap <M-' . i . '> :tabnext ' . i . '<CR>'
-    execute 'nmap <Leader>' . i . ' :tabnext ' . i . '<CR>'
+    exe 'nmap <M-' . i . '> :tabnext ' . i . '<CR>'
+    exe 'nmap <Leader>' . i . ' :tabnext ' . i . '<CR>'
     let i += 1
 endwhile
 
 let g:last_tab = 1
-nmap <Space><Space> :execute 'tabn ' . g:last_tab<CR>
+nmap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
 autocmd TabLeave * let g:last_tab = tabpagenr()
 
 noremap <M-h> <C-w>h
@@ -107,10 +107,14 @@ func! AuBufLeave()
 endfunc
 autocmd BufLeave * call AuBufLeave()
 
-func! AuBufWritePost()
+func! AuNewFileBufRead()
     exe ':Neomake'
+
+    if &ft != "gitcommit" && line("'\"") > 1 && line("'\"") <= line("$")
+        exe "normal! g'\""
+    endif
 endfunc
-autocmd BufWritePost * call AuBufWritePost()
+autocmd BufNewFile,BufRead * call AuNewFileBufRead()
 
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
@@ -153,4 +157,5 @@ hi PmenuThumb ctermbg=18
 hi PmenuSbar ctermbg=18
 hi GitGutterAdd ctermbg=18
 hi GitGutterChange ctermbg=18 ctermfg=3
-hi GitGutterDelete ctermbg=18
+hi GitGutterDelete ctermbg=18 ctermfg=1
+hi GitGutterChangeDelete ctermbg=18 ctermfg=1
