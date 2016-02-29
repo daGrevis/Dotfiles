@@ -103,7 +103,7 @@ export WORK_HOSTNAME="rx-wks-44"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export EDITOR='gvim -f'
+export EDITOR='nvim'
 export VISUAL=${EDITOR}
 export BROWSER=firefox
 
@@ -189,11 +189,12 @@ copy-to-clipboard() {
 }
 
 function vim {
-    command gvim -p $@
-}
-
-function vimd {
-    command gvim -p $@ & disown && exit
+    command -v nvim &> /dev/null
+    if [ "$?" != "0" ]; then
+        command vim -p $@
+    else
+        nvim -p $@
+    fi
 }
 
 alias generate-password="xkcdpass --valid_chars='[a-z]' --numwords=10"
@@ -354,7 +355,7 @@ open-pavucontrol() {
 open-vim() {
     notify-executing "vim"
 
-    gvim
+    termite -e nvim
 }
 
 open-mousepad() {

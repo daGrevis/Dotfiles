@@ -13,6 +13,7 @@ declare -a pkgs=(
     "ipython"
     "lein"
     "mpv"
+    "neovim"
     "stalonetray"
     "sxhkd"
     "systemd"
