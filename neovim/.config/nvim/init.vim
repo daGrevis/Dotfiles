@@ -24,6 +24,7 @@ Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
 Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'json', 'javascript.jsx']}
 
+Plug 'Yggdroot/indentLine'
 Plug 'chriskempson/base16-vim'
 
 call plug#end()
@@ -43,6 +44,8 @@ set listchars=tab:→\ ,trail:·,nbsp:·
 set relativenumber
 
 set colorcolumn=100
+
+set cursorline
 
 set expandtab
 set tabstop=4
@@ -155,6 +158,9 @@ hi Pmenu ctermbg=18 ctermfg=7
 hi PmenuSel ctermbg=19 ctermfg=7
 hi PmenuThumb ctermbg=18
 hi PmenuSbar ctermbg=18
+hi WildMenu ctermbg=19 ctermfg=7
+hi Todo ctermbg=1 ctermfg=18
+
 hi GitGutterAdd ctermbg=18
 hi GitGutterChange ctermbg=18 ctermfg=3
 hi GitGutterDelete ctermbg=18 ctermfg=1
