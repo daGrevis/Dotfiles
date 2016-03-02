@@ -20,9 +20,12 @@ Plug 'kshenoy/vim-signature'
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 
-Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
-Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
+Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'json', 'javascript.jsx']}
+Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
+
+Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
 
 Plug 'Yggdroot/indentLine'
 Plug 'chriskempson/base16-vim'
@@ -52,6 +55,8 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
+set lazyredraw
+
 syntax on
 
 let mapleader = "\<Space>"
@@ -69,6 +74,9 @@ noremap <M-q> :q!<CR>
 
 noremap <C-l> :nohlsearch<CR>
 
+noremap j gj
+noremap k gk
+
 noremap H ^
 vnoremap H ^
 noremap L $
@@ -81,21 +89,32 @@ vnoremap > >gv
 
 noremap gp `[v`]
 
+noremap ' `
+
+noremap "" "0
+
 let i = 1
 while i < 10
-    exe 'nmap <M-' . i . '> :tabnext ' . i . '<CR>'
-    exe 'nmap <Leader>' . i . ' :tabnext ' . i . '<CR>'
+    exe 'noremap <M-' . i . '> :tabnext ' . i . '<CR>'
+    exe 'noremap <Leader>' . i . ' :tabnext ' . i . '<CR>'
     let i += 1
 endwhile
 
 let g:last_tab = 1
-nmap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
+noremap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
 autocmd TabLeave * let g:last_tab = tabpagenr()
 
 noremap <M-h> <C-w>h
 noremap <M-j> <C-w>j
 noremap <M-k> <C-w>k
 noremap <M-l> <C-w>l
+
+noremap Q @q
+
+nmap <Home> [[zz
+nmap <End> ]]zz
+nmap <PageUp> [mzz
+nmap <PageDown> ]mzz
 
 noremap <Leader>a :Ack<Space>
 noremap // :<C-r>/'<Home>Ack<Space>'<End>
@@ -110,16 +129,19 @@ func! AuBufLeave()
 endfunc
 autocmd BufLeave * call AuBufLeave()
 
-func! AuNewFileBufRead()
+func! AuBufReadPost()
     exe ':Neomake'
 
     if &ft != "gitcommit" && line("'\"") > 1 && line("'\"") <= line("$")
         exe "normal! g'\""
     endif
 endfunc
-autocmd BufNewFile,BufRead * call AuNewFileBufRead()
+autocmd BufReadPost * call AuBufReadPost()
 
-autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+func! AuBufWritePost()
+    exe ':Neomake'
+endfunc
+autocmd BufWritePost * call AuBufWritePost()
 
 let g:ctrlp_working_path_mode = 'r'
 let g:ctrlp_user_command = [
@@ -129,6 +151,7 @@ let g:ctrlp_user_command = [
 let g:ctrlp_status_func = {
             \ 'main': 'CtrlPStatusFuncMain',
             \ }
+let g:ctrlp_match_window = 'max:20'
 
 function! CtrlPStatusFuncMain(focus, byfname, regex, prev, item, next, marked)
     return getcwd()
