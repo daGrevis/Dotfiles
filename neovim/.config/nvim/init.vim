@@ -13,12 +13,13 @@ Plug 'tpope/vim-unimpaired'
 Plug 'vim-utils/vim-husk'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mileszs/ack.vim'
 Plug 'bronson/vim-visual-star-search'
 Plug 'kshenoy/vim-signature'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mileszs/ack.vim'
 Plug 'benekastah/neomake'
+Plug 'majutsushi/tagbar'
 
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
@@ -116,6 +117,8 @@ nmap <End> ]]zz
 nmap <PageUp> [mzz
 nmap <PageDown> ]mzz
 
+cnoremap <C-v> <C-r>+
+
 noremap <Leader>a :Ack<Space>
 noremap // :<C-r>/'<Home>Ack<Space>'<End>
 
@@ -161,8 +164,24 @@ let g:neomake_error_sign = {
             \ 'text': 'E>',
             \ 'texthl': 'ErrorMsg',
             \ }
+let g:neomake_warning_sign = {
+            \ 'text': 'W>',
+            \ 'texthl': 'WarningMsg',
+            \ }
 
 let g:neomake_python_enabled_makers = ['python']
+
+" let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
+
+noremap <Backspace> :TagbarToggle<CR>
+
+let g:tagbar_width = 60
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose = 1
+let g:tagbar_sort = 0
+let g:tagbar_compact = 1
+let g:tagbar_indent = 4
+let g:tagbar_iconchars = [' ', ' ']
 
 colorscheme base16-eighties
 set background=dark
@@ -183,8 +202,11 @@ hi PmenuThumb ctermbg=18
 hi PmenuSbar ctermbg=18
 hi WildMenu ctermbg=19 ctermfg=7
 hi Todo ctermbg=1 ctermfg=18
+hi VertSplit ctermbg=18 ctermfg=8
+hi SignColumn ctermbg=18
+hi WarningMsg ctermfg=3
 
-hi GitGutterAdd ctermbg=18
-hi GitGutterChange ctermbg=18 ctermfg=3
-hi GitGutterDelete ctermbg=18 ctermfg=1
-hi GitGutterChangeDelete ctermbg=18 ctermfg=1
+hi SignifySignAdd ctermbg=18
+hi SignifySignChange ctermbg=18 ctermfg=3
+hi SignifySignDelete ctermbg=18
+hi SignifySignChangeDelete ctermbg=18 ctermfg=1
