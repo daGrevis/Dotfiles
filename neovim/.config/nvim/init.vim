@@ -5,11 +5,21 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 
+" Commenting.
 Plug 'tpope/vim-commentary'
+
+" UNIX helpers.
 Plug 'tpope/vim-eunuch'
+
+" Hooks for 3rd party repeat support.
 Plug 'tpope/vim-repeat'
+
+" Surround text-objects.
 Plug 'tpope/vim-surround'
+
+" Bracket mappings.
 Plug 'tpope/vim-unimpaired'
+
 Plug 'vim-utils/vim-husk'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
@@ -58,6 +68,8 @@ set softtabstop=4
 
 set lazyredraw
 
+set scrolloff=20
+
 syntax on
 
 let mapleader = "\<Space>"
@@ -67,6 +79,7 @@ noremap <Leader>ee :e!<CR>
 noremap <Leader>t :tabe<Space>
 noremap <Leader>w :w<CR>
 noremap <Leader>q :wq<CR>
+noremap <Leader>h :help<Space>
 vnoremap <Leader>x y:@"<CR>
 
 cnoremap <C-t> <Home>tabe \| <End>
@@ -161,11 +174,11 @@ function! CtrlPStatusFuncMain(focus, byfname, regex, prev, item, next, marked)
 endfunction
 
 let g:neomake_error_sign = {
-            \ 'text': 'E>',
+            \ 'text': 'EE',
             \ 'texthl': 'ErrorMsg',
             \ }
 let g:neomake_warning_sign = {
-            \ 'text': 'W>',
+            \ 'text': 'WW',
             \ 'texthl': 'WarningMsg',
             \ }
 
