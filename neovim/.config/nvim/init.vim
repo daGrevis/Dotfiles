@@ -131,6 +131,7 @@ nmap <PageUp> [mzz
 nmap <PageDown> ]mzz
 
 cnoremap <C-v> <C-r>+
+inoremap <C-v> <C-r>+
 
 noremap <Leader>a :Ack<Space>
 noremap // :<C-r>/'<Home>Ack<Space>'<End>
