@@ -168,7 +168,7 @@ t() {
     if [ "$?" != "0" ]; then
         tree -a -I '.git' $@
     else
-        exa -T $@
+        exa -Tal $@
     fi
 }
 
@@ -501,6 +501,7 @@ alias gs="git status -sb"
 alias gsb="git status -sb"
 alias gst="git status -sb"
 alias gsw="git show"
+alias gswl="git show --name-only"
 alias gtg="git tag"
 
 #

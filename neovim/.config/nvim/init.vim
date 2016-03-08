@@ -33,7 +33,8 @@ Plug 'majutsushi/tagbar'
 
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
-Plug 'pangloss/vim-javascript', {'for': ['javascript', 'json', 'javascript.jsx']}
+Plug 'elzr/vim-json', {'for': ['json']}
+Plug 'pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
 
 Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
@@ -159,6 +160,10 @@ func! AuBufWritePost()
     exe ':Neomake'
 endfunc
 autocmd BufWritePost * call AuBufWritePost()
+
+" Don't be weird... Amazing hack.
+" https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
+let g:vim_json_syntax_conceal = 0
 
 let g:ctrlp_working_path_mode = 'r'
 let g:ctrlp_user_command = [
