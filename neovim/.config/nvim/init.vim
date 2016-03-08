@@ -70,6 +70,18 @@ set lazyredraw
 
 set scrolloff=20
 
+set statusline=
+" Path and line number.
+set statusline+=%f\:%l
+" Modified and readonly flags.
+set statusline+=\ %m%r
+" Right align.
+set statusline+=%=
+" Current tag.
+set statusline+=%{tagbar#currenttag('[%s]\ ','\ ','f')}
+" Filetype.
+set statusline+=%{&ft}
+
 syntax on
 
 let mapleader = "\<Space>"
@@ -125,10 +137,13 @@ noremap <M-l> <C-w>l
 
 noremap Q @q
 
-nmap <Home> [[zz
-nmap <End> ]]zz
-nmap <PageUp> [mzz
-nmap <PageDown> ]mzz
+nmap <Home> [[
+nmap <End> ]]
+nmap <PageUp> [m
+nmap <PageDown> ]m
+
+nmap * g*<C-o>
+nmap # g#<C-o>
 
 cnoremap <C-v> <C-r>+
 inoremap <C-v> <C-r>+
