@@ -2,7 +2,7 @@
 " 
 " This allows to replicate my Vim setup by simply copying init.vim into the
 " right place. This can be done with a simple one-liner as shown below.
-"     curl -Lo ~/.config/nvim/init.vim --create-dirs https://github.com/daGrevis/Dotfiles/blob/master/neovim/.config/nvim/init.vim
+"     curl -Lo ~/.config/nvim/init.vim --create-dirs https://github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 
