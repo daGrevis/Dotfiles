@@ -83,6 +83,8 @@ set statusline+=%{tagbar#currenttag('[%s]\ ','\ ','f')}
 " Filetype.
 set statusline+=%{&ft}
 
+set mouse=a
+
 syntax on
 
 let mapleader = "\<Space>"
