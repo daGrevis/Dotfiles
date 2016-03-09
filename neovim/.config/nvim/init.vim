@@ -1,6 +1,16 @@
+" Installs vim-plug and required plugins if needed.
+" 
+" This allows to replicate my Vim setup by simply copying init.vim into the
+" right place. This can be done with a simple one-liner as shown below.
+"     curl -Lo ~/.config/nvim/init.vim --create-dirs https://github.com/daGrevis/Dotfiles/blob/master/neovim/.config/nvim/init.vim
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
-    autocmd VimEnter * PlugInstall
+
+    func! AuPlugged()
+        exe ':PlugInstall'
+        echo 'Plugins installed, **restart Neovim to load them**!'
+    endfunc
+    autocmd VimEnter * call AuPlugged()
 endif
 
 call plug#begin('~/.config/nvim/plugged')
