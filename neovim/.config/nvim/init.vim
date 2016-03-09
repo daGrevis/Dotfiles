@@ -219,9 +219,24 @@ let g:tagbar_compact = 1
 let g:tagbar_indent = 4
 let g:tagbar_iconchars = [' ', ' ']
 
-colorscheme base16-eighties
-set background=dark
+" Complete from top to bottom.
+let g:SuperTabDefaultCompletionType = "<C-n>"
 
+try
+    colorscheme base16-eighties
+    set background=dark
+
+    let colorscheme_loaded = 1
+catch
+    let colorscheme_loaded = 0
+endtry
+
+" 1 = red
+" 2 = green
+" 3 = yellow
+" 4 = blue
+" 5 = purple
+" 6 = teal
 hi StatusLine ctermbg=18 ctermfg=7
 hi StatusLineNC ctermbg=18 ctermfg=8
 hi TabLine ctermbg=18 ctermfg=7
@@ -232,10 +247,10 @@ hi CursorLineNr ctermbg=18
 hi CursorLine ctermbg=18
 hi ColorColumn ctermbg=18
 hi Visual ctermbg=19
-hi Pmenu ctermbg=18 ctermfg=7
-hi PmenuSel ctermbg=19 ctermfg=7
-hi PmenuThumb ctermbg=18
-hi PmenuSbar ctermbg=18
+hi Pmenu ctermbg=19 ctermfg=7
+hi PmenuSel ctermbg=7 ctermfg=18
+hi PmenuThumb ctermbg=19
+hi PmenuSbar ctermbg=19
 hi WildMenu ctermbg=19 ctermfg=7
 hi Todo ctermbg=1 ctermfg=18
 hi VertSplit ctermbg=18 ctermfg=8
