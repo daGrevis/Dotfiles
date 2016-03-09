@@ -9,6 +9,8 @@ setopt interactivecomments
 # time that oh-my-zsh is loaded.
 ZSH_THEME="custom"
 
+TERM=xterm-256color
+
 source ~/settings.sh
 
 # Base16 Shell
