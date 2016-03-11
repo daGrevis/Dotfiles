@@ -93,6 +93,9 @@ set statusline+=%{tagbar#currenttag('[%s]\ ','\ ','f')}
 " Filetype.
 set statusline+=%{&ft}
 
+set splitbelow
+set splitright
+
 set iskeyword+=-
 
 set mouse=a

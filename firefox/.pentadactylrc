@@ -41,16 +41,8 @@ imap <C-q> <C-i>
 nmap <A-q> :q!<CR>
 nmap <A-w> :q<CR>
 
-" Move tabs. Idiomatic <S-{-,=}>.
-nmap _ :tabm -1<CR>
-nmap + :tabm +1<CR>
-
-" Go to next/prev tab.
-nmap \- gT
-nmap = gt
-" Go to above/below tab (when treetabs are enabled).
-nmap J gt
-nmap K gT
+nnoremap J gt
+nnoremap K gT
 
 nmap <BS> :tabbartoggle<CR>
 
