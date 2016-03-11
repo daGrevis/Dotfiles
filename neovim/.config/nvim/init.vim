@@ -40,6 +40,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'benekastah/neomake'
 Plug 'majutsushi/tagbar'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'rhysd/devdocs.vim'
 
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
@@ -55,8 +57,6 @@ Plug 'chriskempson/base16-vim'
 call plug#end()
 
 set noswapfile
-
-set wildignore+=*.pyc
 
 set gdefault
 
@@ -93,62 +93,61 @@ set statusline+=%{tagbar#currenttag('[%s]\ ','\ ','f')}
 " Filetype.
 set statusline+=%{&ft}
 
+set iskeyword+=-
+
 set mouse=a
+
+set wildignore+=*.pyc
+
+set dictionary=
+set dictionary+=/usr/share/dict/cracklib-small
 
 syntax on
 
 let mapleader = "\<Space>"
 
-noremap <Leader>e :e<Space>
-noremap <Leader>ee :e!<CR>
-noremap <Leader>t :tabe<Space>
-noremap <Leader>w :w<CR>
-noremap <Leader>q :wq<CR>
-noremap <Leader>h :help<Space>
+nnoremap <Leader>e :e<Space>
+nnoremap <Leader>ee :e!<CR>
+nnoremap <Leader>q :wq<CR>
+nnoremap <Leader>t :tabe<Space>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>h :help<Space>
+nnoremap <Leader>f :set ft=
+nnoremap <Leader>z :setl spell<CR>z=
+
 vnoremap <Leader>x y:@"<CR>
 
 cnoremap <C-t> <Home>tabe \| <End>
 
-noremap <M-q> :q!<CR>
+nnoremap <M-q> :q!<CR>
 
-noremap <C-l> :nohlsearch<CR>
+nnoremap <C-l> :nohlsearch<CR>
 
-noremap j gj
-noremap k gk
+nnoremap j gj
+nnoremap k gk
 
-noremap H ^
+nnoremap H ^
 vnoremap H ^
-noremap L $
+nnoremap L $
 vnoremap L $
 
-noremap Y y$
+nnoremap Y y$
 
 vnoremap < <gv
 vnoremap > >gv
 
-noremap gp `[v`]
+nnoremap gp `[v`]
 
-noremap ' `
+nnoremap ' `
 
-noremap "" "0
+nnoremap "" "0
 
-let i = 1
-while i < 10
-    exe 'noremap <M-' . i . '> :tabnext ' . i . '<CR>'
-    exe 'noremap <Leader>' . i . ' :tabnext ' . i . '<CR>'
-    let i += 1
-endwhile
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
 
-let g:last_tab = 1
-noremap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
-autocmd TabLeave * let g:last_tab = tabpagenr()
-
-noremap <M-h> <C-w>h
-noremap <M-j> <C-w>j
-noremap <M-k> <C-w>k
-noremap <M-l> <C-w>l
-
-noremap Q @q
+nnoremap Q @q
 
 nmap <Home> [[
 nmap <End> ]]
@@ -161,8 +160,28 @@ nmap # g#<C-o>
 cnoremap <C-v> <C-r>+
 inoremap <C-v> <C-r>+
 
-noremap <Leader>a :Ack<Space>
-noremap // :<C-r>/'<Home>Ack<Space>'<End>
+nnoremap // :<C-r>/'<Home>Ack<Space>'<End>
+
+" J and K position is just too good for line joining and keyword lookup. I do
+" switching between tabs much more often so it's a remap.
+" NOTE: Join with <Leader>j (using splitjoin.vim).
+" NOTE: Open docs with <Leader>k (using devdocs.vim).
+nnoremap J gt
+nnoremap K gT
+
+" Dictionary completion.
+inoremap <C-z> <C-x><C-k>
+
+let i = 1
+while i < 10
+    exe 'nnoremap <M-' . i . '> :tabnext ' . i . '<CR>'
+    exe 'nnoremap <Leader>' . i . ' :tabnext ' . i . '<CR>'
+    let i += 1
+endwhile
+
+let g:last_tab = 1
+nnoremap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
+autocmd TabLeave * let g:last_tab = tabpagenr()
 
 func! AuFocusLost()
     exe ':silent! update'
@@ -187,6 +206,18 @@ func! AuBufWritePost()
     exe ':Neomake'
 endfunc
 autocmd BufWritePost * call AuBufWritePost()
+
+func! AuFileTypeGitCommit()
+    setl spell
+endfunc
+au FileType gitcommit call AuFileTypeGitCommit()
+
+func! AuFileTypePython()
+    " Default omnifunc for Python literally does not work so we disable it.
+    " NOTE: Try jedi-vim one more time.
+    setl omnifunc=
+endfunc
+au FileType python call AuFileTypePython()
 
 " Don't be weird... Amazing hack.
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
@@ -219,7 +250,7 @@ let g:neomake_python_enabled_makers = ['python']
 
 " let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
 
-noremap <Backspace> :TagbarToggle<CR>
+nnoremap <Backspace> :TagbarToggle<CR>
 
 let g:tagbar_width = 60
 let g:tagbar_autofocus = 1
@@ -230,7 +261,23 @@ let g:tagbar_indent = 4
 let g:tagbar_iconchars = [' ', ' ']
 
 " Complete from top to bottom.
-let g:SuperTabDefaultCompletionType = "<C-n>"
+let g:SuperTabContextDefaultCompletionType = "<C-n>"
+" Omni-complete when possible, but fallback to keyword complete.
+" https://github.com/ervandew/supertab/blob/66511772a430a5eaad7f7d03dbb02e8f33c4a641/doc/supertab.txt#L435-L460
+let g:SuperTabDefaultCompletionType = 'context'
+autocmd FileType *
+            \ if &omnifunc != '' |
+            \   call SuperTabChain(&omnifunc, '<C-n>') |
+            \ endif
+
+nnoremap <Leader>a :Ack<Space>
+
+" Join and split.
+nnoremap <Leader>j gJ
+vnoremap <Leader>j gJ
+nnoremap <Leader>s :SplitjoinSplit<CR>
+
+nnoremap <Leader>k :DevDocsUnderCursor<CR>
 
 try
     colorscheme base16-eighties
