@@ -37,6 +37,7 @@ Plug 'bronson/vim-visual-star-search'
 Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
 Plug 'mileszs/ack.vim'
 Plug 'benekastah/neomake'
 Plug 'majutsushi/tagbar'
@@ -262,6 +263,11 @@ let g:tagbar_sort = 0
 let g:tagbar_compact = 1
 let g:tagbar_indent = 4
 let g:tagbar_iconchars = [' ', ' ']
+
+nnoremap <Tab> :NERDTreeToggle<CR>
+
+let NERDTreeWinSize = 60
+let NERDTreeShowHidden = 1
 
 " Complete from top to bottom.
 let g:SuperTabContextDefaultCompletionType = "<C-n>"
