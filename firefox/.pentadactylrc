@@ -5,6 +5,7 @@ set complete=location,suggestion
 set defsearch=google
 set hintkeys=asdfghjkl
 set hlfind
+set editor='termite -e "nvim <file>"'
 
 nmap <C-q> <Nop>
 
