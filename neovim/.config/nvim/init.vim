@@ -318,7 +318,7 @@ hi PmenuSel ctermbg=7 ctermfg=18
 hi PmenuThumb ctermbg=19
 hi PmenuSbar ctermbg=19
 hi WildMenu ctermbg=19 ctermfg=7
-hi Todo ctermbg=1 ctermfg=18
+hi Todo ctermbg=2 ctermfg=18
 hi VertSplit ctermbg=18 ctermfg=8
 hi SignColumn ctermbg=18
 hi WarningMsg ctermfg=3
