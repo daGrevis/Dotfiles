@@ -106,6 +106,11 @@ set wildignore+=*.pyc
 set dictionary=
 set dictionary+=/usr/share/dict/cracklib-small
 
+set complete=
+set complete+=.
+set complete+=b
+set complete+=t
+
 syntax on
 
 let mapleader = "\<Space>"
@@ -162,7 +167,7 @@ nmap * g*<C-o>
 nmap # g#<C-o>
 
 cnoremap <C-v> <C-r>+
-inoremap <C-v> <C-r>+
+inoremap <C-v> <C-c>"+pi
 
 nnoremap // :<C-r>/'<Home>Ack<Space>'<End>
 
@@ -211,17 +216,16 @@ func! AuBufWritePost()
 endfunc
 autocmd BufWritePost * call AuBufWritePost()
 
+func! AuFileType()
+    " It just isn't good enough.
+    setl omnifunc=
+endfunc
+au FileType * call AuFileType()
+
 func! AuFileTypeGitCommit()
     setl spell
 endfunc
 au FileType gitcommit call AuFileTypeGitCommit()
-
-func! AuFileTypePython()
-    " Default omnifunc for Python literally does not work so we disable it.
-    " NOTE: Try jedi-vim one more time.
-    setl omnifunc=
-endfunc
-au FileType python call AuFileTypePython()
 
 " Don't be weird... Amazing hack.
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
@@ -270,14 +274,7 @@ let NERDTreeWinSize = 60
 let NERDTreeShowHidden = 1
 
 " Complete from top to bottom.
-let g:SuperTabContextDefaultCompletionType = "<C-n>"
-" Omni-complete when possible, but fallback to keyword complete.
-" https://github.com/ervandew/supertab/blob/66511772a430a5eaad7f7d03dbb02e8f33c4a641/doc/supertab.txt#L435-L460
-let g:SuperTabDefaultCompletionType = 'context'
-autocmd FileType *
-            \ if &omnifunc != '' |
-            \   call SuperTabChain(&omnifunc, '<C-n>') |
-            \ endif
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
 nnoremap <Leader>a :Ack<Space>
 
