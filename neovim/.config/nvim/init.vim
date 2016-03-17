@@ -43,6 +43,7 @@ Plug 'benekastah/neomake'
 Plug 'majutsushi/tagbar'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/devdocs.vim'
+Plug 'justinmk/vim-sneak'
 
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
@@ -181,6 +182,16 @@ nnoremap K gT
 " Dictionary completion.
 inoremap <C-z> <C-x><C-k>
 
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+vmap f <Plug>Sneak_f
+vmap F <Plug>Sneak_F
+
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+vmap t <Plug>Sneak_t
+vmap T <Plug>Sneak_T
+
 let i = 1
 while i < 10
     exe 'nnoremap <M-' . i . '> :tabnext ' . i . '<CR>'
@@ -203,8 +214,6 @@ endfunc
 autocmd BufLeave * call AuBufLeave()
 
 func! AuBufReadPost()
-    exe ':Neomake'
-
     if &ft != "gitcommit" && line("'\"") > 1 && line("'\"") <= line("$")
         exe "normal! g'\""
     endif
@@ -230,6 +239,8 @@ au FileType gitcommit call AuFileTypeGitCommit()
 " Don't be weird... Amazing hack.
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
 let g:vim_json_syntax_conceal = 0
+
+let g:ack_qhandler = "botright copen 20"
 
 let g:ctrlp_working_path_mode = 'r'
 let g:ctrlp_user_command = [
@@ -324,3 +335,4 @@ hi SignifySignAdd ctermbg=18
 hi SignifySignChange ctermbg=18 ctermfg=3
 hi SignifySignDelete ctermbg=18
 hi SignifySignChangeDelete ctermbg=18 ctermfg=1
+hi SneakPluginTarget ctermfg=8 ctermbg=3
