@@ -44,6 +44,7 @@ Plug 'majutsushi/tagbar'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/devdocs.vim'
 Plug 'justinmk/vim-sneak'
+Plug 'wellle/targets.vim'
 
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
