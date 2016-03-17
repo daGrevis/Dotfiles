@@ -1,16 +1,20 @@
-" Installs vim-plug and required plugins if needed.
-" 
+augroup vimrc
+    autocmd!
+augroup END
+
+" Installs vim-plug along with all plugins in case plugin manager isn't installed.
+"
 " This allows to replicate my Vim setup by simply copying init.vim into the
 " right place. This can be done with a simple one-liner as shown below.
 "     curl -Lo ~/.config/nvim/init.vim --create-dirs https://github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 
-    func! AuPlugged()
+    function! AuPlugged()
         exe ':PlugInstall'
         echo 'Plugins installed, **restart Neovim to load them**!'
-    endfunc
-    autocmd VimEnter * call AuPlugged()
+    endfunction
+    autocmd vimrc VimEnter * call AuPlugged()
 endif
 
 call plug#begin('~/.config/nvim/plugged')
@@ -30,12 +34,16 @@ Plug 'tpope/vim-surround'
 " Bracket mappings.
 Plug 'tpope/vim-unimpaired'
 
+" Diff via sign column.
+Plug 'mhinz/vim-signify'
+
+" Marks via sign column.
+Plug 'kshenoy/vim-signature'
+
 Plug 'vim-utils/vim-husk'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
 Plug 'bronson/vim-visual-star-search'
-Plug 'kshenoy/vim-signature'
-Plug 'mhinz/vim-signify'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'mileszs/ack.vim'
@@ -58,6 +66,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'chriskempson/base16-vim'
 
 call plug#end()
+
+set encoding=utf-8
+scriptencoding utf-8
 
 set noswapfile
 
@@ -115,7 +126,7 @@ set complete+=t
 
 syntax on
 
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 nnoremap <Leader>e :e<Space>
 nnoremap <Leader>ee :e!<CR>
@@ -125,8 +136,12 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>h :help<Space>
 nnoremap <Leader>f :set ft=
 nnoremap <Leader>z :setl spell<CR>z=
-
 vnoremap <Leader>x y:@"<CR>
+nnoremap <Leader>j :join<CR>
+vnoremap <Leader>j :join<CR>
+nnoremap <Leader>m :messages<CR>
+nnoremap <Leader>r :registers<CR>
+nnoremap <Leader>s :set<Space>
 
 cnoremap <C-t> <Home>tabe \| <End>
 
@@ -175,8 +190,7 @@ nnoremap // :<C-r>/'<Home>Ack<Space>'<End>
 
 " J and K position is just too good for line joining and keyword lookup. I do
 " switching between tabs much more often so it's a remap.
-" NOTE: Join with <Leader>j (using splitjoin.vim).
-" NOTE: Open docs with <Leader>k (using devdocs.vim).
+" NOTE: Join lines with <Leader>j.
 nnoremap J gt
 nnoremap K gT
 
@@ -193,55 +207,62 @@ nmap T <Plug>Sneak_T
 vmap t <Plug>Sneak_t
 vmap T <Plug>Sneak_T
 
-let i = 1
-while i < 10
-    exe 'nnoremap <M-' . i . '> :tabnext ' . i . '<CR>'
-    exe 'nnoremap <Leader>' . i . ' :tabnext ' . i . '<CR>'
-    let i += 1
-endwhile
+function! MapGoToTab()
+    let s:i = 1
+    while s:i < 10
+        exe 'nnoremap <M-' . s:i . '> :tabnext ' . s:i . '<CR>'
+        let s:i += 1
+    endwhile
+endfunction
+call MapGoToTab()
 
 let g:last_tab = 1
 nnoremap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
-autocmd TabLeave * let g:last_tab = tabpagenr()
+autocmd vimrc TabLeave * let g:last_tab = tabpagenr()
 
-func! AuFocusLost()
+function! AuFocusLost()
     exe ':silent! update'
-endfunc
-autocmd FocusLost * call AuFocusLost()
+endfunction
+autocmd vimrc FocusLost * call AuFocusLost()
 
-func! AuBufLeave()
+function! AuBufLeave()
     exe ':silent! update'
-endfunc
-autocmd BufLeave * call AuBufLeave()
+endfunction
+autocmd vimrc BufLeave * call AuBufLeave()
 
-func! AuBufReadPost()
+function! AuBufReadPost()
     if &ft != "gitcommit" && line("'\"") > 1 && line("'\"") <= line("$")
         exe "normal! g'\""
     endif
-endfunc
-autocmd BufReadPost * call AuBufReadPost()
+endfunction
+autocmd vimrc BufReadPost * call AuBufReadPost()
 
-func! AuBufWritePost()
+function! AuBufWritePost()
     exe ':Neomake'
-endfunc
-autocmd BufWritePost * call AuBufWritePost()
+endfunction
+autocmd vimrc BufWritePost * call AuBufWritePost()
 
-func! AuFileType()
+function! AuFileType()
     " It just isn't good enough.
     setl omnifunc=
-endfunc
-au FileType * call AuFileType()
+endfunction
+augroup FileType * call AuFileType()
 
-func! AuFileTypeGitCommit()
+function! AuFileTypeHelp()
+    setl relativenumber
+endfunction
+autocmd vimrc FileType help call AuFileTypeHelp()
+
+function! AuFileTypeGitCommit()
     setl spell
-endfunc
-au FileType gitcommit call AuFileTypeGitCommit()
+endfunction
+autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
 
 " Don't be weird... Amazing hack.
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
 let g:vim_json_syntax_conceal = 0
 
-let g:ack_qhandler = "botright copen 20"
+let g:ack_qhandler = 'botright copen 20'
 
 let g:ctrlp_working_path_mode = 'r'
 let g:ctrlp_user_command = [
@@ -258,16 +279,17 @@ function! CtrlPStatusFuncMain(focus, byfname, regex, prev, item, next, marked)
 endfunction
 
 let g:neomake_error_sign = {
-            \ 'text': 'EE',
-            \ 'texthl': 'ErrorMsg',
+            \ 'text': 'E>',
+            \ 'texthl': 'ErrorSign',
             \ }
 let g:neomake_warning_sign = {
-            \ 'text': 'WW',
-            \ 'texthl': 'WarningMsg',
+            \ 'text': 'W>',
+            \ 'texthl': 'WarningSign',
             \ }
 
 let g:neomake_python_enabled_makers = ['python']
 
+let g:neomake_verbose = 0
 " let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
 
 nnoremap <Backspace> :TagbarToggle<CR>
@@ -282,36 +304,49 @@ let g:tagbar_iconchars = [' ', ' ']
 
 nnoremap <Tab> :NERDTreeToggle<CR>
 
-let NERDTreeWinSize = 60
-let NERDTreeShowHidden = 1
+let g:NERDTreeWinSize = 60
+let g:NERDTreeShowHidden = 1
 
 " Complete from top to bottom.
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
 nnoremap <Leader>a :Ack<Space>
 
-" Join and split.
-nnoremap <Leader>j gJ
-vnoremap <Leader>j gJ
-nnoremap <Leader>s :SplitjoinSplit<CR>
-
 nnoremap <Leader>k :DevDocsUnderCursor<CR>
+
+let g:signify_sign_change = '~'
+" let g:signify_sign_changedelete = '~_'
 
 try
     colorscheme base16-eighties
     set background=dark
 
-    let colorscheme_loaded = 1
+    let g:colorscheme_loaded = 1
 catch
-    let colorscheme_loaded = 0
+    let g:colorscheme_loaded = 0
 endtry
 
-" 1 = red
-" 2 = green
-" 3 = yellow
-" 4 = blue
-" 5 = purple
-" 6 = teal
+" Color map.
+" https://raw.github.com/chriskempson/base16/master/base16-default.png
+"
+" 00, 0  = black
+" 01, 18 = less black
+" 02, 19 = ..
+" 03, 8  = ..
+" 04, 20 = ..
+" 05, 7  = ..
+" 05, 21 = less white
+" 07, 15 = white
+"
+" 08, 1  = red
+" 09, 16 = orange
+" 0A, 3  = yellow
+" 0B, 2  = green
+" 0C, 6  = teal
+" 0D, 4  = blue
+" 0E, 5  = purple
+" 0F, 17 = brown
+
 hi StatusLine ctermbg=18 ctermfg=7
 hi StatusLineNC ctermbg=18 ctermfg=8
 hi TabLine ctermbg=18 ctermfg=7
@@ -332,8 +367,14 @@ hi VertSplit ctermbg=18 ctermfg=8
 hi SignColumn ctermbg=18
 hi WarningMsg ctermfg=3
 
+hi ErrorSign ctermbg=0 ctermfg=1
+hi WarningSign ctermbg=0 ctermfg=3
+
 hi SignifySignAdd ctermbg=18
 hi SignifySignChange ctermbg=18 ctermfg=3
-hi SignifySignDelete ctermbg=18
+hi SignifySignDelete ctermbg=18 ctermfg=1
 hi SignifySignChangeDelete ctermbg=18 ctermfg=1
+
+hi SignatureMarkText ctermbg=0 ctermfg=4
+
 hi SneakPluginTarget ctermfg=8 ctermbg=3
