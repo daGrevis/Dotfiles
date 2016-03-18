@@ -1,7 +1,3 @@
-augroup vimrc
-    autocmd!
-augroup END
-
 " Installs vim-plug along with all plugins in case plugin manager isn't installed.
 "
 " This allows to replicate my Vim setup by simply copying init.vim into the
@@ -14,7 +10,10 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
         exe ':PlugInstall'
         echo 'Plugins installed, **restart Neovim to load them**!'
     endfunction
-    autocmd vimrc VimEnter * call AuPlugged()
+    augroup AuPlugged
+        autocmd!
+        autocmd VimEnter * call AuPlugged()
+    augroup END
 endif
 
 call plug#begin('~/.config/nvim/plugged')
@@ -82,8 +81,6 @@ set listchars=tab:→\ ,trail:·,nbsp:·
 
 set relativenumber
 
-set colorcolumn=100
-
 set cursorline
 
 set expandtab
@@ -135,7 +132,7 @@ nnoremap <Leader>t :tabe<Space>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>h :help<Space>
 nnoremap <Leader>f :set ft=
-nnoremap <Leader>z :setl spell<CR>z=
+nnoremap <Leader>z :setlocal spell<CR>z=
 vnoremap <Leader>x y:@"<CR>
 nnoremap <Leader>j :join<CR>
 vnoremap <Leader>j :join<CR>
@@ -216,6 +213,10 @@ function! MapGoToTab()
 endfunction
 call MapGoToTab()
 
+augroup vimrc
+    autocmd!
+augroup END
+
 let g:last_tab = 1
 nnoremap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
 autocmd vimrc TabLeave * let g:last_tab = tabpagenr()
@@ -231,7 +232,7 @@ endfunction
 autocmd vimrc BufLeave * call AuBufLeave()
 
 function! AuBufReadPost()
-    if &ft != "gitcommit" && line("'\"") > 1 && line("'\"") <= line("$")
+    if &filetype !=# 'gitcommit' && line("'\"") > 1 && line("'\"") <= line('$')
         exe "normal! g'\""
     endif
 endfunction
@@ -244,19 +245,35 @@ autocmd vimrc BufWritePost * call AuBufWritePost()
 
 function! AuFileType()
     " It just isn't good enough.
-    setl omnifunc=
+    setlocal omnifunc=
 endfunction
 augroup FileType * call AuFileType()
 
 function! AuFileTypeHelp()
-    setl relativenumber
+    setlocal relativenumber
 endfunction
 autocmd vimrc FileType help call AuFileTypeHelp()
 
 function! AuFileTypeGitCommit()
-    setl spell
+    setlocal spell
 endfunction
 autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
+
+" function! AuWinEnterFocusGained()
+"     setlocal cursorline
+"     if &textwidth !=# '0'
+"         setlocal colorcolumn=+1
+"     else
+"         setlocal colorcolumn=100
+"     endif
+" endfunction
+" autocmd vimrc WinEnter,FocusGained * call AuWinEnterFocusGained()
+
+" function! AuWinLeaveFocusLost()
+"     setlocal nocursorline
+"     setlocal colorcolumn=0
+" endfunction
+" autocmd vimrc WinLeave,FocusLost * call AuWinLeaveFocusLost()
 
 " Don't be weird... Amazing hack.
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
