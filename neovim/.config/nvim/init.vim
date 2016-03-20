@@ -89,6 +89,7 @@ set listchars=tab:→\ ,trail:·,nbsp:·
 set relativenumber
 
 set cursorline
+set colorcolumn=100
 
 set expandtab
 set tabstop=4
