@@ -263,22 +263,6 @@ function! AuFileTypeGitCommit()
 endfunction
 autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
 
-" function! AuWinEnterFocusGained()
-"     setlocal cursorline
-"     if &textwidth !=# '0'
-"         setlocal colorcolumn=+1
-"     else
-"         setlocal colorcolumn=100
-"     endif
-" endfunction
-" autocmd vimrc WinEnter,FocusGained * call AuWinEnterFocusGained()
-
-" function! AuWinLeaveFocusLost()
-"     setlocal nocursorline
-"     setlocal colorcolumn=0
-" endfunction
-" autocmd vimrc WinLeave,FocusLost * call AuWinLeaveFocusLost()
-
 " Don't be weird... Amazing hack.
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
 let g:vim_json_syntax_conceal = 0
