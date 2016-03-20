@@ -39,6 +39,9 @@ Plug 'mhinz/vim-signify'
 " Marks via sign column.
 Plug 'kshenoy/vim-signature'
 
+" Highlight all matching patterns.
+Plug 'haya14busa/incsearch.vim'
+
 Plug 'vim-utils/vim-husk'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
@@ -66,8 +69,12 @@ Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
-set encoding=utf-8
-scriptencoding utf-8
+try
+    set encoding=utf-8
+    scriptencoding utf-8
+catch
+    " We can't source these more than once.
+endtry
 
 set noswapfile
 
@@ -222,16 +229,24 @@ nnoremap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
 autocmd vimrc TabLeave * let g:last_tab = tabpagenr()
 
 function! AuFocusLost()
+    exe ':stopinsert'
     exe ':silent! update'
+    exe ':Neomake'
 endfunction
 autocmd vimrc FocusLost * call AuFocusLost()
 
 function! AuBufLeave()
     exe ':silent! update'
+    exe ':Neomake'
 endfunction
 autocmd vimrc BufLeave * call AuBufLeave()
 
 function! AuBufReadPost()
+    " It just isn't good enough.
+    setlocal omnifunc=
+
+    setlocal relativenumber
+
     if &filetype !=# 'gitcommit' && line("'\"") > 1 && line("'\"") <= line('$')
         exe "normal! g'\""
     endif
@@ -242,17 +257,6 @@ function! AuBufWritePost()
     exe ':Neomake'
 endfunction
 autocmd vimrc BufWritePost * call AuBufWritePost()
-
-function! AuFileType()
-    " It just isn't good enough.
-    setlocal omnifunc=
-endfunction
-augroup FileType * call AuFileType()
-
-function! AuFileTypeHelp()
-    setlocal relativenumber
-endfunction
-autocmd vimrc FileType help call AuFileTypeHelp()
 
 function! AuFileTypeGitCommit()
     setlocal spell
@@ -332,7 +336,9 @@ nnoremap <Leader>a :Ack<Space>
 nnoremap <Leader>k :DevDocsUnderCursor<CR>
 
 let g:signify_sign_change = '~'
-" let g:signify_sign_changedelete = '~_'
+
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
 
 try
     colorscheme base16-eighties
@@ -379,10 +385,13 @@ hi PmenuSel ctermbg=7 ctermfg=18
 hi PmenuThumb ctermbg=19
 hi PmenuSbar ctermbg=19
 hi WildMenu ctermbg=19 ctermfg=7
-hi Todo ctermbg=2 ctermfg=18
 hi VertSplit ctermbg=18 ctermfg=8
 hi SignColumn ctermbg=18
 hi WarningMsg ctermfg=3
+hi Todo ctermbg=18 ctermfg=4 cterm=bold
+hi Search ctermfg=19
+
+hi IncSearch ctermbg=16 ctermfg=18 cterm=bold
 
 hi ErrorSign ctermbg=0 ctermfg=1
 hi WarningSign ctermbg=0 ctermfg=3

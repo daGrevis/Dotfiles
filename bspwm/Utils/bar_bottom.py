@@ -135,6 +135,7 @@ def get_monitors(line):
     ]
     """
 
+    # Throws away initial W.
     parts = line[1:].split(":")
 
     monitors = []
@@ -182,7 +183,7 @@ def get_window_ids_in_desktop(desktop_name):
         "query",
         "-d",
         desktop_name,
-        "-W",
+        "-N",
     ]).decode("utf-8")
     window_ids = output.split("\n")[:-1]
 
@@ -194,9 +195,9 @@ def get_focused_window_id():
         output = subprocess.check_output([
             "bspc",
             "query",
-            "-w",
+            "-n",
             "focused",
-            "-W",
+            "-N",
         ]).decode("utf-8")
     except subprocess.CalledProcessError:
         return None
@@ -241,12 +242,17 @@ def get_windows(monitor):
     window_ids = get_window_ids_in_desktop(focused_desktop["desktop_name"])
 
     focused_window_id = get_focused_window_id()
-    window_id_to_window_names = dict(zip(window_ids, get_window_names(window_ids)))
+    window_id_to_window_names = {
+        k: v
+        for k, v
+        in zip(window_ids, get_window_names(window_ids))
+        if v != ""
+    }
     windows = [{
         "window_id": window_id,
         "window_name": window_id_to_window_names[window_id],
         "is_focused": window_id == focused_window_id,
-    } for window_id in window_ids]
+    } for window_id in window_id_to_window_names]
 
     return windows
 

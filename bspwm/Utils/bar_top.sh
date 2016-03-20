@@ -14,7 +14,7 @@ touch $logfile
 rm -f $pipe
 mkfifo $pipe
 
-bspc control --subscribe > "$pipe" &
+bspc subscribe report > "$pipe" &
 
 . ~/Utils/bar_colors.sh
 
