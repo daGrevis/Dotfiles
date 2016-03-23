@@ -124,10 +124,18 @@ set wildignore+=*.pyc
 set dictionary=
 set dictionary+=/usr/share/dict/cracklib-small
 
+set completeopt=
+set completeopt+=menu
+set completeopt+=preview
+set completeopt+=longest
+
 set complete=
 set complete+=.
 set complete+=b
 set complete+=t
+
+" Complete from top to bottom.
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
 syntax on
 
@@ -312,9 +320,6 @@ nnoremap <Tab> :NERDTreeToggle<CR>
 
 let g:NERDTreeWinSize = 60
 let g:NERDTreeShowHidden = 1
-
-" Complete from top to bottom.
-let g:SuperTabDefaultCompletionType = '<C-n>'
 
 nnoremap <Leader>a :Ack<Space>
 
