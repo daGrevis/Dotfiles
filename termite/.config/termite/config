@@ -12,6 +12,8 @@ urgent_on_bell = true
 clickable_url = true
 scrollback_lines = 10000
 search_wrap = true
+cursor_blink = off
+cursor_shape = block
 
 [colors]
 # Base16 Eighties
