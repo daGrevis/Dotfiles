@@ -2,7 +2,7 @@
 
 ## Neovim
 
-Copy [init.vim](github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim) into `~/.config/nvim/`.
+Copy [init.vim](https://github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim) into `~/.config/nvim/`.
 
 Here's a one-line just for that:
 

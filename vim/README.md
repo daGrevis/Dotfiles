@@ -1,6 +1,6 @@
 # [Dotfiles](https://github.com/daGrevis/Dotfiles)
 
-**Deprecated in favor of [init.vim](github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim) for Neovim.**
+**Deprecated in favor of [init.vim](https://github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim) for Neovim.**
 
 ## Vim
 
