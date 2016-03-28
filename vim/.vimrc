@@ -1,3 +1,6 @@
+" Deprecated in favor of init.vim for Neovim.
+" github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim
+
 " Required.
 set nocompatible
 filetype off
