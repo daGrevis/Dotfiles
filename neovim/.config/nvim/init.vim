@@ -1,3 +1,8 @@
+" Part of github.com/daGrevis/Dotfiles
+" Source: github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim
+
+" Auto-install {{{
+
 " Installs vim-plug along with all plugins in case plugin manager isn't installed.
 "
 " This allows to replicate my Vim setup by simply copying init.vim into the
@@ -8,7 +13,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 
     function! AuPlugged()
         exe ':PlugInstall'
-        echo 'Plugins installed, **restart Neovim to load them**!'
+        echom 'Installing plugins... **Restart Vim to load them!**'
     endfunction
     augroup AuPlugged
         autocmd!
@@ -16,58 +21,96 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
     augroup END
 endif
 
+" }}}
+
+" Plugins {{{
+
 call plug#begin('~/.config/nvim/plugged')
 
-" Commenting.
-Plug 'tpope/vim-commentary'
-
-" UNIX helpers.
-Plug 'tpope/vim-eunuch'
-
 " Hooks for 3rd party repeat support.
-Plug 'tpope/vim-repeat'
+Plug 'https://github.com/tpope/vim-repeat'
 
-" Surround text-objects.
-Plug 'tpope/vim-surround'
+" Various new text objects and enchantments to standard ones.
+Plug 'https://github.com/wellle/targets.vim'
+
+" Easily delete, change and add such surroundings in pairs.
+Plug 'https://github.com/tpope/vim-surround'
+
+" Sneak motion and enchantments to f/F/t/T mappings.
+Plug 'https://github.com/justinmk/vim-sneak'
+
+" Highlight all pattern matches.
+Plug 'https://github.com/haya14busa/incsearch.vim'
 
 " Bracket mappings.
-Plug 'tpope/vim-unimpaired'
+Plug 'https://github.com/tpope/vim-unimpaired'
 
-" Diff via sign column.
-Plug 'mhinz/vim-signify'
+" Search under the cursor from visual mode.
+Plug 'https://github.com/bronson/vim-visual-star-search'
+
+" Readline bindings in command mode.
+Plug 'https://github.com/vim-utils/vim-husk'
+
+" UNIX helpers from command mode.
+Plug 'https://github.com/tpope/vim-eunuch'
+
+" Commenting.
+Plug 'https://github.com/tpope/vim-commentary'
+
+" Tab completion.
+Plug 'https://github.com/ervandew/supertab'
+
+" Auto-close delimiters.
+Plug 'https://github.com/Raimondi/delimitMate'
+
+" File finder (fuzzy search, regex and more).
+Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+
+" File explorer.
+Plug 'https://github.com/scrooloose/nerdtree'
+
+" Asynchronous linting (syntax checking, static analysis and so on).
+Plug 'https://github.com/benekastah/neomake'
+
+" Grepping tool, optimized for searching code.
+Plug 'https://github.com/mileszs/ack.vim'
+
+" Syntax tree using ctags.
+Plug 'https://github.com/majutsushi/tagbar'
+
+" Diffs via sign column.
+Plug 'https://github.com/mhinz/vim-signify'
 
 " Marks via sign column.
-Plug 'kshenoy/vim-signature'
+Plug 'https://github.com/kshenoy/vim-signature'
 
-" Highlight all matching patterns.
-Plug 'haya14busa/incsearch.vim'
+" Interface to DevDocs.io documentation.
+Plug 'https://github.com/rhysd/devdocs.vim'
 
-Plug 'vim-utils/vim-husk'
-Plug 'Raimondi/delimitMate'
-Plug 'ervandew/supertab'
-Plug 'bronson/vim-visual-star-search'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'mileszs/ack.vim'
-Plug 'benekastah/neomake'
-Plug 'majutsushi/tagbar'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'rhysd/devdocs.vim'
-Plug 'justinmk/vim-sneak'
-Plug 'wellle/targets.vim'
+" Edit GPG encrypted files.
+Plug 'https://github.com/jamessan/vim-gnupg'
 
-Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+" Display vertical indentation lines.
+Plug 'https://github.com/Yggdroot/indentLine'
 
-Plug 'elzr/vim-json', {'for': ['json']}
-Plug 'pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
-Plug 'mxw/vim-jsx', {'for': 'javascript.jsx'}
+" Fave color-scheme.
+Plug 'https://github.com/chriskempson/base16-vim'
 
-Plug 'kchmck/vim-coffee-script', {'for': 'coffee'}
+" File-type specific plugins below.
 
-Plug 'Yggdroot/indentLine'
-Plug 'chriskempson/base16-vim'
+Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
+
+Plug 'https://github.com/elzr/vim-json', {'for': ['json']}
+Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
+Plug 'https://github.com/mxw/vim-jsx', {'for': 'javascript.jsx'}
+
+Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
 
 call plug#end()
+
+" }}}
+
+" Encoding {{{
 
 try
     set encoding=utf-8
@@ -76,130 +119,97 @@ catch
     " We can't source these more than once.
 endtry
 
-set noswapfile
+" }}}
 
-set gdefault
+" Leader {{{
 
-set ignorecase
-set smartcase
+" Vim has this abstract button called Leader. Sets Leader to Space.
+" This means that <Leader>w mapping can be invoked by pressing <Space>w.
+let g:mapleader = "\<Space>"
 
-set list
-set listchars=tab:→\ ,trail:·,nbsp:·
+" }}}
 
-set relativenumber
+" Tabs vs Spaces {{{
 
-set cursorline
-set colorcolumn=100
-
+" Use spaces when inserting a tab.
 set expandtab
+" Number of spaces that a tab counts for.
 set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+" Number of spaces that a tab counts for when using auto-indent.
+set shiftwidth=0
 
-set lazyredraw
+" }}}
 
-set scrolloff=20
+" Look and Feel {{{
 
-set statusline=
-" Path and line number.
-set statusline+=%f\:%l
-" Modified and readonly flags.
-set statusline+=\ %m%r
-" Right align.
-set statusline+=%=
-" Current tag.
-set statusline+=%{tagbar#currenttag('[%s]\ ','\ ','f')}
-" Filetype.
-set statusline+=%{&ft}
-
-set splitbelow
-set splitright
-
-set iskeyword+=-
-
-set mouse=a
-
+" Ignore patterns.
+set wildignore=
 set wildignore+=*.pyc
 
-set dictionary=
-set dictionary+=/usr/share/dict/cracklib-small
+" Adds - to the list of keyword characters. Used for w and * mapping among
+" other things.
+set iskeyword+=-
 
-set completeopt=
-set completeopt+=menu
-set completeopt+=preview
-set completeopt+=longest
+" Show characters like Tab or trailing space differently.
+set list listchars=tab:→\ ,trail:·,nbsp:·
+
+" Show the line number relative to the cursor. This allows rapid movement in
+" buffers with 10j, 17k or alike moves to get to the specific line.
+set relativenumber
+
+" Keeps cursor at the center region of screen.
+set scrolloff=25
+
+" Highlights the screen line of the cursor. Helps finding the cursor.
+set cursorline
+
+" Highlights the screen column.
+set colorcolumn=101
+
+" Enables mouse (super useful in rare situations).
+set mouse=a
+
+" Any action not typed will not cause the screen to redraw. Good for macros.
+set lazyredraw
+
+" Don't hide my JSON! Amazing hack.
+" https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
+let g:vim_json_syntax_conceal = 0
+
+" }}}
+
+" Completion {{{
 
 set complete=
 set complete+=.
 set complete+=b
 set complete+=t
 
-" Complete from top to bottom.
+set dictionary=
+set dictionary+=/usr/share/dict/cracklib-small
+
+" Dictionary completion.
+inoremap <C-z> <C-x><C-k>
+
+" Complete top to bottom.
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
-syntax on
+" }}}
 
-let g:mapleader = "\<Space>"
+" Splits {{{
 
-nnoremap <Leader>e :e<Space>
-nnoremap <Leader>ee :e!<CR>
-nnoremap <Leader>q :wq<CR>
-nnoremap <Leader>t :tabe<Space>
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>h :help<Space>
-nnoremap <Leader>f :set ft=
-nnoremap <Leader>z :setlocal spell<CR>z=
-vnoremap <Leader>x y:@"<CR>
-nnoremap <Leader>j :join<CR>
-vnoremap <Leader>j :join<CR>
-nnoremap <Leader>m :messages<CR>
-nnoremap <Leader>r :registers<CR>
-nnoremap <Leader>s :set<Space>
+set splitbelow
+set splitright
 
-cnoremap <C-t> <Home>tabe \| <End>
-
-nnoremap <M-q> :q!<CR>
-
-nnoremap <C-l> :nohlsearch<CR>
-
-nnoremap j gj
-nnoremap k gk
-
-nnoremap H ^
-vnoremap H ^
-nnoremap L $
-vnoremap L $
-
-nnoremap Y y$
-
-vnoremap < <gv
-vnoremap > >gv
-
-nnoremap gp `[v`]
-
-nnoremap ' `
-
-nnoremap "" "0
-
+" Switch to a split.
 nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j
 nnoremap <M-k> <C-w>k
 nnoremap <M-l> <C-w>l
 
-nnoremap Q @q
+" }}}
 
-nmap <Home> [[
-nmap <End> ]]
-nmap <PageUp> [m
-nmap <PageDown> ]m
-
-nmap * g*<C-o>
-nmap # g#<C-o>
-
-cnoremap <C-v> <C-r>+
-inoremap <C-v> <C-c>"+pi
-
-nnoremap // :<C-r>/'<Home>Ack<Space>'<End>
+" Tabs {{{
 
 " J and K position is just too good for line joining and keyword lookup. I do
 " switching between tabs much more often so it's a remap.
@@ -207,19 +217,7 @@ nnoremap // :<C-r>/'<Home>Ack<Space>'<End>
 nnoremap J gt
 nnoremap K gT
 
-" Dictionary completion.
-inoremap <C-z> <C-x><C-k>
-
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F
-vmap f <Plug>Sneak_f
-vmap F <Plug>Sneak_F
-
-nmap t <Plug>Sneak_t
-nmap T <Plug>Sneak_T
-vmap t <Plug>Sneak_t
-vmap T <Plug>Sneak_T
-
+" Go to tab 1-9 with <M-1>, <M-2> etc..
 function! MapGoToTab()
     let s:i = 1
     while s:i < 10
@@ -229,13 +227,301 @@ function! MapGoToTab()
 endfunction
 call MapGoToTab()
 
+" }}}
+
+" Folding {{{
+
+" Folding 101
+" * zi - toggle folding
+" * za - toggle fold
+" * zj - next fold
+" * zk - previous fold
+" * zR - open everything
+" * zM - close everything
+
+set nofoldenable
+
+set foldmethod=marker
+
+nnoremap <Enter> za
+
+" }}}
+
+" Spelling {{{
+
+" #PROTIP: Use cos mapping from vim-unimpaired to toggle spell-checker.
+
+" Suggest word under/after the cursor.
+nnoremap <Leader>z :setlocal spell<CR>z=
+
+" }}}
+
+" System Clipboard {{{
+
+" Paste text.
+cnoremap <C-v> <C-r>+
+inoremap <C-v> <C-c>"+pi
+
+" Copy text (also exits visual model cause it's <C-c>).
+vnoremap <C-c> "+y
+
+" }}}
+
+" File Finder {{{
+
+" Don't change working directory.
+let g:ctrlp_working_path_mode = ''
+
+" List files using git when possible. This is much faster and will respect
+" .gitignore rules.
+let g:ctrlp_user_command = [
+            \ '.git/',
+            \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
+            \ ]
+
+" Sets height.
+let g:ctrlp_match_window = 'max:20'
+
+" Rewrites status-line.
+function! CtrlPStatusFuncMain(focus, byfname, regex, prev, item, next, marked)
+    return getcwd()
+endfunction
+let g:ctrlp_status_func = {
+            \ 'main': 'CtrlPStatusFuncMain',
+            \ }
+
+" }}}
+
+" File Explorer {{{
+
+nnoremap <Tab> :NERDTreeToggle<CR>
+
+let g:NERDTreeWinSize = 60
+let g:NERDTreeShowHidden = 1
+
+" }}}
+
+" Syntax Tree {{{
+
+nnoremap <Backspace> :TagbarToggle<CR>
+
+" Tweaks apparance.
+let g:tagbar_width = 60
+let g:tagbar_compact = 1
+let g:tagbar_indent = 4
+let g:tagbar_iconchars = [' ', ' ']
+
+" Focus Tagbar on open.
+let g:tagbar_autofocus = 1
+" Close Tagbar when going to tag.
+let g:tagbar_autoclose = 1
+
+" Sort according to order in the source file (don't sort).
+let g:tagbar_sort = 0
+
+" }}}
+
+" Linter {{{
+
+" Visual appearance.
+let g:neomake_error_sign = {
+            \ 'text': 'E>',
+            \ 'texthl': 'ErrorSign',
+            \ }
+let g:neomake_warning_sign = {
+            \ 'text': 'W>',
+            \ 'texthl': 'WarningSign',
+            \ }
+
+" let g:neomake_{ language }_enabled_makers
+let g:neomake_python_enabled_makers = ['python']
+
+" Logging. Be quite by default.
+let g:neomake_verbose = 0
+" let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
+
+" }}}
+
+" Searching {{{
+
+" Match globally (avoid /g in s/foo/bar/g).
+set gdefault
+
+" Ignore case when all characters are in lower case.
+set ignorecase smartcase
+
+" Highlights all pattern matches when searching.
+" #PROTIP: Interactively test your regex.
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+
+" }}}
+
+" Grepping {{{
+
+" Grep something.
+nnoremap <Leader>a :Ack<Space>
+
+" #PROTIP: Ack --python sweetcache ~/Dotfiles/
+
+" Grep last search pattern.
+" Especially useful when the match can't be found in current buffer. Press
+" // to grep for the same pattern.
+nnoremap // :<C-r>/'<Home>Ack<Space>'<End>
+
+" #PROTIP: Grep word under the cursor with *// mapping.
+
+" Sets position and height.
+let g:ack_qhandler = 'botright copen 20'
+
+" }}}
+
+" Diffs {{{
+
+" The character to use when line was changed.
+let g:signify_sign_change = '~'
+
+" }}}
+
+" Status-line {{{
+
+function! StatusLinePathAndLineNo()
+    let s:path = @%
+    if s:path ==# ''
+        let s:path = '[No Name]'
+    endif
+
+    let s:output = s:path . ':' . line('.')
+    if mode() ==# 'v'
+        let s:output = s:output . '|' . virtcol('.')
+    endif
+    return s:output
+endfunction
+
+set statusline=
+" Path and line number.
+set statusline+=%{StatusLinePathAndLineNo()}
+" Modified and read-only flags.
+set statusline+=\ %m%r
+" Right align.
+set statusline+=%=
+" Current tag.
+set statusline+=%{tagbar#currenttag('%s\ ','\ ','f')}
+" File-type.
+set statusline+=%{&ft}
+
+" }}}
+
+" Mappings {{{
+
+" Move downward/upward with a respect to lines wrap.
+nnoremap j gj
+nnoremap k gk
+
+" Join lines.
+nnoremap <Leader>j :join<CR>
+vnoremap <Leader>j :join<CR>
+
+" Temporary disable search highlighting.
+nnoremap <C-l> :nohlsearch<CR>
+
+" Goes to the first non-blank character of the line.
+nnoremap H ^
+vnoremap H ^
+" Goes to the end of the line.
+nnoremap L $
+vnoremap L $
+
+" Yank till end of the line.
+nnoremap Y y$
+
+" Indent visually selected text.
+vnoremap < <gv
+vnoremap > >gv
+
+" Select last yanked/pasted text.
+nnoremap gp `[v`]
+
+" Character-wise marks.
+nnoremap ' `
+
+" Visually select word under the cursor without moving.
+nmap * g*<C-o>
+nmap # g#<C-o>
+
+" Run macro called q.
+nnoremap Q @q
+
+" Yank X, delete Y, paste X with ""p.
+" http://stackoverflow.com/a/1504373
+nnoremap "" "0
+
+" Move through syntax tree.
+" For example, <PageDown> goes to next method.
+nmap <Home> [[
+nmap <End> ]]
+nmap <PageUp> [m
+nmap <PageDown> ]m
+
+" Juggling with buffers.
+nnoremap <Leader>e :e<Space>
+nnoremap <Leader>ee :e!<CR>
+nnoremap <Leader>q :wq<CR>
+nnoremap <Leader>w :w<CR>
+nnoremap <M-q> :q!<CR>
+
+" Command templates.
+nnoremap <Leader>h :help<Space>
+nnoremap <Leader>t :tabe<Space>
+nnoremap <Leader>s :set<Space>
+nnoremap <Leader>f :set ft=
+
+" Execute command in a new tab.
+" Type :Ack foo and press <C-t>.
+cnoremap <C-t> <Home>tabe \| <End>
+
+" Show messages.
+nnoremap <Leader>m :messages<CR>
+" Display registers.
+nnoremap <Leader>r :registers<CR>
+
+" Source visually selected Vimscript.
+vnoremap <Leader>x y:@"<CR>
+
+" Just like standard f/F except it works on multiple lines.
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+vmap f <Plug>Sneak_f
+vmap F <Plug>Sneak_F
+
+" Just like standard t/T except it works on multiple lines.
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+vmap t <Plug>Sneak_t
+vmap T <Plug>Sneak_T
+
+" Keeps s/S original functionality.
+" https://github.com/justinmk/vim-sneak/issues/87
+nmap <Plug>(Go_away_Sneak_s) <Plug>Sneak_s
+nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
+
+" Search DevDocs.io for word under the cursor.
+nnoremap <Leader>k :DevDocsUnderCursor<CR>
+
+" }}}
+
+" Auto-groups {{{
+
 augroup vimrc
     autocmd!
 augroup END
 
 let g:last_tab = 1
 nnoremap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
-autocmd vimrc TabLeave * let g:last_tab = tabpagenr()
+function! AuTabLeave()
+    let g:last_tab = tabpagenr()
+endfunction
+autocmd vimrc TabLeave * call AuTabLeave()
 
 function! AuFocusLost()
     exe ':stopinsert'
@@ -272,63 +558,9 @@ function! AuFileTypeGitCommit()
 endfunction
 autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
 
-" Don't be weird... Amazing hack.
-" https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
-let g:vim_json_syntax_conceal = 0
+" }}}
 
-let g:ack_qhandler = 'botright copen 20'
-
-let g:ctrlp_working_path_mode = 'r'
-let g:ctrlp_user_command = [
-            \ '.git/',
-            \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
-            \ ]
-let g:ctrlp_status_func = {
-            \ 'main': 'CtrlPStatusFuncMain',
-            \ }
-let g:ctrlp_match_window = 'max:20'
-
-function! CtrlPStatusFuncMain(focus, byfname, regex, prev, item, next, marked)
-    return getcwd()
-endfunction
-
-let g:neomake_error_sign = {
-            \ 'text': 'E>',
-            \ 'texthl': 'ErrorSign',
-            \ }
-let g:neomake_warning_sign = {
-            \ 'text': 'W>',
-            \ 'texthl': 'WarningSign',
-            \ }
-
-let g:neomake_python_enabled_makers = ['python']
-
-let g:neomake_verbose = 0
-" let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
-
-nnoremap <Backspace> :TagbarToggle<CR>
-
-let g:tagbar_width = 60
-let g:tagbar_autofocus = 1
-let g:tagbar_autoclose = 1
-let g:tagbar_sort = 0
-let g:tagbar_compact = 1
-let g:tagbar_indent = 4
-let g:tagbar_iconchars = [' ', ' ']
-
-nnoremap <Tab> :NERDTreeToggle<CR>
-
-let g:NERDTreeWinSize = 60
-let g:NERDTreeShowHidden = 1
-
-nnoremap <Leader>a :Ack<Space>
-
-nnoremap <Leader>k :DevDocsUnderCursor<CR>
-
-let g:signify_sign_change = '~'
-
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
+" Color-scheme {{{
 
 try
     colorscheme base16-eighties
@@ -338,6 +570,15 @@ try
 catch
     let g:colorscheme_loaded = 0
 endtry
+
+" Fall-back to a color-scheme called slate.
+if !g:colorscheme_loaded
+    colorscheme slate
+endif
+
+" }}}
+
+" Color-scheme modifications {{{
 
 " Color map.
 " https://raw.github.com/chriskempson/base16/master/base16-default.png
@@ -380,6 +621,7 @@ hi SignColumn ctermbg=18
 hi WarningMsg ctermfg=3
 hi Todo ctermbg=18 ctermfg=4 cterm=bold
 hi Search ctermfg=19
+hi Folded ctermbg=18
 
 hi IncSearch ctermbg=16 ctermfg=18 cterm=bold
 
@@ -394,3 +636,5 @@ hi SignifySignChangeDelete ctermbg=18 ctermfg=1
 hi SignatureMarkText ctermbg=0 ctermfg=4
 
 hi SneakPluginTarget ctermfg=8 ctermbg=3
+
+" }}}
