@@ -57,6 +57,9 @@ Plug 'https://github.com/tpope/vim-eunuch'
 " Commenting.
 Plug 'https://github.com/tpope/vim-commentary'
 
+" Git bindings.
+Plug 'https://github.com/tpope/vim-fugitive'
+
 " Tab completion.
 Plug 'https://github.com/ervandew/supertab'
 
@@ -72,8 +75,8 @@ Plug 'https://github.com/scrooloose/nerdtree'
 " Asynchronous linting (syntax checking, static analysis and so on).
 Plug 'https://github.com/benekastah/neomake'
 
-" Grepping tool, optimized for searching code.
-Plug 'https://github.com/mileszs/ack.vim'
+" Grepping tool with support for Ack.
+Plug 'https://github.com/mhinz/vim-grepper'
 
 " Syntax tree using ctags.
 Plug 'https://github.com/majutsushi/tagbar'
@@ -360,19 +363,18 @@ map ? <Plug>(incsearch-backward)
 " Grepping {{{
 
 " Grep something.
-nnoremap <Leader>a :Ack<Space>
-
-" #PROTIP: Ack --python sweetcache ~/Dotfiles/
+nnoremap <Leader>a :Grepper<CR>
 
 " Grep last search pattern.
 " Especially useful when the match can't be found in current buffer. Press
 " // to grep for the same pattern.
-nnoremap // :<C-r>/'<Home>Ack<Space>'<End>
+nnoremap // :Grepper<CR>
 
-" #PROTIP: Grep word under the cursor with *// mapping.
+let g:grepper = {
+    \ 'tools': ['ack', 'git', 'grep'],
+    \ }
 
-" Sets position and height.
-let g:ack_qhandler = 'botright copen 20'
+autocmd User Grepper :resize 20
 
 " }}}
 
