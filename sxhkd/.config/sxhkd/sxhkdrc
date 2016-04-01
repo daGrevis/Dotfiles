@@ -203,11 +203,11 @@ super + ctrl + shift + space
 
 # expand the tiled space in the given direction
 super + alt + {h,j,k,l}
-	bspc node {@west -r -10,@south -r +10,@north -r -10,@east -r +10}
+	bspc node {@west -r -20,@south -r +20,@north -r -20,@east -r +20}
 
 # contract the tiled space in the given direction
 super + alt + shift + {h,j,k,l}
-	bspc node {@east -r -10,@north -r +10,@south -r -10,@west -r +10}
+	bspc node {@east -r -20,@north -r +20,@south -r -20,@west -r +20}
 
 # move a floating window
 super + {Left,Down,Up,Right}

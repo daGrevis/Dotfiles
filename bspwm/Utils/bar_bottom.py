@@ -280,7 +280,7 @@ def get_window_sizes():
     return window_sizes
 
 
-def render_to_monitor(monitor, windows):
+def render_to_monitor(monitor, windows=[]):
     if monitor["monitor_id"] == 1:
         focused_color = COLORS["blue"]
     else:
@@ -360,14 +360,11 @@ def render(monitors):
         if monitor["monitor_name"] == "HDMI1":
             continue
 
-        windows = get_windows(monitor)
-        for window in windows:
-            window["size"] = window_sizes.get(window["window_id"])
+        # windows = get_windows(monitor)
+        # for window in windows:
+        #     window["size"] = window_sizes.get(window["window_id"])
 
-        render_to_monitor(
-            monitor,
-            windows,
-        )
+        render_to_monitor(monitor)
 
 
 def main():
