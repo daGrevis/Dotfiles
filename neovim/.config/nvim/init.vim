@@ -363,11 +363,6 @@ map ? <Plug>(incsearch-backward)
 " Grepping {{{
 
 " Grep something.
-nnoremap <Leader>a :Grepper<CR>
-
-" Grep last search pattern.
-" Especially useful when the match can't be found in current buffer. Press
-" // to grep for the same pattern.
 nnoremap // :Grepper<CR>
 
 let g:grepper = {
