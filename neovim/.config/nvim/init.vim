@@ -145,6 +145,8 @@ set shiftwidth=0
 
 " Look and Feel {{{
 
+set noswapfile
+
 " Ignore patterns.
 set wildignore=
 set wildignore+=*.pyc

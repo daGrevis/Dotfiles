@@ -207,9 +207,15 @@ pacman-import-gpg-key() {
     sudo pacman-key -r $1 && \
         sudo pacman-key --lsign-key $1
 }
-update-packages() {
-    sudo pacman -Syu --noconfirm && \
-        yaourt -Syua --noconfirm
+
+notify-updates() {
+    count=$(checkupdates | wc -l)
+
+    if [ "$count" = "0" ]; then
+        return
+    fi
+
+    notify-send "New updates" -- "$count update(s)"
 }
 
 json-prettify() {

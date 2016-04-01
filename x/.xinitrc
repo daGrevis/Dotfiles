@@ -16,15 +16,7 @@ if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3
 fi
 
-# Sets brightness to something sane.
-h=$(date "+%k")
-if ((h < 9)); then
-    xbacklight -set 20 -time 0
-elif ((h < 18 )); then
-    xbacklight -set 80 -time 0
-else
-    xbacklight -set 60 -time 0
-fi
+adjust_brightness.sh
 
 DISPLAY=:0 dropbox &
 

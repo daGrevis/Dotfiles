@@ -28,5 +28,5 @@ dunst &
 killall stalonetray
 (sleep 2 && stalonetray) &
 
-kill -9 $(pgrep -f Utils/cron.py)
+stop_cron.sh
 start_cron.sh
