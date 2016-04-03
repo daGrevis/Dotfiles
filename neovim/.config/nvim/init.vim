@@ -339,11 +339,11 @@ let g:neomake_warning_sign = {
             \ }
 
 " let g:neomake_{ language }_enabled_makers
-let g:neomake_python_enabled_makers = ['python']
+" let g:neomake_python_enabled_makers = ['python']
 
 " Logging. Be quite by default.
 let g:neomake_verbose = 0
-" let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
+let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
 
 " }}}
 

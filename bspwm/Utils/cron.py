@@ -10,7 +10,7 @@ def test_job():
 
 def notify_updates():
     print("called notify_updates")
-    subprocess.call("notify-updates", shell=True)
+    subprocess.call("zsh -c notify-updates", shell=True)
 
 
 def food_notification():
@@ -25,18 +25,22 @@ def review_notification():
 
 # schedule.every().second.do(test_job)
 
-schedule.every().hour.at("xx:00").do(notify_updates)
+# schedule.every().hour.at("xx:00").do(notify_updates)
 
 schedule.every().day.at("12:00").do(food_notification)
 
 schedule.every().day.at("10:30").do(review_notification)
 schedule.every().day.at("14:00").do(review_notification)
 
+schedule.every().day.at("11:00").do(notify_updates)
+schedule.every().day.at("17:00").do(notify_updates)
+schedule.every().day.at("22:00").do(notify_updates)
+
 
 ticks = 0
 while True:
     ticks += 1
-    # print("tick: {}".format(ticks))
+    print("tick: {}".format(ticks))
 
     schedule.run_pending()
 

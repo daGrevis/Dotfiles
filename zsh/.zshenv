@@ -259,8 +259,8 @@ function delete-pyco {
     find -type f -name '*.py[co]' -delete
 }
 
-function focus-desktop {
-    wmctrl -r '' -b add,demands_attention
+function set-urgent {
+    echo -e "\a"
 }
 
 function update-fonts {
@@ -426,12 +426,6 @@ open-ranger() {
     notify-executing "ranger"
 
     termite -e ranger
-}
-
-open-thunar() {
-    notify-executing "thunar"
-
-    thunar
 }
 
 open-weechat() {

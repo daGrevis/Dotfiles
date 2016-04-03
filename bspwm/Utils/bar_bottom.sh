@@ -14,9 +14,14 @@ touch $logfile
 rm -f $pipe
 mkfifo $pipe
 
-bspc subscribe all > "$pipe" &
+bspc subscribe report > "$pipe" &
 
 . ~/Utils/bar_colors.sh
+
+while true; do
+    echo "" > "$pipe"
+    sleep 1
+done &
 
 reader() {
     while read -r line ; do

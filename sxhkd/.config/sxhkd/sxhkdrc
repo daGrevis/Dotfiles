@@ -1,17 +1,5 @@
 # vim: iskeyword+=-
 
-# Restart WM.
-super + F1
-    ~/Utils/restart_wm.sh
-
-# Restart sxhkd.
-super + F2
-    pkill -USR1 -x sxhkd
-
-# Quit bspwm.
-super + F12
-    bspc quit
-
 super + shift + Return
     termite
 
@@ -88,20 +76,11 @@ super + shift + s
 super + shift + b
     open-transmission
 
-super + shift + q
-    open-ipython
-
-super + shift + w
-    open-ipython2
-
 super + shift + g
     open-glances
 
 super + shift + r
     open-ranger
-
-super + shift + t
-    open-thunar
 
 super + shift + x
     open-weechat
@@ -111,9 +90,18 @@ super + shift + x
 # bspwm hotkeys
 #
 
-# quit bspwm normally
-super + alt + Escape
-	bspc quit
+# restart wm
+super + F1
+    ~/Utils/start_wm.sh
+
+# restart sxhkd
+super + F2
+    pkill -USR1 -x sxhkd
+
+# quit bspwm
+super + F12
+    ~/Utils/stop_wm.sh && bspc quit
+
 
 # close and kill
 super + {_,shift + }w
@@ -149,33 +137,33 @@ super + ctrl + {x,y,z}
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
-
-# focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
-
-# focus the next/previous node
-super + {_,shift + }c
-	bspc node -f {next,prev}
+    bspc node -{f,s} {west,south,north,east}
 
 # focus the next/previous desktop
 super + bracket{left,right}
-	bspc desktop -f {prev,next}
+    bspc desktop -f {prev,next}
 
-# focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+# focus the next node
+super + Tab
+    bspc node -f next
+
+# focus the last desktop
+super + grave
+    bspc desktop -f last
 
 # focus the older or newer node in the focus history
-super + {o,i}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
+super + {o,O}
+    bspc wm -h off; \
+    bspc node {older,newer} -f; \
+    bspc wm -h on
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+    bspc {desktop -f,node -d} '^{1-9,10}'
+
+# focus the urgent node
+super + u
+    bspc desktop -f next.urgent
 
 #
 # preselect

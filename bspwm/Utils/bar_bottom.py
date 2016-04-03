@@ -10,6 +10,11 @@ from lemony import (
 )
 
 from widgets import COLORS, Widget, cache, notify_exception, debug
+from widgets.datetime import DatetimeWidget
+from widgets.weather import WeatherWidget
+from widgets.brightness import BrightnessWidget
+from widgets.sound import SoundWidget
+from widgets.battery import BatteryWidget
 
 
 logger = logging.getLogger()
@@ -115,8 +120,8 @@ def get_monitors(line):
 
             monitor_name: str
 
-            is_monocle: bool
-            is_tiled: bool
+            is_desktop_tiled: bool
+            is_desktop_monocle: bool
             is_active: bool
 
             desktops: [
@@ -135,6 +140,7 @@ def get_monitors(line):
     ]
     """
 
+    # debug(line)
     # Throws away initial W.
     parts = line[1:].split(":")
 
@@ -151,6 +157,14 @@ def get_monitors(line):
 
                 "is_active": prefix == "M",
 
+                "is_node_tiled": False,
+                "is_node_pseudo_tiled": False,
+
+                "is_node_tiled": False,
+                "is_node_pseudo_tiled": False,
+                "is_node_floating": False,
+                "is_node_fullscreen": False,
+
                 "desktops": [],
             }
 
@@ -161,8 +175,14 @@ def get_monitors(line):
 
         # Adds the layout options to monitor....
         if prefix == "L":
-            monitor["is_tiled"] = content == "T"
-            monitor["is_monocle"] = content == "M"
+            monitor["is_desktop_tiled"] = content == "T"
+            monitor["is_desktop_monocle"] = content == "M"
+
+        if prefix == "T":
+            monitor["is_node_tiled"] = content == "T"
+            monitor["is_node_pseudo_tiled"] = content == "P"
+            monitor["is_node_floating"] = content == "F"
+            monitor["is_node_fullscreen"] = content == "="
 
         # If it's a desktop that belongs to monitor...
         if prefix in "FOUfou":
@@ -241,20 +261,9 @@ def get_windows(monitor):
     focused_desktop = [d for d in monitor["desktops"] if d["is_focused"]][0]
     window_ids = get_window_ids_in_desktop(focused_desktop["desktop_name"])
 
-    focused_window_id = get_focused_window_id()
-    window_id_to_window_names = {
-        k: v
-        for k, v
-        in zip(window_ids, get_window_names(window_ids))
-        if v != ""
-    }
-    windows = [{
+    return [{
         "window_id": window_id,
-        "window_name": window_id_to_window_names[window_id],
-        "is_focused": window_id == focused_window_id,
-    } for window_id in window_id_to_window_names]
-
-    return windows
+    } for window_id in window_ids]
 
 
 def get_window_sizes():
@@ -299,52 +308,52 @@ def render_to_monitor(monitor, windows=[]):
 
     desktop_output = "".join(rendered_widgets)
 
-    window_output = None
-    window_widgets = [
-        WindowWidget(w)
-        for w in windows
-    ]
-
-    rendered_widgets = []
-    for w in window_widgets:
-        if not w.is_available():
-            continue
-
-        rendered_widgets.append(w.render())
-
-        window_output = "".join(rendered_widgets)
-
-    if window_output is None or not windows:
-        output = desktop_output
-    else:
-        output = desktop_output + "  " + window_output
+    output = desktop_output
 
     output = align_left(output)
 
     if monitor["is_active"]:
         output = set_line_color(set_underline(output), focused_color)
 
-    if monitor["is_tiled"]:
-        mode = "tiled"
-    elif monitor["is_monocle"]:
-        mode = "monocle"
-
-    focused_window = None
-    focused_windows = [w for w in windows if w["is_focused"]]
-    if focused_windows:
-        focused_window = focused_windows[0]
-
-    if focused_window is not None and focused_window["size"] is not None:
-        size = "{}x{}".format(*focused_window["size"])
-
-        status_bar = "{mode}, {size}".format(
-            mode=mode,
-            size=size,
-        )
+    if monitor["is_desktop_tiled"]:
+        status_bar = "desktop " + set_bold("tiled")
     else:
-        status_bar = mode
+        status_bar = "desktop " + set_bold("monocle")
 
-    output += align_right(status_bar)
+    if monitor["is_node_tiled"]:
+        status_bar += ", node " + set_bold("tiled")
+    elif monitor["is_node_pseudo_tiled"]:
+        status_bar += ", node " + set_bold("pseudo-tiled")
+    elif monitor["is_node_floating"]:
+        status_bar += ", node " + set_bold("floating")
+    elif monitor["is_node_fullscreen"]:
+        status_bar += ", node " + set_bold("fullscreen")
+
+    output += "  " + status_bar
+
+    if monitor["monitor_id"] == 1:
+        widgets = [
+            BatteryWidget(),
+            SoundWidget(),
+            BrightnessWidget(),
+            WeatherWidget(),
+            DatetimeWidget(),
+        ]
+
+        rendered_widgets = []
+        for w in widgets:
+            if not w.is_available():
+                continue
+
+            try:
+                rendered_widget = w.render()
+                if rendered_widget:
+                    rendered_widgets.append(rendered_widget)
+            except Exception as exc:
+                notify_exception()
+                logger.exception(exc)
+
+        output += align_right((" " * 4).join(rendered_widgets))
 
     stdout.write(set_monitor(
         output,
@@ -353,18 +362,14 @@ def render_to_monitor(monitor, windows=[]):
 
 
 def render(monitors):
-    window_sizes = get_window_sizes()
-
     for monitor in monitors:
         # Hack to disable bar for TV screen because it's acting real weird.
         if monitor["monitor_name"] == "HDMI1":
             continue
 
-        # windows = get_windows(monitor)
-        # for window in windows:
-        #     window["size"] = window_sizes.get(window["window_id"])
+        windows = get_windows(monitor)
 
-        render_to_monitor(monitor)
+        render_to_monitor(monitor, windows)
 
 
 def main():
@@ -379,27 +384,6 @@ def main():
         cache.set("bar_bottom.monitors", monitors)
     else:
         monitors = cache.get("bar_bottom.monitors", [])
-
-    # if line.startswith("monitor_focus"):
-    #     pass
-
-    # if line.startswith("desktop_focus"):
-    #     pass
-
-    # if line.startswith("desktop_layout"):
-    #     pass
-
-    # if line.startswith("window_state"):
-    #     pass
-
-    # if line.startswith("window_focus"):
-    #     pass
-
-    # if line.startswith("window_manage"):
-    #     pass
-
-    # if line.startswith("window_unmanage"):
-    #     pass
 
     render(monitors)
 
