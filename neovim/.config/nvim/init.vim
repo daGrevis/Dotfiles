@@ -343,7 +343,7 @@ let g:neomake_warning_sign = {
 
 " Logging. Be quite by default.
 let g:neomake_verbose = 0
-let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
+" let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
 
 " }}}
 
@@ -367,11 +367,10 @@ map ? <Plug>(incsearch-backward)
 " Grep something.
 nnoremap // :Grepper<CR>
 
+" Enabled greppers sorted by priority.
 let g:grepper = {
     \ 'tools': ['ack', 'git', 'grep'],
     \ }
-
-autocmd User Grepper :resize 20
 
 " }}}
 
@@ -384,7 +383,7 @@ let g:signify_sign_change = '~'
 
 " Status-line {{{
 
-function! StatusLinePathAndLineNo()
+function! StatusLinePath()
     let s:path = @%
     if s:path ==# ''
         let s:path = '[No Name]'
@@ -399,7 +398,7 @@ endfunction
 
 set statusline=
 " Path and line number.
-set statusline+=%{StatusLinePathAndLineNo()}
+set statusline+=%{StatusLinePath()}
 " Modified and read-only flags.
 set statusline+=\ %m%r
 " Right align.
@@ -511,10 +510,12 @@ nnoremap <Leader>k :DevDocsUnderCursor<CR>
 
 " Auto-groups {{{
 
+" Allows cleaning old auto-commands.
 augroup vimrc
     autocmd!
 augroup END
 
+" Go back to last tab.
 let g:last_tab = 1
 nnoremap <Space><Space> :exe 'tabn ' . g:last_tab<CR>
 function! AuTabLeave()
@@ -523,39 +524,54 @@ endfunction
 autocmd vimrc TabLeave * call AuTabLeave()
 
 function! AuFocusLost()
-    exe ':stopinsert'
+    " Save when losing focus.
     exe ':silent! update'
-    exe ':Neomake'
+
+    " Go back to normal mode.
+    exe ':stopinsert'
 endfunction
 autocmd vimrc FocusLost * call AuFocusLost()
 
 function! AuBufLeave()
+    " Save when leaving buffer.
     exe ':silent! update'
-    exe ':Neomake'
 endfunction
 autocmd vimrc BufLeave * call AuBufLeave()
 
 function! AuBufReadPost()
-    " It just isn't good enough.
+    " I'm not using omni-complete.
     setlocal omnifunc=
 
+    " Always show line numbers.
     setlocal relativenumber
 
-    if &filetype !=# 'gitcommit' && line("'\"") > 1 && line("'\"") <= line('$')
-        exe "normal! g'\""
+    " Remember last cursor position.
+    if line("'\"") > 1 && line("'\"") <= line('$')
+        " Unless it's a commit message.
+        if &filetype !=# 'gitcommit'
+            exe "normal! g'\""
+        endif
     endif
 endfunction
 autocmd vimrc BufReadPost * call AuBufReadPost()
 
 function! AuBufWritePost()
+    " Run linter on explicit save.
     exe ':Neomake'
 endfunction
 autocmd vimrc BufWritePost * call AuBufWritePost()
 
 function! AuFileTypeGitCommit()
+    " Enables spell-checker for commit messages.
     setlocal spell
 endfunction
 autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
+
+function! AuGrepper()
+    " Sets Grepper window height to 20 lines.
+    exe ':resize 20'
+endfunction
+autocmd vimrc User Grepper call AuGrepper()
 
 " }}}
 
