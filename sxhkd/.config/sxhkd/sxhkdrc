@@ -85,7 +85,6 @@ super + shift + r
 super + shift + x
     open-weechat
 
-
 #
 # bspwm hotkeys
 #
@@ -191,15 +190,15 @@ super + ctrl + shift + space
 
 # expand the tiled space in the given direction
 super + alt + {h,j,k,l}
-	bspc node {@west -r -20,@south -r +20,@north -r -20,@east -r +20}
+    bspc node {@west -r -60,@south -r +60,@north -r -60,@east -r +60}
 
 # contract the tiled space in the given direction
 super + alt + shift + {h,j,k,l}
-	bspc node {@east -r -20,@north -r +20,@south -r -20,@west -r +20}
+    bspc node {@east -r -60,@north -r +60,@south -r -60,@west -r +60}
 
 # move a floating window
 super + {Left,Down,Up,Right}
-	xdo move {-x -20,-y +20,-y -20,-x +20}
+    xdo move {-x -60,-y +60,-y -60,-x +60}
 
 #
 # pointer focus/move/resize
