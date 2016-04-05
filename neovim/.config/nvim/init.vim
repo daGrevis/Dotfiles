@@ -1,5 +1,5 @@
-" Part of github.com/daGrevis/Dotfiles
-" Source: github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim
+" Part of https://github.com/daGrevis/Dotfiles
+" Source: https://github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim
 
 " Auto-install {{{
 
