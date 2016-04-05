@@ -477,12 +477,21 @@ alias gcp="git cherry-pick"
 alias gd="git diff"
 alias gdf="git diff"
 function gl {
+    rev_before=$(git rev-parse HEAD)
+
     output="$(git pull)"
+    pull_code="$?"
+
     echo "$output"
 
-    rev_range=$(echo "$output" | grep -Po '\K(\w+\.\.\w+)')
-    if [ "$?" = "0" ]; then
+    # rev_range=$(echo "$output" | grep -Po '\K(\w+\.\.\w+)')
+    if [ "$pull_code" = "0" ]; then
+        rev_after=$(git rev-parse HEAD)
+        rev_range="$rev_before..$rev_after"
+        rev_range_short="${rev_before:0:7}..${rev_after:0:7}"
+
         echo
+        echo "$rev_range_short"
         git --no-pager log "$rev_range" --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
         echo
     fi
