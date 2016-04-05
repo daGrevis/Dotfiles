@@ -44,8 +44,8 @@ stow --ignore=".md" zsh
 stow --delete vim # But don't...
 ~~~
 
-If you want everything like I do and fast, try `stow_everything.sh`. It
-not a good idea though.
+If you want everything like I do and fast, try `stow_everything.sh`. It's not
+a good idea though.
 
 # Other
 

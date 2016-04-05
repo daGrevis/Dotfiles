@@ -162,7 +162,7 @@ super + {_,shift + }{1-9,0}
 
 # focus the urgent node
 super + u
-    bspc desktop -f next.urgent
+    bspc desktop -f last.urgent; bspc node -f next.urgent
 
 #
 # preselect
