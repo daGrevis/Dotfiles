@@ -4,13 +4,10 @@
 
 ## Screenshots
 
-[![](https://i.imgur.com/HWJv59e.jpg)](https://imgur.com/a/zZFbo)
-[![](https://i.imgur.com/r42gO7t.png)](https://imgur.com/a/zZFbo)
-[![](https://i.imgur.com/D00mKEn.png)](https://imgur.com/a/zZFbo)
-[![](https://i.imgur.com/nqO2GbG.png)](https://imgur.com/a/zZFbo)
-[![](https://i.imgur.com/JJqjOmy.png)](https://imgur.com/a/zZFbo)
-[![](https://i.imgur.com/BS5s9TL.png)](https://imgur.com/a/zZFbo)
-[![](https://i.imgur.com/sVXpghM.png)](https://imgur.com/a/zZFbo)
+[![](https://i.imgur.com/AUIyOdX.jpg)](https://i.imgur.com/un5qKRn.png)
+[![](https://i.imgur.com/5GJb0Sr.jpg)](https://i.imgur.com/fVtqoub.png)
+[![](https://i.imgur.com/BlUrj2x.jpg)](https://i.imgur.com/7imocu8.png)
+[![](https://i.imgur.com/aVVJUAY.jpg)](https://i.imgur.com/6XfEg5R.png)
 
 **Warning**: screenshots above show repo as in [commit 297129a](https://github.com/daGrevis/Dotfiles/tree/297129a).
 
