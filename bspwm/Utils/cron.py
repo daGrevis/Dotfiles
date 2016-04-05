@@ -1,6 +1,8 @@
 import subprocess
 import schedule
 import time
+from datetime import date
+
 from widgets import notify_send
 
 
@@ -23,14 +25,21 @@ def review_notification():
     notify_send("Reviews", "Better do them.")
 
 
+def when_weekday(fn):
+    if date.today().weekday() in range(0, 5):
+        return fn
+    else:
+        return lambda: "noop"
+
+
 # schedule.every().second.do(test_job)
 
 # schedule.every().hour.at("xx:00").do(notify_updates)
 
-schedule.every().day.at("12:00").do(food_notification)
+schedule.every().day.at("12:00").do(when_weekday(food_notification))
 
-schedule.every().day.at("10:30").do(review_notification)
-schedule.every().day.at("14:00").do(review_notification)
+schedule.every().day.at("10:30").do(when_weekday(review_notification))
+schedule.every().day.at("14:00").do(when_weekday(review_notification))
 
 schedule.every().day.at("11:00").do(notify_updates)
 schedule.every().day.at("17:00").do(notify_updates)
