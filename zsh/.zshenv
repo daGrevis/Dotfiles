@@ -484,7 +484,6 @@ function gl {
 
     echo "$output"
 
-    # rev_range=$(echo "$output" | grep -Po '\K(\w+\.\.\w+)')
     if [ "$pull_code" = "0" ]; then
         rev_after=$(git rev-parse HEAD)
         rev_range="$rev_before..$rev_after"
