@@ -637,6 +637,7 @@ hi WarningMsg ctermfg=3
 hi Todo ctermbg=18 ctermfg=4 cterm=bold
 hi Search ctermfg=19
 hi Folded ctermbg=18
+hi Comment ctermfg=20
 
 hi IncSearch ctermbg=16 ctermfg=18 cterm=bold
 
