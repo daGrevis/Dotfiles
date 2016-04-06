@@ -479,12 +479,8 @@ alias gdf="git diff"
 function gl {
     rev_before=$(git rev-parse HEAD)
 
-    output="$(git pull)"
-    pull_code="$?"
-
-    echo "$output"
-
-    if [ "$pull_code" = "0" ]; then
+    git pull
+    if [ "$?" = "0" ]; then
         rev_after=$(git rev-parse HEAD)
 
         if [ "$rev_before" = "$rev_after" ]; then
