@@ -486,6 +486,11 @@ function gl {
 
     if [ "$pull_code" = "0" ]; then
         rev_after=$(git rev-parse HEAD)
+
+        if [ "$rev_before" = "$rev_after" ]; then
+            return 0
+        fi
+
         rev_range="$rev_before..$rev_after"
         rev_range_short="${rev_before:0:7}..${rev_after:0:7}"
 
