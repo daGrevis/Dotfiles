@@ -9,7 +9,7 @@
 [![](https://i.imgur.com/BlUrj2x.jpg)](https://i.imgur.com/7imocu8.png)
 [![](https://i.imgur.com/aVVJUAY.jpg)](https://i.imgur.com/6XfEg5R.png)
 
-**Warning**: screenshots above show repo as in [commit 297129a](https://github.com/daGrevis/Dotfiles/tree/297129a).
+**Warning**: screenshots above show repo as in [commit bc2189d](https://github.com/daGrevis/Dotfiles/tree/bc2189d).
 
 # Installation
 
