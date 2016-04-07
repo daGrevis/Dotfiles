@@ -24,7 +24,7 @@ class MemoryWidget(Widget):
         if memory.percent >= 75:
             output = set_line_color(set_overline(output), COLORS["red"])
 
-        bar = progress_bar(5, 10)
+        bar = progress_bar(memory.percent, 10)
 
         output += " " + self.wrap_in_brackets(bar)
 
