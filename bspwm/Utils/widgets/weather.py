@@ -106,7 +106,7 @@ class WeatherWidget(Widget):
 
         # See https://en.wikipedia.org/wiki/Beaufort_scale#Modern_scale
         if wind_ms >= 8:
-            color = COLORS["orange"]
+            color = COLORS["yellow"]
             if wind_ms >= Decimal("10.8"):
                 color = COLORS["red"]
 

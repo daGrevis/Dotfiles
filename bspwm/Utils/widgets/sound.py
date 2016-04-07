@@ -48,7 +48,7 @@ class SoundWidget(Widget):
         ])
 
         if is_muted:
-            output = set_line_color(set_underline(output), COLORS["orange"])
+            output = set_line_color(set_underline(output), COLORS["yellow"])
 
         return output
 

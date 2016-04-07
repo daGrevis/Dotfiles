@@ -35,26 +35,31 @@ class NetworkWidget(Widget):
         is_wireless = re.search(r"Wireless", wicd_output) is not None
         is_wired = re.search(r"Wired", wicd_output) is not None
 
+        overline_color = None
+
         if is_wireless:
-            is_down = False
             icon = ICONS["entypo"]["signal"]
             text = re.search(r"Connected to (\S+)", wicd_output).group(1)
 
         if is_wired:
-            is_down = False
             icon = ICONS["font-awesome"]["plug"]
             text = "ethernet"
 
-        if (not is_wireless and not is_wired) or self.is_down():
-            is_down = True
+        if (not is_wireless and not is_wired):
             icon = ICONS["entypo"]["cancel"]
-            text = "no network"
+            text = "no connection"
+            overline_color = COLORS["red"]
+
+        if self.is_down():
+            icon = ICONS["entypo"]["cancel"]
+            text = "failing connections"
+            overline_color = COLORS["yellow"]
 
         output = (self.set_icon_foreground_color(icon) + " "
                   + self.wrap_in_brackets([set_bold(text)]))
 
-        if is_down:
-            output = set_line_color(set_overline(output), COLORS["red"])
+        if overline_color is not None:
+            output = set_line_color(set_overline(output), overline_color)
 
         return output
 
