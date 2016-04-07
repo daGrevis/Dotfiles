@@ -7,4 +7,4 @@ notify-send 'Locking screen' 'Right now'
 
 convert -colorspace gray /tmp/screenshot.jpg -scale 25% -scale 400% /tmp/screensaver.png
 
-i3lock -u -i /tmp/screensaver.png
+i3lock -n -e -u -i "/tmp/screensaver.png"; echo $(date +"%s") > ~/tmp/session_ts
