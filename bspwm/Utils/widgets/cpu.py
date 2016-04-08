@@ -13,7 +13,7 @@ def format_percentage(x):
 
     s += "%"
 
-    if x >= 75:
+    if x >= 90:
         s = set_line_color(set_overline(s), COLORS["red"])
 
     return s
