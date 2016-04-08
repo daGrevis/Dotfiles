@@ -561,6 +561,16 @@ function! AuBufWritePost()
 endfunction
 autocmd vimrc BufWritePost * call AuBufWritePost()
 
+function! AuFileTypePo()
+    setlocal commentstring=#~\ %s
+endfunction
+autocmd vimrc FileType po call AuFileTypePo()
+
+function! AuFileTypeSql()
+    setlocal commentstring=--\ %s
+endfunction
+autocmd vimrc FileType sql call AuFileTypeSql()
+
 function! AuFileTypeGitCommit()
     " Enables spell-checker for commit messages.
     setlocal spell
