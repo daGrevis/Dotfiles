@@ -9,6 +9,8 @@ fi
 
 PATH=$PATH:~/Utils
 
+rm -f ~/tmp/session_ts
+
 eval $(ssh-agent)
 
 if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
