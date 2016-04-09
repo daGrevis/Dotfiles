@@ -320,16 +320,16 @@ def render_to_monitor(monitor, windows=[]):
     else:
         status_bar = set_bold("monocle")
 
-    status_bar += " / "
-
-    if monitor["is_node_tiled"]:
-        status_bar += set_bold("tiled")
-    elif monitor["is_node_pseudo_tiled"]:
-        status_bar += set_bold("pseudo-tiled")
-    elif monitor["is_node_floating"]:
-        status_bar += set_bold("floating")
-    elif monitor["is_node_fullscreen"]:
-        status_bar += set_bold("fullscreen")
+    node_state_key_name_mapping = {
+        "is_node_tiled": "tiled",
+        "is_node_pseudo_tiled": "pseudo-tiled",
+        "is_node_floating": "floating",
+        "is_node_fullscreen": "fullscreen",
+    }
+    for key, name in node_state_key_name_mapping.items():
+        if monitor[key]:
+            status_bar += " / " + set_bold(name)
+            break
 
     output += "  " + status_bar
 
