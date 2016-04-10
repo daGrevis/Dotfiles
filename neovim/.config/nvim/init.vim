@@ -141,7 +141,7 @@ set expandtab
 " Number of spaces that a tab counts for.
 set tabstop=4
 " Number of spaces that a tab counts for when using auto-indent.
-set shiftwidth=0
+set shiftwidth=4
 
 " }}}
 
@@ -572,6 +572,11 @@ function! AuFileTypeSql()
     setlocal commentstring=--\ %s
 endfunction
 autocmd vimrc FileType sql call AuFileTypeSql()
+
+function! AuFileTypeSass()
+    setlocal shiftwidth=4
+endfunction
+autocmd vimrc FileType sass call AuFileTypeSass()
 
 function! AuFileTypeMarkdown()
     setlocal tw=80
