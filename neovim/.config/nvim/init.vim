@@ -109,6 +109,8 @@ Plug 'https://github.com/mxw/vim-jsx', {'for': 'javascript.jsx'}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
 
+Plug 'https://github.com/reedes/vim-pencil', {'for': 'markdown'}
+
 call plug#end()
 
 " }}}
@@ -570,6 +572,13 @@ function! AuFileTypeSql()
     setlocal commentstring=--\ %s
 endfunction
 autocmd vimrc FileType sql call AuFileTypeSql()
+
+function! AuFileTypeMarkdown()
+    setlocal tw=80
+    setlocal cc=81
+    call pencil#init()
+endfunction
+autocmd vimrc FileType markdown call AuFileTypeMarkdown()
 
 function! AuFileTypeGitCommit()
     " Enables spell-checker for commit messages.

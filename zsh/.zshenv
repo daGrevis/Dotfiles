@@ -283,6 +283,10 @@ import-gpg-public-key() {
     gpg --import $@
 }
 
+ssh-fingerprint() {
+    ssh-keygen -lf ~/.ssh/id_rsa.pub
+}
+
 dmenu-go() {
     dmenu_run -b -i -fn "Fira Mono-9" -nb $COLOR_01 -nf $COLOR_05 -sb $COLOR_02 -sf $COLOR_06
 }
