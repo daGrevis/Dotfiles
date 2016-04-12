@@ -134,17 +134,26 @@ super + ctrl + {x,y,z}
 # focus/swap
 #
 
-# focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-    bspc node -{f,s} {west,south,north,east}
+# focus the node in the given direction or focus the monitor in the given direction
+super + {h,j,k,l}
+    DIR={west,south,north,east}; \
+    bspc node -f $DIR || bspc monitor -f $DIR
 
-# focus the next/previous desktop
-super + bracket{left,right}
-    bspc desktop -f {prev,next}
+# focus the node in the given direction
+super + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
 
 # focus the next node
 super + Tab
     bspc node -f next
+
+# focus the previous node
+super + shift + Tab
+    bspc node -f prev
+
+# focus the next/previous desktop
+super + bracket{left,right}
+    bspc desktop -f {prev,next}
 
 # focus the last desktop
 super + grave
