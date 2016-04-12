@@ -1,6 +1,7 @@
 import subprocess
 import shutil
 import re
+import random
 from datetime import timedelta
 
 import requests
@@ -17,17 +18,31 @@ class NetworkWidget(Widget):
 
     @cache.it("widgets.network.is_down", expires=timedelta(seconds=10))
     def is_down(self):
-        try:
-            response = requests.get("http://google.com", timeout=2)
-            response.raise_for_status()
+        urls = [
+            "http://google.com",
+            "http://youtube.com",
+            "http://facebook.com",
+            "http://twitter.com",
+            "http://amazon.com",
+            "http://yahoo.com",
+            "http://wikipedia.org",
+        ]
+        random.shuffle(urls)
 
-            return False
-        except (
-            requests.exceptions.ConnectionError,
-            requests.exceptions.Timeout,
-            requests.exceptions.HTTPError,
-        ):
-            return True
+        for url in urls[:3]:
+            try:
+                response = requests.get(url, timeout=2)
+                response.raise_for_status()
+
+                return False
+            except (
+                requests.exceptions.ConnectionError,
+                requests.exceptions.Timeout,
+                requests.exceptions.HTTPError,
+            ):
+                continue
+
+        return True
 
     def render(self):
         wicd_output = self.get_wicd_output()
