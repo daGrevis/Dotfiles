@@ -42,9 +42,10 @@ class BatteryWidget(Widget):
         duration = humanize_timedelta(duration_timedelta, discard_names=("second", ))
 
         if is_charging:
-            text = "{} til charged".format(duration)
+            text = "{} til charged"
         else:
-            text = "{} til discharged".format(duration)
+            text = "{} til discharged"
+        text = text.format(set_bold(duration))
 
         output = "".join([
             self.set_icon_foreground_color(icon),
@@ -53,7 +54,7 @@ class BatteryWidget(Widget):
                 set_bold(percentage),
                 "/100%",
                 ", ",
-                set_bold(text),
+                text,
             ]),
         ])
 
