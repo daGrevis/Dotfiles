@@ -288,7 +288,15 @@ ssh-fingerprint() {
 }
 
 dmenu-go() {
-    dmenu_run -b -i -fn "Fira Mono-9" -nb $COLOR_01 -nf $COLOR_05 -sb $COLOR_02 -sf $COLOR_06
+    dmenu_input=$(awk '{print $2}' ~/tmp/dmenudb; dmenu_path)
+    cmd=$(
+        echo "$dmenu_input" | dmenu -b -i \
+            -fn "Fira Mono-9" \
+            -nb $COLOR_01 -nf $COLOR_05 \
+            -sb $COLOR_02 -sf $COLOR_06
+    )
+    dmenudb.py "$cmd"
+    exec "$cmd"
 }
 
 disable-sreen() {
