@@ -12,7 +12,7 @@ from widgets import Widget, ICONS, COLORS, cache, debug
 
 class NetworkWidget(Widget):
 
-    @cache.it("widgets.network.wicd_output", expires=timedelta(seconds=5))
+    @cache.it("widgets.network.wicd_output", expires=timedelta(seconds=2))
     def get_wicd_output(self):
         return subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
 
@@ -64,8 +64,7 @@ class NetworkWidget(Widget):
             icon = ICONS["entypo"]["cancel"]
             text = "no connection"
             overline_color = COLORS["red"]
-
-        if self.is_down():
+        elif self.is_down():
             icon = ICONS["entypo"]["cancel"]
             text = "failing connections"
             overline_color = COLORS["yellow"]
