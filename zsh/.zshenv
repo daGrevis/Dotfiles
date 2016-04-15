@@ -288,7 +288,9 @@ ssh-fingerprint() {
 }
 
 dmenu-go() {
-    dmenu_input=$(awk '{print $2}' ~/tmp/dmenudb; dmenu_path)
+    dmenu_input=$(awk '{print $2}' ~/tmp/dmenudb; echo $PATH | tr ":" "\n" | xargs stest -flx | sort -u)
+    # Unique lines without sorting.
+    dmenu_input=$(echo "$dmenu_input" | awk '!x[$0]++')
     cmd=$(
         echo "$dmenu_input" | dmenu -b -i \
             -fn "Fira Mono-9" \
