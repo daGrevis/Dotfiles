@@ -288,7 +288,7 @@ ssh-fingerprint() {
 }
 
 dmenu-go() {
-    dmenu_input=$(awk '{print $2}' ~/tmp/dmenudb; echo $PATH | tr ":" "\n" | xargs stest -flx | sort -u)
+    dmenu_input=$(dmenudb.py | awk '{print $2}'; echo $PATH | tr ":" "\n" | xargs stest -flx | sort -u)
     # Unique lines without sorting.
     dmenu_input=$(echo "$dmenu_input" | awk '!x[$0]++')
     cmd=$(
