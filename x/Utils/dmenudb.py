@@ -8,9 +8,12 @@ DB_FILEPATH = expanduser("~") + "/tmp/dmenudb"
 
 
 def main():
+    no_freq = False
     try:
         argv[1]
-        is_insert = True
+
+        no_freq = argv[1] == "--no-freq"
+        is_insert = not no_freq
     except IndexError:
         is_insert = False
 
@@ -21,20 +24,25 @@ def main():
     lines = read_db()
 
     if not is_insert:
-        entries = parse_lines(lines)
-        new_lines = unparse_entries(sort_entries(entries))
+        entries = sort(parse(lines))
+        new_lines = unparse(entries)
         output = "".join(new_lines)
 
-        print(output, end="")
+        if no_freq:
+            phrases = [phrase for freq, phrase in entries]
+            print("\n".join(phrases))
+        else:
+            print(output, end="")
 
         if lines != new_lines:
             write_db(output)
     else:
         new_phrase = " ".join(argv[1:])
 
-        entries = parse_lines(lines)
+        entries = parse(lines)
         entries = insert_entry(new_phrase, entries)
-        new_lines = unparse_entries(sort_entries(entries))
+        entries = sort(entries)
+        new_lines = unparse(sort(entries))
         output = "".join(new_lines)
 
         write_db(output)
@@ -57,7 +65,7 @@ def write_db(output, filepath=DB_FILEPATH):
         f.write(output)
 
 
-def parse_lines(lines):
+def parse(lines):
     if not lines:
         return []
 
@@ -73,7 +81,7 @@ def parse_lines(lines):
     return entries
 
 
-def unparse_entries(entries):
+def unparse(entries):
     max_pad = len(str(max([freq for freq, _ in entries]))) + 1
     lines = []
     for freq, phrase in entries:
@@ -103,7 +111,7 @@ def insert_entry(new_phrase, entries):
     return entries
 
 
-def sort_entries(entries):
+def sort(entries):
     return sorted(entries, reverse=True)
 
 

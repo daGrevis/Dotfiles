@@ -288,17 +288,20 @@ ssh-fingerprint() {
 }
 
 dmenu-go() {
-    dmenu_input=$(dmenudb.py | awk '{print $2}'; echo $PATH | tr ":" "\n" | xargs stest -flx | sort -u)
-    # Unique lines without sorting.
+    dmenu_input=$(
+        dmenudb.py --no-freq;
+        echo $PATH | tr ":" "\n" | xargs stest -flx | sort -u
+    )
+    # Filter out unique lines without sorting.
     dmenu_input=$(echo "$dmenu_input" | awk '!x[$0]++')
     cmd=$(
-        echo "$dmenu_input" | dmenu -b -i \
+        echo "$dmenu_input" | dmenu -h 24 -b -i \
             -fn "Fira Mono-9" \
             -nb $COLOR_01 -nf $COLOR_05 \
             -sb $COLOR_02 -sf $COLOR_06
     )
     dmenudb.py "$cmd"
-    exec "$cmd"
+    eval "$cmd"
 }
 
 disable-sreen() {
