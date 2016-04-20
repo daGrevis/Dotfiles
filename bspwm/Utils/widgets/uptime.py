@@ -47,7 +47,7 @@ class UptimeWidget(Widget):
                 set_bold(session_text),
             )
 
-        text += "up {}".format(
+        text += "uptime {}".format(
             set_bold(uptime_text),
         )
 

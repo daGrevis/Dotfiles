@@ -4,11 +4,12 @@ from os import path as os_path
 from sys import stdout
 
 from widgets import notify_exception
+from widgets.datetime import DatetimeWidget
 from widgets.uptime import UptimeWidget
+from widgets.weather import WeatherWidget
 from widgets.network import NetworkWidget
-from widgets.disk_usage import DiskUsageWidget
-from widgets.memory import MemoryWidget
-from widgets.cpu import CpuWidget
+from widgets.brightness import BrightnessWidget
+from widgets.sound import SoundWidget
 
 
 # To silence the damn linter!
@@ -33,11 +34,12 @@ DEBUG = bool(os.environ.get("PANEL_DEBUG", False))
 
 
 widgets = [
+    DatetimeWidget(),
     UptimeWidget(),
+    WeatherWidget(),
     NetworkWidget(),
-    DiskUsageWidget(),
-    MemoryWidget(),
-    CpuWidget(),
+    SoundWidget(),
+    BrightnessWidget(),
 ]
 
 rendered_widgets = []

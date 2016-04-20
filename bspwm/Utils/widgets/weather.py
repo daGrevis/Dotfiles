@@ -3,7 +3,7 @@ from datetime import timedelta
 from decimal import Decimal
 
 import requests
-from lemony import set_bold, set_underline, set_line_color
+from lemony import set_bold, set_overline, set_line_color
 
 from widgets import Widget, ICONS, COLORS, cache
 
@@ -80,12 +80,9 @@ class WeatherWidget(Widget):
             "sleet": "snow-heavy-inv",
             "snow": "snow-heavy-inv",
             "thunderstorm": "cloud-flash-inv",
-            "tornado": None,
-            "wind": None,
         }
         icon = ICONS["meteocons"].get(
-            icon_mapping.get(forecast["currently"]["icon"], None),
-            "-",
+            icon_mapping.get(forecast["currently"]["icon"]),
         )
 
         if temperature == apparent_temperature:
@@ -104,23 +101,17 @@ class WeatherWidget(Widget):
             set_bold(wind_direction),
         )
 
-        # See https://en.wikipedia.org/wiki/Beaufort_scale#Modern_scale
-        if wind_ms >= 8:
-            color = COLORS["yellow"]
-            if wind_ms >= Decimal("10.8"):
-                color = COLORS["red"]
-
-            wind_text = set_line_color(set_underline(wind_text), color)
-
         text = ", ".join([
             temperature_text,
             wind_text,
         ])
 
-        output = (self.set_icon_foreground_color(icon) + " "
-                  + self.wrap_in_brackets(text))
+        output = ""
+        if icon:
+            output += self.set_icon_foreground_color(icon) + " "
+        output += self.wrap_in_brackets(text)
 
         if forecast.get("alerts", []):
-            output = set_line_color(set_underline(output), COLORS["red"])
+            output = set_line_color(set_overline(output), COLORS["red"])
 
         return output

@@ -10,11 +10,10 @@ from lemony import (
 )
 
 from widgets import COLORS, Widget, cache, notify_exception, debug
-from widgets.datetime import DatetimeWidget
-from widgets.weather import WeatherWidget
-from widgets.brightness import BrightnessWidget
-from widgets.sound import SoundWidget
 from widgets.battery import BatteryWidget
+from widgets.disk_usage import DiskUsageWidget
+from widgets.memory import MemoryWidget
+from widgets.cpu import CpuWidget
 
 
 logger = logging.getLogger()
@@ -110,6 +109,17 @@ class WindowWidget(Widget):
         text = set_foreground_color(text, foreground_color)
 
         return text
+
+
+def get_status():
+    output = subprocess.check_output([
+        "bspc",
+        "wm",
+        "--get-status",
+    ]).decode("utf-8")
+    status = output.strip()
+
+    return status
 
 
 def get_monitors(line):
@@ -336,10 +346,9 @@ def render_to_monitor(monitor, windows=[]):
     if monitor["monitor_id"] == 1:
         widgets = [
             BatteryWidget(),
-            SoundWidget(),
-            BrightnessWidget(),
-            WeatherWidget(),
-            DatetimeWidget(),
+            # CpuWidget(),
+            MemoryWidget(),
+            DiskUsageWidget(),
         ]
 
         rendered_widgets = []
@@ -378,14 +387,14 @@ def main():
     try:
         line = argv[1]
     except IndexError:
-        return
+        exit(1)
 
     if line.startswith("W"):
-        monitors = get_monitors(line)
-
-        cache.set("bar_bottom.monitors", monitors)
+        bspwm_status = line
     else:
-        monitors = cache.get("bar_bottom.monitors", [])
+        bspwm_status = get_status()
+
+    monitors = get_monitors(bspwm_status)
 
     render(monitors)
 
