@@ -104,6 +104,7 @@ Plug 'https://github.com/chriskempson/base16-vim'
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'https://github.com/elzr/vim-json', {'for': ['json']}
+" https://github.com/pangloss/vim-javascript/issues/378
 Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
 Plug 'https://github.com/mxw/vim-jsx', {'for': 'javascript.jsx'}
 
