@@ -531,6 +531,12 @@ function! AuTabLeave()
 endfunction
 autocmd vimrc TabLeave * call AuTabLeave()
 
+function! AuFocusGained()
+    " https://github.com/neovim/neovim/issues/1936
+    exe ':checktime'
+endfunction
+autocmd vimrc FocusGained * call AuFocusGained()
+
 function! AuFocusLost()
     " Save when losing focus.
     exe ':silent! update'
