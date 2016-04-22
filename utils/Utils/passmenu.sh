@@ -1,16 +1,17 @@
-#!/bin/zsh
+#!/bin/bash
 
-. ~/Utils/colors.sh
+shopt -s nullglob globstar
 
 password_files=( ~/.password-store/**/*.gpg )
 password_files=( "${password_files[@]##*/.password-store/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
-loc=$(printf '%s\n' "${password_files[@]}" | dmenu -b -i -fn "Fira Mono-9" -nb $COLOR_01 -nf $COLOR_05 -sb $COLOR_02 -sf $COLOR_06 "$@")
+dmenu_input=$(printf '%s\n' "${password_files[@]}")
+name=$(themenu.sh "$dmenu_input")
 
-pass -c "$loc" > /dev/null
+pass --clip "$name"
 rc=$?
 
-if [[ "$loc" != "" ]] && [[ $rc -eq 0 ]]; then
-    notify-send -u low "Password copied" "$loc"
+if [[ "$name" != "" ]] && [[ $rc -eq 0 ]]; then
+    notify-send -u low "Password Copied" "$name"
 fi;
