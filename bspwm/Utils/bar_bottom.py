@@ -346,25 +346,18 @@ def render_to_monitor(monitor, windows=[]):
     if monitor["monitor_id"] == 1:
         widgets = [
             BatteryWidget(),
-            # CpuWidget(),
+            CpuWidget(),
             MemoryWidget(),
             DiskUsageWidget(),
         ]
 
-        rendered_widgets = []
-        for w in widgets:
-            if not w.is_available():
-                continue
+        widget_outputs = []
+        for widget in widgets:
+            widget_output = cache.get(["widget_output", widget.get_name()], None)
+            if widget_output:
+                widget_outputs.append(widget_output)
 
-            try:
-                rendered_widget = w.render()
-                if rendered_widget:
-                    rendered_widgets.append(rendered_widget)
-            except Exception as exc:
-                notify_exception()
-                logger.exception(exc)
-
-        output += align_right((" " * 4).join(rendered_widgets))
+        output += align_right((" " * 4).join(widget_outputs))
 
     stdout.write(set_monitor(
         output,

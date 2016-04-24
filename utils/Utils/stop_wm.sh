@@ -10,6 +10,8 @@ killall bar_top.sh
 
 killall bar_bottom.sh
 
+pkill -f widget_worker.py
+
 killall dunst
 
 killall stalonetray

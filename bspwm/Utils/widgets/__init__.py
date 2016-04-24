@@ -9,7 +9,7 @@ from math import floor
 
 import sweetcache
 import sweetcache_redis
-from lemony import BaseWidget, set_foreground_color, set_bold
+from lemony import set_foreground_color, set_bold
 
 
 ISO_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -102,7 +102,16 @@ if not cache.is_available():
     fatal_error("{} is not available!".format(cache))
 
 
-class Widget(BaseWidget):
+class Widget(object):
+
+    def render(self):
+        raise NotImplementedError()
+
+    def is_available(self):
+        return True
+
+    def get_name(self):
+        return self.__class__.__name__
 
     def wrap_in_brackets(self, texts):
         color = COLORS["04"]

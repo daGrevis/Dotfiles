@@ -151,6 +151,10 @@ super + Tab
 super + shift + Tab
     bspc node -f prev
 
+# swap with biggest node
+super + b
+    bspc node --swap biggest
+
 # focus the next/previous desktop
 super + bracket{left,right}
     bspc desktop -f {prev,next}
@@ -207,7 +211,7 @@ super + alt + shift + {h,j,k,l}
 
 # move a floating window
 super + {Left,Down,Up,Right}
-    xdo move {-x -60,-y +60,-y -60,-x +60}
+    xdo move {-x -20,-y +20,-y -20,-x +20}
 
 #
 # pointer focus/move/resize

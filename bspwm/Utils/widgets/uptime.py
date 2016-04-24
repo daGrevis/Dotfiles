@@ -4,19 +4,17 @@ from time import time
 import psutil
 from lemony import set_bold
 
-from widgets import Widget, ICONS, humanize_timedelta, cache, debug
+from widgets import Widget, ICONS, humanize_timedelta, debug
 
 
 class UptimeWidget(Widget):
 
-    @cache.it("widgets.uptime.uptime", 1)
     def get_uptime(self):
         boot_time = datetime.fromtimestamp(psutil.boot_time())
         since_timedelta = datetime.now() - boot_time
 
         return since_timedelta
 
-    @cache.it("widgets.uptime.session", 1)
     def get_session(self):
         try:
             with open("tmp/session_ts") as f:

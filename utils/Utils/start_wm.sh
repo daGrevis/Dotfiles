@@ -4,6 +4,8 @@ stop_wm.sh
 
 sxhkd &
 
+widget_worker.sh &
+
 bar_top.sh &
 
 bar_bottom.sh &
