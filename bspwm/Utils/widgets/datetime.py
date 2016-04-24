@@ -11,7 +11,7 @@ class DatetimeWidget(Widget):
         now = datetime.now()
 
         icon = ICONS["elusive"]["clock"]
-        dt = (now.strftime("%m-") + set_bold(now.strftime("%d %H:%M")))
+        dt = (now.strftime("%m/") + set_bold(now.strftime("%d %H:%M")))
         weekday = now.strftime("%A")
 
         return (self.set_icon_foreground_color(icon) + " "
