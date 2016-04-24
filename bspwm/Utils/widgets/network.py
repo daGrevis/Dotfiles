@@ -46,6 +46,8 @@ class NetworkWidget(Widget):
         return True
 
     def render(self):
+        local_ip = socket.gethostbyname(socket.gethostname())
+
         wicd_output = self.get_wicd_output()
 
         is_wireless = re.search(r"Wireless", wicd_output) is not None
@@ -71,9 +73,7 @@ class NetworkWidget(Widget):
 
         text = set_bold(text)
 
-        if is_wireless or is_wireless:
-            local_ip = socket.gethostbyname(socket.gethostname())
-            text += ", " + local_ip
+        text += ", " + local_ip
 
         output = (
             self.set_icon_foreground_color(icon)
