@@ -2,6 +2,7 @@ import subprocess
 import shutil
 import re
 import random
+import socket
 from datetime import timedelta
 
 import requests
@@ -50,8 +51,6 @@ class NetworkWidget(Widget):
         is_wireless = re.search(r"Wireless", wicd_output) is not None
         is_wired = re.search(r"Wired", wicd_output) is not None
 
-        overline_color = None
-
         if is_wireless:
             icon = ICONS["entypo"]["signal"]
             text = re.search(r"Connected to (\S+)", wicd_output).group(1)
@@ -60,6 +59,7 @@ class NetworkWidget(Widget):
             icon = ICONS["font-awesome"]["plug"]
             text = "ethernet"
 
+        overline_color = None
         if (not is_wireless and not is_wired):
             icon = ICONS["entypo"]["cancel"]
             text = "no connection"
@@ -69,8 +69,17 @@ class NetworkWidget(Widget):
             text = "failing connections"
             overline_color = COLORS["yellow"]
 
-        output = (self.set_icon_foreground_color(icon) + " "
-                  + self.wrap_in_brackets([set_bold(text)]))
+        text = set_bold(text)
+
+        if is_wireless or is_wireless:
+            local_ip = socket.gethostbyname(socket.gethostname())
+            text += ", " + local_ip
+
+        output = (
+            self.set_icon_foreground_color(icon)
+            + " "
+            + self.wrap_in_brackets([text])
+        )
 
         if overline_color is not None:
             output = set_line_color(set_overline(output), overline_color)
