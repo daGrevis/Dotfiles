@@ -377,15 +377,7 @@ def render(monitors):
 
 
 def main():
-    try:
-        line = argv[1]
-    except IndexError:
-        exit(1)
-
-    if line.startswith("W"):
-        bspwm_status = line
-    else:
-        bspwm_status = get_status()
+    bspwm_status = get_status()
 
     monitors = get_monitors(bspwm_status)
 

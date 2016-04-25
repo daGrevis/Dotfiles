@@ -20,12 +20,12 @@ bspc subscribe report > "$pipe" &
 
 while true; do
     echo "" > "$pipe"
-    sleep .1
+    sleep .5
 done &
 
 reader() {
     while read -r line ; do
-        output="$(PYTHONPATH=~/Python/lemony:~/Python/sweetcache-redis:~/Python/sweetcache python ~/Utils/bar_bottom.py "$line")"
+        output="$(PYTHONPATH=~/Python/lemony:~/Python/sweetcache-redis:~/Python/sweetcache python ~/Utils/bar_bottom.py)"
         printf "%s\n" "$output"
     done
 }

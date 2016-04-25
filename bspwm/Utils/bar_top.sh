@@ -20,7 +20,7 @@ bspc subscribe report > "$pipe" &
 
 while true; do
     echo "" > "$pipe"
-    sleep .1
+    sleep .5
 done &
 
 reader() {
