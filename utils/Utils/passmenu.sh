@@ -9,7 +9,7 @@ password_files=( "${password_files[@]##*/.password-store/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
 dmenu_input=$(
-    fav.py ls --only-phrases;
+    fav.py ls --only-names;
     printf '%s\n' "${password_files[@]}"
 )
 # Filter out unique lines without sorting.

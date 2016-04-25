@@ -291,7 +291,7 @@ dmenu-go() {
     export FAVFILE=~/sh-commands.fav
 
     dmenu_input=$(
-        fav.py ls --only-phrases;
+        fav.py ls --only-names;
         echo $PATH | tr ":" "\n" | xargs stest -flx | sort -u
     )
     # Filter out unique lines without sorting.
