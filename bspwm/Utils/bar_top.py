@@ -14,8 +14,8 @@ widgets = [
     UptimeWidget(),
     WeatherWidget(),
     NetworkWidget(),
-    SoundWidget(),
     BrightnessWidget(),
+    SoundWidget(),
 ]
 
 outputs = []

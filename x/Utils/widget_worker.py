@@ -54,9 +54,14 @@ for widget in WIDGETS:
                 start_time = time()
 
                 def maybe_sleep():
-                    sleep_time = TIME_INTERVAL - (time() - start_time)
+                    delta = time() - start_time
+                    sleep_time = TIME_INTERVAL - delta
                     if sleep_time > 0:
+                        # print("sleeping for", sleep_time)
                         sleep(sleep_time)
+                    else:
+                        pass
+                        # print("not sleeping", delta)
 
                 if not widget.is_available():
                     maybe_sleep()
@@ -76,7 +81,7 @@ for widget in WIDGETS:
                     ["widget_output", widget.get_name()],
                     output,
                 )
-                print("tick", i)
+                # print("tick", i)
 
                 maybe_sleep()
         except KeyboardInterrupt:

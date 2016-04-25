@@ -13,9 +13,6 @@ def format_percentage(x):
 
     s += "%"
 
-    if x >= 95:
-        s = set_line_color(set_overline(s), COLORS["yellow"])
-
     return s
 
 
@@ -24,7 +21,7 @@ class CpuWidget(Widget):
     def render(self):
         cpu_percentages = map(
             format_percentage,
-            sorted(psutil.cpu_percent(interval=1, percpu=True), reverse=True)
+            sorted(psutil.cpu_percent(interval=2, percpu=True), reverse=True)
         )
 
         output = (
