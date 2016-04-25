@@ -288,8 +288,10 @@ ssh-fingerprint() {
 }
 
 dmenu-go() {
+    export FAVFILE=~/sh-commands.fav
+
     dmenu_input=$(
-        dmenudb.py --no-freq;
+        fav.py ls --only-phrases;
         echo $PATH | tr ":" "\n" | xargs stest -flx | sort -u
     )
     # Filter out unique lines without sorting.
@@ -297,7 +299,7 @@ dmenu-go() {
 
     phrase=$(themenu.sh "$dmenu_input")
 
-    dmenudb.py "$phrase"
+    fav.py insert "$phrase"
 
     eval "$phrase"
 }

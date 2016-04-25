@@ -1,56 +1,72 @@
 #!/usr/bin/env python
+import argparse
 import re
-from sys import argv
-from os.path import expanduser
-
-
-DB_FILEPATH = expanduser("~") + "/tmp/dmenudb"
+from os import environ as env
 
 
 def main():
-    no_freq = False
-    try:
-        argv[1]
+    args = get_args()
 
-        no_freq = argv[1] == "--no-freq"
-        is_insert = not no_freq
-    except IndexError:
-        is_insert = False
+    is_insert = args.subparser_name == "insert"
+    is_ls = args.subparser_name == "ls"
 
-    if is_insert and argv[1] == "":
-        print("Empty phrase, ignoring for convenience")
+    if is_insert and not args.phrase:
+        print("Empty phrase, ignoring")
         exit(0)
 
-    lines = read_db()
+    db_filepath = env.get("FAVFILE", "default.fav")
 
-    if not is_insert:
+    lines = read_db(db_filepath)
+
+    if is_ls:
+        if not lines:
+            output = ""
+            write_db(output, db_filepath)
+            exit(0)
+
         entries = sort(parse(lines))
         new_lines = unparse(entries)
         output = "".join(new_lines)
 
-        if no_freq:
+        if args.only_phrases:
             phrases = [phrase for freq, phrase in entries]
             print("\n".join(phrases))
         else:
             print(output, end="")
 
         if lines != new_lines:
-            write_db(output)
-    else:
-        new_phrase = " ".join(argv[1:])
+            write_db(output, db_filepath)
 
+        exit(0)
+    elif is_insert:
         entries = parse(lines)
-        entries = insert_entry(new_phrase, entries)
+        entries = insert_entry(args.phrase, entries)
         entries = sort(entries)
         new_lines = unparse(sort(entries))
         output = "".join(new_lines)
 
-        write_db(output)
+        write_db(output, db_filepath)
+        exit(0)
 
-    exit(0)
+
+def get_args():
+    arg_parser = argparse.ArgumentParser(
+        description="Manage a list of most frequently used phrases",
+    )
+    arg_subparsers = arg_parser.add_subparsers(dest="subparser_name")
+
+    ls_parser = arg_subparsers.add_parser("ls", help="list phrases sorted by frequency")
+    ls_parser.add_argument("--only-phrases", action="store_true", help="do not show frequencies")
+
+    insert_parser = arg_subparsers.add_parser("insert", help="insert phrase")
+    insert_parser.add_argument("phrase", nargs="?")
+
+    args = arg_parser.parse_args()
+
+    return args
 
 
-def read_db(filepath=DB_FILEPATH):
+def read_db(filepath):
     try:
         with open(filepath) as f:
             lines = f.readlines()
@@ -60,8 +76,8 @@ def read_db(filepath=DB_FILEPATH):
     return lines
 
 
-def write_db(output, filepath=DB_FILEPATH):
-    with open(DB_FILEPATH, "w+") as f:
+def write_db(output, filepath):
+    with open(filepath, "w+") as f:
         f.write(output)
 
 
