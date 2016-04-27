@@ -4,7 +4,7 @@ from decimal import Decimal
 
 from lemony import set_bold, progress_bar
 
-from widgets import Widget, ICONS
+from utils import Widget, ICONS
 
 
 class BrightnessWidget(Widget):

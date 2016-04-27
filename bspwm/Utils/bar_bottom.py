@@ -9,11 +9,9 @@ from lemony import (
     set_monitor, align_left, align_right,
 )
 
-from widgets import COLORS, Widget, cache, notify_exception, debug
-from widgets.battery import BatteryWidget
-from widgets.disk_usage import DiskUsageWidget
-from widgets.memory import MemoryWidget
-from widgets.cpu import CpuWidget
+from utils import COLORS, Widget, cache, notify_exception, debug
+
+import widgets
 
 
 logger = logging.getLogger()
@@ -344,17 +342,19 @@ def render_to_monitor(monitor, windows=[]):
     output += "  " + status_bar
 
     if monitor["monitor_id"] == 1:
-        widgets = [
-            BatteryWidget(),
-            CpuWidget(),
-            MemoryWidget(),
-            DiskUsageWidget(),
+        WIDGET_CLASSES = [
+            widgets.CpuWidget,
+            # widgets.NetworkingWidget,
+            widgets.MemoryWidget,
+            widgets.DiskUsageWidget,
         ]
 
         widget_outputs = []
-        for widget in widgets:
+        for widget_class in WIDGET_CLASSES:
+            widget = widget_class()
+
             widget_output = cache.get(["widget_output", widget.get_name()], None)
-            if widget_output:
+            if widget_output is not None:
                 widget_outputs.append(widget_output)
 
         output += align_right((" " * 4).join(widget_outputs))

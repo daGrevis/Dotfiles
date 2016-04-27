@@ -2,7 +2,7 @@ from datetime import datetime
 
 from lemony import set_bold
 
-from widgets import Widget, ICONS
+from utils import Widget, ICONS
 
 
 class DatetimeWidget(Widget):

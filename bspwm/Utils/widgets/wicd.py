@@ -8,15 +8,15 @@ from datetime import timedelta
 import requests
 from lemony import set_bold, set_overline, set_line_color
 
-from widgets import Widget, ICONS, COLORS, cache, debug
+from utils import Widget, ICONS, COLORS, cache
 
 
-class NetworkWidget(Widget):
+class WicdWidget(Widget):
 
     def get_wicd_output(self):
         return subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
 
-    @cache.it("widgets.network.is_down", expires=timedelta(seconds=10))
+    @cache.it("widgets.wicd", expires=timedelta(seconds=10))
     def is_down(self):
         urls = [
             "http://google.com",

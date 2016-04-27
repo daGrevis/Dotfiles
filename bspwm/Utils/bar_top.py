@@ -1,27 +1,26 @@
 from sys import stdout
 
-from widgets import cache
-from widgets.datetime import DatetimeWidget
-from widgets.uptime import UptimeWidget
-from widgets.weather import WeatherWidget
-from widgets.network import NetworkWidget
-from widgets.brightness import BrightnessWidget
-from widgets.sound import SoundWidget
+from utils import cache
+
+import widgets
 
 
-widgets = [
-    DatetimeWidget(),
-    UptimeWidget(),
-    WeatherWidget(),
-    NetworkWidget(),
-    BrightnessWidget(),
-    SoundWidget(),
+WIDGET_CLASSES = [
+    widgets.DatetimeWidget,
+    widgets.UptimeWidget,
+    widgets.ForecastWidget,
+    widgets.WicdWidget,
+    widgets.BrightnessWidget,
+    widgets.SoundWidget,
+    widgets.BatteryWidget,
 ]
 
 outputs = []
-for widget in widgets:
+for widget_class in WIDGET_CLASSES:
+    widget = widget_class()
+
     output = cache.get(["widget_output", widget.get_name()], None)
-    if output:
+    if output is not None:
         outputs.append(output)
 
 

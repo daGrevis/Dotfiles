@@ -5,7 +5,7 @@ from decimal import Decimal
 import requests
 from lemony import set_bold, set_overline, set_line_color
 
-from widgets import Widget, ICONS, COLORS, cache
+from utils import Widget, ICONS, COLORS, cache
 
 
 FORECAST_IO_API_KEY = os.environ["FORECAST_IO_API_KEY"]
@@ -26,9 +26,9 @@ def get_forecast():
     return response.json()
 
 
-class WeatherWidget(Widget):
+class ForecastWidget(Widget):
 
-    @cache.it("widgets.weather", expires=timedelta(days=1) / 400)
+    @cache.it("widgets.forecast", expires=timedelta(days=1) / 400)
     def get_forecast(self):
         return get_forecast()
 

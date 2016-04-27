@@ -4,7 +4,7 @@ from time import time
 import psutil
 from lemony import set_bold
 
-from widgets import Widget, ICONS, humanize_timedelta, debug
+from utils import Widget, ICONS, humanize_timedelta
 
 
 class UptimeWidget(Widget):

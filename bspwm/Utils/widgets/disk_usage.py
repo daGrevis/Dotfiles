@@ -3,7 +3,7 @@ from datetime import timedelta
 import psutil
 from lemony import set_bold, set_overline, set_line_color
 
-from widgets import Widget, ICONS, COLORS, cache
+from utils import Widget, ICONS, COLORS, cache
 
 
 class DiskUsageWidget(Widget):
@@ -11,7 +11,7 @@ class DiskUsageWidget(Widget):
     def __init__(self, paths=None):
         self.paths = paths
 
-    @cache.it("widgets.disk_usages", expires=timedelta(seconds=5))
+    @cache.it("widgets.disk_usage", expires=timedelta(seconds=5))
     def get_disk_usages(self):
         paths = self.paths
 

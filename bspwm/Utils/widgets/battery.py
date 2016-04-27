@@ -6,7 +6,7 @@ from decimal import Decimal
 
 from lemony import set_bold, set_underline, set_line_color
 
-from widgets import Widget, ICONS, COLORS, humanize_timedelta, cache
+from utils import Widget, ICONS, COLORS, humanize_timedelta, cache
 
 
 class BatteryWidget(Widget):

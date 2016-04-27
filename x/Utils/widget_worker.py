@@ -2,18 +2,9 @@ import logging
 from os import path
 from multiprocessing import Process
 from time import time, sleep
+import importlib
 
-from widgets import cache, notify_exception
-from widgets.datetime import DatetimeWidget
-from widgets.uptime import UptimeWidget
-from widgets.weather import WeatherWidget
-from widgets.network import NetworkWidget
-from widgets.brightness import BrightnessWidget
-from widgets.sound import SoundWidget
-from widgets.battery import BatteryWidget
-from widgets.disk_usage import DiskUsageWidget
-from widgets.memory import MemoryWidget
-from widgets.cpu import CpuWidget
+from utils import cache, notify_exception
 
 
 logger = logging.getLogger()
@@ -28,63 +19,75 @@ logger_handler.setFormatter(logger_formatter)
 logger.addHandler(logger_handler)
 
 
-TIME_INTERVAL = .5
+MIN_SLEEPING_TIME_INTERVAL = .5
 
 WIDGETS = [
-    DatetimeWidget(),
-    UptimeWidget(),
-    WeatherWidget(),
-    NetworkWidget(),
-    SoundWidget(),
-    BrightnessWidget(),
-    BatteryWidget(),
-    CpuWidget(),
-    MemoryWidget(),
-    DiskUsageWidget(),
+    "BatteryWidget",
+    "BrightnessWidget",
+    "CpuWidget",
+    "DatetimeWidget",
+    "DiskUsageWidget",
+    "ForecastWidget",
+    "MemoryWidget",
+    # "NetworkingWidget",
+    "SoundWidget",
+    "UptimeWidget",
+    "WicdWidget",
 ]
 
 
+def maybe_sleep(start_time, min_sleep=MIN_SLEEPING_TIME_INTERVAL):
+    delta = time() - start_time
+    sleep_time = min_sleep - delta
+    if sleep_time > 0:
+        # print("sleeping for", round(sleep_time, 2))
+        sleep(sleep_time)
+    else:
+        pass
+        # print("not sleeping", round(delta, 2))
+
+
+def f(classname):
+    i = 0
+    try:
+        while True:
+            i += 1
+            start_time = time()
+
+            # Reload for live feedback.
+            import widgets
+            widgets = importlib.reload(widgets)
+            widget_class = getattr(widgets, widget_classname)
+
+            widget = widget_class()
+
+            # print(i, widget.get_name())
+
+            if not widget.is_available():
+                maybe_sleep(start_time)
+                continue
+
+            try:
+                output = widget.render()
+            except Exception as exc:
+                notify_exception()
+                logger.exception(exc)
+
+            # Widgets may return False which means that they shouldn't be rendered.
+            if output == False:
+                maybe_sleep(start_time)
+                continue
+
+            cache.set(
+                ["widget_output", widget.get_name()],
+                output,
+            )
+
+            maybe_sleep(start_time)
+            continue
+    except KeyboardInterrupt:
+        return
+
 # For each widget instance, create a new process that loops forever while updating the widget.
-for widget in WIDGETS:
-    def f(widget):
-        i = 0
-        try:
-            while True:
-                i += 1
-                start_time = time()
-
-                def maybe_sleep():
-                    delta = time() - start_time
-                    sleep_time = TIME_INTERVAL - delta
-                    if sleep_time > 0:
-                        # print("sleeping for", sleep_time)
-                        sleep(sleep_time)
-                    else:
-                        pass
-                        # print("not sleeping", delta)
-
-                if not widget.is_available():
-                    maybe_sleep()
-                    continue
-
-                try:
-                    output = widget.render()
-                except Exception as exc:
-                    notify_exception()
-                    logger.exception(exc)
-
-                if not output:
-                    maybe_sleep()
-                    continue
-
-                cache.set(
-                    ["widget_output", widget.get_name()],
-                    output,
-                )
-                # print("tick", i)
-
-                maybe_sleep()
-        except KeyboardInterrupt:
-            return
-
-    Process(target=f, args=[widget]).start()
+for widget_classname in WIDGETS:
+    Process(target=f, args=[widget_classname]).start()

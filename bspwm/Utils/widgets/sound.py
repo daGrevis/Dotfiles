@@ -4,7 +4,7 @@ import re
 
 from lemony import set_bold, set_underline, set_line_color, progress_bar
 
-from widgets import Widget, ICONS, COLORS
+from utils import Widget, ICONS, COLORS
 
 
 class SoundWidget(Widget):
