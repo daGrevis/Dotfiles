@@ -1,7 +1,7 @@
 import psutil
 from lemony import set_bold, set_overline, set_line_color, progress_bar
 
-from utils import Widget, ICONS, COLORS, debug
+from utils import Widget, ICONS, COLORS
 
 
 class MemoryWidget(Widget):
@@ -24,12 +24,7 @@ class MemoryWidget(Widget):
         if memory.percent >= 75:
             output = set_line_color(set_overline(output), COLORS["red"])
 
-        # GB per step unless it's <= 2 GB.
-        bar_steps = round(total_mb / 1000)
-        if bar_steps <= 2:
-            bar_steps = 10
-
-        bar = progress_bar(memory.percent, bar_steps)
+        bar = progress_bar(memory.percent)
 
         output += " " + self.wrap_in_brackets(bar)
 
