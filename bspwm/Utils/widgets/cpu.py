@@ -6,8 +6,16 @@ from utils import Widget, ICONS
 
 
 def format_percentage(x):
+    x = min(x, 99)
+
     s = "{}".format(round(x))
-    s = set_bold(s)
+
+    if len(s) == 1:
+        s = " " + s
+
+    if x >= 90:
+        s = set_bold(s)
+
     s += "%"
 
     return s
@@ -16,9 +24,10 @@ def format_percentage(x):
 class CpuWidget(Widget):
 
     def render(self):
+        print("render called")
         cpu_percentages = map(
             format_percentage,
-            sorted(psutil.cpu_percent(interval=3, percpu=True), reverse=True)
+            sorted(psutil.cpu_percent(interval=2, percpu=True), reverse=True)
         )
 
         output = (

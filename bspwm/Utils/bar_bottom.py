@@ -343,8 +343,8 @@ def render_to_monitor(monitor, windows=[]):
 
     if monitor["monitor_id"] == 1:
         WIDGET_CLASSES = [
+            widgets.NetworkingWidget,
             widgets.CpuWidget,
-            # widgets.NetworkingWidget,
             widgets.MemoryWidget,
             widgets.DiskUsageWidget,
         ]

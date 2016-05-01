@@ -14,14 +14,11 @@ LOCATION_LNG = os.environ["LOCATION_LNG"]
 
 
 def get_forecast():
-    try:
-        response = requests.get("https://api.forecast.io/forecast/{api_key}/{lat},{lng}".format(
-            api_key=FORECAST_IO_API_KEY,
-            lat=LOCATION_LAT,
-            lng=LOCATION_LNG,
-        ), timeout=2)
-    except requests.ConnectionError:
-        return None
+    response = requests.get("https://api.forecast.io/forecast/{api_key}/{lat},{lng}".format(
+        api_key=FORECAST_IO_API_KEY,
+        lat=LOCATION_LAT,
+        lng=LOCATION_LNG,
+    ), timeout=2)
 
     return response.json()
 
@@ -34,9 +31,6 @@ class ForecastWidget(Widget):
 
     def render(self):
         forecast = self.get_forecast()
-
-        if forecast is None:
-            return
 
         to_c = lambda x: (x - Decimal(32)) / Decimal("1.8")
 

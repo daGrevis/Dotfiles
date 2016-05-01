@@ -19,6 +19,7 @@ logger_handler.setFormatter(logger_formatter)
 logger.addHandler(logger_handler)
 
 
+VERBOSE = True
 MIN_SLEEPING_TIME_INTERVAL = .5
 
 WIDGETS = [
@@ -29,7 +30,7 @@ WIDGETS = [
     "DiskUsageWidget",
     "ForecastWidget",
     "MemoryWidget",
-    # "NetworkingWidget",
+    "NetworkingWidget",
     "SoundWidget",
     "UptimeWidget",
     "WicdWidget",
@@ -40,11 +41,12 @@ def maybe_sleep(start_time, min_sleep=MIN_SLEEPING_TIME_INTERVAL):
     delta = time() - start_time
     sleep_time = min_sleep - delta
     if sleep_time > 0:
-        # print("sleeping for", round(sleep_time, 2))
+        if VERBOSE:
+            print("sleeping for", round(sleep_time, 2))
         sleep(sleep_time)
     else:
-        pass
-        # print("not sleeping", round(delta, 2))
+        if VERBOSE:
+            print("not sleeping", round(delta, 2))
 
 
 def f(classname):
@@ -59,19 +61,25 @@ def f(classname):
             widgets = importlib.reload(widgets)
             widget_class = getattr(widgets, widget_classname)
 
-            widget = widget_class()
-
-            # print(i, widget.get_name())
-
-            if not widget.is_available():
-                maybe_sleep(start_time)
-                continue
-
             try:
+                widget = widget_class()
+
+                if VERBOSE:
+                    print(i, widget.get_name())
+
+                if not widget.is_available():
+                    maybe_sleep(start_time)
+                    continue
+
                 output = widget.render()
             except Exception as exc:
                 notify_exception()
                 logger.exception(exc)
+
+                maybe_sleep(start_time)
+                # Wait a bit more to avoid spam.
+                sleep(2)
+                continue
 
             # Widgets may return False which means that they shouldn't be rendered.
             if output == False:
