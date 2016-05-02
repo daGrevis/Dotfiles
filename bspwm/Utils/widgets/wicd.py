@@ -8,7 +8,7 @@ from datetime import timedelta
 import requests
 from lemony import set_bold, set_overline, set_line_color
 
-from utils import Widget, ICONS, COLORS, cache
+from utils import Widget, ICONS, COLORS, cache, debug
 
 
 class WicdWidget(Widget):
@@ -16,7 +16,7 @@ class WicdWidget(Widget):
     def get_wicd_output(self):
         return subprocess.check_output(["wicd-cli", "--status"]).decode("utf-8")
 
-    @cache.it("widgets.wicd", expires=timedelta(seconds=10))
+    @cache.it("widgets.wicd", expires=timedelta(seconds=20))
     def is_down(self):
         urls = [
             "http://google.com",
@@ -24,14 +24,17 @@ class WicdWidget(Widget):
             "http://facebook.com",
             "http://twitter.com",
             "http://amazon.com",
+            "http://ebay.com",
             "http://yahoo.com",
             "http://wikipedia.org",
+            "http://github.com",
+            "http://reddit.com",
         ]
         random.shuffle(urls)
 
         for url in urls[:3]:
             try:
-                response = requests.get(url, timeout=2)
+                response = requests.get(url, timeout=10)
                 response.raise_for_status()
 
                 return False

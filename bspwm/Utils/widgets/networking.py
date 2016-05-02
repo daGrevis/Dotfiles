@@ -19,7 +19,7 @@ def to_mb(b):
     return b / 1024 / 1024
 
 
-def perform_ping():
+def do_ping():
     ping = {}
 
     ping_process = run(
@@ -66,7 +66,7 @@ class NetworkingWidget(Widget):
         time_start = time.time()
         snetio_before = psutil.net_io_counters()
 
-        ping = perform_ping()
+        ping = do_ping()
 
         ping_delta = time.time() - time_start
 
@@ -89,11 +89,14 @@ class NetworkingWidget(Widget):
             up_text,
         )
 
-        text += ", ping {}ms".format(
-            set_bold(round(ping["timing_avg"])),
-        )
+        if ping:
+            text += ", ping {}ms".format(
+                set_bold(round(ping["timing_avg"])),
+            )
+        else:
+            text += ", " + set_bold("no ping")
 
-        if ping["packet_loss"]:
+        if ping and ping["packet_loss"]:
             text += " "
             loss_text = "({}% loss)".format(
                 set_bold(round(ping["packet_loss"])),

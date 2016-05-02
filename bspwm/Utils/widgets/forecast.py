@@ -5,7 +5,7 @@ from decimal import Decimal
 import requests
 from lemony import set_bold, set_overline, set_line_color
 
-from utils import Widget, ICONS, COLORS, cache
+from utils import Widget, ICONS, COLORS, cache, debug
 
 
 FORECAST_IO_API_KEY = os.environ["FORECAST_IO_API_KEY"]
@@ -30,7 +30,10 @@ class ForecastWidget(Widget):
         return get_forecast()
 
     def render(self):
-        forecast = self.get_forecast()
+        try:
+            forecast = self.get_forecast()
+        except requests.ConnectionError:
+            return False
 
         to_c = lambda x: (x - Decimal(32)) / Decimal("1.8")
 
