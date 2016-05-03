@@ -1,8 +1,3 @@
-# In [9]: psutil.net_io_counters().bytes_recv / 1024 / 1024
-# Out[9]: 484.22121238708496
-
-# In [10]: psutil.net_io_counters().bytes_sent / 1024 / 1024
-# Out[10]: 367.929482460022
 import time
 import re
 from subprocess import run, PIPE
@@ -55,8 +50,6 @@ def format_speed(speed):
 
     if speed_mb >= 1:
         return set_bold(text)
-    elif text.startswith("0."):
-        return text[1:]
     else:
         return text
 
