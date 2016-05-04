@@ -1,4 +1,4 @@
-#! /bin/zsh
+#!/bin/bash
 
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
     for f in /etc/X11/xinit/xinitrc.d/*; do
@@ -12,9 +12,8 @@ PATH=$PATH:~/Utils
 rm -f ~/tmp/session_ts
 
 # Tries to fix Redis sometimes not cleaning up expired keys.
-redis-cli DEL 'bar_bottom.monitors'
 # http://stackoverflow.com/a/16974060
-redis-cli EVAL "return redis.call('del', unpack(redis.call('keys', ARGV[1])))" 0 'widgets.*'
+redis-cli EVAL "return redis.call('del', unpack(redis.call('keys', ARGV[1])))" 0 'widget_output.*'
 
 eval $(ssh-agent)
 
