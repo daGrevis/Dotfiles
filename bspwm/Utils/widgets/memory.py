@@ -9,13 +9,13 @@ class MemoryWidget(Widget):
     def render(self):
         memory = psutil.virtual_memory()
 
-        total_mb = memory.total / 1024 / 1024
-        used_mb = (memory.total - memory.available) / 1024 / 1024
+        total_gb = memory.total / 1024 / 1024 / 1024
+        used_gb = (memory.total - memory.available) / 1024 / 1024 / 1024
 
         icon = ICONS["font-awesome"]["server"]
-        text = "{}/{} MB".format(
-            set_bold(round(used_mb)),
-            round(total_mb),
+        text = "{}/{} GB".format(
+            set_bold(round(used_gb, 1)),
+            round(total_gb, 1),
         )
 
         output = (self.set_icon_foreground_color(icon) + " "
