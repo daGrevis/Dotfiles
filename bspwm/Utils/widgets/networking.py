@@ -90,11 +90,9 @@ class NetworkingWidget(Widget):
             text += ", " + set_bold("no ping")
 
         if ping and ping["packet_loss"]:
-            text += " "
-            loss_text = "({}% loss)".format(
+            text += " ({}% loss)".format(
                 set_bold(round(ping["packet_loss"])),
             )
-            text += set_line_color(set_underline(loss_text), COLORS["red"])
 
         output = (
             self.wrap_in_brackets([
