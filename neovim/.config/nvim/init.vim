@@ -307,6 +307,9 @@ nnoremap <Tab> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize = 60
 let g:NERDTreeShowHidden = 1
 
+" https://github.com/kien/ctrlp.vim/issues/78
+let g:ctrlp_dont_split = 'nerdtree'
+
 " }}}
 
 " Syntax Tree {{{
