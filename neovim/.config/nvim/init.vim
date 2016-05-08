@@ -395,15 +395,7 @@ function! StatusLinePath()
         let s:path = '[No Name]'
     endif
 
-    if mode() ==# 'v' || mode() ==# 'V'
-        exe 'normal "xy'
-        let s:col = strlen(@x)
-        exe 'normal gv'
-    else
-        let s:col = virtcol('.')
-    endif
-
-    let s:output = s:path . ':' . line('.') . '|' . s:col
+    let s:output = s:path . ':' . line('.') . '|' . virtcol('.')
     return s:output
 endfunction
 
