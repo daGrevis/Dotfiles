@@ -586,8 +586,9 @@ endfunction
 autocmd vimrc FileType sass call AuFileTypeSass()
 
 function! AuFileTypeMarkdown()
-    setlocal tw=80
-    setlocal cc=81
+    setlocal textwidth=80
+    setlocal colorcolumn=81
+
     call pencil#init()
 endfunction
 autocmd vimrc FileType markdown call AuFileTypeMarkdown()
@@ -595,6 +596,9 @@ autocmd vimrc FileType markdown call AuFileTypeMarkdown()
 function! AuFileTypeGitCommit()
     " Enables spell-checker for commit messages.
     setlocal spell
+
+    " http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+    setlocal colorcolumn=73
 endfunction
 autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
 
