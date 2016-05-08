@@ -339,6 +339,9 @@ def render_to_monitor(monitor, windows=[]):
             status_bar += " / " + set_bold(name)
             break
 
+    if monitor["is_desktop_tiled"] and monitor["is_node_tiled"]:
+        status_bar = set_bold("tiled")
+
     output += "  " + status_bar
 
     if monitor["monitor_id"] == 1:
