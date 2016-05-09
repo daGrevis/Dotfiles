@@ -203,15 +203,11 @@ super + ctrl + shift + space
 
 # expand the tiled space in the given direction
 super + alt + {h,j,k,l}
-    bspc node {@west -r -60,@south -r +60,@north -r -60,@east -r +60}
-
-# contract the tiled space in the given direction
-super + alt + shift + {h,j,k,l}
-    bspc node {@east -r -60,@north -r +60,@south -r -60,@west -r +60}
+    resize_window.sh {left,down,up,right}
 
 # move a floating window
 super + {Left,Down,Up,Right}
-    xdo move {-x -20,-y +20,-y -20,-x +20}
+    xdo move {-x -30,-y +30,-y -30,-x +30}
 
 #
 # pointer focus/move/resize
