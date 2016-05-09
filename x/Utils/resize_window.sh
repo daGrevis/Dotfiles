@@ -19,6 +19,7 @@ case $1 in
         ;;
     down)
         bspc node @south -r +$offsety || bspc node @north -r +$offsety
+
         if [[ $height == "$(xwininfo -id "$wid" | \
                 awk '/Height/ {print $2}')" ]]; then
             xdotool windowsize $(printf 0x%x $(bspc query -n focused -N)) 0 $(($height + $offsety)) 0
@@ -26,6 +27,7 @@ case $1 in
         ;;
     up)
         bspc node @north -r -$offsety || bspc node @south -r -$offsety
+
         if [[ $height == "$(xwininfo -id "$wid" | \
                 awk '/Height/ {print $2}')" ]]; then
             xdotool windowsize $(printf 0x%x $(bspc query -n focused -N)) 0 $(($height + $offsety)) 0
