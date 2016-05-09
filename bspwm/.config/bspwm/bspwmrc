@@ -19,7 +19,7 @@ bspc config borderless_monocle true
 # Remove gaps in monocle mode.
 bspc config gapless_monocle true
 # Go monocle if there’s only one tiled window in the desktop.
-bspc config leaf_monocle true
+bspc config single_monocle true
 
 bspc config focus_by_distance true
 # Focus the window under the pointer.
