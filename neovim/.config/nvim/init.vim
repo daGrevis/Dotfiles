@@ -1,13 +1,12 @@
-" Part of https://github.com/daGrevis/Dotfiles
-" Source: https://github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim
+" Part of http://dagrev.is/Dotfiles
+" Source: http://dagrev.is/init.vim
 
 " Auto-install {{{
 
 " Installs vim-plug along with all plugins in case plugin manager isn't installed.
 "
-" This allows to replicate my Vim setup by simply copying init.vim into the
-" right place. This can be done with a simple one-liner as shown below.
-"     curl -Lo ~/.config/nvim/init.vim --create-dirs https://github.com/daGrevis/Dotfiles/raw/master/neovim/.config/nvim/init.vim
+" This allows to replicate my Vim setup by simply copying init.vim into the right place:
+"     curl -Lo ~/.config/nvim/init.vim --create-dirs http://dagrev.is/init.vim
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 
@@ -92,6 +91,9 @@ Plug 'https://github.com/rhysd/devdocs.vim'
 
 " Edit GPG encrypted files.
 Plug 'https://github.com/jamessan/vim-gnupg'
+
+" Color text if it looks like a color (hex colors, CSS colors etc.).
+Plug 'https://github.com/chrisbra/Colorizer'
 
 " Display vertical indentation lines.
 Plug 'https://github.com/Yggdroot/indentLine'
@@ -601,6 +603,11 @@ function! AuFileTypeGitCommit()
     setlocal colorcolumn=73
 endfunction
 autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
+
+function! AuFileTypeVim()
+    set textwidth=100
+endfunction
+autocmd vimrc FileType vim call AuFileTypeVim()
 
 function! AuGrepper()
     " Sets Grepper window height to 20 lines.

@@ -177,6 +177,10 @@ super + {_,shift + }{1-9,0}
 super + u
     bspc desktop -f last.urgent; bspc node -f next.urgent
 
+# rotate node
+super + r
+    bspc node @/ -R {90, 270}
+
 #
 # preselect
 #

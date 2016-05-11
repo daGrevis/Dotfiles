@@ -12,7 +12,7 @@ urgent_on_bell = true
 clickable_url = true
 scrollback_lines = 10000
 search_wrap = true
-cursor_blink = off
+cursor_blink = on
 cursor_shape = block
 
 [colors]
@@ -21,7 +21,7 @@ cursor_shape = block
 
 foreground      = #d3d0c8
 foreground_bold = #d3d0c8
-cursor          = #d3d0c8
+cursor          = #515151
 background      = #2d2d2d
 
 # 16 color space
