@@ -477,6 +477,10 @@ df() {
     colordiff -u $@ | less
 }
 
+function calm() {
+    cal -m $(date +"%Y")
+}
+
 #
 # Git alias.
 #
