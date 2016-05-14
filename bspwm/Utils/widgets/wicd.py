@@ -38,8 +38,15 @@ class WicdWidget(Widget):
                 response.raise_for_status()
 
                 return False
+            except requests.exceptions.ConnectionError as ex:
+                # TODO: Learn about this case and handle it.
+                NAME_OR_SERVICE_NOT_KNOWN = -2
+                if ex.args[0].reason.errno == NAME_OR_SERVICE_NOT_KNOWN:
+                    debug("Name or service not known! Exiting...")
+                    exit()
+
+                continue
             except (
-                requests.exceptions.ConnectionError,
                 requests.exceptions.Timeout,
                 requests.exceptions.HTTPError,
             ):
