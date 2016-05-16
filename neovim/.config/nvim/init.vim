@@ -101,6 +101,9 @@ Plug 'https://github.com/Yggdroot/indentLine'
 " Fave color-scheme.
 Plug 'https://github.com/chriskempson/base16-vim'
 
+" Handle line and column numbers in file names.
+Plug 'https://github.com/kopischke/vim-fetch'
+
 " File-type specific plugins below.
 
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
@@ -397,7 +400,7 @@ function! StatusLinePath()
         let s:path = '[No Name]'
     endif
 
-    let s:output = s:path . ':' . line('.') . '|' . virtcol('.')
+    let s:output = s:path . ':' . line('.') . ':' . virtcol('.')
     return s:output
 endfunction
 
