@@ -101,6 +101,9 @@ Plug 'https://github.com/Yggdroot/indentLine'
 " Fave color-scheme.
 Plug 'https://github.com/chriskempson/base16-vim'
 
+" Handle line and column numbers in file names.
+Plug 'https://github.com/kopischke/vim-fetch'
+
 " File-type specific plugins below.
 
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
@@ -316,7 +319,8 @@ let g:ctrlp_dont_split = 'nerdtree'
 
 " Syntax Tree {{{
 
-nnoremap <Backspace> :TagbarToggle<CR>
+" Opens Tagbar and allows searching in it.
+nnoremap <Backspace> :Tagbar<CR>/
 
 " Tweaks apparance.
 let g:tagbar_width = 60
@@ -397,7 +401,7 @@ function! StatusLinePath()
         let s:path = '[No Name]'
     endif
 
-    let s:output = s:path . ':' . line('.') . '|' . virtcol('.')
+    let s:output = s:path . ':' . line('.') . ':' . virtcol('.')
     return s:output
 endfunction
 
@@ -510,6 +514,10 @@ nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 
 " Search DevDocs.io for word under the cursor.
 nnoremap <Leader>k :DevDocsUnderCursor<CR>
+
+" Replace in current buffer.
+nnoremap <Leader>a :%s/\<<C-r><C-w>\>/
+vnoremap <Leader>a y:%s/<C-r>"/
 
 nnoremap <Leader>p :PencilToggle<CR>
 
