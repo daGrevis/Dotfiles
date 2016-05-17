@@ -511,6 +511,8 @@ nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 " Search DevDocs.io for word under the cursor.
 nnoremap <Leader>k :DevDocsUnderCursor<CR>
 
+nnoremap <Leader>p :PencilToggle<CR>
+
 " }}}
 
 " Auto-groups {{{
