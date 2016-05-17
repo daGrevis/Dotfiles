@@ -319,7 +319,8 @@ let g:ctrlp_dont_split = 'nerdtree'
 
 " Syntax Tree {{{
 
-nnoremap <Backspace> :TagbarToggle<CR>
+" Opens Tagbar and allows searching in it.
+nnoremap <Backspace> :Tagbar<CR>/
 
 " Tweaks apparance.
 let g:tagbar_width = 60
