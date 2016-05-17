@@ -515,6 +515,10 @@ nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 " Search DevDocs.io for word under the cursor.
 nnoremap <Leader>k :DevDocsUnderCursor<CR>
 
+" Replace in current buffer.
+nnoremap <Leader>a :%s/\<<C-r><C-w>\>/
+vnoremap <Leader>a y:%s/<C-r>"/
+
 " }}}
 
 " Auto-groups {{{
