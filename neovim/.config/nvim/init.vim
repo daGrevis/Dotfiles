@@ -303,6 +303,9 @@ let g:ctrlp_status_func = {
             \ 'main': 'CtrlPStatusFuncMain',
             \ }
 
+" Clear caches and then open CtrlP.
+nnoremap <M-p> :CtrlPClearAllCaches \| CtrlP<CR>
+
 " }}}
 
 " File Explorer {{{
