@@ -477,8 +477,12 @@ df() {
     colordiff -u $@ | less
 }
 
-function calm() {
+calm() {
     cal -m $(date +"%Y")
+}
+
+show-ports() {
+    netstat -tulpn
 }
 
 #
@@ -548,7 +552,7 @@ alias dpsa='docker ps -a'
 alias drm='docker rm -f'
 alias drmi='docker rmi'
 alias drs='docker restart'
-alias dsp='docker stop'
+alias dstp='docker stop'
 alias dst='docker start'
 function docker-rmcs {
     docker rm -f $(docker ps -aq)
