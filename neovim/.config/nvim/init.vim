@@ -394,6 +394,8 @@ let g:grepper = {
 " The character to use when line was changed.
 let g:signify_sign_change = '~'
 
+let g:signify_update_on_focusgained = 1
+
 " }}}
 
 " Status-line {{{
