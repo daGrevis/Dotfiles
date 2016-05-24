@@ -6,6 +6,7 @@ declare -a pkgs=(
     "coffeelint"
     "dunst"
     "editorconfig"
+    "eslint"
     "firefox"
     "flake8"
     "git"
