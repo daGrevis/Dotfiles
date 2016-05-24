@@ -176,7 +176,9 @@ c() {
 
 alias o=xdg-open
 
-alias g=grep
+g() {
+    grep -i $@
+}
 
 copy-to-clipboard() {
     echo "${1}" | xclip

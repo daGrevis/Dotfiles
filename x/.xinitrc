@@ -19,7 +19,7 @@ eval $(ssh-agent)
 
 if [[ "$(hostname)" == $WORK_HOSTNAME ]]; then
     # Sets 2nd monitor usable.
-    xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3
+    xrandr --output HDMI3 --primary --output HDMI2 --right-of HDMI3 --rotate left
 fi
 
 adjust_brightness.sh
