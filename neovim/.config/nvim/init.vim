@@ -551,6 +551,9 @@ autocmd vimrc TabLeave * call AuTabLeave()
 function! AuFocusGained()
     " https://github.com/neovim/neovim/issues/1936
     exe ':checktime'
+
+    " Run linter on focus gained.
+    exe ':Neomake'
 endfunction
 autocmd vimrc FocusGained * call AuFocusGained()
 
