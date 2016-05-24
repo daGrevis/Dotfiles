@@ -375,6 +375,11 @@ set ignorecase smartcase
 map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 
+function! SearchForDiffMarker()
+    exe '/\v[=><]{4,}'
+endfunction
+command! SearchForDiffMarker call SearchForDiffMarker()
+
 " }}}
 
 " Grepping {{{
