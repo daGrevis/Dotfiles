@@ -528,7 +528,7 @@ nnoremap <Leader>p :PencilToggle<CR>
 
 " }}}
 
-" Auto-groups {{{
+" Auto-commands (events) {{{
 
 " Allows cleaning old auto-commands.
 augroup vimrc
@@ -599,6 +599,13 @@ function! AuFileTypeSql()
     setlocal commentstring=--\ %s
 endfunction
 autocmd vimrc FileType sql call AuFileTypeSql()
+
+function! AuFileTypeJavaScript()
+    " All JavaScript will be parsed as JSX because some people put JSX in .js files. :(
+    " TODO: Check for JSX code in buffer instead.
+    setlocal filetype=javascript.jsx
+endfunction
+autocmd vimrc FileType javascript call AuFileTypeJavaScript()
 
 function! AuFileTypeSass()
     setlocal shiftwidth=4
