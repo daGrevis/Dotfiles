@@ -529,6 +529,9 @@ nnoremap <Leader>k :DevDocsUnderCursor<CR>
 nnoremap <Leader>a :%s/\<<C-r><C-w>\>/
 vnoremap <Leader>a y:%s/<C-r>"/
 
+" Visually select current line without selecting newline at the end.
+nnoremap <Leader>c ^v$h
+
 nnoremap <Leader>p :PencilToggle<CR>
 
 " }}}
