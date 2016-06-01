@@ -41,7 +41,7 @@ class WicdWidget(Widget):
             except requests.exceptions.ConnectionError as ex:
                 # TODO: Learn about this case and handle it.
                 NAME_OR_SERVICE_NOT_KNOWN = -2
-                if (hasattr(ex.args[0], "reason")
+                if (hasattr(ex.args[0], "reason") and hasattr(ex.args[0].reason, "errno")
                         and ex.args[0].reason.errno == NAME_OR_SERVICE_NOT_KNOWN):
                     debug("Name or service not known! Exiting...")
                     exit()
