@@ -104,6 +104,9 @@ Plug 'https://github.com/chriskempson/base16-vim'
 " Handle line and column numbers in file names.
 Plug 'https://github.com/kopischke/vim-fetch'
 
+" Seamless management of tags file.
+Plug 'https://github.com/ludovicchabant/vim-gutentags'
+
 " File-type specific plugins below.
 
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
@@ -531,6 +534,9 @@ vnoremap <Leader>a y:%s/<C-r>"/
 
 " Visually select current line without selecting newline at the end.
 nnoremap <Leader>c ^v$h
+
+" Open list of tags for word under the cursor.
+nnoremap <Leader>] :tselect<CR>
 
 nnoremap <Leader>p :PencilToggle<CR>
 
