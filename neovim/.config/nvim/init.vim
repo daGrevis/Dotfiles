@@ -92,6 +92,15 @@ Plug 'https://github.com/rhysd/devdocs.vim'
 " Edit GPG encrypted files.
 Plug 'https://github.com/jamessan/vim-gnupg'
 
+" Handle line and column numbers in file names.
+Plug 'https://github.com/kopischke/vim-fetch'
+
+" Seamless management of tags file.
+Plug 'https://github.com/ludovicchabant/vim-gutentags'
+
+" Generate HTML by writing CSS.
+Plug 'https://github.com/mattn/emmet-vim'
+
 " Color text if it looks like a color (hex colors, CSS colors etc.).
 Plug 'https://github.com/chrisbra/Colorizer'
 
@@ -100,9 +109,6 @@ Plug 'https://github.com/Yggdroot/indentLine'
 
 " Fave color-scheme.
 Plug 'https://github.com/chriskempson/base16-vim'
-
-" Handle line and column numbers in file names.
-Plug 'https://github.com/kopischke/vim-fetch'
 
 " File-type specific plugins below.
 
@@ -528,6 +534,9 @@ nnoremap <Leader>k :DevDocsUnderCursor<CR>
 " Replace in current buffer.
 nnoremap <Leader>a :%s/\<<C-r><C-w>\>/
 vnoremap <Leader>a y:%s/<C-r>"/
+
+" Visually select current line without selecting newline at the end.
+nnoremap <Leader>c ^v$h
 
 nnoremap <Leader>p :PencilToggle<CR>
 
