@@ -92,6 +92,15 @@ Plug 'https://github.com/rhysd/devdocs.vim'
 " Edit GPG encrypted files.
 Plug 'https://github.com/jamessan/vim-gnupg'
 
+" Handle line and column numbers in file names.
+Plug 'https://github.com/kopischke/vim-fetch'
+
+" Seamless management of tags file.
+Plug 'https://github.com/ludovicchabant/vim-gutentags'
+
+" Generate HTML by writing CSS.
+Plug 'https://github.com/mattn/emmet-vim'
+
 " Color text if it looks like a color (hex colors, CSS colors etc.).
 Plug 'https://github.com/chrisbra/Colorizer'
 
@@ -100,12 +109,6 @@ Plug 'https://github.com/Yggdroot/indentLine'
 
 " Fave color-scheme.
 Plug 'https://github.com/chriskempson/base16-vim'
-
-" Handle line and column numbers in file names.
-Plug 'https://github.com/kopischke/vim-fetch'
-
-" Seamless management of tags file.
-Plug 'https://github.com/ludovicchabant/vim-gutentags'
 
 " File-type specific plugins below.
 
