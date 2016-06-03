@@ -535,9 +535,6 @@ vnoremap <Leader>a y:%s/<C-r>"/
 " Visually select current line without selecting newline at the end.
 nnoremap <Leader>c ^v$h
 
-" Open list of tags for word under the cursor.
-nnoremap <Leader>] :tselect<CR>
-
 nnoremap <Leader>p :PencilToggle<CR>
 
 " }}}
