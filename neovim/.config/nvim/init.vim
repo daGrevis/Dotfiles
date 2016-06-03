@@ -531,6 +531,9 @@ vnoremap <Leader>a y:%s/<C-r>"/
 
 nnoremap <Leader>p :PencilToggle<CR>
 
+" Format the current buffer.
+nnoremap gw gwgg=G
+
 " }}}
 
 " Auto-commands (events) {{{
