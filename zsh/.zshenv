@@ -197,7 +197,7 @@ function vim {
     fi
 }
 
-alias generate-password="xkcdpass --valid_chars='[a-z]' --numwords=10"
+alias generate-password="xkcdpass --numwords=10"
 
 alias serve-http='python -m http.server'
 
