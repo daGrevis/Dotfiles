@@ -629,6 +629,11 @@ function! AuFileTypeSass()
 endfunction
 autocmd vimrc FileType sass call AuFileTypeSass()
 
+function! AuFileTypeYaml()
+    setlocal shiftwidth=2
+endfunction
+autocmd vimrc FileType yaml call AuFileTypeYaml()
+
 function! AuFileTypeMarkdown()
     setlocal textwidth=80
     setlocal colorcolumn=81
