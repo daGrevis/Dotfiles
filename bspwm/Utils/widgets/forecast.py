@@ -18,7 +18,7 @@ def get_forecast():
         api_key=FORECAST_IO_API_KEY,
         lat=LOCATION_LAT,
         lng=LOCATION_LNG,
-    ), timeout=2)
+    ), timeout=10)
 
     return response.json()
 
@@ -32,7 +32,7 @@ class ForecastWidget(Widget):
     def render(self):
         try:
             forecast = self.get_forecast()
-        except requests.ConnectionError:
+        except (requests.ConnectionError, requests.ReadTimeout):
             return False
 
         to_c = lambda x: (x - Decimal(32)) / Decimal("1.8")
