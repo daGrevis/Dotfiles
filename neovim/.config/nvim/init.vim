@@ -360,6 +360,12 @@ let g:tagbar_sort = 0
 
 " }}}
 
+" Tags {{{
+
+let g:gutentags_enabled = 0
+
+" }}}
+
 " Linter {{{
 
 " Visual appearance.
@@ -575,8 +581,12 @@ function! AuFocusGained()
     " https://github.com/neovim/neovim/issues/1936
     exe ':checktime'
 
-    " Run linter on focus gained.
-    exe ':Neomake'
+    try
+        " Run linter on focus gain.
+        " This will fail when Neomake is not installed. We don't want an error whenever focus has
+        " been gained.
+        exe ':Neomake'
+    endtry
 endfunction
 autocmd vimrc FocusGained * call AuFocusGained()
 
