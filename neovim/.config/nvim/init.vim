@@ -586,6 +586,7 @@ function! AuFocusGained()
         " This will fail when Neomake is not installed. We don't want an error whenever focus has
         " been gained.
         exe ':Neomake'
+    catch
     endtry
 endfunction
 autocmd vimrc FocusGained * call AuFocusGained()
