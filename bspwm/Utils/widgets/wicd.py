@@ -58,7 +58,11 @@ class WicdWidget(Widget):
     def render(self):
         local_ip = socket.gethostbyname(socket.gethostname())
 
-        wicd_output = self.get_wicd_output()
+        try:
+            wicd_output = self.get_wicd_output()
+        except subprocess.CalledProcessError:
+            # TODO: Sometimes this happens, why? Next call usually works fine.
+            return False
 
         is_wireless = re.search(r"Wireless", wicd_output) is not None
         is_wired = re.search(r"Wired", wicd_output) is not None
