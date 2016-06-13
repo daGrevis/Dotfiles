@@ -9,9 +9,6 @@ setopt interactivecomments
 # time that oh-my-zsh is loaded.
 ZSH_THEME="custom"
 
-# TODO: It's incorrect to set this.
-# TERM=xterm-256color
-
 source ~/settings.sh
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -490,6 +487,10 @@ show-ports() {
 
 help() {
     apropos . | awk '{print $1}' | selecta | xargs man && clear
+}
+
+ssh() {
+    TERM=xterm command ssh $@
 }
 
 #
