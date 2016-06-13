@@ -9,7 +9,8 @@ setopt interactivecomments
 # time that oh-my-zsh is loaded.
 ZSH_THEME="custom"
 
-TERM=xterm-256color
+# TODO: It's incorrect to set this.
+# TERM=xterm-256color
 
 source ~/settings.sh
 
@@ -292,18 +293,18 @@ ssh-fingerprint() {
 dmenu-go() {
     export FAVFILE=~/sh-commands.fav
 
-    dmenu_input=$(
-        fav.py ls --only-names;
-        echo $PATH | tr ":" "\n" | xargs stest -flx | sort -u
+    items=$(
+        fav ls --only-names;
+        echo "$PATH" | tr ":" "\n" | xargs stest -flx | sort -u
     )
-    # Filter out unique lines without sorting.
-    dmenu_input=$(echo "$dmenu_input" | awk '!x[$0]++')
+    # Filter out duplicated commands without sorting
+    items=$(echo "$items" | awk '!x[$0]++')
 
-    phrase=$(themenu.sh "$dmenu_input")
+    selection=$(themenu.sh "$items")
 
-    fav.py insert "$phrase"
+    fav insert "$selection"
 
-    eval "$phrase"
+    eval "$selection"
 }
 
 disable-sreen() {
@@ -485,6 +486,10 @@ calm() {
 
 show-ports() {
     netstat -tulpn
+}
+
+help() {
+    apropos . | awk '{print $1}' | selecta | xargs man && clear
 }
 
 #

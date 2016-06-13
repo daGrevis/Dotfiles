@@ -63,6 +63,9 @@ def get_args():
 
     args = arg_parser.parse_args()
 
+    if args.subparser_name is None:
+        arg_parser.print_help()
+
     return args
 
 
