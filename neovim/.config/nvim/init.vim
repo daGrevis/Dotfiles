@@ -121,9 +121,19 @@ Plug 'https://github.com/mxw/vim-jsx', {'for': 'javascript.jsx'}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
 
-Plug 'https://github.com/reedes/vim-pencil', {'for': 'markdown'}
-
 call plug#end()
+
+" }}}
+
+" Functions {{{
+
+" Highlights the screen column.
+" Don't set color column when terminal is not wide enough.
+function! SetColorColumn(v)
+    if &columns > a:v
+        exe 'set colorcolumn=' . a:v
+    endif
+endfunction
 
 " }}}
 
@@ -182,14 +192,17 @@ set scrolloff=25
 " Highlights the screen line of the cursor. Helps finding the cursor.
 set cursorline
 
-" Highlights the screen column.
-set colorcolumn=101
-
 " Enables mouse (super useful in rare situations).
 set mouse=a
 
 " Any action not typed will not cause the screen to redraw. Good for macros.
 set lazyredraw
+
+" Don't show startup message.
+set shortmess+=I
+
+" Always show status bar.
+set laststatus=2
 
 " Don't hide my JSON! Amazing hack.
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
@@ -538,8 +551,6 @@ vnoremap <Leader>a y:%s/<C-r>"/
 " Visually select current line without selecting newline at the end.
 nnoremap <Leader>c ^v$h
 
-nnoremap <Leader>p :PencilToggle<CR>
-
 " Format the current buffer.
 nnoremap gw gwgg=G
 
@@ -585,6 +596,8 @@ endfunction
 autocmd vimrc BufLeave * call AuBufLeave()
 
 function! AuBufReadPost()
+    call SetColorColumn(101)
+
     " I'm not using omni-complete.
     setlocal omnifunc=
 
@@ -635,10 +648,10 @@ endfunction
 autocmd vimrc FileType yaml call AuFileTypeYaml()
 
 function! AuFileTypeMarkdown()
+    " :help fo-table
+    setlocal formatoptions=want
     setlocal textwidth=80
-    setlocal colorcolumn=81
-
-    call pencil#init()
+    call SetColorColumn(81)
 endfunction
 autocmd vimrc FileType markdown call AuFileTypeMarkdown()
 
@@ -647,7 +660,7 @@ function! AuFileTypeGitCommit()
     setlocal spell
 
     " http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
-    setlocal colorcolumn=73
+    call SetColorColumn(73)
 endfunction
 autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
 
@@ -741,5 +754,9 @@ hi SignifySignChangeDelete ctermbg=18 ctermfg=1
 hi SignatureMarkText ctermbg=0 ctermfg=4
 
 hi SneakPluginTarget ctermfg=8 ctermbg=3
+
+" }}}
+
+" Experiments {{{
 
 " }}}
