@@ -151,11 +151,11 @@ function ff {
     find -name "*$@*"
 }
 
-function aux {
+aux() {
     ps -aux | head -n 1
     for pid in `pgrep -f $@`;
     do
-        ps aux -q $pid | sed -n 2p
+        ps -u --pid $pid | sed -n 2p
     done
 }
 
