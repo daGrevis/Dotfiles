@@ -4,6 +4,7 @@ declare -a pkgs=(
     "ack"
     "bspwm"
     "coffeelint"
+    "ctags"
     "dunst"
     "editorconfig"
     "eslint"

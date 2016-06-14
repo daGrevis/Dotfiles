@@ -1,0 +1,5 @@
+--exclude=.git
+--exclude=site-packages
+--exclude=node_modules
+--exclude=COMPILED
+--exclude=*bundle.js
