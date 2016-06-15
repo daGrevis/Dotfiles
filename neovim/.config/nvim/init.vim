@@ -405,6 +405,11 @@ function! SearchForDiffMarker()
 endfunction
 command! SearchForDiffMarker call SearchForDiffMarker()
 
+function! SearchForNonAscii()
+    exe '/[^\u0000-\u007F]+'
+endfunction
+command! SearchForNonAscii call SearchForNonAscii()
+
 " }}}
 
 " Grepping {{{
@@ -527,7 +532,8 @@ nnoremap <Leader>m :messages<CR>
 " Display registers.
 nnoremap <Leader>r :registers<CR>
 
-" Source visually selected Vimscript.
+" Source Vimscript.
+nnoremap <Leader>x :source %<CR>
 vnoremap <Leader>x y:@"<CR>
 
 " Just like standard f/F except it works on multiple lines.
@@ -665,6 +671,11 @@ function! AuFileTypeMarkdown()
     call SetColorColumn(81)
 endfunction
 autocmd vimrc FileType markdown call AuFileTypeMarkdown()
+
+function! AuFileTypeTwig()
+    setlocal filetype=html
+endfunction
+autocmd vimrc FileType twig call AuFileTypeTwig()
 
 function! AuFileTypeGitCommit()
     " Enables spell-checker for commit messages.
