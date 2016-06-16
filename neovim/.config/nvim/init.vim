@@ -781,4 +781,34 @@ hi SneakPluginTarget ctermfg=8 ctermbg=3
 
 " Experiments {{{
 
+" https://github.com/defunkt/gist/issues/195
+function! ShareGist(line1, line2, ...) abort
+    let l:args = []
+
+    if index(a:000, '-f') == -1
+        let l:fname = fnamemodify(expand('%'), ':t')
+        let l:ext = fnamemodify(l:fname, ':e')
+        if !len(l:ext)
+            let l:fname .= '.' . &filetype
+        endif
+        let l:args += ['-f', l:fname]
+    endif
+
+    for l:a in a:000 | let l:args += [shellescape(l:a)] | endfor
+
+    let l:output = systemlist('gist '.join(l:args, ' '), getline(a:line1, a:line2))
+
+    if len(l:output) == 1
+        call setreg('+', l:output[0])
+        echom l:output[0]
+    else
+        for l:l in l:output
+            echo l:l
+        endfor
+    endif
+endfunction
+command! -range=% -nargs=* ShareGist call ShareGist(<line1>, <line2>, <f-args>)
+
+nnoremap <Leader>p :ShareGist<CR>
+
 " }}}
