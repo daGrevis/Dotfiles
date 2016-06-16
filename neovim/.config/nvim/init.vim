@@ -783,6 +783,11 @@ hi SneakPluginTarget ctermfg=8 ctermbg=3
 
 " https://github.com/defunkt/gist/issues/195
 function! ShareGist(line1, line2, ...) abort
+    if executable('gist') == 0
+        echom 'Install gist for sharing text (gem install gist)'
+        return
+    endif
+
     let l:args = []
 
     if index(a:000, '-f') == -1
@@ -809,6 +814,7 @@ function! ShareGist(line1, line2, ...) abort
 endfunction
 command! -range=% -nargs=* ShareGist call ShareGist(<line1>, <line2>, <f-args>)
 
-nnoremap <Leader>p :ShareGist<CR>
+nnoremap <Leader>p :ShareGist
+vnoremap <Leader>p :ShareGist
 
 " }}}
