@@ -77,6 +77,9 @@ Plug 'https://github.com/benekastah/neomake'
 " Grepping tool with support for Ack.
 Plug 'https://github.com/mhinz/vim-grepper'
 
+" Utils for quickfix window.
+Plug 'https://github.com/romainl/vim-qf'
+
 " Syntax tree using ctags.
 Plug 'https://github.com/majutsushi/tagbar'
 
@@ -814,5 +817,8 @@ command! -range=% -nargs=* ShareGist call ShareGist(<line1>, <line2>, <f-args>)
 
 nnoremap <Leader>p :ShareGist
 vnoremap <Leader>p :ShareGist
+
+" Mappings like s, v, t, o, and O for quickfix window.
+let g:qf_mapping_ack_style = 1
 
 " }}}
