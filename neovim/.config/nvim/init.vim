@@ -275,8 +275,6 @@ set nofoldenable
 
 set foldmethod=marker
 
-nnoremap <Enter> za
-
 " }}}
 
 " Spelling {{{
