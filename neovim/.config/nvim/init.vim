@@ -821,4 +821,6 @@ vnoremap <Leader>p :ShareGist
 " Mappings like s, v, t, o, and O for quickfix window.
 let g:qf_mapping_ack_style = 1
 
+nnoremap <Leader>] <C-w><C-]><C-w>T
+
 " }}}
