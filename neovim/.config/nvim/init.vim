@@ -684,6 +684,10 @@ function! AuFileTypeGitCommit()
 
     " http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
     call SetColorColumn(73)
+
+    " Don't be weird with colors.
+    hi clear gitcommitSummary
+    hi clear gitcommitOverflow
 endfunction
 autocmd vimrc FileType gitcommit call AuFileTypeGitCommit()
 
