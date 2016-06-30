@@ -797,11 +797,13 @@ function! ShareGist(line1, line2, ...) abort
 
     if index(a:000, '-f') == -1
         let l:fname = fnamemodify(expand('%'), ':t')
-        let l:ext = fnamemodify(l:fname, ':e')
-        if !len(l:ext)
-            let l:fname .= '.' . &filetype
+        if len(l:fname)
+            let l:ext = fnamemodify(l:fname, ':e')
+            if !len(l:ext)
+                let l:fname .= '.' . &filetype
+            endif
+            let l:args += ['-f', l:fname]
         endif
-        let l:args += ['-f', l:fname]
     endif
 
     for l:a in a:000 | let l:args += [shellescape(l:a)] | endfor
