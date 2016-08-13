@@ -59,6 +59,12 @@ Plug 'https://github.com/tpope/vim-commentary'
 " Git bindings.
 Plug 'https://github.com/tpope/vim-fugitive'
 
+" Auto-adjust tabs vs spaces based on current buffer.
+Plug 'https://github.com/tpope/vim-sleuth'
+
+" Helpers for modifying word under the cursor.
+Plug 'https://github.com/tpope/vim-abolish'
+
 " Tab completion.
 Plug 'https://github.com/ervandew/supertab'
 
@@ -111,7 +117,7 @@ Plug 'https://github.com/chrisbra/Colorizer'
 Plug 'https://github.com/Yggdroot/indentLine'
 
 " Fave color-scheme.
-Plug 'https://github.com/chriskempson/base16-vim'
+Plug 'https://github.com/mhartington/oceanic-next'
 
 " File-type specific plugins below.
 
@@ -185,9 +191,9 @@ set iskeyword+=-
 " Show characters like Tab or trailing space differently.
 set list listchars=tab:→\ ,trail:·,nbsp:·
 
-" Show the line number relative to the cursor. This allows rapid movement in
+" Also shows line number relative to the cursor. This allows rapid movement in
 " buffers with 10j, 17k or alike moves to get to the specific line.
-set relativenumber
+set number relativenumber
 
 " Keeps cursor at the center region of screen.
 set scrolloff=25
@@ -206,6 +212,8 @@ set shortmess+=I
 
 " Always show status bar.
 set laststatus=2
+
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Don't hide my JSON! Amazing hack.
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
@@ -236,12 +244,6 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 set splitbelow
 set splitright
 
-" Switch to a split.
-nnoremap <M-h> <C-w>h
-nnoremap <M-j> <C-w>j
-nnoremap <M-k> <C-w>k
-nnoremap <M-l> <C-w>l
-
 " }}}
 
 " Tabs {{{
@@ -252,11 +254,11 @@ nnoremap <M-l> <C-w>l
 nnoremap J gt
 nnoremap K gT
 
-" Go to tab 1-9 with <M-1>, <M-2> etc..
+" Go to tab 1-9.
 function! MapGoToTab()
     let s:i = 1
     while s:i < 10
-        exe 'nnoremap <M-' . s:i . '> :tabnext ' . s:i . '<CR>'
+        exe 'nnoremap <Leader>' . s:i . ' :tabnext ' . s:i . '<CR>'
         let s:i += 1
     endwhile
 endfunction
@@ -323,9 +325,6 @@ let g:ctrlp_status_func = {
             \ 'main': 'CtrlPStatusFuncMain',
             \ }
 
-" Clear caches and then open CtrlP.
-nnoremap <M-p> :CtrlPClearAllCaches \| CtrlP<CR>
-
 " }}}
 
 " File Explorer {{{
@@ -344,6 +343,7 @@ let g:ctrlp_dont_split = 'nerdtree'
 
 " Opens Tagbar and allows searching in it.
 nnoremap <Backspace> :Tagbar<CR>/
+nnoremap <Leader><Backspace> :Tagbar<CR>
 
 " Tweaks apparance.
 let g:tagbar_width = 60
@@ -365,6 +365,8 @@ let g:tagbar_sort = 0
 
 let g:gutentags_enabled = 0
 
+let g:gutentags_ctags_executable_javascript = 'jsctagsi'
+
 " }}}
 
 " Linter {{{
@@ -384,7 +386,7 @@ let g:neomake_warning_sign = {
 
 " Logging. Be quite by default.
 let g:neomake_verbose = 0
-" let g:neomake_logfile = '/home/dagrevis/tmp/neomake.log'
+" let g:neomake_logfile = '/home/dagrevis/neomake.log'
 
 " }}}
 
@@ -400,6 +402,11 @@ set ignorecase smartcase
 " #PROTIP: Interactively test your regex.
 map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
+
+function! CountMatches()
+    exe ':%s///gn'
+endfunction
+command! CountMatches call CountMatches()
 
 function! SearchForDiffMarker()
     exe '/\v[=><]{4,}'
@@ -470,8 +477,10 @@ nnoremap k gk
 nnoremap <Leader>j :join<CR>
 vnoremap <Leader>j :join<CR>
 
-" Temporary disable search highlighting.
+" Clear currently highlighted phrase.
 nnoremap <C-l> :nohlsearch<CR>
+
+nnoremap <C-q> :q!<CR>
 
 " Goes to the first non-blank character of the line.
 nnoremap H ^
@@ -516,7 +525,6 @@ nnoremap <Leader>e :e<Space>
 nnoremap <Leader>ee :e!<CR>
 nnoremap <Leader>q :wq<CR>
 nnoremap <Leader>w :w<CR>
-nnoremap <M-q> :q!<CR>
 
 " Command templates.
 nnoremap <Leader>h :help<Space>
@@ -649,7 +657,7 @@ endfunction
 autocmd vimrc FileType sql call AuFileTypeSql()
 
 function! AuFileTypeJavaScript()
-    " All JavaScript will be parsed as JSX because some people put JSX in .js files. :(
+    " All JavaScript will be parsed as JSX because some people put JSX into .js files. :(
     " TODO: Check for JSX code in buffer instead.
     setlocal filetype=javascript.jsx
 endfunction
@@ -702,85 +710,44 @@ function! AuGrepper()
 endfunction
 autocmd vimrc User Grepper call AuGrepper()
 
-" }}}
+function! AuFileTypeTagbar()
+    cnoremap <buffer> <Esc> <Esc>:q<CR>
+    cnoremap <buffer> <C-c> <Esc>:q<CR>
+    cnoremap <buffer> <C-q> <Esc>:q<CR>
+endfunction
+autocmd vimrc FileType tagbar call AuFileTypeTagbar()
 
-" Color-scheme {{{
+function! AuVimEnter()
+    try
+        colorscheme OceanicNext
+        set background=dark
 
-try
-    colorscheme base16-eighties
-    set background=dark
+        let g:colorscheme_loaded = 1
+    catch
+        let g:colorscheme_loaded = 0
+    endtry
 
-    let g:colorscheme_loaded = 1
-catch
-    let g:colorscheme_loaded = 0
-endtry
+    " Fallback to a color-scheme called slate.
+    if !g:colorscheme_loaded
+        echom "Fallbacking to slate colorscheme"
+        colorscheme slate
+    endif
 
-" Fall-back to a color-scheme called slate.
-if !g:colorscheme_loaded
-    colorscheme slate
-endif
+    if g:colorscheme_loaded
+        hi TabLine guifg=#a7adba
+        hi TabLineSel guifg=#d8dee9 guibg=#4f5b66
+        hi StatusLine guibg=#343d46
+        hi WildMenu guifg=#d8dee9 guibg=#4f5b66
+        hi PmenuSel guifg=#d8dee9 guibg=#4f5b66
+        hi Pmenu guibg=#343d46
+        hi PmenuThumb guibg=#4f5b66
+        hi PmenuSbar guibg=#343d46
+        " hi ModeMsg
 
-" }}}
-
-" Color-scheme modifications {{{
-
-" Color map.
-" https://raw.github.com/chriskempson/base16/master/base16-default.png
-"
-" 00, 0  = black
-" 01, 18 = less black
-" 02, 19 = ..
-" 03, 8  = ..
-" 04, 20 = ..
-" 05, 7  = ..
-" 05, 21 = less white
-" 07, 15 = white
-"
-" 08, 1  = red
-" 09, 16 = orange
-" 0A, 3  = yellow
-" 0B, 2  = green
-" 0C, 6  = teal
-" 0D, 4  = blue
-" 0E, 5  = purple
-" 0F, 17 = brown
-
-hi StatusLine ctermbg=18 ctermfg=7
-hi StatusLineNC ctermbg=18 ctermfg=8
-hi TabLine ctermbg=18 ctermfg=7
-hi TabLineFill ctermbg=18
-hi TabLineSel ctermbg=19 ctermfg=7
-hi LineNr ctermbg=18
-hi CursorLineNr ctermbg=18
-hi CursorLine ctermbg=18
-hi ColorColumn ctermbg=18
-hi Visual ctermbg=19
-hi Pmenu ctermbg=19 ctermfg=7
-hi PmenuSel ctermbg=7 ctermfg=18
-hi PmenuThumb ctermbg=19
-hi PmenuSbar ctermbg=19
-hi WildMenu ctermbg=19 ctermfg=7
-hi VertSplit ctermbg=18 ctermfg=8
-hi SignColumn ctermbg=18
-hi WarningMsg ctermfg=3
-hi Todo ctermbg=18 ctermfg=4 cterm=bold
-hi Search ctermfg=19
-hi Folded ctermbg=18
-hi Comment ctermfg=20
-
-hi IncSearch ctermbg=16 ctermfg=18 cterm=bold
-
-hi ErrorSign ctermbg=0 ctermfg=1
-hi WarningSign ctermbg=0 ctermfg=3
-
-hi SignifySignAdd ctermbg=18
-hi SignifySignChange ctermbg=18 ctermfg=3
-hi SignifySignDelete ctermbg=18 ctermfg=1
-hi SignifySignChangeDelete ctermbg=18 ctermfg=1
-
-hi SignatureMarkText ctermbg=0 ctermfg=4
-
-hi SneakPluginTarget ctermfg=8 ctermbg=3
+        hi SneakPluginTarget guibg=#4f5b66
+    endif
+endfunction
+autocmd vimrc VimEnter * call AuVimEnter()
 
 " }}}
 
@@ -828,5 +795,7 @@ vnoremap <Leader>p :ShareGist
 let g:qf_mapping_ack_style = 1
 
 nnoremap <Leader>] <C-w><C-]><C-w>T
+
+let g:javascript_plugin_flow = 1
 
 " }}}
