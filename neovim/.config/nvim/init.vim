@@ -229,7 +229,7 @@ set complete+=b
 set complete+=t
 
 set dictionary=
-set dictionary+=/usr/share/dict/cracklib-small
+set dictionary+=/usr/share/dict/words
 
 " Dictionary completion.
 inoremap <C-z> <C-x><C-k>
