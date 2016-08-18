@@ -737,6 +737,7 @@ function! AuVimEnter()
         hi TabLine guifg=#a7adba
         hi TabLineSel guifg=#d8dee9 guibg=#4f5b66
         hi StatusLine guibg=#343d46
+        hi ModeMsg guifg=#d8dee9
         hi WildMenu guifg=#d8dee9 guibg=#4f5b66
         hi PmenuSel guifg=#d8dee9 guibg=#4f5b66
         hi Pmenu guibg=#343d46
