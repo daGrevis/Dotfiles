@@ -341,9 +341,10 @@ let g:ctrlp_dont_split = 'nerdtree'
 
 " Syntax Tree {{{
 
-" Opens Tagbar and allows searching in it.
+" Opens Tagbar and waits for search phrase.
 nnoremap <Backspace> :Tagbar<CR>/
-nnoremap <Leader><Backspace> :Tagbar<CR>
+" Opens Tagbar.
+nnoremap <Leader><Backspace> :TagbarToggle<CR>
 
 " Tweaks apparance.
 let g:tagbar_width = 60
@@ -711,9 +712,9 @@ endfunction
 autocmd vimrc User Grepper call AuGrepper()
 
 function! AuFileTypeTagbar()
-    cnoremap <buffer> <Esc> <Esc>:q<CR>
-    cnoremap <buffer> <C-c> <Esc>:q<CR>
-    cnoremap <buffer> <C-q> <Esc>:q<CR>
+    " Hit backspace to cancel search.
+    " Hit backspace one more time to close Tagbar.
+    nnoremap <buffer> <Backspace> :TagbarClose<CR>
 endfunction
 autocmd vimrc FileType tagbar call AuFileTypeTagbar()
 
