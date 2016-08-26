@@ -15,7 +15,7 @@ alias vim=nvim
 alias v=nvim
 
 mkcd() {
-    mkdir -p "$@" && cd "$@" || exit
+    mkdir -p "$@" && cd "$@"
 }
 
 f() {
