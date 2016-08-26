@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 alias dpl='docker pull'
 alias dim='docker images'

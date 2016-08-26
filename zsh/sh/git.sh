@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 alias ga="git add"
 alias gaa="git add -A"
