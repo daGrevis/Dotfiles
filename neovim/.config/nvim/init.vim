@@ -818,7 +818,7 @@ function! TabLine()
             let tabname = '[No Name]'
         elseif buftype == ''
             let tabname = fnamemodify(bufname, ':~:.')
-            let tabname = matchstr(bufname, '[^\/]\+\/[^\/]\+$')
+            let tabname = matchstr(tabname, '[^\/]\+\/[^\/]\+$')
         endif
 
         if tabname == ''
