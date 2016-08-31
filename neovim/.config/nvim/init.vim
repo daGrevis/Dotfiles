@@ -800,4 +800,40 @@ nnoremap <Leader>] <C-w><C-]><C-w>T
 
 let g:javascript_plugin_flow = 1
 
+function! TabLine()
+    let s = ''
+
+    let t = tabpagenr()
+    let tt = tabpagenr('$')
+
+    for i in range(tt)
+        let tab = i + 1
+        let buflist = tabpagebuflist(tab)
+        let winnr = tabpagewinnr(tab)
+        let bufnr = buflist[winnr - 1]
+        let bufname = bufname(bufnr)
+        let buftype = getbufvar(bufnr, 'buftype')
+
+        if bufname == ''
+            let tabname = '[No Name]'
+        elseif buftype == ''
+            let tabname = fnamemodify(bufname, ':~:.')
+            let tabname = matchstr(bufname, '[^\/]\+\/[^\/]\+$')
+        endif
+
+        if tabname == ''
+            let tabname = bufname
+        endif
+
+        let s .= '%' . tab . 'T'
+        let s .= (tab == t ? '%#TabLineSel#' : '%#TabLine#')
+        let s .= ' ' . tab . ' ' . tabname . ' '
+    endfor
+
+    let s .= '%#TabLineFill#'
+
+    return s
+endfunction
+set tabline=%!TabLine()
+
 " }}}
