@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+v() {
+    if [ -f Session.vim ]; then
+        nvim -p -S
+    else
+        nvim -p
+    fi
+}
+alias vim=v
+
+alias serve-http='python3 -m http.server'
+
 unalias l
 l() {
     # https://github.com/ogham/exa
@@ -10,9 +21,6 @@ l() {
         exa -lag -s modified "$@"
     fi
 }
-
-alias vim=nvim
-alias v=nvim
 
 mkcd() {
     mkdir -p "$@" && cd "$@"
@@ -52,4 +60,8 @@ ip-addresses() {
 
     curl ipecho.net/plain
     echo
+}
+
+view-markdown() {
+    grip "$1" 7777 -b
 }

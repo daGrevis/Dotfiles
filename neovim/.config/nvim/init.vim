@@ -65,6 +65,9 @@ Plug 'https://github.com/tpope/vim-sleuth'
 " Helpers for modifying word under the cursor.
 Plug 'https://github.com/tpope/vim-abolish'
 
+" Saves your Vim sessions.
+Plug 'https://github.com/tpope/vim-obsession'
+
 " Tab completion.
 Plug 'https://github.com/ervandew/supertab'
 
@@ -116,6 +119,9 @@ Plug 'https://github.com/chrisbra/Colorizer'
 " Display vertical indentation lines.
 Plug 'https://github.com/Yggdroot/indentLine'
 
+" Wrap and unwrap arguments.
+Plug 'https://github.com/FooSoft/vim-argwrap'
+
 " Fave color-scheme.
 Plug 'https://github.com/mhartington/oceanic-next'
 
@@ -123,12 +129,13 @@ Plug 'https://github.com/mhartington/oceanic-next'
 
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 
-Plug 'https://github.com/elzr/vim-json', {'for': ['json']}
-" https://github.com/pangloss/vim-javascript/issues/378
+Plug 'https://github.com/elzr/vim-json', {'for': 'json'}
 Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx'], 'branch': 'develop'}
 Plug 'https://github.com/mxw/vim-jsx', {'for': 'javascript.jsx'}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
+
+Plug 'https://github.com/evanmiller/nginx-vim-syntax', {'for': 'nginx'}
 
 call plug#end()
 
@@ -219,6 +226,9 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
 let g:vim_json_syntax_conceal = 0
 
+" Enable Flow syntax support.
+let g:javascript_plugin_flow = 1
+
 " }}}
 
 " Completion {{{
@@ -246,7 +256,7 @@ set splitright
 
 " }}}
 
-" Tabs {{{
+" Tabline {{{
 
 " J and K position is just too good for line joining and keyword lookup. I do
 " switching between tabs much more often so it's a remap.
@@ -263,6 +273,43 @@ function! MapGoToTab()
     endwhile
 endfunction
 call MapGoToTab()
+
+" Overrides how tab names are shown.
+function! TabLine()
+    let s = ''
+
+    let t = tabpagenr()
+    let tt = tabpagenr('$')
+
+    for i in range(tt)
+        let tab = i + 1
+        let buflist = tabpagebuflist(tab)
+        let winnr = tabpagewinnr(tab)
+        let bufnr = buflist[winnr - 1]
+        let bufname = bufname(bufnr)
+        let buftype = getbufvar(bufnr, 'buftype')
+
+        if bufname == ''
+            let tabname = '[No Name]'
+        elseif buftype == ''
+            let tabname = fnamemodify(bufname, ':~:.')
+            let tabname = matchstr(tabname, '[^\/]\+\/[^\/]\+$')
+        endif
+
+        if tabname == ''
+            let tabname = bufname
+        endif
+
+        let s .= '%' . tab . 'T'
+        let s .= (tab == t ? '%#TabLineSel#' : '%#TabLine#')
+        let s .= ' ' . tab . ' ' . tabname . ' '
+    endfor
+
+    let s .= '%#TabLineFill#'
+
+    return s
+endfunction
+set tabline=%!TabLine()
 
 " }}}
 
@@ -307,23 +354,28 @@ vnoremap <C-c> "+y
 " Don't change working directory.
 let g:ctrlp_working_path_mode = ''
 
-" List files using git when possible. This is much faster and will respect
-" .gitignore rules.
-let g:ctrlp_user_command = [
-            \ '.git/',
-            \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
-            \ ]
+" How CtrlP finds files. For now it uses git/hg when possible, but fallbacks to find.
+let g:ctrlp_user_command = {
+            \ 'types': {
+            \ 1: ['.git', 'cd %s && git ls-files -oc --exclude-standard'],
+            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+            \ },
+            \ 'fallback': 'find %s -type f'
+            \ }
 
-" Sets height.
+" CtrlP height.
 let g:ctrlp_match_window = 'max:20'
 
-" Rewrites status-line.
+" Custom status.
 function! CtrlPStatusFuncMain(focus, byfname, regex, prev, item, next, marked)
     return getcwd()
 endfunction
 let g:ctrlp_status_func = {
             \ 'main': 'CtrlPStatusFuncMain',
             \ }
+
+" Clears cache and then runs CtrlP.
+nnoremap <Leader>p :CtrlPClearAllCaches \| CtrlP<CR>
 
 " }}}
 
@@ -367,6 +419,9 @@ let g:tagbar_sort = 0
 let g:gutentags_enabled = 0
 
 let g:gutentags_ctags_executable_javascript = 'jsctagsi'
+
+" Open tag under the cursor in a new tab.
+nnoremap <Leader>] <C-w><C-]><C-w>T
 
 " }}}
 
@@ -431,6 +486,9 @@ let g:grepper = {
     \ 'tools': ['ack', 'git', 'grep'],
     \ }
 
+" Mappings like s, v, t, o, and O for quickfix window.
+let g:qf_mapping_ack_style = 1
+
 " }}}
 
 " Diffs {{{
@@ -439,6 +497,50 @@ let g:grepper = {
 let g:signify_sign_change = '~'
 
 let g:signify_update_on_focusgained = 1
+
+" }}}
+
+" Text Sharing {{{
+
+" Make an anonymous gist from current buffer or selection. It uploads the gist and then yanks the
+" gist link to system clipboard. Also tries to determine filename and filetype.
+" Based on https://github.com/defunkt/gist/issues/195
+function! ShareGist(line1, line2, ...) abort
+    if executable('gist') == 0
+        echom 'Install gist for sharing text (gem install gist)'
+        return
+    endif
+
+    let l:args = []
+
+    if index(a:000, '-f') == -1
+        let l:fname = fnamemodify(expand('%'), ':t')
+        if len(l:fname)
+            let l:ext = fnamemodify(l:fname, ':e')
+            if !len(l:ext)
+                let l:fname .= '.' . &filetype
+            endif
+            let l:args += ['-f', l:fname]
+        endif
+    endif
+
+    for l:a in a:000 | let l:args += [shellescape(l:a)] | endfor
+
+    let l:output = systemlist('gist '.join(l:args, ' '), getline(a:line1, a:line2))
+
+    if len(l:output) == 1
+        call setreg('+', l:output[0])
+        echom l:output[0]
+    else
+        for l:l in l:output
+            echo l:l
+        endfor
+    endif
+endfunction
+command! -range=% -nargs=* ShareGist call ShareGist(<line1>, <line2>, <f-args>)
+
+nnoremap <Leader>g :ShareGist
+vnoremap <Leader>g :ShareGist
 
 " }}}
 
@@ -497,8 +599,8 @@ nnoremap Y y$
 vnoremap < <gv
 vnoremap > >gv
 
-" Select last yanked/pasted text.
-nnoremap gp `[v`]
+" Select last yanked text.
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Character-wise marks.
 nnoremap ' `
@@ -546,6 +648,16 @@ nnoremap <Leader>r :registers<CR>
 nnoremap <Leader>x :source %<CR>
 vnoremap <Leader>x y:@"<CR>
 
+" Replace in current buffer.
+nnoremap <Leader>a :%s/\<<C-r><C-w>\>/
+vnoremap <Leader>a y:%s/<C-r>"/
+
+" Visually select current line without selecting newline at the end.
+nnoremap <Leader>c ^v$h
+
+" Format the current buffer.
+nnoremap gw gwgg=G
+
 " Just like standard f/F except it works on multiple lines.
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
@@ -566,15 +678,8 @@ nmap <Plug>(Go_away_Sneak_S) <Plug>Sneak_S
 " Search DevDocs.io for word under the cursor.
 nnoremap <Leader>k :DevDocsUnderCursor<CR>
 
-" Replace in current buffer.
-nnoremap <Leader>a :%s/\<<C-r><C-w>\>/
-vnoremap <Leader>a y:%s/<C-r>"/
-
-" Visually select current line without selecting newline at the end.
-nnoremap <Leader>c ^v$h
-
-" Format the current buffer.
-nnoremap gw gwgg=G
+" Wraps or unwraps under the cursor.
+nnoremap <Leader>' :ArgWrap<CR>
 
 " }}}
 
@@ -661,6 +766,8 @@ function! AuFileTypeJavaScript()
     " All JavaScript will be parsed as JSX because some people put JSX into .js files. :(
     " TODO: Check for JSX code in buffer instead.
     setlocal filetype=javascript.jsx
+
+    setlocal shiftwidth=2
 endfunction
 autocmd vimrc FileType javascript call AuFileTypeJavaScript()
 
@@ -676,7 +783,7 @@ autocmd vimrc FileType yaml call AuFileTypeYaml()
 
 function! AuFileTypeMarkdown()
     " :help fo-table
-    setlocal formatoptions=want
+    setlocal formatoptions-=t
     setlocal textwidth=80
     call SetColorColumn(81)
 endfunction
@@ -754,86 +861,5 @@ autocmd vimrc VimEnter * call AuVimEnter()
 " }}}
 
 " Experiments {{{
-
-" https://github.com/defunkt/gist/issues/195
-function! ShareGist(line1, line2, ...) abort
-    if executable('gist') == 0
-        echom 'Install gist for sharing text (gem install gist)'
-        return
-    endif
-
-    let l:args = []
-
-    if index(a:000, '-f') == -1
-        let l:fname = fnamemodify(expand('%'), ':t')
-        if len(l:fname)
-            let l:ext = fnamemodify(l:fname, ':e')
-            if !len(l:ext)
-                let l:fname .= '.' . &filetype
-            endif
-            let l:args += ['-f', l:fname]
-        endif
-    endif
-
-    for l:a in a:000 | let l:args += [shellescape(l:a)] | endfor
-
-    let l:output = systemlist('gist '.join(l:args, ' '), getline(a:line1, a:line2))
-
-    if len(l:output) == 1
-        call setreg('+', l:output[0])
-        echom l:output[0]
-    else
-        for l:l in l:output
-            echo l:l
-        endfor
-    endif
-endfunction
-command! -range=% -nargs=* ShareGist call ShareGist(<line1>, <line2>, <f-args>)
-
-nnoremap <Leader>p :ShareGist
-vnoremap <Leader>p :ShareGist
-
-" Mappings like s, v, t, o, and O for quickfix window.
-let g:qf_mapping_ack_style = 1
-
-nnoremap <Leader>] <C-w><C-]><C-w>T
-
-let g:javascript_plugin_flow = 1
-
-function! TabLine()
-    let s = ''
-
-    let t = tabpagenr()
-    let tt = tabpagenr('$')
-
-    for i in range(tt)
-        let tab = i + 1
-        let buflist = tabpagebuflist(tab)
-        let winnr = tabpagewinnr(tab)
-        let bufnr = buflist[winnr - 1]
-        let bufname = bufname(bufnr)
-        let buftype = getbufvar(bufnr, 'buftype')
-
-        if bufname == ''
-            let tabname = '[No Name]'
-        elseif buftype == ''
-            let tabname = fnamemodify(bufname, ':~:.')
-            let tabname = matchstr(tabname, '[^\/]\+\/[^\/]\+$')
-        endif
-
-        if tabname == ''
-            let tabname = bufname
-        endif
-
-        let s .= '%' . tab . 'T'
-        let s .= (tab == t ? '%#TabLineSel#' : '%#TabLine#')
-        let s .= ' ' . tab . ' ' . tabname . ' '
-    endfor
-
-    let s .= '%#TabLineFill#'
-
-    return s
-endfunction
-set tabline=%!TabLine()
 
 " }}}
