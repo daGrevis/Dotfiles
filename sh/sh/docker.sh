@@ -3,7 +3,7 @@
 alias dpl='docker pull'
 alias dim='docker images'
 dlg() {
-    docker logs '$@' 2>&1
+    docker logs -f "$@" 2>&1
 }
 alias dps='docker ps'
 alias dpsa='docker ps -a'
@@ -13,8 +13,8 @@ alias drs='docker restart'
 alias dstp='docker stop'
 alias dst='docker start'
 docker-rmcs() {
-    docker rm -f "$(docker ps -aq)"
+    docker rm -f $(docker ps -aq)
 }
 docker-rmis() {
-    docker rmi -f "$(docker images -q)"
+    docker rmi -f $(docker images -q)
 }
