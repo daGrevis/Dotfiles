@@ -3,7 +3,8 @@
 --ignore-dir=bower_components/
 --ignore-dir=bundles/
 --ignore-dir=dist/
---ignore-dir=lib/
+--ignore-dir=lib/python2.7
+--ignore-dir=lib/python3.5
 --ignore-dir=out/
 --ignore-dir=_site/
 --ignore-dir=cache/
