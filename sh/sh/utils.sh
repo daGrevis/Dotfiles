@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 v() {
-    if [ -f Session.vim ]; then
-        nvim -p -S
+    if [ -f Session.vim ] && [ $# -eq 0 ]; then
+        nvim -S
     else
-        nvim -p
+        nvim -p "$@"
     fi
 }
 alias vim=v
