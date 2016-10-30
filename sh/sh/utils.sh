@@ -31,7 +31,7 @@ f() {
 }
 
 ff() {
-    find . -name '*$@*'
+    find . -name "*$@*"
 }
 
 t() {
@@ -64,4 +64,9 @@ ip-addresses() {
 
 view-markdown() {
     grip "$1" 7777 -b
+}
+
+aux() {
+    ps aux | head -n 1
+    ps aux | grep -i $@
 }
