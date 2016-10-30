@@ -4,6 +4,9 @@ export LANG=en_US.UTF-8
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
 
+GPG_TTY=`tty`
+export GPG_TTY
+
 s=""
 s+=":/usr/local/bin"
 s+=":/usr/local/opt"
