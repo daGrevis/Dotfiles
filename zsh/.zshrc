@@ -18,6 +18,8 @@ export PATH="$s"
 export NVM_DIR=~/.nvm
 source ~/.nvm/nvm.sh
 
+nvm use v6 > /dev/null
+
 source /usr/local/share/antigen.zsh
 
 antigen use oh-my-zsh
