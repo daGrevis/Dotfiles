@@ -116,11 +116,14 @@ Plug 'https://github.com/mattn/emmet-vim'
 " Color text if it looks like a color (hex colors, CSS colors etc.).
 Plug 'https://github.com/chrisbra/Colorizer'
 
-" Display vertical indentation lines.
-Plug 'https://github.com/Yggdroot/indentLine'
-
 " Wrap and unwrap arguments.
 Plug 'https://github.com/FooSoft/vim-argwrap'
+
+" Snippet engine.
+Plug 'https://github.com/SirVer/ultisnips'
+
+" Move arguments left and right.
+Plug 'https://github.com/AndrewRadev/sideways.vim'
 
 " Fave color-scheme.
 Plug 'https://github.com/mhartington/oceanic-next'
@@ -222,8 +225,7 @@ set laststatus=2
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-" Don't hide my JSON! Amazing hack.
-" https://github.com/Yggdroot/indentLine/issues/140#issuecomment-173867054
+" Don't conceal JSON quotes.
 let g:vim_json_syntax_conceal = 0
 
 " Enable Flow syntax support.
@@ -360,7 +362,7 @@ let g:ctrlp_user_command = {
             \ 1: ['.git', 'cd %s && git ls-files -oc --exclude-standard'],
             \ 2: ['.hg', 'hg --cwd %s locate -I .'],
             \ },
-            \ 'fallback': 'find %s -type f'
+            \ 'fallback': 'find %s -type f -o -type l'
             \ }
 
 " CtrlP height.
@@ -851,6 +853,7 @@ function! AuVimEnter()
         hi Pmenu guibg=#343d46
         hi PmenuThumb guibg=#4f5b66
         hi PmenuSbar guibg=#343d46
+        hi Comment guifg=#a7adba
         " hi ModeMsg
 
         hi SneakPluginTarget guibg=#4f5b66
@@ -861,5 +864,10 @@ autocmd vimrc VimEnter * call AuVimEnter()
 " }}}
 
 " Experiments {{{
+
+let g:UltiSnipsExpandTrigger = "<C-s>"
+
+nnoremap <Leader>, :SidewaysLeft<CR>
+nnoremap <Leader>. :SidewaysRight<CR>
 
 " }}}
