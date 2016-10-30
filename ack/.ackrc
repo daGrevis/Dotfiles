@@ -5,6 +5,7 @@
 --ignore-dir=dist/
 --ignore-dir=lib/python2.7
 --ignore-dir=lib/python3.5
+--ignore-dir=coverage/
 --ignore-dir=out/
 --ignore-dir=_site/
 --ignore-dir=cache/
@@ -17,6 +18,7 @@
 --ignore-file=is:tags
 --ignore-file=is:tags.lock
 --ignore-file=is:tags.temp
+--ignore-file=is:Session.vim
 
 --pager=less -R
 
