@@ -223,7 +223,10 @@ set shortmess+=I
 " Always show status bar.
 set laststatus=2
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" GUI colors for Neovim >= 0.1.5+ and Vim 8.
+if (has("termguicolors"))
+    set termguicolors
+endif
 
 " Don't conceal JSON quotes.
 let g:vim_json_syntax_conceal = 0
@@ -829,8 +832,8 @@ autocmd vimrc FileType tagbar call AuFileTypeTagbar()
 
 function! AuVimEnter()
     try
-        colorscheme OceanicNext
         set background=dark
+        colorscheme OceanicNext
 
         let g:colorscheme_loaded = 1
     catch
@@ -853,7 +856,7 @@ function! AuVimEnter()
         hi Pmenu guibg=#343d46
         hi PmenuThumb guibg=#4f5b66
         hi PmenuSbar guibg=#343d46
-        hi Comment guifg=#a7adba
+        hi Comment guifg=#86909c
         " hi ModeMsg
 
         hi SneakPluginTarget guibg=#4f5b66
