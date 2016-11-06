@@ -70,7 +70,7 @@ hs.hotkey.bind({"cmd", "shift"}, "e", function()
   kwmc("quit")
 end)
 
-hs.hotkey.bind({"cmd"}, "a", function()
+hs.hotkey.bind({"cmd"}, "b", function()
   kwmc("space -t bsp")
 end)
 
@@ -82,12 +82,12 @@ hs.hotkey.bind({"cmd"}, "d", function()
   kwmc("space -t float")
 end)
 
-hs.hotkey.bind({"cmd"}, "r", function()
-  kwmc("tree rotate 90")
-end)
-
 hs.hotkey.bind({"cmd"}, "e", function()
   kwmc("tree rotate 180")
+end)
+
+hs.hotkey.bind({"cmd", "shift"}, "e", function()
+  kwmc("tree rotate 90")
 end)
 
 hs.hotkey.bind({"cmd", "alt"}, "f", function()
