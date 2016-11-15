@@ -51,6 +51,8 @@ zstyle ':completion:*' matcher-list '' \
   'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
   'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
 
+bindkey '^X' edit-command-line
+
 source ~/sh/utils.sh
 source ~/sh/git.sh
 source ~/sh/docker.sh
