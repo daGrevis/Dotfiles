@@ -489,6 +489,7 @@ nnoremap // :Grepper<CR>
 " Enabled greppers sorted by priority.
 let g:grepper = {
     \ 'tools': ['ack', 'git', 'grep'],
+    \ 'simple_prompt': 1,
     \ }
 
 " Mappings like s, v, t, o, and O for quickfix window.
@@ -857,8 +858,11 @@ function! AuVimEnter()
         hi PmenuThumb guibg=#4f5b66
         hi PmenuSbar guibg=#343d46
         hi Comment guifg=#86909c
+        hi xmlTagName guifg=#6699cc
+        hi xmlEndTag guifg=#6699cc
         " hi ModeMsg
 
+        hi IncSearch guibg=#fac863
         hi SneakPluginTarget guibg=#4f5b66
     endif
 endfunction
