@@ -252,6 +252,10 @@ inoremap <C-z> <C-x><C-k>
 " Complete top to bottom.
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
+" Expand snippet under the cursor.
+" See: .config/nvim/UltiSnips/*.snippets
+let g:UltiSnipsExpandTrigger = "<C-s>"
+
 " }}}
 
 " Splits {{{
@@ -687,6 +691,10 @@ nnoremap <Leader>k :DevDocsUnderCursor<CR>
 " Wraps or unwraps under the cursor.
 nnoremap <Leader>' :ArgWrap<CR>
 
+" Moves the argument to left or right side.
+nnoremap <Leader>, :SidewaysLeft<CR>
+nnoremap <Leader>. :SidewaysRight<CR>
+
 " }}}
 
 " Auto-commands (events) {{{
@@ -872,9 +880,6 @@ autocmd vimrc VimEnter * call AuVimEnter()
 
 " Experiments {{{
 
-let g:UltiSnipsExpandTrigger = "<C-s>"
-
-nnoremap <Leader>, :SidewaysLeft<CR>
-nnoremap <Leader>. :SidewaysRight<CR>
+" Here be dragons!
 
 " }}}
