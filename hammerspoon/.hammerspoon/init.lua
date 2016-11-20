@@ -12,14 +12,11 @@ function kwmc(s)
   hs.execute("/usr/local/bin/kwmc " .. s)
 end
 
-ctrl_table = {
-  sends_escape = true,
-  last_mods = {}
-}
+send_escape = false
+last_mods = {}
 
-control_key_timer = hs.timer.delayed.new(0.2, function()
-  ctrl_table["send_escape"] = false
-  -- log.i("timer fired")
+control_key_timer = hs.timer.delayed.new(0.15, function()
+  send_escape = false
 end
 )
 
@@ -32,23 +29,23 @@ flags_changed_watcher = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, 
     return false
   end
   if not last_mods["ctrl"] then
-    -- log.i("control pressed")
     last_mods = new_mods
-    ctrl_table["send_escape"] = true
-    -- log.i("starting timer")
+    send_escape = true
     control_key_timer:start()
   else
-    -- log.i("contrtol released")
-    -- log.i(ctrl_table["send_escape"])
-    if ctrl_table["send_escape"] then
-      -- log.i("triggering escape")
+    if send_escape then
       hs.eventtap.keyStroke({}, "ESCAPE")
     end
     last_mods = new_mods
     control_key_timer:stop()
-    return true
   end
 
+  return false
+end
+):start()
+
+key_down_watcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(ev)
+  send_escape = false
   return false
 end
 ):start()
