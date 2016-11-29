@@ -1,3 +1,5 @@
+# t1=$(gdate +%s.%N)
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -18,38 +20,42 @@ s+=":$HOME/.cargo/bin"
 s+=":$PATH"
 export PATH="$s"
 
-export NVM_DIR=~/.nvm
-source ~/.nvm/nvm.sh
+_NVM_DIR=~/.nvm
 
-nvm use v6 > /dev/null
+nvm() {
+  unset -f nvm
+  export NVM_DIR=$_NVM_DIR
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
 
-source /usr/local/share/antigen.zsh
+node() {
+  unset -f node
+  export NVM_DIR=$_NVM_DIR
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  node "$@"
+}
 
-antigen use oh-my-zsh
+npm() {
+  unset -f npm
+  export NVM_DIR=$_NVM_DIR
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  npm "$@"
+}
 
-antigen bundle osx
-antigen bundle brew
-antigen bundle brew-cask
-antigen bundle node
-antigen bundle npm
-antigen bundle gem
-antigen bundle autojump
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions src
+export ZSH=~/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh.git
 
-antigen theme robbyrussell
+ZSH_CUSTOM=~/.oh-my-zsh/custom
 
-antigen apply
+ZSH_THEME='custom'
 
-ZSH_THEME_TERM_TITLE_IDLE='%~'
+plugins=(autojump)
+
+source $ZSH/oh-my-zsh.sh
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 ZSH_THEME_TERM_TAB_TITLE_IDLE='$(basename ${PWD/$HOME/"~"})/'
-
-WORDCHARS='-._'
-
-zstyle ':completion:*' matcher-list '' \
-  'm:{a-z\-}={A-Z\_}' \
-  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-  'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
 
 bindkey '^X' edit-command-line
 
@@ -57,3 +63,6 @@ source ~/sh/utils.sh
 source ~/sh/git.sh
 source ~/sh/docker.sh
 source ~/sh/pass.sh
+
+# t2=$(gdate +%s.%N)
+# echo $((t2 - t1))
