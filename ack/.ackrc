@@ -11,6 +11,7 @@
 --ignore-dir=cache/
 --ignore-dir=vendor/
 --ignore-dir=assets/
+--ignore-dir=build/
 
 --ignore-file=match:/.+\.bundle\.js$/
 --ignore-file=is:browserify-cache.json
@@ -19,6 +20,7 @@
 --ignore-file=is:tags.lock
 --ignore-file=is:tags.temp
 --ignore-file=is:Session.vim
+--ignore-file=is:yarn.lock
 
 --pager=less -R
 
