@@ -48,3 +48,6 @@ alias gst="git status -sb"
 alias gsw="git show"
 alias gswl="git show --name-only"
 alias gtg="git tag"
+
+alias git-delete-local-branch="git branch -D"
+alias git-delete-remote-branch="git push origin --delete"
