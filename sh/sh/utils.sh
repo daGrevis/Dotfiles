@@ -70,3 +70,6 @@ aux() {
     ps aux | head -n 1
     ps aux | grep -i $@
 }
+
+alias ka='killall'
+alias k9='kill -9'
