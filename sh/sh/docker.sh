@@ -2,7 +2,8 @@
 
 alias dpl='docker pull'
 alias dim='docker images'
-dlg() {
+alias dlg='docker logs'
+dlgf() {
     docker logs -f "$@" 2>&1
 }
 alias dps='docker ps'
