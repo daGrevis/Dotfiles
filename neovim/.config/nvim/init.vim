@@ -747,7 +747,9 @@ endfunction
 autocmd vimrc BufLeave * call AuBufLeave()
 
 function! AuBufReadPost()
-    call SetColorColumn(101)
+    if &filetype !=# 'gitcommit'
+        call SetColorColumn(101)
+    endif
 
     " I'm not using omni-complete.
     setlocal omnifunc=
@@ -818,7 +820,7 @@ function! AuFileTypeGitCommit()
     setlocal spell
 
     " http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
-    call SetColorColumn(73)
+    call SetColorColumn(51)
 
     " Don't be weird with colors.
     hi clear gitcommitSummary
