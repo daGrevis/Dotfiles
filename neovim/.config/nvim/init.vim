@@ -892,4 +892,9 @@ autocmd vimrc VimEnter * call AuVimEnter()
 
 " Here be dragons!
 
+function! RemoveExactDuplicateLines()
+    exe 'g/^\(.*\)\n\1$/d'
+endfunction
+command! RemoveExactDuplicateLines call RemoveExactDuplicateLines()
+
 " }}}
