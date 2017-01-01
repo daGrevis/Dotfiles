@@ -8,8 +8,25 @@ function tablelength(T)
   return count
 end
 
-function open_app(name)
-  hs.execute("open -a '/Applications/" .. name .. ".app'")
+function open_app(app_name, new)
+  new = new or true
+
+  local s = "open"
+  if new then
+    s = s .. " -n"
+  end
+  s = s .. " -a '/Applications/" .. app_name .. ".app'"
+
+  hs.execute(s)
+end
+
+function open_iterm2()
+  s = [[
+    tell application "iTerm2"
+    create window with default profile
+    end tell
+  ]]
+  hs.osascript.applescript(s)
 end
 
 function kwmc(s)
@@ -66,11 +83,6 @@ hs.hotkey.bind({"cmd"}, "`", function()
   end
 end)
 
-hs.hotkey.bind({"cmd", "shift"}, "e", function()
-  -- Restarts WM.
-  kwmc("quit")
-end)
-
 hs.hotkey.bind({"cmd"}, "b", function()
   kwmc("space -t bsp")
 end)
@@ -91,20 +103,33 @@ hs.hotkey.bind({"cmd", "shift"}, "e", function()
   kwmc("tree rotate 90")
 end)
 
+hs.hotkey.bind({"cmd", "shift"}, "h", function()
+  kwmc("window -c expand 0.05 west")
+end)
+hs.hotkey.bind({"cmd", "shift"}, "j", function()
+  kwmc("window -c expand 0.05 south")
+end)
+hs.hotkey.bind({"cmd", "shift"}, "k", function()
+  kwmc("window -c expand 0.05 north")
+end)
+hs.hotkey.bind({"cmd", "shift"}, "l", function()
+  kwmc("window -c expand 0.05 east")
+end)
+
 hs.hotkey.bind({"cmd", "alt"}, "f", function()
   kwmc("window -z fullscreen")
 end)
 
-hs.hotkey.bind({"cmd", "shift"}, "t", function()
-  open_app("iTerm")
+hs.hotkey.bind({"cmd"}, "/", function()
+  hs.caffeinate.startScreensaver()
+end)
+
+hs.hotkey.bind({"cmd", "shift"}, "return", function()
+  open_iterm2()
 end)
 
 hs.hotkey.bind({"cmd", "shift"}, "i", function()
   open_app("Google Chrome")
-end)
-
-hs.hotkey.bind({"cmd", "shift"}, "l", function()
-  hs.caffeinate.startScreensaver()
 end)
 
 config_path = os.getenv("HOME") .. "/.hammerspoon/"
