@@ -556,27 +556,32 @@ vnoremap <Leader>g :ShareGist
 
 " Status-line {{{
 
-function! StatusLinePath()
-    let s:path = @%
-    if s:path ==# ''
-        let s:path = '[No Name]'
-    endif
+function! StatusLineGitHead()
+    let s:head = fugitive#head(7)
 
-    let s:output = s:path . ':' . line('.') . ':' . virtcol('.')
-    return s:output
+    if s:head == ''
+        return ''
+    endif
+    return ' ' . s:head . ' '
 endfunction
 
 set statusline=
-" Path and line number.
-set statusline+=%{StatusLinePath()}
 " Modified and read-only flags.
 set statusline+=\ %m%r
+" Current path.
+set statusline+=%f\ 
+" Git revision.
+set statusline+=%1*
+set statusline+=%{StatusLineGitHead()}
+set statusline+=%*
 " Right align.
 set statusline+=%=
 " Current tag.
 set statusline+=%{tagbar#currenttag('%s\ ','\ ','f')}
-" File-type.
-set statusline+=%{&ft}
+set statusline+=%1*
+" Position.
+set statusline+=\ %l/%L\ %p%%
+set statusline+=%*
 
 " }}}
 
