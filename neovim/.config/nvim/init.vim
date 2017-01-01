@@ -873,12 +873,15 @@ function! AuVimEnter()
         hi PmenuThumb guibg=#4f5b66
         hi PmenuSbar guibg=#343d46
         hi Comment guifg=#86909c
+        hi htmlTag guifg=#6699cc
+        hi htmlTagName guifg=#6699cc
         hi xmlTagName guifg=#6699cc
         hi xmlEndTag guifg=#6699cc
+        hi xmlTagN guifg=#6699cc
         " hi ModeMsg
 
         hi IncSearch guibg=#fac863
-        hi SneakPluginTarget guibg=#4f5b66
+        hi Sneak guibg=#4f5b66
     endif
 endfunction
 autocmd vimrc VimEnter * call AuVimEnter()
