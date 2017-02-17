@@ -125,6 +125,9 @@ Plug 'https://github.com/SirVer/ultisnips'
 " Move arguments left and right.
 Plug 'https://github.com/AndrewRadev/sideways.vim'
 
+" Colorful parentheses for lisp-like languages.
+Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
+
 " Fave color-scheme.
 Plug 'https://github.com/mhartington/oceanic-next'
 
@@ -896,5 +899,7 @@ function! RemoveExactDuplicateLines()
     exe 'g/^\(.*\)\n\1$/d'
 endfunction
 command! RemoveExactDuplicateLines call RemoveExactDuplicateLines()
+
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 
 " }}}
