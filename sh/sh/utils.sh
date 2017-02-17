@@ -81,3 +81,7 @@ open-preview() {
 open-chrome() {
     open -a /Applications/Google\ Chrome.app $@
 }
+
+s() {
+    source .env && echo '.env sourced!'
+}
