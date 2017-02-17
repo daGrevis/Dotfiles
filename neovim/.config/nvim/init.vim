@@ -456,6 +456,9 @@ let g:neomake_warning_sign = {
 let g:neomake_verbose = 0
 " let g:neomake_logfile = '/home/dagrevis/neomake.log'
 
+" Disable makers for html files.
+let g:neomake_html_enabled_makers = []
+
 " }}}
 
 " Searching {{{
