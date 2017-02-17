@@ -25,9 +25,26 @@ If you're in a hurry, use `curl` like this:
 curl -Lo ~/.config/nvim/init.vim --create-dirs http://dagrev.is/init.vim
 ```
 
-After opening the Vim, required plugins will be installed automatically. Restart the editor to load them!
+After opening the Vim, required plugins will be installed automatically. Restart
+the editor to load them!
 
 It's recommended to read `init.vim` line by line and copy paste what's relevant.
 The source is heavily documented just for that reason alone.
 
 ![Neovim Preview](preview-neovim.png)
+
+## Zsh
+
+Install [`oh-my-zsh`](https://github.com/robbyrussell/oh-my-zsh) by running:
+
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+```
+
+(Keep in mind that you're blindly running a random shell-script from the
+internet)
+
+Then you'll want to remove `~/.zshrc` that was created by `oh-my-zsh`. Instead
+run `stow zsh` to get my [`.zshrc`](https://github.com/daGrevis/Dotfiles/blob/master/zsh/.zshrc).
+
+My setup depends on `sh` scripts so run `stow sh` for that.
