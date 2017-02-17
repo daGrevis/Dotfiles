@@ -73,3 +73,11 @@ aux() {
 
 alias ka='killall'
 alias k9='kill -9'
+
+open-preview() {
+    open -a /Applications/Preview.app $@
+}
+
+open-chrome() {
+    open -a /Applications/Google\ Chrome.app $@
+}
