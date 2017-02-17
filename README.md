@@ -48,3 +48,5 @@ Then you'll want to remove `~/.zshrc` that was created by `oh-my-zsh`. Instead
 run `stow zsh` to get my [`.zshrc`](https://github.com/daGrevis/Dotfiles/blob/master/zsh/.zshrc).
 
 My setup depends on `sh` scripts so run `stow sh` for that.
+
+![Zsh Preview](preview-zsh.png)
