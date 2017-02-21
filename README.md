@@ -50,3 +50,7 @@ run `stow zsh` to get my [`.zshrc`](https://github.com/daGrevis/Dotfiles/blob/ma
 My setup depends on `sh` scripts so run `stow sh` for that.
 
 ![Zsh Preview](preview-zsh.png)
+
+# Asciinema Recordings
+
+[![asciicast](https://asciinema.org/a/bhr88lz6ampal7n9yl43q60zt.png)](https://asciinema.org/a/bhr88lz6ampal7n9yl43q60zt)
