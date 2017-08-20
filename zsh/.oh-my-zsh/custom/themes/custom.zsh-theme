@@ -21,6 +21,11 @@ extra_status() {
         echo -n "%{$fg_bold[yellow]%}[ssh]%{$reset_color%}"
     fi
 
+    if [ -n "$NVM_PATH" ]; then
+        has_output=1
+        echo -n "%{$fg_bold[green]%}[nvm]%{$reset_color%}"
+    fi
+
     if [ $has_output -eq 1 ]; then
         echo -n ' '
     fi
