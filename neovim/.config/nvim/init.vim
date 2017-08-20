@@ -200,6 +200,10 @@ set shiftwidth=4
 
 " Look and Feel {{{
 
+" How often CursorHold auto-command is triggered.
+set updatetime=500
+
+" Do not create swap-files.
 set noswapfile
 
 " Ignore patterns.
