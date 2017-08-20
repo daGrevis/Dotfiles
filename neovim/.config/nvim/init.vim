@@ -625,6 +625,16 @@ set statusline+=%*
 
 " }}}
 
+" Commands {{{
+
+" Remove whitespace from end of lines.
+function! StripWhitespace()
+    s/\s\+$//e
+endfunction
+command! -range=% StripWhitespace <line1>,<line2>call StripWhitespace()
+
+" }}}
+
 " Mappings {{{
 
 " Move downward/upward with a respect to lines wrap.
