@@ -2,6 +2,8 @@ local passchooser = require "passchooser/passchooser"
 
 passchooser.bind()
 
+hs.loadSpoon('ControlEscape'):start()
+
 function tablelength(T)
   local count = 0
   for _ in pairs(T) do count = count + 1 end
@@ -36,44 +38,6 @@ end
 function kwmc(s)
   hs.execute("/usr/local/bin/kwmc " .. s)
 end
-
-send_escape = false
-last_mods = {}
-
-control_key_timer = hs.timer.delayed.new(0.15, function()
-  send_escape = false
-end
-)
-
-last_mods = {}
-
-flags_changed_watcher = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(ev)
-  local new_mods = ev:getFlags()
-
-  if last_mods["ctrl"] == new_mods["ctrl"] then
-    return false
-  end
-  if not last_mods["ctrl"] then
-    last_mods = new_mods
-    send_escape = true
-    control_key_timer:start()
-  else
-    if send_escape then
-      hs.eventtap.keyStroke({}, "ESCAPE")
-    end
-    last_mods = new_mods
-    control_key_timer:stop()
-  end
-
-  return false
-end
-):start()
-
-key_down_watcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(ev)
-  send_escape = false
-  return false
-end
-):start()
 
 hs.hotkey.bind({"cmd"}, "`", function()
   local front_app = hs.application.frontmostApplication()
