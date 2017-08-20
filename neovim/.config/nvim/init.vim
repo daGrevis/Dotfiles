@@ -839,6 +839,11 @@ function! AuFileTypeSql()
 endfunction
 autocmd vimrc FileType sql call AuFileTypeSql()
 
+function! AuFileTypeNginx()
+    setlocal commentstring=#\ %s
+endfunction
+autocmd vimrc FileType nginx call AuFileTypeNginx()
+
 function! AuFileTypeJavaScript()
     " All JavaScript will be parsed as JSX because some people put JSX into .js files. :(
     " TODO: Check for JSX code in buffer instead.
