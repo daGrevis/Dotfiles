@@ -244,6 +244,9 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
+" Incremental %s/ in split.
+set inccommand=split
+
 " Don't conceal JSON quotes.
 let g:vim_json_syntax_conceal = 0
 
