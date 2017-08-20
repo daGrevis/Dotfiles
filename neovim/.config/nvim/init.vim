@@ -256,6 +256,9 @@ let g:javascript_plugin_flow = 1
 " Make it a bit wider.
 let g:gundo_width = 60
 
+" Character pairs to colorize in Lisp-like languages.
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+
 " }}}
 
 " Completion {{{
