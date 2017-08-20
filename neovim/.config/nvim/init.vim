@@ -929,25 +929,34 @@ function! AuVimEnter()
     endif
 
     if g:colorscheme_loaded
-        hi TabLine guifg=#a7adba
-        hi TabLineSel guifg=#d8dee9 guibg=#4f5b66
-        hi StatusLine guibg=#343d46
+        hi NonText gui=none
+
         hi ModeMsg guifg=#d8dee9
-        hi WildMenu guifg=#d8dee9 guibg=#4f5b66
-        hi PmenuSel guifg=#d8dee9 guibg=#4f5b66
-        hi Pmenu guibg=#343d46
-        hi PmenuThumb guibg=#4f5b66
-        hi PmenuSbar guibg=#343d46
-        hi Comment guifg=#86909c
+        hi WildMenu gui=bold
+        hi StatusLineNC guifg=#1b2b34 guibg=#4f5b66
+
+        hi PmenuSel gui=bold
+        hi Pmenu guifg=#65737e
+        hi PmenuThumb guibg=#65737e
+
+        hi TabLineFill guifg=#1b2b34
+        hi TabLine guifg=#65737e guibg=#1b2b34 gui=none
+        hi TabLineSel guifg=#65737e guibg=#343d46
+
+        hi DiffAdd guibg=#1b2b34
+        hi DiffChange guibg=#1b2b34
+        hi DiffDelete guibg=#1b2b34
+
         hi htmlTag guifg=#6699cc
         hi htmlTagName guifg=#6699cc
+
         hi xmlTagName guifg=#6699cc
         hi xmlEndTag guifg=#6699cc
         hi xmlTagN guifg=#6699cc
-        " hi ModeMsg
 
-        hi IncSearch guibg=#fac863
-        hi Sneak guibg=#4f5b66
+        hi IncSearch guibg=#fac863 guifg=#343d46
+
+        hi Sneak guibg=#fac863 guifg=#343d46
     endif
 endfunction
 autocmd vimrc VimEnter * call AuVimEnter()
