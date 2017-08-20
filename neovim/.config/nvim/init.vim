@@ -745,6 +745,12 @@ nnoremap <Leader>' :ArgWrap<CR>
 nnoremap <Leader>, :SidewaysLeft<CR>
 nnoremap <Leader>. :SidewaysRight<CR>
 
+" Toggle coloring of the text.
+nnoremap <Leader>l :ColorToggle<CR>
+
+" Toggle Gundo for history tree.
+nnoremap <Leader>u :GundoToggle<CR>
+
 " }}}
 
 " Auto-commands (events) {{{
