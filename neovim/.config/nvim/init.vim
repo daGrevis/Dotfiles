@@ -6,7 +6,7 @@
 " Installs vim-plug along with all plugins in case plugin manager isn't installed.
 "
 " This allows to replicate my Vim setup by simply copying init.vim into the right place:
-"     curl -Lo ~/.config/nvim/init.vim --create-dirs http://dagrev.is/init.vim
+"   curl -Lo ~/.config/nvim/init.vim --create-dirs http://dagrev.is/init.vim
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://github.com/junegunn/vim-plug/raw/master/plug.vim
 
@@ -31,6 +31,9 @@ Plug 'https://github.com/tpope/vim-repeat'
 
 " Various new text objects and enchantments to standard ones.
 Plug 'https://github.com/wellle/targets.vim'
+
+" Text object for the same indent level.
+Plug 'https://github.com/michaeljsmith/vim-indent-object'
 
 " Easily delete, change and add such surroundings in pairs.
 Plug 'https://github.com/tpope/vim-surround'
