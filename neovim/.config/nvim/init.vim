@@ -715,6 +715,9 @@ nnoremap <Leader>v ggVG
 " Format the current buffer.
 nnoremap gw gwgg=G
 
+" Prompt to open file with same name, different extension.
+nnoremap <Leader>y :tabe <C-r>=expand('%:r').'.'<CR>
+
 " Just like standard f/F except it works on multiple lines.
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
