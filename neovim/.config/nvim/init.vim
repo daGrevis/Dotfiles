@@ -261,8 +261,11 @@ let g:gundo_width = 60
 " Completion {{{
 
 set complete=
+" Scan the current buffer.
 set complete+=.
+" Scan other loaded buffers that are in the buffer list.
 set complete+=b
+" Tag completion.
 set complete+=t
 
 set dictionary=
