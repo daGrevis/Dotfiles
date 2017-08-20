@@ -768,14 +768,18 @@ function! AuTabLeave()
 endfunction
 autocmd vimrc TabLeave * call AuTabLeave()
 
-function! AuFocusGained()
-    " https://github.com/neovim/neovim/issues/1936
-    exe ':checktime'
-
+function! AuChanged()
     try
-        " Run linter on focus gain.
-        " This will fail when Neomake is not installed. We don't want an error whenever focus has
-        " been gained.
+        exe ':checktime'
+        exe ':Neomake'
+    catch
+    endtry
+endfunction
+autocmd vimrc CursorHold,InsertLeave,FocusLost * call AuChanged()
+
+function! AuFocusGained()
+    try
+        exe ':checktime'
         exe ':Neomake'
     catch
     endtry
@@ -820,6 +824,7 @@ autocmd vimrc BufReadPost * call AuBufReadPost()
 
 function! AuBufWritePost()
     " Run linter on explicit save.
+    exe ':checktime'
     exe ':Neomake'
 endfunction
 autocmd vimrc BufWritePost * call AuBufWritePost()
