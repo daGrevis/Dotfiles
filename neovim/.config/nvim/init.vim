@@ -718,6 +718,12 @@ nnoremap gw gwgg=G
 " Prompt to open file with same name, different extension.
 nnoremap <Leader>y :tabe <C-r>=expand('%:r').'.'<CR>
 
+" Switch between splits easily.
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
 " Just like standard f/F except it works on multiple lines.
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
