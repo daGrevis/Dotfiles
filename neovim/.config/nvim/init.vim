@@ -853,6 +853,11 @@ function! AuFileTypeJavaScript()
 endfunction
 autocmd vimrc FileType javascript call AuFileTypeJavaScript()
 
+function! AuFileTypeTypeScript()
+    setlocal filetype=typescript.jsx
+endfunction
+autocmd vimrc FileType typescript call AuFileTypeTypeScript()
+
 function! AuFileTypeSass()
     setlocal shiftwidth=4
 endfunction
