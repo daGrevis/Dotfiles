@@ -593,6 +593,18 @@ function! StatusLineGitHead()
     return ' ' . s:head . ' '
 endfunction
 
+function! StatusLineFileSize()
+    let bytes = getfsize(expand("%:p"))
+    if bytes <= 0
+        return ""
+    endif
+    if bytes < 1024
+        return bytes . 'B'
+    else
+        return (bytes / 1024) . 'K'
+    endif
+endfunction
+
 set statusline=
 " Modified and read-only flags.
 set statusline+=\ %m%r
@@ -602,13 +614,13 @@ set statusline+=%f\
 set statusline+=%1*
 set statusline+=%{StatusLineGitHead()}
 set statusline+=%*
+
 " Right align.
 set statusline+=%=
-" Current tag.
-set statusline+=%{tagbar#currenttag('%s\ ','\ ','f')}
+set statusline+=%{StatusLineFileSize()}\ 
 set statusline+=%1*
 " Position.
-set statusline+=\ %l/%L\ %p%%
+set statusline+=\ %l:%c/%L\ %p%%\ 
 set statusline+=%*
 
 " }}}
