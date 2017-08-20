@@ -709,6 +709,8 @@ vnoremap <Leader>a y:%s/<C-r>"/
 
 " Visually select current line without selecting newline at the end.
 nnoremap <Leader>c ^v$h
+" Visually select current line without selecting newline at the end.
+nnoremap <Leader>v ggVG
 
 " Format the current buffer.
 nnoremap gw gwgg=G
