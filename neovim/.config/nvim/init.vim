@@ -62,6 +62,9 @@ Plug 'https://github.com/tpope/vim-commentary'
 " Git bindings.
 Plug 'https://github.com/tpope/vim-fugitive'
 
+" Visualize Vim history tree.
+Plug 'https://github.com/sjl/gundo.vim'
+
 " Auto-adjust tabs vs spaces based on current buffer.
 Plug 'https://github.com/tpope/vim-sleuth'
 
@@ -239,6 +242,9 @@ let g:vim_json_syntax_conceal = 0
 
 " Enable Flow syntax support.
 let g:javascript_plugin_flow = 1
+
+" Make it a bit wider.
+let g:gundo_width = 60
 
 " }}}
 
