@@ -724,6 +724,15 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
+" Switch case of the character under the cursor, but DON'T move to the right.
+function! SwitchCase()
+    exe "normal! ~"
+    if strlen(getline('.')) != virtcol('.')
+        exe "normal! h"
+    endif
+endfunction
+nnoremap ~ :call SwitchCase()<CR>
+
 " Just like standard f/F except it works on multiple lines.
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
