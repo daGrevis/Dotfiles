@@ -142,12 +142,15 @@ Plug 'https://github.com/mhartington/oceanic-next'
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'https://github.com/elzr/vim-json', {'for': 'json'}
-Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx'], 'branch': 'develop'}
-Plug 'https://github.com/mxw/vim-jsx', {'for': 'javascript.jsx'}
+Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
+Plug 'https://github.com/leafgarland/typescript-vim', {'for': ['typescript', 'typescript.jsx']}
+Plug 'https://github.com/mxw/vim-jsx', {'for': ['javascript.jsx', 'typescript.jsx']}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
 
 Plug 'https://github.com/evanmiller/nginx-vim-syntax', {'for': 'nginx'}
+
+Plug 'https://github.com/cespare/vim-toml', {'for': 'toml'}
 
 call plug#end()
 
