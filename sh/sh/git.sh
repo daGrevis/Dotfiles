@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Disable automatic git-lfs downloads.
+export GIT_LFS_SKIP_SMUDGE=1
+
 alias ga="git add"
 alias gaa="git add -A"
 alias gbr="git branch"
