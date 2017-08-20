@@ -14,8 +14,9 @@ alias gcm="git commit -v"
 alias gco="git checkout"
 alias gcob="git checkout -b"
 alias gcp="git cherry-pick"
-alias gd="git diff"
-alias gdf="git diff"
+gd() {
+    { git --no-pager diff --color --stat "$@"; echo; git --no-pager diff --color "$@" } | less
+}
 gl() {
     rev_before=$(git rev-parse HEAD)
 
