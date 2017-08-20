@@ -995,11 +995,23 @@ autocmd vimrc VimEnter * call AuVimEnter()
 
 " Here be dragons!
 
-function! RemoveExactDuplicateLines()
-    exe 'g/^\(.*\)\n\1$/d'
-endfunction
-command! RemoveExactDuplicateLines call RemoveExactDuplicateLines()
-
-let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+let g:tagbar_type_typescript = {
+    \ 'ctagsbin': 'tstags',
+    \ 'ctagsargs': '-f-',
+    \ 'kinds': [
+        \ 'e:enums:0:1',
+        \ 'f:function:0:1',
+        \ 't:typealias:0:1',
+        \ 'M:Module:0:1',
+        \ 'I:import:0:1',
+        \ 'i:interface:0:1',
+        \ 'C:class:0:1',
+        \ 'm:method:0:1',
+        \ 'p:property:0:1',
+        \ 'v:variable:0:1',
+        \ 'c:const:0:1',
+    \ ],
+    \ 'sort': 0
+\ }
 
 " }}}
