@@ -628,8 +628,8 @@ set statusline+=%*
 " Mappings {{{
 
 " Move downward/upward with a respect to lines wrap.
-nnoremap j gj
-nnoremap k gk
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
 
 " Join lines.
 nnoremap <Leader>j :join<CR>
