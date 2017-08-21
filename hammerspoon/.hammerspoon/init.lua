@@ -51,16 +51,26 @@ hs.hotkey.bind({"cmd"}, "`", function()
   end
 end)
 
-hs.hotkey.bind({"cmd"}, "b", function()
-  kwmc("space -t bsp")
-end)
+local modeIndex = 0
+hs.hotkey.bind({"cmd", "shift"}, "s", function()
+  modeIndex = modeIndex + 1
 
-hs.hotkey.bind({"cmd"}, "s", function()
-  kwmc("space -t monocle")
-end)
+  local index = modeIndex % 3
 
-hs.hotkey.bind({"cmd"}, "d", function()
-  kwmc("space -t float")
+  if index == 0 then
+    kwmc("space -t monocle")
+    hs.alert.show("monocle")
+  end
+
+  if index == 1 then
+    hs.alert.show("float")
+    kwmc("space -t float")
+  end
+
+  if index == 2 then
+    hs.alert.show("bsp")
+    kwmc("space -t bsp")
+  end
 end)
 
 hs.hotkey.bind({"cmd"}, "e", function()
