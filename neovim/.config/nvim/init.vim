@@ -125,6 +125,9 @@ Plug 'https://github.com/chrisbra/Colorizer'
 " Wrap and unwrap arguments.
 Plug 'https://github.com/FooSoft/vim-argwrap'
 
+" Switch segments of text with predefined replacements.
+Plug 'https://github.com/AndrewRadev/switch.vim'
+
 " Snippet engine.
 Plug 'https://github.com/SirVer/ultisnips'
 
