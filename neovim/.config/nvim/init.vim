@@ -198,6 +198,8 @@ set expandtab
 set tabstop=4
 " Number of spaces that a tab counts for when using auto-indent.
 set shiftwidth=4
+" Round indent to multiple.
+set shiftround
 
 " }}}
 
@@ -219,6 +221,7 @@ set iskeyword+=-
 
 " Show characters like Tab or trailing space differently.
 set list listchars=tab:→\ ,trail:·,nbsp:·
+set showbreak=↪
 
 " Also shows line number relative to the cursor. This allows rapid movement in
 " buffers with 10j, 17k or alike moves to get to the specific line.
