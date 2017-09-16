@@ -211,6 +211,9 @@ set updatetime=500
 " Do not create swap-files.
 set noswapfile
 
+" Persist undos/redos after closing Vim.
+set undofile
+
 " Ignore patterns.
 set wildignore=
 set wildignore+=*.pyc
@@ -1000,6 +1003,5 @@ autocmd vimrc VimEnter * call AuVimEnter()
 " Experiments {{{
 
 " Here be dragons!
-
 
 " }}}
