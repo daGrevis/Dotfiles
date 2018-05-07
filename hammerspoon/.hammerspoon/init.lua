@@ -22,21 +22,6 @@ function open_app(app_name, new)
   hs.execute(s)
 end
 
-function open_iterm2()
-  s = [[
-    if application "iTerm" is running then
-      tell application "iTerm"
-        create window with default profile
-      end tell
-    else
-      activate application "iTerm"
-    end if
-  ]]
-  hs.osascript.applescript(s)
-end
-
-function kwmc(s)
-  hs.execute("/usr/local/bin/kwmc " .. s)
 function chunkc(s)
   hs.execute("/usr/local/bin/chunkc " .. s)
 end
@@ -124,7 +109,7 @@ hs.hotkey.bind({"cmd"}, ".", function()
 end)
 
 hs.hotkey.bind({"cmd", "shift"}, "return", function()
-  open_iterm2()
+  open_app("Alacritty")
 end)
 
 hs.hotkey.bind({"cmd", "shift"}, "i", function()
