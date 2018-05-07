@@ -33,3 +33,9 @@ css=.sass,.scss
 
 --type-add
 js=.jsx
+
+--type-add
+ts=.ts,.tsx
+
+--type-add
+cs=.cs
