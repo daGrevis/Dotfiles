@@ -23,6 +23,16 @@ s+=":$HOME/.nvm/versions/node/v8.4.0/bin"
 s+=":$PATH"
 export PATH="$s"
 
+tm() {
+  if [ "$1" = "ls" ]; then
+    tmux ls
+  elif [ "$1" = "" ]; then
+    tmux attach -t "default" || tmux new -s "default"
+  else
+    tmux new -s "$1" || tmux attach -t "$1"
+  fi
+}
+
 _NVM_DIR=~/.nvm
 
 nvm() {
