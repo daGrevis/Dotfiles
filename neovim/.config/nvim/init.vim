@@ -982,15 +982,18 @@ function! AuVimEnter()
 
         hi ModeMsg guifg=#d8dee9
         hi WildMenu gui=bold
-        hi StatusLineNC guifg=#1b2b34 guibg=#4f5b66
+        hi StatusLine guifg=#65737e guibg=#343d46 gui=bold
+        hi StatusLineNC guifg=#65737e guibg=#343d46 gui=bold
 
         hi PmenuSel gui=bold
         hi Pmenu guifg=#65737e
         hi PmenuThumb guibg=#65737e
 
-        hi TabLineFill guifg=#1b2b34
+        hi TabLineFill guifg=#1b2b34 guibg=#343d46
         hi TabLine guifg=#65737e guibg=#1b2b34 gui=none
         hi TabLineSel guifg=#65737e guibg=#343d46
+
+        hi QuickFixLine guibg=none
 
         hi DiffAdd guibg=#1b2b34
         hi DiffChange guibg=#1b2b34
@@ -1006,6 +1009,8 @@ function! AuVimEnter()
         hi IncSearch guibg=#fac863 guifg=#343d46
 
         hi Sneak guibg=#fac863 guifg=#343d46
+
+        hi SignatureMarkText guifg=#ec5f67
     endif
 endfunction
 autocmd vimrc VimEnter * call AuVimEnter()
