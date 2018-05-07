@@ -382,7 +382,7 @@ set foldmethod=marker
 
 " Spelling {{{
 
-" #PROTIP: Use cos mapping from vim-unimpaired to toggle spell-checker.
+" #PROTIP: Use =os mapping from vim-unimpaired to toggle spell-checker.
 
 " Suggest word under/after the cursor.
 nnoremap <Leader>z :setlocal spell<CR>z=
