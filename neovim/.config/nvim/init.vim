@@ -432,7 +432,8 @@ nnoremap <Leader>p :CtrlPClearAllCaches \| CtrlP<CR>
 
 " File Explorer {{{
 
-nnoremap <Tab> :NERDTreeToggle<CR>
+" Reuse the same NERDTree across tabs.
+nnoremap <Tab> :NERDTreeToggle \| :silent NERDTreeMirror<CR>
 
 let g:NERDTreeWinSize = 60
 let g:NERDTreeShowHidden = 1
