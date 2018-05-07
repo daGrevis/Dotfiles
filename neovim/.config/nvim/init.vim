@@ -154,7 +154,7 @@ Plug 'https://github.com/mxw/vim-jsx', {'for': ['javascript.jsx', 'typescript.js
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
 
-Plug 'https://github.com/evanmiller/nginx-vim-syntax', {'for': 'nginx'}
+Plug 'https://github.com/chr4/nginx.vim', {'for': 'nginx'}
 
 Plug 'https://github.com/cespare/vim-toml', {'for': 'toml'}
 
