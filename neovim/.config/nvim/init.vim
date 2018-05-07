@@ -134,6 +134,9 @@ Plug 'https://github.com/SirVer/ultisnips'
 " Move arguments left and right.
 Plug 'https://github.com/AndrewRadev/sideways.vim'
 
+" Restores FocusGained & FocusLost auto-commands when running inside tmux.
+Plug 'https://github.com/tmux-plugins/vim-tmux-focus-events'
+
 " Colorful parentheses for lisp-like languages.
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 
