@@ -805,6 +805,9 @@ nnoremap <Leader>l :ColorToggle<CR>
 " Toggle Gundo for history tree.
 nnoremap <Leader>u :GundoToggle<CR>
 
+" Git blame current buffer.
+nnoremap <Leader>b :Gblame<CR>
+
 " }}}
 
 " Auto-commands (events) {{{
