@@ -158,6 +158,8 @@ Plug 'https://github.com/evanmiller/nginx-vim-syntax', {'for': 'nginx'}
 
 Plug 'https://github.com/cespare/vim-toml', {'for': 'toml'}
 
+Plug 'https://github.com/tmux-plugins/vim-tmux', {'for': 'tmux'}
+
 call plug#end()
 
 " }}}
