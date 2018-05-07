@@ -718,6 +718,7 @@ nmap <PageDown> ]m
 " Juggling with buffers.
 nnoremap <Leader>e :e<Space>
 nnoremap <Leader>ee :e!<CR>
+nnoremap <Leader>r :tabdo e!<CR>
 nnoremap <Leader>q :wq<CR>
 nnoremap <Leader>w :w<CR>
 
@@ -733,8 +734,6 @@ cnoremap <C-t> <Home>tabe \| <End>
 
 " Show messages.
 nnoremap <Leader>m :messages<CR>
-" Display registers.
-nnoremap <Leader>r :registers<CR>
 
 " Source Vimscript.
 nnoremap <Leader>x :source %<CR>
