@@ -102,6 +102,11 @@ hs.hotkey.bind({"cmd"}, "/", function()
   hs.caffeinate.startScreensaver()
 end)
 
+hs.hotkey.bind({"cmd"}, ".", function()
+  hs.pasteboard.setContents('')
+  hs.alert.show("clipboard cleared")
+end)
+
 hs.hotkey.bind({"cmd", "shift"}, "return", function()
   open_iterm2()
 end)
