@@ -74,8 +74,11 @@ Plug 'https://github.com/tpope/vim-abolish'
 " Saves your Vim sessions.
 Plug 'https://github.com/tpope/vim-obsession'
 
-" Tab completion.
+" Insert-mode completion with tab.
 Plug 'https://github.com/ervandew/supertab'
+
+" Completion engine.
+Plug 'https://github.com/Shougo/deoplete.nvim'
 
 " Auto-close delimiters.
 Plug 'https://github.com/Raimondi/delimitMate'
@@ -149,8 +152,9 @@ Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'https://github.com/elzr/vim-json', {'for': 'json'}
 Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
-Plug 'https://github.com/leafgarland/typescript-vim', {'for': ['typescript', 'typescript.jsx']}
-Plug 'https://github.com/mxw/vim-jsx', {'for': ['javascript.jsx', 'typescript.jsx']}
+Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
+Plug 'https://github.com/mhartington/nvim-typescript', {'for': ['typescript', 'typescript.jsx']}
+Plug 'https://github.com/mxw/vim-jsx', {'for': ['javascript.jsx']}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
 
@@ -253,6 +257,9 @@ set shortmess+=I
 " Always show status bar.
 set laststatus=2
 
+" Hide buffers instead of closing them.
+set hidden
+
 " GUI colors for Neovim >= 0.1.5+ and Vim 8.
 if (has("termguicolors"))
     set termguicolors
@@ -285,6 +292,9 @@ set complete+=b
 " Tag completion.
 set complete+=t
 
+" Do not show preview.
+set completeopt-=preview
+
 set dictionary=
 set dictionary+=/usr/share/dict/words
 
@@ -297,6 +307,9 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 " Expand snippet under the cursor.
 " See: .config/nvim/UltiSnips/*.snippets
 let g:UltiSnipsExpandTrigger = "<C-s>"
+
+" Start Deoplete on start-up.
+let g:deoplete#enable_at_startup = 1
 
 " }}}
 
@@ -811,15 +824,6 @@ function! AuTabLeave()
 endfunction
 autocmd vimrc TabLeave * call AuTabLeave()
 
-function! AuChanged()
-    try
-        exe ':checktime'
-        exe ':Neomake'
-    catch
-    endtry
-endfunction
-autocmd vimrc CursorHold,InsertLeave,FocusLost * call AuChanged()
-
 function! AuFocusGained()
     try
         exe ':checktime'
@@ -900,6 +904,11 @@ function! AuFileTypeTypeScript()
     setlocal filetype=typescript.jsx
 endfunction
 autocmd vimrc FileType typescript call AuFileTypeTypeScript()
+
+function! AuBufEnterBufNewTsx()
+    setlocal filetype=typescript.jsx
+endfunction
+autocmd vimrc BufEnter,BufNew *.tsx call AuBufEnterBufNewTsx()
 
 function! AuFileTypeSass()
     setlocal shiftwidth=4
