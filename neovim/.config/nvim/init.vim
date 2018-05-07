@@ -493,11 +493,9 @@ nnoremap <Leader>] <C-w><C-]><C-w>T
 " Visual appearance.
 let g:neomake_error_sign = {
             \ 'text': 'E>',
-            \ 'texthl': 'ErrorSign',
             \ }
 let g:neomake_warning_sign = {
             \ 'text': 'W>',
-            \ 'texthl': 'WarningSign',
             \ }
 
 " let g:neomake_{ language }_enabled_makers
