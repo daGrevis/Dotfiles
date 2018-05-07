@@ -37,8 +37,11 @@ end
 
 function kwmc(s)
   hs.execute("/usr/local/bin/kwmc " .. s)
+function chunkc(s)
+  hs.execute("/usr/local/bin/chunkc " .. s)
 end
 
+-- Focus previously used window of the same app.
 hs.hotkey.bind({"cmd"}, "`", function()
   local front_app = hs.application.frontmostApplication()
   local visible_windows = front_app:visibleWindows()
@@ -51,6 +54,7 @@ hs.hotkey.bind({"cmd"}, "`", function()
   end
 end)
 
+-- Change between layout modes: monocle, float or bsp.
 local modeIndex = 0
 hs.hotkey.bind({"cmd", "shift"}, "s", function()
   modeIndex = modeIndex + 1
@@ -58,44 +62,56 @@ hs.hotkey.bind({"cmd", "shift"}, "s", function()
   local index = modeIndex % 3
 
   if index == 0 then
-    kwmc("space -t monocle")
-    hs.alert.show("monocle")
+    hs.alert.show("mode: monocle")
+    chunkc("tiling::desktop --layout monocle")
   end
 
   if index == 1 then
-    hs.alert.show("float")
-    kwmc("space -t float")
+    hs.alert.show("mode: float")
+    chunkc("tiling::desktop --layout float")
   end
 
   if index == 2 then
-    hs.alert.show("bsp")
-    kwmc("space -t bsp")
+    hs.alert.show("mode: bsp")
+    chunkc("tiling::desktop --layout bsp")
   end
 end)
 
-hs.hotkey.bind({"cmd"}, "e", function()
-  kwmc("tree rotate 180")
-end)
+-- Focus windows.
+-- TODO: Fix C-l
+-- hs.hotkey.bind({"cmd"}, "h", function()
+--   chunkc("tiling::window --focus west")
+-- end)
+-- hs.hotkey.bind({"cmd"}, "j", function()
+--   chunkc("tiling::window --focus south")
+-- end)
+-- hs.hotkey.bind({"cmd"}, "k", function()
+--   chunkc("tiling::window --focus north")
+-- end)
+-- hs.hotkey.bind({"cmd"}, "l", function()
+--   chunkc("tiling::window --focus east")
+-- end)
 
-hs.hotkey.bind({"cmd", "shift"}, "e", function()
-  kwmc("tree rotate 90")
-end)
-
+-- Resize windows.
 hs.hotkey.bind({"cmd", "shift"}, "h", function()
-  kwmc("window -c expand 0.05 west")
+  chunkc("tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west")
 end)
 hs.hotkey.bind({"cmd", "shift"}, "j", function()
-  kwmc("window -c expand 0.05 south")
+  chunkc("tiling::window --use-temporary-ratio 0.05 --adjust-window-edge south")
 end)
 hs.hotkey.bind({"cmd", "shift"}, "k", function()
-  kwmc("window -c expand 0.05 north")
+  chunkc("tiling::window --use-temporary-ratio 0.05 --adjust-window-edge north")
 end)
 hs.hotkey.bind({"cmd", "shift"}, "l", function()
-  kwmc("window -c expand 0.05 east")
+  chunkc("tiling::window --use-temporary-ratio 0.05 --adjust-window-edge east")
 end)
 
-hs.hotkey.bind({"cmd", "alt"}, "f", function()
-  kwmc("window -z fullscreen")
+-- Rotate desktops.
+hs.hotkey.bind({"cmd"}, "e", function()
+  chunkc("tiling::desktop --rotate 180")
+end)
+hs.hotkey.bind({"cmd", "shift"}, "e", function()
+  chunkc("tiling::desktop --rotate 90")
 end)
 
 hs.hotkey.bind({"cmd"}, "/", function()
