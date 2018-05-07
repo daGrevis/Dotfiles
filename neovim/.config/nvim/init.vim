@@ -847,10 +847,6 @@ endfunction
 autocmd vimrc BufLeave * call AuBufLeave()
 
 function! AuBufReadPost()
-    if &filetype !=# 'gitcommit'
-        call SetColorColumn(101)
-    endif
-
     " I'm not using omni-complete.
     setlocal omnifunc=
 
