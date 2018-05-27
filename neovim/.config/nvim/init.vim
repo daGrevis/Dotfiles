@@ -162,6 +162,8 @@ Plug 'https://github.com/chr4/nginx.vim', {'for': 'nginx'}
 
 Plug 'https://github.com/cespare/vim-toml', {'for': 'toml'}
 
+Plug 'https://github.com/LnL7/vim-nix', {'for': 'nix'}
+
 Plug 'https://github.com/tmux-plugins/vim-tmux', {'for': 'tmux'}
 
 call plug#end()
