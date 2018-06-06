@@ -38,7 +38,7 @@ t() {
     tree -a -I ".git" "$@"
 }
 
-df() {
+dff() {
     command -v colordiff &> /dev/null
     if [ "$?" != "0" ]; then
         diff -u "$@" | less

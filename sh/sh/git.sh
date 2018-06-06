@@ -17,6 +17,7 @@ alias gcp="git cherry-pick"
 gd() {
     { git --no-pager diff --color --stat "$@"; echo; git --no-pager diff --color "$@" } | less
 }
+alias gdf=gd
 gl() {
     rev_before=$(git rev-parse HEAD)
 
