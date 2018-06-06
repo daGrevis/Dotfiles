@@ -710,8 +710,8 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap ' `
 
 " Visually select word under the cursor without moving.
-nmap * g*<C-o>
-nmap # g#<C-o>
+nnoremap * g*<C-o>
+nnoremap # g#<C-o>
 
 " Run macro called q.
 nnoremap Q @q
