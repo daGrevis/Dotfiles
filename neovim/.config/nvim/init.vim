@@ -617,8 +617,11 @@ vnoremap <Leader>g :ShareGist
 " Status-line {{{
 
 function! StatusLineGitHead()
-    let s:head = fugitive#head(7)
+    if winwidth(0) < 120
+        return ''
+    endif
 
+    let s:head = fugitive#head(7)
     if s:head == ''
         return ''
     endif
@@ -626,6 +629,10 @@ function! StatusLineGitHead()
 endfunction
 
 function! StatusLineFileSize()
+    if winwidth(0) < 120
+        return ''
+    endif
+
     let bytes = getfsize(expand("%:p"))
     if bytes <= 0
         return ""
