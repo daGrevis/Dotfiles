@@ -44,6 +44,9 @@ Plug 'https://github.com/justinmk/vim-sneak'
 " Highlight all pattern matches.
 Plug 'https://github.com/haya14busa/incsearch.vim'
 
+" Show number of search matches and index of a current match.
+Plug 'https://github.com/google/vim-searchindex'
+
 " Bracket mappings.
 Plug 'https://github.com/tpope/vim-unimpaired'
 
