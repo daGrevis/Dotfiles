@@ -629,11 +629,26 @@ function! StatusLineGitHead()
         return ''
     endif
 
-    let s:head = fugitive#head(7)
+    try
+        let s:head = fugitive#head(7)
+    catch
+        return ''
+    endtry
+
     if s:head == ''
         return ''
     endif
+
     return ' ' . s:head . ' '
+endfunction
+
+function! StatusLineNeomake()
+    let s:counts = neomake#statusline#LoclistCounts()
+    let s:errors = get(s:counts, 'E', 0)
+    let s:warnings = get(s:counts, 'W', 0)
+    let s:e = s:errors == 0 ? '' : 'E' . s:errors
+    let s:w = s:warnings == 0 ? '' : 'W' . s:warnings
+    return ' ' . s:e . (s:warnings == 0 ? '' : ' ') . s:w . ' '
 endfunction
 
 function! StatusLineFileSize()
@@ -657,13 +672,16 @@ set statusline=
 set statusline+=\ %m%r
 " Current path.
 set statusline+=%f\ 
-" Git revision.
+" Start highlight.
 set statusline+=%1*
+" Git revision.
 set statusline+=%{StatusLineGitHead()}
+" End highlight.
 set statusline+=%*
 
 " Right align.
 set statusline+=%=
+set statusline+=%{StatusLineNeomake()}\ 
 set statusline+=%{StatusLineFileSize()}\ 
 set statusline+=%1*
 " Position.
