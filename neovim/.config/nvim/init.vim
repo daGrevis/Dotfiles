@@ -68,6 +68,9 @@ Plug 'https://github.com/tpope/vim-fugitive'
 " GitHub bindings.
 Plug 'https://github.com/tpope/vim-rhubarb'
 
+" Illuminate other uses of the current word under the cursor.
+Plug 'https://github.com/RRethy/vim-illuminate'
+
 " Visualize Vim history tree.
 Plug 'https://github.com/sjl/gundo.vim'
 
