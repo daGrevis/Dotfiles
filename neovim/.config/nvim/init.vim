@@ -713,8 +713,6 @@ vnoremap <Leader>j :join<CR>
 " Clear currently highlighted phrase.
 nnoremap <C-l> :nohlsearch<CR>
 
-nnoremap <C-q> :q!<CR>
-
 " Goes to the first non-blank character of the line.
 nnoremap H ^
 vnoremap H ^
@@ -757,7 +755,7 @@ nmap <PageDown> ]m
 nnoremap <Leader>e :e<Space>
 nnoremap <Leader>ee :e!<CR>
 nnoremap <Leader>r :tabdo e!<CR>
-nnoremap <Leader>q :wq<CR>
+nnoremap <Leader>q ZZ
 nnoremap <Leader>w :w<CR>
 
 " Command templates.
