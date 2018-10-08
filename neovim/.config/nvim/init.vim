@@ -958,6 +958,11 @@ function! AuFileTypeMarkdown()
 endfunction
 autocmd vimrc FileType markdown call AuFileTypeMarkdown()
 
+function! AuFileTypeSvg()
+    setlocal nowrap
+endfunction
+autocmd vimrc FileType svg call AuFileTypeSvg()
+
 function! AuFileTypeTwig()
     setlocal filetype=html
 endfunction
