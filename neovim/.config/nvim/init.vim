@@ -1057,4 +1057,11 @@ autocmd vimrc VimEnter * call AuVimEnter()
 
 " Here be dragons!
 
+set backupcopy=yes
+
+noremap <silent> gr :tabm +<CR>
+noremap <silent> gR :tabm -<CR>
+
+set shellcmdflag=-ic
+
 " }}}
