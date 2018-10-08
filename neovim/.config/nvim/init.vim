@@ -65,6 +65,9 @@ Plug 'https://github.com/tpope/vim-commentary'
 " Git bindings.
 Plug 'https://github.com/tpope/vim-fugitive'
 
+" GitHub bindings.
+Plug 'https://github.com/tpope/vim-rhubarb'
+
 " Visualize Vim history tree.
 Plug 'https://github.com/sjl/gundo.vim'
 
