@@ -560,6 +560,8 @@ nnoremap // :Grepper<CR>
 let g:grepper = {
     \ 'tools': ['ack', 'git', 'grep'],
     \ 'simple_prompt': 1,
+    \ 'highlight': 1,
+    \ 'next_tool': '<leader>g',
     \ }
 
 " Mappings like s, v, t, o, and O for quickfix window.
