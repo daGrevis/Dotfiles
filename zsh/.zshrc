@@ -19,7 +19,7 @@ s+=":/opt/local/sbin"
 s+=":$HOME/.bin"
 s+=":$HOME/.node/bin"
 s+=":$HOME/.cargo/bin"
-s+=":$HOME/.nvm/versions/node/v8.4.0/bin"
+s+=":$HOME/.nvm/versions/node/v9.11.1/bin"
 s+=":$PATH"
 export PATH="$s"
 
@@ -76,7 +76,6 @@ bindkey '^X' edit-command-line
 precmd() {
   if [ -f 'package.json' ] && [ -z "$NVM_DIR" ]; then
     nvm > /dev/null
-    echo 'nvm auto-loaded!'
   fi
 }
 
