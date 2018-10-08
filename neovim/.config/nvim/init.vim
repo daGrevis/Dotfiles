@@ -788,7 +788,7 @@ nnoremap <Leader>v ggVG
 nnoremap gw gwgg=G
 
 " Prompt to open file with same name, different extension.
-nnoremap <Leader>y :tabe <C-r>=expand('%:r').'.'<CR>
+nnoremap <Leader>y :tabe <C-r>=expand('%:h').'/'<CR>
 
 " Switch between splits easily.
 nnoremap <A-h> <C-w>h
