@@ -15,13 +15,12 @@ alias gco="git checkout"
 alias gcob="git checkout -b"
 alias gcp="git cherry-pick"
 gd() {
-    { git --no-pager diff --color --stat "$@"; echo; git --no-pager diff --color "$@" } | less
+    { git --no-pager diff --color --stat "$@"; echo; git --no-pager diff --color "$@" | diff-so-fancy } | less -R --pattern '^(added|deleted|modified):'
 }
-alias gdf=gd
 gl() {
     rev_before=$(git rev-parse HEAD)
 
-    git pull
+    git pull origin $(git branch | grep \* | cut -d ' ' -f2)
     if [ "$?" = "0" ]; then
         rev_after=$(git rev-parse HEAD)
 
