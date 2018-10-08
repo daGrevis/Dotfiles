@@ -8,6 +8,7 @@ v() {
     fi
 }
 alias vim=v
+alias vv='nvim -u NORC'
 
 alias serve-http='python3 -m http.server'
 
@@ -47,6 +48,10 @@ dff() {
     fi
 }
 
+pjson() {
+    python -c 'import fileinput, json; print(json.dumps(json.loads("".join(fileinput.input())), indent=2))'
+}
+
 generate-password() {
     xkcdpass -d "-"
 }
@@ -84,4 +89,13 @@ open-chrome() {
 
 s() {
     source .env && echo '.env sourced!'
+}
+
+p() {
+    command -v prettyping &> /dev/null
+    if [ "$?" != "0" ]; then
+        ping google.com
+    else
+        prettyping --nolegend google.com
+    fi
 }
