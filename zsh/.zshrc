@@ -65,6 +65,8 @@ plugins=(autojump)
 
 source $ZSH/oh-my-zsh.sh
 
+unalias l
+
 ZSH_SYNTAX_HIGHLIGHTING="/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 [ -s "$ZSH_SYNTAX_HIGHLIGHTING" ] && . "$ZSH_SYNTAX_HIGHLIGHTING"
 
@@ -78,10 +80,22 @@ precmd() {
   fi
 }
 
-source ~/sh/utils.sh
-source ~/sh/git.sh
-source ~/sh/docker.sh
-source ~/sh/pass.sh
+# gcloud
+if [ -f '/Users/dagrevis/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dagrevis/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/dagrevis/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dagrevis/google-cloud-sdk/completion.zsh.inc'; fi
 
-# t2=$(gdate +%s.%N)
-# echo $((t2 - t1))
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_DEFAULT_OPTS="--bind ctrl-n:next-history,ctrl-p:previous-history,ctrl-r:up --history=$HOME/.fzf_history"
+
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+_fzf_compgen_path() {
+  fd --hidden --follow . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow . "$1"
+}
