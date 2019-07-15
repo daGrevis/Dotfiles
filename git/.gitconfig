@@ -3,6 +3,7 @@
     email = dagrevis@gmail.com
 [core]
     pager = less -+F
+    excludesfile = ~/.gitignore_global
 [color]
     ui = true
     diff = always
