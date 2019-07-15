@@ -1,123 +1,252 @@
-local passchooser = require "passchooser/passchooser"
+-- https://github.com/jasonrudolph/ControlEscape.spoon
+local ControlEscape = hs.loadSpoon('ControlEscape')
+ControlEscape:start()
 
-passchooser.bind()
+local PassChooser = hs.loadSpoon('PassChooser')
+PassChooser:bindHotkeys({
+  show={{'cmd'}, 'p'},
+})
+PassChooser:init({
+  clearAfter=10,
+})
 
-hs.loadSpoon('ControlEscape'):start()
+hs.alert.show('Hammerspoon loaded')
 
-function tablelength(T)
-  local count = 0
-  for _ in pairs(T) do count = count + 1 end
-  return count
+-- http://lua-users.org/wiki/StringRecipes
+function string.ends(String, End)
+   return End == '' or string.sub(String, -string.len(End)) == End
 end
 
 function open_app(app_name, new)
-  new = new or true
+  new = new or false
 
-  local s = "open"
+  local s = 'open'
   if new then
-    s = s .. " -n"
+    s = s .. ' -n'
   end
   s = s .. " -a '/Applications/" .. app_name .. ".app'"
 
   hs.execute(s)
 end
 
-function chunkc(s)
-  hs.execute("/usr/local/bin/chunkc " .. s)
+function airPods(deviceName)
+  local s = [[
+    activate application "SystemUIServer"
+    tell application "System Events"
+      tell process "SystemUIServer"
+        set btMenu to (menu bar item 1 of menu bar 1 whose description contains "bluetooth")
+        tell btMenu
+          click
+  ]]
+  ..
+          'tell (menu item "' .. deviceName .. '" of menu 1)\n'
+  ..
+  [[
+            click
+            if exists menu item "Connect" of menu 1 then
+              click menu item "Connect" of menu 1
+              return "Connecting AirPods..."
+            else
+              click menu item "Disconnect" of menu 1
+              return "Disconecting AirPods..."
+            end if
+          end tell
+        end tell
+      end tell
+    end tell
+  ]]
+
+  return hs.osascript.applescript(s)
 end
 
+hs.hotkey.bind({'cmd'}, '\\', function()
+  local ok, output = airPods('daGrevis’ AirPods')
+  if ok then
+    hs.alert.show(output)
+  else
+    hs.alert.show("Couldn't connect to AirPods!")
+  end
+end)
+
 -- Focus previously used window of the same app.
-hs.hotkey.bind({"cmd"}, "`", function()
+hs.hotkey.bind({'cmd'}, '`', function()
   local front_app = hs.application.frontmostApplication()
-  local visible_windows = front_app:visibleWindows()
-  local standard_windows = hs.fnutils.ifilter(visible_windows, function(w)
-    return w:subrole() == 'AXStandardWindow'
-  end)
 
-  if tablelength(standard_windows) > 1 then
-    standard_windows[2]:focus()
+  local windows
+  if front_app:name() == 'Alacritty' then
+    local rest_apps = hs.fnutils.ifilter({hs.application.find('Alacritty')}, function(app)
+      return app:pid() ~= front_app:pid()
+    end)
+
+    local apps = hs.fnutils.concat({front_app}, rest_apps)
+
+    print('apps', hs.inspect(apps))
+
+    windows = hs.fnutils.imap(apps, function(app)
+      return app:allWindows()[1]
+    end)
+  else
+    windows = hs.fnutils.ifilter(front_app:visibleWindows(), function(window)
+      return window:subrole() == 'AXStandardWindow'
+    end)
+  end
+
+  if #windows > 1 then
+    windows[2]:focus()
   end
 end)
 
--- Change between layout modes: monocle, float or bsp.
-local modeIndex = 0
-hs.hotkey.bind({"cmd", "shift"}, "s", function()
-  modeIndex = modeIndex + 1
-
-  local index = modeIndex % 3
-
-  if index == 0 then
-    hs.alert.show("mode: monocle")
-    chunkc("tiling::desktop --layout monocle")
-  end
-
-  if index == 1 then
-    hs.alert.show("mode: float")
-    chunkc("tiling::desktop --layout float")
-  end
-
-  if index == 2 then
-    hs.alert.show("mode: bsp")
-    chunkc("tiling::desktop --layout bsp")
-  end
-end)
-
--- Focus windows.
--- TODO: Fix C-l
--- hs.hotkey.bind({"cmd"}, "h", function()
---   chunkc("tiling::window --focus west")
--- end)
--- hs.hotkey.bind({"cmd"}, "j", function()
---   chunkc("tiling::window --focus south")
--- end)
--- hs.hotkey.bind({"cmd"}, "k", function()
---   chunkc("tiling::window --focus north")
--- end)
--- hs.hotkey.bind({"cmd"}, "l", function()
---   chunkc("tiling::window --focus east")
--- end)
-
--- Resize windows.
-hs.hotkey.bind({"cmd", "shift"}, "h", function()
-  chunkc("tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west")
-end)
-hs.hotkey.bind({"cmd", "shift"}, "j", function()
-  chunkc("tiling::window --use-temporary-ratio 0.05 --adjust-window-edge south")
-end)
-hs.hotkey.bind({"cmd", "shift"}, "k", function()
-  chunkc("tiling::window --use-temporary-ratio 0.05 --adjust-window-edge north")
-end)
-hs.hotkey.bind({"cmd", "shift"}, "l", function()
-  chunkc("tiling::window --use-temporary-ratio 0.05 --adjust-window-edge east")
-end)
-
--- Rotate desktops.
-hs.hotkey.bind({"cmd"}, "e", function()
-  chunkc("tiling::desktop --rotate 180")
-end)
-hs.hotkey.bind({"cmd", "shift"}, "e", function()
-  chunkc("tiling::desktop --rotate 90")
-end)
-
-hs.hotkey.bind({"cmd"}, "/", function()
+hs.hotkey.bind({'cmd'}, '/', function()
   hs.caffeinate.startScreensaver()
 end)
 
-hs.hotkey.bind({"cmd"}, ".", function()
+hs.hotkey.bind({'cmd'}, '.', function()
   hs.pasteboard.setContents('')
-  hs.alert.show("clipboard cleared")
+  hs.alert.show('clipboard cleared')
 end)
 
-hs.hotkey.bind({"cmd", "shift"}, "return", function()
-  open_app("Alacritty")
+hs.hotkey.bind({'cmd', 'shift'}, 'return', function()
+  open_app('Alacritty', true)
 end)
 
-hs.hotkey.bind({"cmd", "shift"}, "i", function()
-  open_app("Google Chrome")
+hs.hotkey.bind({'cmd', 'shift'}, 'i', function()
+  open_app('Firefox')
 end)
 
-config_path = os.getenv("HOME") .. "/.hammerspoon/"
-config_path_watcher = hs.pathwatcher.new(config_path, function()
-  hs.reload()
+hs.hotkey.bind({'cmd', 'shift'}, 's', function()
+  open_app('Slack')
+end)
+
+hs.hotkey.bind({'cmd', 'shift'}, 'a', function()
+  open_app('Spark')
+end)
+
+hs.hotkey.bind({'cmd', 'shift'}, 'd', function()
+  hs.execute('open ~')
+end)
+
+hs.hotkey.bind({'cmd'}, 'd', function()
+  hs.sound.getByFile(os.getenv('HOME') .. '/drum.mp3'):play()
+  hs.alert.show('Ba dum tss!')
+end)
+
+function closeNotifications()
+  local s = [[
+    tell application "System Events"
+      tell process "NotificationCenter"
+        set numwins to (count windows)
+        repeat with i from numwins to 1 by -1
+          try
+            click button "Close" of window i
+          end try
+          try
+            click button "Mark as Read" of window i
+          end try
+        end repeat
+      end tell
+    end tell
+  ]]
+
+  return hs.osascript.applescript(s)
 end
-):start()
+
+hs.hotkey.bind({'ctrl'}, 'space', function()
+  closeNotifications()
+end)
+
+config_path = os.getenv('HOME') .. '/.hammerspoon/'
+hs.pathwatcher.new(config_path, function(paths, flagTables)
+  paths = hs.fnutils.ifilter(paths, function(path)
+    if path:ends('.git/index.lock') then
+      return false
+    end
+
+    if path:ends('.md') or path:ends('.md~') then
+      return false
+    end
+
+    return true
+  end)
+
+  if #paths > 0 then
+    hs.reload()
+  end
+end):start()
+
+hs.window.animationDuration = 0
+
+function setWindowFrame(fn)
+  local focusedWindow = hs.window.focusedWindow()
+  local windowFrame = focusedWindow:frame()
+  local screenFrame = focusedWindow:screen():frame()
+  focusedWindow:setFrame(fn(windowFrame, screenFrame))
+end
+
+hs.hotkey.bind({'cmd', 'alt'}, 'f', function()
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.x = screenFrame.x
+    windowFrame.y = screenFrame.y
+    windowFrame.w = screenFrame.w
+    windowFrame.h = screenFrame.h
+    return windowFrame
+  end)
+end)
+
+hs.hotkey.bind({'cmd', 'alt'}, 'c', function()
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.x = screenFrame.w * .2
+    windowFrame.y = screenFrame.h * .125
+    windowFrame.w = screenFrame.w * .6
+    windowFrame.h = screenFrame.h * .8
+    return windowFrame
+  end)
+end)
+
+hs.hotkey.bind({'cmd', 'alt'}, 'left', function()
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.x = screenFrame.x
+    windowFrame.w = screenFrame.w / 2
+    return windowFrame
+  end)
+end)
+
+hs.hotkey.bind({'cmd', 'alt'}, 'right', function()
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.x = screenFrame.x + (screenFrame.w / 2)
+    windowFrame.w = screenFrame.w / 2
+    return windowFrame
+  end)
+end)
+
+hs.hotkey.bind({'cmd', 'alt'}, 'down', function()
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.y = screenFrame.y + (screenFrame.h / 2)
+    windowFrame.h = screenFrame.h / 2
+    return windowFrame
+  end)
+end)
+
+hs.hotkey.bind({'cmd', 'alt'}, 'up', function()
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.y = 0
+    windowFrame.h = screenFrame.h / 2
+    return windowFrame
+  end)
+end)
+
+hs.grid.MARGINX = 0
+hs.grid.MARGINY = 0
+hs.grid.GRIDHEIGHT = 12
+hs.grid.GRIDWIDTH = 12
+
+-- Move windows.
+hs.hotkey.bind({'cmd', 'ctrl'}, 'down', hs.grid.pushWindowDown)
+hs.hotkey.bind({'cmd', 'ctrl'}, 'up', hs.grid.pushWindowUp)
+hs.hotkey.bind({'cmd', 'ctrl'}, 'left', hs.grid.pushWindowLeft)
+hs.hotkey.bind({'cmd', 'ctrl'}, 'right', hs.grid.pushWindowRight)
+
+-- Resize windows.
+hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'down', hs.grid.resizeWindowShorter)
+hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'up', hs.grid.resizeWindowTaller)
+hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'left', hs.grid.resizeWindowThinner)
+hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'right', hs.grid.resizeWindowWider)
