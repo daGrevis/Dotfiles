@@ -12,7 +12,6 @@ alias vv='nvim -u NORC'
 
 alias serve-http='python3 -m http.server'
 
-unalias l
 l() {
     # https://github.com/ogham/exa
     command -v exa &> /dev/null
@@ -48,7 +47,7 @@ dff() {
     fi
 }
 
-pjson() {
+json-prettify() {
     python -c 'import fileinput, json; print(json.dumps(json.loads("".join(fileinput.input())), indent=2))'
 }
 
@@ -73,7 +72,11 @@ view-markdown() {
 
 aux() {
     ps aux | head -n 1
-    ps aux | grep -i $@
+    ps aux | grep -i $@ | grep -v 'grep -i'
+}
+
+auxpid() {
+    aux $@ | awk '{print $2}' | tail -n 1
 }
 
 alias ka='killall'
@@ -98,4 +101,18 @@ p() {
     else
         prettyping --nolegend google.com
     fi
+}
+
+video-to-gif() {
+    FPS="${FPS:-10}"
+    SCALE="${SCALE:-640}"
+    ffmpeg -i "$@" -vf fps=$FPS,scale=$SCALE:-1:flags=lanczos,palettegen palette.png
+    ffmpeg -i "$@" -i palette.png -filter_complex "fps=$FPS,scale=$SCALE:-1:flags=lanczos[x];[x][1:v]paletteuse" recording.gif
+    rm palette.png
+}
+
+alias dc=cd
+
+port-used() {
+    lsof -nP -i4TCP:"$1" | grep LISTEN
 }
