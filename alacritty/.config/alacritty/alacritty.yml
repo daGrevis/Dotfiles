@@ -1,13 +1,12 @@
 env:
   TERM: xterm-256color
 
-padding:
-  x: 8
-  y: 4
+window:
+  dimensions:
+    columns: 120
+    lines: 50
 
 tabspaces: 4
-
-draw_bold_text_with_bright_colors: true
 
 font:
   normal:
@@ -21,19 +20,36 @@ font:
 
   size: 14.0
 
-  offset:
-    x: 0
-    y: 0
-
-  glyph_offset:
-    x: 0
-    y: 0
-
-  use_thin_strokes: true
-
 render_timer: false
 
-custom_cursor_colors: false
+# srcery
+
+# colors:
+#   primary:
+#     background: '0x1C1B19'
+#     foreground: '0xFCE8C3'
+
+#   normal:
+#     black:   '0x1C1B19'
+#     red:     '0xEF2F27'
+#     green:   '0x519F50'
+#     yellow:  '0xFBB829'
+#     blue:    '0x2C78BF'
+#     magenta: '0xE02C6D'
+#     cyan:    '0x0AAEB3'
+#     white:   '0x918175'
+
+#   bright:
+#     black:   '0x2D2B28'
+#     red:     '0xF75341'
+#     green:   '0x98BC37'
+#     yellow:  '0xFED06E'
+#     blue:    '0x529CE0'
+#     magenta: '0xFF5C8F'
+#     cyan:    '0x53FDE9'
+#     white:   '0xFCE8C3'
+
+# OceanicNext
 
 colors:
   primary:
@@ -68,14 +84,16 @@ visual_bell:
   animation: EaseOutExpo
   duration: 0
 
-background_opacity: 1.0
-
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
 
 mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
+
+  url:
+    launcher: open
+    # modifiers: Command
 
 scrolling:
   history: 10000
@@ -85,8 +103,6 @@ scrolling:
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
-
-hide_cursor_when_typing: false
 
 live_config_reload: true
 
@@ -192,7 +208,7 @@ key_bindings:
   - { key: F11,      mods: Command, chars: "\x1b[23;3~"                  }
   - { key: F12,      mods: Command, chars: "\x1b[24;3~"                  }
 
-  - { key: C, mods: Command, command: { program: "/usr/local/bin/tmux", args: ["send-keys", "-X", "copy-pipe", "pbcopy"] }, chars: "\x1b3" }
+  - { key: C, mods: Command, command: { program: "/usr/local/bin/tmux", args: ["send-keys", "-X", "copy-pipe", "pbcopy"] } }
   - { key: T, mods: Command, command: { program: "/usr/local/bin/tmux", args: ["new-window", "-c", "~"] } }
   - { key: W, mods: Command, command: { program: "/usr/local/bin/tmux", args: ["kill-pane"] } }
   - { key: H, mods: Command, command: { program: "osascript", args: ["-e", "tell application \"System Events\" to tell process \"Alacritty\" to set visible to false"] } }
