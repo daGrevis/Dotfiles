@@ -33,7 +33,7 @@ extra_status() {
 
 PROMPT='$(return_status)$(extra_status)%{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git[%{$fg[black]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git[%{$fg[white]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}±%{$fg[blue]%}]"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%}]"
