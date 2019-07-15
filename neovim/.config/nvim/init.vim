@@ -86,20 +86,37 @@ Plug 'https://github.com/tpope/vim-obsession'
 " Insert-mode completion with tab.
 Plug 'https://github.com/ervandew/supertab'
 
-" Completion engine.
-Plug 'https://github.com/Shougo/deoplete.nvim'
+" IntelliSense engine.
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
+
+" VimL source.
+Plug 'Shougo/neco-vim'
+Plug 'https://github.com/neoclide/coc-neco'
+
+" CSS source.
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile --force'}
+
+" JSON source.
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile --force'}
+
+" JavaScript and TypeScript source.
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
+
+" ESLint source.
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile --force'}
+
+" Prettier source.
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile --force'}
 
 " Auto-close delimiters.
 Plug 'https://github.com/Raimondi/delimitMate'
 
-" File finder (fuzzy search, regex and more).
-Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+" Fuzzy finder for files, buffers and more.
+Plug '/usr/local/opt/fzf'
+Plug 'https://github.com/junegunn/fzf.vim'
 
 " File explorer.
 Plug 'https://github.com/scrooloose/nerdtree'
-
-" Asynchronous linting (syntax checking, static analysis and so on).
-Plug 'https://github.com/benekastah/neomake'
 
 " Grepping tool with support for Ack.
 Plug 'https://github.com/mhinz/vim-grepper'
@@ -154,6 +171,7 @@ Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 
 " Fave color-scheme.
 Plug 'https://github.com/mhartington/oceanic-next'
+" Plug 'https://github.com/srcery-colors/srcery-vim'
 
 " File-type specific plugins below.
 
@@ -162,10 +180,13 @@ Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 Plug 'https://github.com/elzr/vim-json', {'for': 'json'}
 Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
 Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
-Plug 'https://github.com/mhartington/nvim-typescript', {'for': ['typescript', 'typescript.jsx']}
-Plug 'https://github.com/mxw/vim-jsx', {'for': ['javascript.jsx']}
+Plug 'https://github.com/mxw/vim-jsx', {'for': 'jsx'}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
+
+Plug 'https://github.com/keith/swift.vim', {'for': 'swift'}
+
+Plug 'https://github.com/dart-lang/dart-vim-plugin', {'for': 'dart'}
 
 Plug 'https://github.com/chr4/nginx.vim', {'for': 'nginx'}
 
@@ -174,6 +195,12 @@ Plug 'https://github.com/cespare/vim-toml', {'for': 'toml'}
 Plug 'https://github.com/LnL7/vim-nix', {'for': 'nix'}
 
 Plug 'https://github.com/tmux-plugins/vim-tmux', {'for': 'tmux'}
+
+Plug 'https://github.com/dearrrfish/vim-applescript', {'for': 'applescript'}
+
+Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
+
+Plug 'https://github.com/yaymukund/vim-haxe', {'for': 'haxe'}
 
 call plug#end()
 
@@ -234,6 +261,10 @@ set noswapfile
 " Persist undos/redos after closing Vim.
 set undofile
 
+" Forces to copy the file and overwrite the original one when writing.
+" Some watchers might not see the change otherwise.
+set backupcopy=yes
+
 " Ignore patterns.
 set wildignore=
 set wildignore+=*.pyc
@@ -256,6 +287,9 @@ set scrolloff=25
 " Highlights the screen line of the cursor. Helps finding the cursor.
 set cursorline
 
+" Always show sign column to avoid flickering.
+set signcolumn=yes
+
 " Enables mouse (super useful in rare situations).
 set mouse=a
 
@@ -265,11 +299,17 @@ set lazyredraw
 " Don't show startup message.
 set shortmess+=I
 
+" Don't show ins-completion-menu messages.
+set shortmess+=c
+
 " Always show status bar.
 set laststatus=2
 
 " Hide buffers instead of closing them.
 set hidden
+
+" Block cursor that doesn't blink.
+set guicursor=a:block-blinkon0
 
 " GUI colors for Neovim >= 0.1.5+ and Vim 8.
 if (has("termguicolors"))
@@ -303,8 +343,11 @@ set complete+=b
 " Tag completion.
 set complete+=t
 
-" Do not show preview.
-set completeopt-=preview
+set completeopt=
+" Use a popup menu to show the possible completions.
+set completeopt+=menu
+" Only insert the longest common text of the matches.
+set completeopt+=longest
 
 set dictionary=
 set dictionary+=/usr/share/dict/words
@@ -315,12 +358,18 @@ inoremap <C-z> <C-x><C-k>
 " Complete top to bottom.
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
+" Match case when completing.
+let g:SuperTabCompleteCase = 'match'
+
+" Complete the longest common match.
+let g:SuperTabLongestEnhanced = 1
+
+" Confirm completion.
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
 " Expand snippet under the cursor.
 " See: .config/nvim/UltiSnips/*.snippets
 let g:UltiSnipsExpandTrigger = "<C-s>"
-
-" Start Deoplete on start-up.
-let g:deoplete#enable_at_startup = 1
 
 " }}}
 
@@ -406,10 +455,12 @@ set foldmethod=marker
 
 " Spelling {{{
 
-" #PROTIP: Use =os mapping from vim-unimpaired to toggle spell-checker.
+set spellfile+=$HOME/.config/nvim/spell/en.utf-8.add
 
 " Suggest word under/after the cursor.
 nnoremap <Leader>z :setlocal spell<CR>z=
+
+" #PROTIP: Use =os mapping from vim-unimpaired to toggle spell-checker.
 
 " }}}
 
@@ -426,31 +477,7 @@ vnoremap <C-c> "+y
 
 " File Finder {{{
 
-" Don't change working directory.
-let g:ctrlp_working_path_mode = ''
-
-" How CtrlP finds files. For now it uses git/hg when possible, but fallbacks to find.
-let g:ctrlp_user_command = {
-            \ 'types': {
-            \ 1: ['.git', 'cd %s && git ls-files -oc --exclude-standard'],
-            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-            \ },
-            \ 'fallback': 'find %s -type f -o -type l'
-            \ }
-
-" CtrlP height.
-let g:ctrlp_match_window = 'max:20'
-
-" Custom status.
-function! CtrlPStatusFuncMain(focus, byfname, regex, prev, item, next, marked)
-    return getcwd()
-endfunction
-let g:ctrlp_status_func = {
-            \ 'main': 'CtrlPStatusFuncMain',
-            \ }
-
-" Clears cache and then runs CtrlP.
-nnoremap <Leader>p :CtrlPClearAllCaches \| CtrlP<CR>
+nnoremap <C-p> :Files<CR>
 
 " }}}
 
@@ -461,9 +488,6 @@ nnoremap <Tab> :NERDTreeToggle \| :silent NERDTreeMirror<CR>
 
 let g:NERDTreeWinSize = 60
 let g:NERDTreeShowHidden = 1
-
-" https://github.com/kien/ctrlp.vim/issues/78
-let g:ctrlp_dont_split = 'nerdtree'
 
 " }}}
 
@@ -499,25 +523,59 @@ nnoremap <Leader>] <C-w><C-]><C-w>T
 
 " }}}
 
-" Linter {{{
+" IntelliSense {{{
 
-" Visual appearance.
-let g:neomake_error_sign = {
-            \ 'text': 'E>',
-            \ }
-let g:neomake_warning_sign = {
-            \ 'text': 'W>',
-            \ }
+" Navigate diagnostics.
+nmap <silent> [l <Plug>(coc-diagnostic-prev)
+nmap <silent> ]l <Plug>(coc-diagnostic-next)
 
-" let g:neomake_{ language }_enabled_makers
-" let g:neomake_python_enabled_makers = ['python']
+nmap <silent> gd :vsplit<CR><Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-" Logging. Be quite by default.
-let g:neomake_verbose = 0
-" let g:neomake_logfile = '/home/dagrevis/neomake.log'
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
-" Disable makers for html files.
-let g:neomake_html_enabled_makers = []
+nnoremap <silent> gk :call <SID>show_documentation()<CR>
+
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+call coc#config('coc.preferences', {
+      \ 'diagnostic.errorSign': 'E',
+      \ 'diagnostic.warningSign': 'W',
+      \ 'diagnostic.infoSign': 'I',
+      \ 'diagnostic.hintSign': 'H',
+      \ })
+
+call coc#config('diagnostic', {
+      \ 'refreshAfterSave': 0,
+      \ })
+
+call coc#config('tsserver', {
+      \ 'enableJavascript': 0,
+      \ })
+
+call coc#config('eslint', {
+      \ 'enable': 1,
+      \ 'packageManager': 'yarn',
+      \ 'filetypes': ['javascript', 'javascriptreact', 'javascript.jsx', 'javascript.flow.jsx', 'typescript'],
+      \ })
+
+call coc#config('languageserver.flow', {
+      \ 'command': './node_modules/.bin/flow',
+      \ 'args': ['lsp'],
+      \ 'filetypes': ['javascript.flow.jsx'],
+      \ 'initializationOptions': {},
+      \ 'requireRootPattern': 1,
+      \ 'settings': {},
+      \ 'rootPatterns': ['.flowconfig']
+      \ })
 
 " }}}
 
@@ -561,7 +619,7 @@ let g:grepper = {
     \ 'tools': ['ack', 'git', 'grep'],
     \ 'simple_prompt': 1,
     \ 'highlight': 1,
-    \ 'next_tool': '<leader>g',
+    \ 'prompt_mapping_tool': '<leader>g',
     \ }
 
 " Mappings like s, v, t, o, and O for quickfix window.
@@ -642,13 +700,17 @@ function! StatusLineGitHead()
     return ' ' . s:head . ' '
 endfunction
 
-function! StatusLineNeomake()
-    let s:counts = neomake#statusline#LoclistCounts()
-    let s:errors = get(s:counts, 'E', 0)
-    let s:warnings = get(s:counts, 'W', 0)
-    let s:e = s:errors == 0 ? '' : 'E' . s:errors
-    let s:w = s:warnings == 0 ? '' : 'W' . s:warnings
-    return ' ' . s:e . (s:warnings == 0 ? '' : ' ') . s:w . ' '
+function! StatusLineDiagnostics()
+    let info = get(b:, 'coc_diagnostic_info', {})
+    if empty(info) | return '' | endif
+    let msgs = []
+    if get(info, 'error', 0)
+      call add(msgs, 'E' . info['error'])
+    endif
+    if get(info, 'warning', 0)
+      call add(msgs, 'W' . info['warning'])
+    endif
+    return join(msgs, ' ')
 endfunction
 
 function! StatusLineFileSize()
@@ -662,8 +724,10 @@ function! StatusLineFileSize()
     endif
     if bytes < 1024
         return bytes . 'B'
-    else
+    elseif bytes < 1024 * 1024
         return (bytes / 1024) . 'K'
+    else
+        return (bytes / 1024 / 1024) . 'M'
     endif
 endfunction
 
@@ -681,7 +745,7 @@ set statusline+=%*
 
 " Right align.
 set statusline+=%=
-set statusline+=%{StatusLineNeomake()}\ 
+set statusline+=%{StatusLineDiagnostics()}\ 
 set statusline+=%{StatusLineFileSize()}\ 
 set statusline+=%1*
 " Position.
@@ -698,6 +762,17 @@ function! StripWhitespace()
 endfunction
 command! -range=% StripWhitespace <line1>,<line2>call StripWhitespace()
 
+" Update on new output similar to tail -f command.
+function! TailF()
+    while 1
+        e
+        normal G
+        redraw
+        sleep 1
+    endwhile
+endfunction
+command! TailF call TailF()
+
 " }}}
 
 " Mappings {{{
@@ -705,6 +780,9 @@ command! -range=% StripWhitespace <line1>,<line2>call StripWhitespace()
 " Move downward/upward with a respect to lines wrap.
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
+
+" nnoremap <expr> h col('.') == match(getline('.'), '\S') + 1 ? 'k$' : 'h'
+" nnoremap <expr> l col('.') == strlen(getline('.')) ? 'j^' : 'l'
 
 " Join lines.
 nnoremap <Leader>j :join<CR>
@@ -734,8 +812,8 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap ' `
 
 " Visually select word under the cursor without moving.
-nnoremap * g*<C-o>
-nnoremap # g#<C-o>
+nnoremap * g*N
+nnoremap # g#N
 
 " Run macro called q.
 nnoremap Q @q
@@ -784,11 +862,21 @@ nnoremap <Leader>c ^v$h
 " Visually select current line without selecting newline at the end.
 nnoremap <Leader>v ggVG
 
+" Copy path of current buffer to system clipboard.
+noremap <Leader>d :let @* = fnamemodify(expand("%"), ":~:.")<CR>
+
 " Format the current buffer.
 nnoremap gw gwgg=G
 
 " Prompt to open file with same name, different extension.
 nnoremap <Leader>y :tabe <C-r>=expand('%:h').'/'<CR>
+
+" Open split in new tab.
+noremap <Leader>o <C-W>T
+
+" Switch between tabs easily.
+noremap <silent> gr :tabm +<CR>
+noremap <silent> gR :tabm -<CR>
 
 " Switch between splits easily.
 nnoremap <A-h> <C-w>h
@@ -859,13 +947,14 @@ endfunction
 autocmd vimrc TabLeave * call AuTabLeave()
 
 function! AuFocusGained()
-    try
-        exe ':checktime'
-        exe ':Neomake'
-    catch
-    endtry
+    exe ':checktime'
 endfunction
 autocmd vimrc FocusGained * call AuFocusGained()
+
+function! AuBufEnter()
+    exe ':checktime'
+endfunction
+autocmd vimrc BufEnter * call AuBufEnter()
 
 function! AuFocusLost()
     " Save when losing focus.
@@ -897,14 +986,17 @@ function! AuBufReadPost()
         endif
     endif
 endfunction
-autocmd vimrc BufReadPost * call AuBufReadPost()
 
 function! AuBufWritePost()
-    " Run linter on explicit save.
     exe ':checktime'
-    exe ':Neomake'
 endfunction
 autocmd vimrc BufWritePost * call AuBufWritePost()
+
+function! AuInsertLeave()
+    " https://github.com/neovim/neovim/issues/7994#issuecomment-388296360
+    setlocal nopaste
+endfunction
+autocmd vimrc InsertLeave * call AuInsertLeave()
 
 function! AuFileTypePo()
     setlocal commentstring=#~\ %s
@@ -923,8 +1015,12 @@ autocmd vimrc FileType nginx call AuFileTypeNginx()
 
 function! AuFileTypeJavaScript()
     " All JavaScript will be parsed as JSX because some people put JSX into .js files. :(
-    " TODO: Check for JSX code in buffer instead.
-    setlocal filetype=javascript.jsx
+    let first_line = getline(1)
+    if first_line =~ '@flow'
+      setlocal filetype=javascript.flow.jsx
+    else
+      setlocal filetype=javascript.jsx
+    endif
 
     setlocal shiftwidth=2
 endfunction
@@ -1014,6 +1110,8 @@ function! AuVimEnter()
     endif
 
     if g:colorscheme_loaded
+        " OceanicNext
+
         hi NonText gui=none
 
         hi ModeMsg guifg=#d8dee9
@@ -1031,10 +1129,6 @@ function! AuVimEnter()
 
         hi QuickFixLine guibg=none
 
-        hi DiffAdd guibg=#1b2b34
-        hi DiffChange guibg=#1b2b34
-        hi DiffDelete guibg=#1b2b34
-
         hi htmlTag guifg=#6699cc
         hi htmlTagName guifg=#6699cc
 
@@ -1047,7 +1141,36 @@ function! AuVimEnter()
         hi Sneak guibg=#fac863 guifg=#343d46
 
         hi SignatureMarkText guifg=#ec5f67
+
+        hi SignifySignChange guifg=#fac863
+        hi SignifySignChangeDelete guifg=#f99157
+
+        hi CocErrorSign guifg=#ec5f67
+        hi CocWarningSign guifg=#fac863
+        hi CocInfoSign guifg=#6699cc
+
+        hi CocErrorHighlight guifg=#ec5f67
+        hi CocWarningHighlight guifg=#fac863
+        hi CocInfoHighlight guifg=#6699cc
+
+        hi CocFloating guifg=#d8dee9 guibg=#4f5b66
+        hi link CocErrorFloat CocFloating
+        hi link CocWarningFloat CocFloating
+        hi link CocInfoFloat CocFloating
+
+        " srcery
+
+        " hi TabLineFill guifg=#918175
+        " hi TabLineSel guifg=#FCE8C3 guibg=#2D2C29
+
+        " hi CocErrorSign guifg=#EF2F27
+        " hi CocWarningSign guifg=#FBB829
+
+        " hi CocErrorHighlight gui=underline
+        " hi CocWarningHighlight gui=italic
     endif
+
+    autocmd vimrc BufReadPost * call AuBufReadPost()
 endfunction
 autocmd vimrc VimEnter * call AuVimEnter()
 
@@ -1057,11 +1180,6 @@ autocmd vimrc VimEnter * call AuVimEnter()
 
 " Here be dragons!
 
-set backupcopy=yes
-
-noremap <silent> gr :tabm +<CR>
-noremap <silent> gR :tabm -<CR>
-
-set shellcmdflag=-ic
+autocmd vimrc VimResized * exe "redraw!"
 
 " }}}
