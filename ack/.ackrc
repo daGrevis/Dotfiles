@@ -11,6 +11,7 @@
 --ignore-dir=out/
 --ignore-dir=_site/
 --ignore-dir=cache/
+--ignore-dir=.cache/
 --ignore-dir=vendor/
 --ignore-dir=assets/
 --ignore-dir=build/
