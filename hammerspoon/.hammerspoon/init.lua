@@ -234,6 +234,17 @@ hs.hotkey.bind({'cmd', 'alt'}, 'up', function()
   end)
 end)
 
+hs.hotkey.bind({'cmd'}, 'm', function()
+  local mainScreen = hs.screen.mainScreen()
+  local otherScreen = hs.fnutils.find(hs.screen.allScreens(), function(screen)
+    return screen:id() ~= mainScreen:id()
+  end)
+
+  local focusedWindow = hs.window.focusedWindow()
+  focusedWindow:moveToScreen(otherScreen)
+  focusedWindow:focus()
+end)
+
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 hs.grid.GRIDHEIGHT = 12
