@@ -557,7 +557,8 @@ nmap <silent> ]l <Plug>(coc-diagnostic-next)
 nmap <silent> gd :vsplit<CR><Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gf <Plug>(coc-references)
+nmap <silent> gn <Plug>(coc-rename)
 
 function! s:show_documentation()
   if &filetype == 'vim'
