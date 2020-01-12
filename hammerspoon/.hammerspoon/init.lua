@@ -92,8 +92,6 @@ hs.hotkey.bind({'cmd'}, '`', function()
 
     local apps = hs.fnutils.concat({front_app}, rest_apps)
 
-    print('apps', hs.inspect(apps))
-
     windows = hs.fnutils.imap(apps, function(app)
       return app:allWindows()[1]
     end)
@@ -149,6 +147,12 @@ function closeNotifications()
         repeat with i from numwins to 1 by -1
           try
             click button "Close" of window i
+          end try
+          try
+            click button "Cancel" of window i
+          end try
+          try
+            click button "Not Now" of window i
           end try
           try
             click button "Mark as Read" of window i
