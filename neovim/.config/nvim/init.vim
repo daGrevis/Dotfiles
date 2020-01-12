@@ -182,7 +182,7 @@ Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 Plug 'https://github.com/elzr/vim-json', {'for': 'json'}
 Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
 Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
-Plug 'https://github.com/mxw/vim-jsx', {'for': 'jsx'}
+Plug 'https://github.com/MaxMEllon/vim-jsx-pretty', {'for': 'jsx'}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
 
@@ -641,7 +641,7 @@ command! SearchForNonAscii call SearchForNonAscii()
 nnoremap // :Grepper<CR>
 
 " Enabled greppers sorted by priority.
-" TOOD: Maybe use location list, not quickfix list, as it's private.
+" TODO: Maybe use location list, not quickfix list, as it's private.
 let g:grepper = {
     \ 'tools': ['ack', 'git', 'grep'],
     \ 'simple_prompt': 1,
