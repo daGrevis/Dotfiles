@@ -86,7 +86,7 @@ if [ -f '/Users/dagrevis/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_OPTS="--bind ctrl-n:next-history,ctrl-p:previous-history,ctrl-r:up,change:top --color=hl+:1,hl:3 --history=$HOME/.fzf_history"
+export FZF_DEFAULT_OPTS="--bind ctrl-n:next-history,ctrl-p:previous-history,ctrl-r:up,change:top --color=hl+:1,hl:3,gutter:0,bg+:0 --history=$HOME/.fzf_history"
 
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude ".git"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
