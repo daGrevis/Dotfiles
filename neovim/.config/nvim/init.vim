@@ -908,6 +908,9 @@ nnoremap <Leader>y :tabe <C-r>=expand('%:h').'/'<CR>
 " Open split in new tab.
 noremap <Leader>o <C-W>T
 
+" Close all but this split.
+noremap <Leader>i :only<CR>
+
 " Switch between tabs easily.
 noremap <silent> gr :tabm +<CR>
 noremap <silent> gR :tabm -<CR>
