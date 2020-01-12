@@ -148,8 +148,8 @@ Plug 'https://github.com/ludovicchabant/vim-gutentags'
 " Generate HTML by writing CSS.
 Plug 'https://github.com/mattn/emmet-vim'
 
-" Color text if it looks like a color (hex colors, CSS colors etc.).
-Plug 'https://github.com/chrisbra/Colorizer'
+" Color text if it looks like a color (hex colors, CSS colors etc).
+Plug 'https://github.com/RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 " Wrap and unwrap arguments.
 Plug 'https://github.com/FooSoft/vim-argwrap'
@@ -330,6 +330,18 @@ let g:gundo_width = 60
 
 " Character pairs to colorize in Lisp-like languages.
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+
+let g:Hexokinase_highlighters = ['virtual']
+
+let g:Hexokinase_optInPatterns = [
+      \ 'full_hex',
+      \ 'triple_hex',
+      \ 'rgb',
+      \ 'rgba',
+      \ 'hsl',
+      \ 'hsla',
+      \ 'colour_names'
+      \ ]
 
 " }}}
 
