@@ -173,6 +173,9 @@ Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 Plug 'https://github.com/mhartington/oceanic-next'
 " Plug 'https://github.com/srcery-colors/srcery-vim'
 
+" Utility functions for converting colors.
+Plug 'https://github.com/mgiuffrida/CSSMinister'
+
 " File-type specific plugins below.
 
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
@@ -342,6 +345,8 @@ let g:Hexokinase_optInPatterns = [
       \ 'hsla',
       \ 'colour_names'
       \ ]
+
+let g:CSSMinisterCreateMappings = 0
 
 " }}}
 
@@ -931,9 +936,6 @@ nnoremap <Leader>' :ArgWrap<CR>
 " Moves the argument to left or right side.
 nnoremap <Leader>, :SidewaysLeft<CR>
 nnoremap <Leader>. :SidewaysRight<CR>
-
-" Toggle coloring of the text.
-nnoremap <Leader>l :ColorToggle<CR>
 
 " Toggle Gundo for history tree.
 nnoremap <Leader>u :GundoToggle<CR>
