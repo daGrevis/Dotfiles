@@ -899,8 +899,8 @@ nnoremap <Leader>v ggVG
 " Copy path of current buffer to system clipboard.
 noremap <Leader>d :let @* = fnamemodify(expand("%"), ":~:.")<CR>
 
-" Format the current buffer.
-nnoremap gw gwgg=G
+" Format the current paragraph.
+nnoremap gw vapgw
 
 " Prompt to open file with same name, different extension.
 nnoremap <Leader>y :tabe <C-r>=expand('%:h').'/'<CR>
