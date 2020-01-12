@@ -1,20 +1,25 @@
 [user]
-    name = Raitis Stengrevics
-    email = dagrevis@gmail.com
+	name = Raitis Stengrevics
+	email = dagrevis@gmail.com
 [core]
-    pager = less -+F
-    excludesfile = ~/.gitignore_global
+	pager = less -+F
+	excludesfile = ~/.gitignore_global
 [color]
-    ui = true
-    diff = always
+	ui = true
+	diff = always
 [rerere]
-    enabled = 1
+	enabled = true
 [merge]
-    tool = vimdiff
+	tool = vimdiff
 [github]
-    user = daGrevis
+	user = daGrevis
 [push]
-    default = current
+	default = current
 [grep]
-    extendRegexp = true
-    lineNumber = true
+	extendRegexp = true
+	lineNumber = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
