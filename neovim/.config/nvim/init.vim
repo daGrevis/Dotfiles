@@ -87,7 +87,7 @@ Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/ervandew/supertab'
 
 " IntelliSense engine.
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile --force'}
 
 " VimL source.
 Plug 'Shougo/neco-vim'
@@ -108,6 +108,9 @@ Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile --force'}
 " Prettier source.
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile --force'}
 
+" File explorer.
+Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
+
 " Auto-close delimiters.
 Plug 'https://github.com/Raimondi/delimitMate'
 
@@ -115,14 +118,12 @@ Plug 'https://github.com/Raimondi/delimitMate'
 Plug '/usr/local/opt/fzf'
 Plug 'https://github.com/junegunn/fzf.vim'
 
-" File explorer.
-Plug 'https://github.com/scrooloose/nerdtree'
-
 " Grepping tool with support for Ack.
 Plug 'https://github.com/mhinz/vim-grepper'
 
 " Utils for quickfix window.
 Plug 'https://github.com/romainl/vim-qf'
+Plug 'https://github.com/ryanoasis/vim-devicons'
 
 " Syntax tree using ctags.
 Plug 'https://github.com/majutsushi/tagbar'
@@ -500,11 +501,20 @@ nnoremap <C-p> :Files<CR>
 
 " File Explorer {{{
 
-" Reuse the same NERDTree across tabs.
-nnoremap <Tab> :NERDTreeToggle \| :silent NERDTreeMirror<CR>
+nnoremap <Tab> :CocCommand explorer<CR>
 
-let g:NERDTreeWinSize = 60
-let g:NERDTreeShowHidden = 1
+call coc#config('explorer', {
+      \ 'keyMappings.<tab>': 'quit',
+      \ 'keyMappings.<cr>': 'open',
+      \ 'openAction.changeDirectory': 0,
+      \ 'quitOnOpen': 1,
+      \ 'sources': [{'name': 'file', 'expand': 1}],
+      \ 'file.columns': ['git', 'indent', 'icon', 'filename', 'readonly', ['fullpath'], ['size'], ['created'], ['modified']],
+      \ 'file.showHiddenFiles': 1,
+      \ 'width': 60,
+      \ 'icon.enableNerdfont': 1,
+      \ 'previewAction.onHover': 0,
+      \ })
 
 " }}}
 
@@ -572,6 +582,7 @@ call coc#config('coc.preferences', {
 
 call coc#config('diagnostic', {
       \ 'refreshAfterSave': 0,
+      \ 'maxWindowHeight': 16,
       \ })
 
 call coc#config('tsserver', {
