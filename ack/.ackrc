@@ -23,6 +23,7 @@
 --ignore-file=match:/.*bundle.js$/
 --ignore-file=match:/.*@neomake.*$/
 --ignore-file=match:/\.ai$/
+--ignore-file=match:/\.cache$/
 --ignore-file=is:tags
 --ignore-file=is:tags.lock
 --ignore-file=is:tags.temp
