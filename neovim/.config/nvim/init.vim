@@ -121,8 +121,6 @@ Plug 'https://github.com/junegunn/fzf.vim'
 " Grepping tool with support for Ack.
 Plug 'https://github.com/mhinz/vim-grepper'
 
-" Utils for quickfix window.
-Plug 'https://github.com/romainl/vim-qf'
 Plug 'https://github.com/ryanoasis/vim-devicons'
 
 " Syntax tree using ctags.
@@ -643,6 +641,7 @@ command! SearchForNonAscii call SearchForNonAscii()
 nnoremap // :Grepper<CR>
 
 " Enabled greppers sorted by priority.
+" TOOD: Maybe use location list, not quickfix list, as it's private.
 let g:grepper = {
     \ 'tools': ['ack', 'git', 'grep'],
     \ 'simple_prompt': 1,
@@ -953,6 +952,12 @@ nnoremap <Leader>u :GundoToggle<CR>
 
 " Git blame current buffer.
 nnoremap <Leader>b :Gblame<CR>
+
+" Quickfix mappings for opening files.
+autocmd FileType qf nnoremap <buffer><silent> o <CR><C-w>w :q<CR>
+autocmd FileType qf nnoremap <buffer><silent> t <C-W>T<CR> :only<CR>
+autocmd FileType qf nnoremap <buffer><silent> O <CR>
+autocmd FileType qf nnoremap <buffer><silent> T <C-W>T<CR>
 
 " }}}
 
