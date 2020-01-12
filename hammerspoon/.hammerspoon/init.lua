@@ -59,6 +59,18 @@ function airPods(deviceName)
   return hs.osascript.applescript(s)
 end
 
+function toggleDark()
+  local s = [[
+    tell application "System Events"
+      tell appearance preferences
+          set dark mode to not dark mode
+      end tell
+    end tell
+  ]]
+
+  return hs.osascript.applescript(s)
+end
+
 hs.hotkey.bind({'cmd'}, '\\', function()
   local ok, output = airPods('daGrevis’ AirPods')
   if ok then
@@ -126,8 +138,7 @@ hs.hotkey.bind({'cmd', 'shift'}, 'd', function()
 end)
 
 hs.hotkey.bind({'cmd'}, 'd', function()
-  hs.sound.getByFile(os.getenv('HOME') .. '/drum.mp3'):play()
-  hs.alert.show('Ba dum tss!')
+  toggleDark()
 end)
 
 function closeNotifications()
