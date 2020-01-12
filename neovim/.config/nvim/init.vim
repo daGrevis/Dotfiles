@@ -857,10 +857,16 @@ nmap <End> ]]
 nmap <PageUp> [m
 nmap <PageDown> ]m
 
+function! ReloadTabs()
+  let last_tab = tabpagenr()
+  exe 'tabdo e!'
+  exe 'tabn ' . last_tab
+endfunction
+
 " Juggling with buffers.
 nnoremap <Leader>e :e<Space>
 nnoremap <Leader>ee :e!<CR>
-nnoremap <Leader>r :tabdo e!<CR>
+nnoremap <Leader>r :call ReloadTabs()<CR>
 nnoremap <Leader>q ZZ
 nnoremap <Leader>w :w<CR>
 
