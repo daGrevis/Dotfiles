@@ -31,7 +31,11 @@ the editor to load them!
 It's recommended to read `init.vim` line by line and copy paste what's relevant.
 The source is heavily documented just for that reason alone.
 
-![Neovim Preview](preview-neovim.png)
+![Neovim Preview](vim1.png)
+
+![Neovim Preview](vim2.png)
+
+![Neovim Preview](vim3.png)
 
 ## Zsh
 
@@ -49,4 +53,4 @@ run `stow zsh` to get my [`.zshrc`](https://github.com/daGrevis/Dotfiles/blob/ma
 
 My setup depends on `sh` scripts so run `stow sh` for that.
 
-![Zsh Preview](preview-zsh.png)
+![Zsh Preview](zsh1.png)
