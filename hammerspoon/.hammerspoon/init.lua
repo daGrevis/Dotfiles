@@ -122,7 +122,7 @@ hs.hotkey.bind({'cmd', 'shift'}, 'return', function()
 end)
 
 hs.hotkey.bind({'cmd', 'shift'}, 'i', function()
-  open_app('Firefox')
+  open_app('Firefox Developer Edition')
 end)
 
 hs.hotkey.bind({'cmd', 'shift'}, 's', function()
