@@ -1002,6 +1002,10 @@ function! AuFocusLost()
 
     " Go back to normal mode.
     exe ':stopinsert'
+
+    if getbufvar(bufnr('%'), '&filetype') == 'fzf'
+      exe ':q'
+    endif
 endfunction
 autocmd vimrc FocusLost * call AuFocusLost()
 
