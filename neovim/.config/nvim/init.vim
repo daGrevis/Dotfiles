@@ -1229,4 +1229,7 @@ autocmd vimrc VimEnter * call AuVimEnter()
 
 autocmd vimrc VimResized * exe "redraw!"
 
+" https://github.com/vim/vim/issues/4738
+nmap gx yiW:!open <cWORD><CR><CR>
+
 " }}}
