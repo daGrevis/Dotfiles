@@ -969,6 +969,9 @@ autocmd FileType qf nnoremap <buffer><silent> t <C-W>T<CR> :only<CR>
 autocmd FileType qf nnoremap <buffer><silent> O <CR>
 autocmd FileType qf nnoremap <buffer><silent> T <C-W>T<CR>
 
+" Fix formatting with Prettier.
+nmap <Leader>p :Prettier<CR>
+
 " }}}
 
 " Auto-commands (events) {{{
