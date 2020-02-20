@@ -15,7 +15,15 @@ alias gco="git checkout"
 alias gcob="git checkout -b"
 alias gcp="git cherry-pick"
 gd() {
-    { git --no-pager diff --color --stat "$@"; echo; git --no-pager diff --color "$@" | diff-so-fancy } | less -R --pattern '^(added|deleted|modified):'
+    git --no-pager diff --color --stat "$@"
+    echo
+
+    command -v colordiff &> /dev/null
+    if [ "$?" != "0" ]; then
+        git diff --color "$@"
+    else
+        { git --no-pager diff --color "$@" | diff-so-fancy } | less -R --pattern '^(added|deleted|modified):'
+    fi
 }
 gl() {
     rev_before=$(git rev-parse HEAD)
