@@ -86,16 +86,32 @@ if [ -f '/Users/dagrevis/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/
 
 export FZF_DEFAULT_OPTS="--bind ctrl-n:next-history,ctrl-p:previous-history,ctrl-r:up,change:top --color=hl+:1,hl:3,gutter:0,bg+:0 --history=$HOME/.fzf_history"
 
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude ".git"'
+command -v fd &> /dev/null
+if [ "$?" != "0" ]; then
+    export FZF_DEFAULT_COMMAND='find . -type f'
+else
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude ".git"'
+fi
+
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 _fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
+  command -v fd &> /dev/null
+  if [ "$?" != "0" ]; then
+      find "$1" -type f
+  else
+      fd --hidden --follow --exclude ".git" . "$1"
+  fi
 }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
+  command -v fd &> /dev/null
+  if [ "$?" != "0" ]; then
+      find "$1" -type d
+  else
+      fd --type d --hidden --follow --exclude ".git" . "$1"
+  fi
 }
 
 alias blender=/Applications/Blender/blender.app/Contents/MacOS/blender
