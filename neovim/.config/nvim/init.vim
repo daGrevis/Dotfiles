@@ -667,7 +667,7 @@ function! ShareGist(line1, line2, ...) abort
         return
     endif
 
-    let l:args = []
+    let l:args = ['-p']
 
     if index(a:000, '-f') == -1
         let l:fname = fnamemodify(expand('%'), ':t')
