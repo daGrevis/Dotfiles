@@ -347,6 +347,9 @@ let g:Hexokinase_optInPatterns = [
 
 let g:CSSMinisterCreateMappings = 0
 
+" Disables creation of .netrwhist file.
+let g:netrw_dirhistmax = 0
+
 " }}}
 
 " Completion {{{
