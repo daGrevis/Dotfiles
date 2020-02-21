@@ -115,7 +115,7 @@ Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
 Plug 'https://github.com/Raimondi/delimitMate'
 
 " Fuzzy finder for files, buffers and more.
-Plug '/usr/local/opt/fzf'
+Plug 'https://github.com/junegunn/fzf'
 Plug 'https://github.com/junegunn/fzf.vim'
 
 " Grepping tool with support for Ack.
