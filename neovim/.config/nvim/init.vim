@@ -123,8 +123,8 @@ Plug 'https://github.com/mhinz/vim-grepper'
 
 Plug 'https://github.com/ryanoasis/vim-devicons'
 
-" Syntax tree using ctags.
-Plug 'https://github.com/majutsushi/tagbar'
+" Syntax tree using coc.
+Plug 'https://github.com/liuchengxu/vista.vim'
 
 " Diffs via sign column.
 Plug 'https://github.com/mhinz/vim-signify'
@@ -518,22 +518,11 @@ call coc#config('explorer', {
 
 " Syntax Tree {{{
 
-" Opens Tagbar and waits for search phrase.
-nnoremap <Backspace> :Tagbar<CR>
+nnoremap <Backspace> :Vista!!<CR>
 
-" Tweaks apparance.
-let g:tagbar_width = 60
-let g:tagbar_compact = 1
-let g:tagbar_indent = 4
-let g:tagbar_iconchars = [' ', ' ']
-
-" Focus Tagbar on open.
-let g:tagbar_autofocus = 1
-" Close Tagbar when going to tag.
-let g:tagbar_autoclose = 1
-
-" Sort according to order in the source file (don't sort).
-let g:tagbar_sort = 0
+let g:vista_default_executive = 'coc'
+let g:vista_close_on_jump = 1
+let g:vista_sidebar_width = 60
 
 " }}}
 
