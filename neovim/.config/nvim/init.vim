@@ -87,29 +87,29 @@ Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/ervandew/supertab'
 
 " IntelliSense engine.
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile --force'}
 
 " VimL source.
-Plug 'Shougo/neco-vim'
+Plug 'https://github.com/Shougo/neco-vim'
 Plug 'https://github.com/neoclide/coc-neco'
 
 " CSS source.
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/neoclide/coc-css', {'do': 'yarn install --frozen-lockfile --force'}
 
 " JSON source.
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile --force'}
 
 " JavaScript and TypeScript source.
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
 
 " ESLint source.
-Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile --force'}
 
 " Prettier source.
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile --force'}
 
 " File explorer.
-Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
+Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
 
 " Auto-close delimiters.
 Plug 'https://github.com/Raimondi/delimitMate'
