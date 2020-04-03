@@ -212,8 +212,8 @@ key_bindings:
   - { key: H, mods: Command, command: { program: "osascript", args: ["-e", "tell application \"System Events\" to tell process \"Alacritty\" to set visible to false"] } }
   - { key: LBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["select-window", "-t:-"] } }
   - { key: RBracket, mods: Command|Shift, command: { program: "/usr/local/bin/tmux", args: ["select-window", "-t:+"] } }
-  - { key: LBracket, mods: Command|Alt, command: { program: "/usr/local/bin/tmux", args: ["swap-window", "-t", "-1"] } }
-  - { key: RBracket, mods: Command|Alt, command: { program: "/usr/local/bin/tmux", args: ["swap-window", "-t", "+1"] } }
+  - { key: LBracket, mods: Command|Alt, command: { program: "/usr/local/bin/tmux", args: ["swap-window", "-t", "-1", ";", "select-window", "-t", "-1"] } }
+  - { key: RBracket, mods: Command|Alt, command: { program: "/usr/local/bin/tmux", args: ["swap-window", "-t", "+1", ";", "select-window", "-t", "+1"] } }
   - { key: Key1, mods: Command, command: { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "1"] } }
   - { key: Key2, mods: Command, command: { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "2"] } }
   - { key: Key3, mods: Command, command: { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "3"] } }
