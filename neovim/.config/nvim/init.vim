@@ -996,8 +996,10 @@ function! AuFocusLost()
     " Save when losing focus.
     exe ':silent! update'
 
-    " Go back to normal mode.
-    exe ':stopinsert'
+    " Go back to normal mode from insert mode.
+    if mode() == 'i'
+      exe ':stopinsert'
+    endif
 
     if getbufvar(bufnr('%'), '&filetype') == 'fzf'
       exe ':q'
