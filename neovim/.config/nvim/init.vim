@@ -506,7 +506,7 @@ nnoremap <Tab> :CocCommand explorer<CR>
 
 call coc#config('explorer', {
       \ 'keyMappings.<tab>': 'quit',
-      \ 'keyMappings.<cr>': 'open',
+      \ 'keyMappings.<cr>': ['expandable?', 'expandOrCollapse', 'open'],
       \ 'openAction.changeDirectory': 0,
       \ 'quitOnOpen': 1,
       \ 'sources': [{'name': 'file', 'expand': 1}],
