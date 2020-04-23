@@ -21,16 +21,6 @@ s+=":$HOME/.nvm/versions/node/v12.2.0/bin"
 s+=":$PATH"
 export PATH="$s"
 
-tm() {
-  if [ "$1" = "ls" ]; then
-    tmux ls
-  elif [ "$1" = "" ]; then
-    tmux attach -t "default" || tmux new -s "default"
-  else
-    tmux new -s "$1" || tmux attach -t "$1"
-  fi
-}
-
 # Lazy-loaded nvm, node & npm.
 NVM_DIR=~/.nvm
 NVM_SH="/usr/local/opt/nvm/nvm.sh"
@@ -119,3 +109,33 @@ alias blender=/Applications/Blender/blender.app/Contents/MacOS/blender
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+
+tm() {
+  if [ "$1" = "ls" ]; then
+    tmux ls
+  elif [ "$1" = "" ]; then
+    tmux attach -t "default" || tmux new -s "default"
+  else
+    tmux new -s "$1" || tmux attach -t "$1"
+  fi
+}
+
+tmu() {
+  if [ -z "$TMUX" ]; then
+    sessions=$(tmux ls 2> /dev/null)
+    if [ "$?" != '0' ]; then
+      sessions=''
+    fi
+
+    sessions=$(echo "$sessions" | cut -d \: -f 1)
+
+    sessions=$(echo "$sessions" | grep -v '^default$')
+    sessions=$(echo "default\n$sessions")
+
+    session=$(echo "$sessions" | fzf --print-query | tail -n1)
+
+    tm "$session" &> /dev/null
+  fi
+}
+
+tmu
