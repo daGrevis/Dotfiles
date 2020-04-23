@@ -960,6 +960,7 @@ autocmd FileType qf nnoremap <buffer><silent> o <CR><C-w>w :q<CR>
 autocmd FileType qf nnoremap <buffer><silent> t <C-W>T<CR> :only<CR>
 autocmd FileType qf nnoremap <buffer><silent> O <CR>
 autocmd FileType qf nnoremap <buffer><silent> T <C-W>T<CR>
+autocmd FileType qf nnoremap <buffer><silent> <CR> <CR><C-w><C-w>
 
 " Fix formatting with Prettier.
 nmap <Leader>p :Prettier<CR>
