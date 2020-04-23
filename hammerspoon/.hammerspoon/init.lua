@@ -132,7 +132,11 @@ hs.hotkey.bind({'cmd', 'shift'}, 'a', function()
 end)
 
 hs.hotkey.bind({'cmd', 'shift'}, 'd', function()
-  hs.execute('open ~')
+  hs.application.launchOrFocus('Finder')
+end)
+
+hs.hotkey.bind({'cmd', 'shift'}, 'r', function()
+  hs.relaunch()
 end)
 
 hs.hotkey.bind({'cmd'}, 'd', function()
