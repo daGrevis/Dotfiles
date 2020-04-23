@@ -71,6 +71,11 @@ function toggleDark()
   return hs.osascript.applescript(s)
 end
 
+function focusFrontmost()
+  local frontmostWindow = hs.window.frontmostWindow()
+  frontmostWindow:focus()
+end
+
 hs.hotkey.bind({'cmd'}, '\\', function()
   local ok, output = airPods('daGrevis’ AirPods')
   if ok then
@@ -139,8 +144,9 @@ hs.hotkey.bind({'cmd', 'shift'}, 'r', function()
   hs.relaunch()
 end)
 
-hs.hotkey.bind({'cmd'}, 'd', function()
-  toggleDark()
+hs.hotkey.bind({'cmd', 'shift'}, 'e', function()
+  hs.toggleConsole()
+  focusFrontmost()
 end)
 
 function closeNotifications()
