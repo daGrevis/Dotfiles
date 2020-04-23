@@ -2,6 +2,7 @@ env:
   TERM: xterm-256color
 
 window:
+  decorations: buttonless
   dimensions:
     columns: 120
     lines: 50
@@ -10,15 +11,17 @@ tabspaces: 4
 
 font:
   normal:
-    family: "Hack Nerd Font"
+    family: "JetBrainsMono Nerd Font Mono"
 
   bold:
-    family: "Hack Nerd Font"
+    family: "JetBrains Mono"
 
   italic:
-    family: "Hack Nerd Font"
+    family: "JetBrains Mono"
 
   size: 14.0
+  offset:
+    y: 2 # Line spacing.
 
 # srcery
 
@@ -96,7 +99,6 @@ mouse:
 scrolling:
   history: 10000
   multiplier: 1
-  faux_multiplier: 2
   auto_scroll: true
 
 selection:
