@@ -43,6 +43,8 @@ npm() {
   npm "$@"
 }
 
+DISABLE_AUTO_TITLE='true'
+
 export ZSH=~/.oh-my-zsh
 
 ZSH_CUSTOM=~/.oh-my-zsh/custom
@@ -110,6 +112,10 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
+set_title() {
+  echo -ne "\033]2;$@\007"
+}
+
 tm() {
   if [ "$1" = "ls" ]; then
     tmux ls
@@ -121,21 +127,25 @@ tm() {
 }
 
 tmu() {
-  if [ -z "$TMUX" ]; then
-    sessions=$(tmux ls 2> /dev/null)
-    if [ "$?" != '0' ]; then
-      sessions=''
-    fi
-
-    sessions=$(echo "$sessions" | cut -d \: -f 1)
-
-    sessions=$(echo "$sessions" | grep -v '^default$')
-    sessions=$(echo "default\n$sessions")
-
-    session=$(echo "$sessions" | fzf --print-query | tail -n1)
-
-    tm "$session" &> /dev/null
+  sessions=$(tmux ls 2> /dev/null)
+  if [ "$?" != '0' ]; then
+    sessions=''
   fi
+
+  sessions=$(echo "$sessions" | cut -d \: -f 1)
+
+  sessions=$(echo "$sessions" | grep -v '^default$')
+  sessions=$(echo "default\n$sessions")
+
+  session=$(echo "$sessions" | fzf --print-query | tail -n1)
+
+  tm "$session" &> /dev/null
 }
 
-tmu
+
+if [ -z "$TMUX" ]; then
+  tmu
+else
+  set_title "$(tmux display-message -p '#S')"
+fi
+
