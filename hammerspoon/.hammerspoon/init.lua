@@ -8,12 +8,15 @@ PassChooser:init({
 
 hs.alert.show('Hammerspoon loaded')
 
--- http://lua-users.org/wiki/StringRecipes
-function string.ends(String, End)
-   return End == '' or string.sub(String, -string.len(End)) == End
+-- local function starts_with(str, start)
+--    return str:sub(1, #start) == start
+-- end
+
+local function ends_with(str, ending)
+   return ending == "" or str:sub(-#ending) == ending
 end
 
-function open_app(app_name, new)
+local function open_app(app_name, new)
   new = new or false
 
   local s = 'open'
@@ -25,7 +28,7 @@ function open_app(app_name, new)
   hs.execute(s)
 end
 
-function airPods(deviceName)
+local function airPods(deviceName)
   local s = [[
     activate application "SystemUIServer"
     tell application "System Events"
@@ -55,7 +58,7 @@ function airPods(deviceName)
   return hs.osascript.applescript(s)
 end
 
-function toggleDark()
+local function toggleDark()
   local s = [[
     tell application "System Events"
       tell appearance preferences
@@ -67,7 +70,7 @@ function toggleDark()
   return hs.osascript.applescript(s)
 end
 
-function focusFrontmost()
+local function focusFrontmost()
   local frontmostWindow = hs.window.frontmostWindow()
   frontmostWindow:focus()
 end
@@ -145,7 +148,7 @@ hs.hotkey.bind({'cmd', 'shift'}, 'e', function()
   focusFrontmost()
 end)
 
-function closeNotifications()
+local function closeNotifications()
   local s = [[
     tell application "System Events"
       tell process "NotificationCenter"
@@ -175,14 +178,14 @@ hs.hotkey.bind({'ctrl'}, 'space', function()
   closeNotifications()
 end)
 
-config_path = os.getenv('HOME') .. '/.hammerspoon/'
-hs.pathwatcher.new(config_path, function(paths, flagTables)
+local config_path = os.getenv('HOME') .. '/.hammerspoon/'
+hs.pathwatcher.new(config_path, function(paths)
   paths = hs.fnutils.ifilter(paths, function(path)
-    if path:ends('.git/index.lock') then
+    if ends_with(path, '.git/index.lock') then
       return false
     end
 
-    if path:ends('.md') or path:ends('.md~') then
+    if ends_with(path, '.md') or ends_with(path, '.md~') then
       return false
     end
 
@@ -196,11 +199,12 @@ end):start()
 
 hs.window.animationDuration = 0
 
-function setWindowFrame(fn)
-  local focusedWindow = hs.window.focusedWindow()
-  local windowFrame = focusedWindow:frame()
-  local screenFrame = focusedWindow:screen():frame()
-  focusedWindow:setFrame(fn(windowFrame, screenFrame))
+local function setWindowFrame(fn, window)
+  local w = window or hs.window.focusedWindow()
+
+  local windowFrame = w:frame()
+  local screenFrame = w:screen():frame()
+  w:setFrame(fn(windowFrame, screenFrame))
 end
 
 hs.hotkey.bind({'cmd', 'alt'}, 'f', function()
