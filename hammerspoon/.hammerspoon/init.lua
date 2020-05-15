@@ -372,3 +372,5 @@ hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'down', hs.grid.resizeWindowShorter)
 hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'up', hs.grid.resizeWindowTaller)
 hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'left', hs.grid.resizeWindowThinner)
 hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'right', hs.grid.resizeWindowWider)
+
+hs.console.darkMode(true)
