@@ -281,6 +281,70 @@ hs.hotkey.bind({'cmd', 'alt'}, 'up', function()
   end)
 end)
 
+-- Split vertically
+hs.hotkey.bind({'cmd', 'alt'}, 'v', function()
+  local orderedWindows = hs.window.orderedWindows()
+
+  if #orderedWindows < 2 then
+    return
+  end
+
+  local leftWindow = orderedWindows[1]
+  local rightWindow = orderedWindows[2]
+
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.x = screenFrame.x
+    windowFrame.y = screenFrame.y
+    windowFrame.w = screenFrame.w / 2
+    windowFrame.h = screenFrame.h
+    return windowFrame
+  end, leftWindow)
+
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.x = screenFrame.x + (screenFrame.w / 2)
+    windowFrame.y = screenFrame.y
+    windowFrame.w = screenFrame.w / 2
+    windowFrame.h = screenFrame.h
+    return windowFrame
+  end, rightWindow)
+end)
+
+-- Swap
+hs.hotkey.bind({'cmd', 'alt'}, 'e', function()
+  local orderedWindows = hs.window.orderedWindows()
+
+  if #orderedWindows < 2 then
+    return
+  end
+
+  local window1 = orderedWindows[1]
+  local window2 = orderedWindows[2]
+
+  local frame1 = window1:frame()
+  local frame2 = window2:frame()
+
+  local x = frame1.x
+  local y = frame1.y
+  local w = frame1.w
+  local h = frame1.h
+
+  setWindowFrame(function(windowFrame)
+    windowFrame.x = frame2.x
+    windowFrame.y = frame2.y
+    windowFrame.w = frame2.w
+    windowFrame.h = frame2.h
+    return windowFrame
+  end, window1)
+
+  setWindowFrame(function(windowFrame)
+    windowFrame.x = x
+    windowFrame.y = y
+    windowFrame.w = w
+    windowFrame.h = h
+    return windowFrame
+  end, window2)
+end)
+
 hs.hotkey.bind({'cmd'}, 'm', function()
   local mainScreen = hs.screen.mainScreen()
   local otherScreen = hs.fnutils.find(hs.screen.allScreens(), function(screen)
