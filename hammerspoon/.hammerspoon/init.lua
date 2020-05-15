@@ -1,7 +1,3 @@
--- https://github.com/jasonrudolph/ControlEscape.spoon
-local ControlEscape = hs.loadSpoon('ControlEscape')
-ControlEscape:start()
-
 local PassChooser = hs.loadSpoon('PassChooser')
 PassChooser:bindHotkeys({
   show={{'cmd'}, 'p'},
