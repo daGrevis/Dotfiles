@@ -374,3 +374,51 @@ hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'left', hs.grid.resizeWindowThinner)
 hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'right', hs.grid.resizeWindowWider)
 
 hs.console.darkMode(true)
+
+local function isWindowTiled(window)
+  local windowFrame = window:frame()
+  local screenFrame = window:screen():frame()
+
+  return (
+    windowFrame.x == screenFrame.x
+    and windowFrame.y == screenFrame.y
+    and windowFrame.w == screenFrame.w
+    and windowFrame.h == screenFrame.h
+  )
+end
+
+local borderCanvas = hs.canvas.new{x=0, y=0, h=0, w=0}
+borderCanvas:appendElements({
+  type='rectangle',
+  action='stroke',
+  strokeWidth=2,
+  strokeColor={red=1},
+  frame={x=0, y=0, h=0, w=0}
+})
+
+local clearBorder = function()
+  borderCanvas:elementAttribute(1, 'frame', {x=0, y=0, h=0, w=0})
+end
+
+local showBorder = function()
+  local focusedWindow = hs.window.focusedWindow()
+
+  clearBorder()
+
+  if isWindowTiled(focusedWindow) then
+    return
+  end
+
+  local screen = focusedWindow:screen()
+  local fullFrame = screen:fullFrame()
+  local frame = focusedWindow:frame()
+
+  borderCanvas:size({x=fullFrame.x, y=fullFrame.y, h=fullFrame.h, w=fullFrame.w})
+  borderCanvas:elementAttribute(1, 'frame', {x=frame.x, y=frame.y, h=frame.h, w=frame.w})
+  borderCanvas:show()
+end
+
+-- Show border around focused window when it's not tiled.
+local wf_any = hs.window.filter.new(true)
+wf_any:subscribe(hs.window.filter.windowFocused, showBorder)
+wf_any:subscribe(hs.window.filter.windowMoved, showBorder)
