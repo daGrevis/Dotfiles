@@ -220,6 +220,24 @@ hs.hotkey.bind({'cmd', 'alt'}, 'f', function()
   end)
 end)
 
+-- Stretch tall
+hs.hotkey.bind({'cmd', 'alt'}, 't', function()
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.y = screenFrame.y
+    windowFrame.h = screenFrame.h
+    return windowFrame
+  end)
+end)
+
+-- Stretch wide
+hs.hotkey.bind({'cmd', 'alt'}, 'w', function()
+  setWindowFrame(function(windowFrame, screenFrame)
+    windowFrame.x = screenFrame.x
+    windowFrame.w = screenFrame.w
+    return windowFrame
+  end)
+end)
+
 -- Center
 hs.hotkey.bind({'cmd', 'alt'}, 'c', function()
   setWindowFrame(function(windowFrame, screenFrame)
