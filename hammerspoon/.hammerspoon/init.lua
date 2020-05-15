@@ -139,10 +139,12 @@ hs.hotkey.bind({'cmd', 'shift'}, 'd', function()
   hs.application.launchOrFocus('Finder')
 end)
 
+-- Relaunch
 hs.hotkey.bind({'cmd', 'shift'}, 'r', function()
   hs.relaunch()
 end)
 
+-- Toggle console
 hs.hotkey.bind({'cmd', 'shift'}, 'e', function()
   hs.toggleConsole()
   focusFrontmost()
@@ -207,6 +209,7 @@ local function setWindowFrame(fn, window)
   w:setFrame(fn(windowFrame, screenFrame))
 end
 
+-- Fullscreen
 hs.hotkey.bind({'cmd', 'alt'}, 'f', function()
   setWindowFrame(function(windowFrame, screenFrame)
     windowFrame.x = screenFrame.x
@@ -217,6 +220,7 @@ hs.hotkey.bind({'cmd', 'alt'}, 'f', function()
   end)
 end)
 
+-- Center
 hs.hotkey.bind({'cmd', 'alt'}, 'c', function()
   setWindowFrame(function(windowFrame, screenFrame)
     windowFrame.x = screenFrame.w * .2
