@@ -116,3 +116,11 @@ alias dc=cd
 port-used() {
     lsof -nP -i4TCP:"$1" | grep LISTEN
 }
+
+man() {
+    page="$1"
+    if [ $# -eq 0 ]; then
+        page=$(command man -aWS 1 \* 2> /dev/null | xargs basename | sed 's/\.[^.]*$//' | sort -u | fzf)
+    fi
+    command man "$page"
+}
