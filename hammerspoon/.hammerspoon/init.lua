@@ -1,3 +1,5 @@
+local YABAI_PATH = '/usr/local/bin/yabai'
+
 local PassChooser = hs.loadSpoon('PassChooser')
 PassChooser:bindHotkeys({
   show={{'cmd'}, 'p'},
@@ -26,6 +28,20 @@ local function open_app(app_name, new)
   s = s .. " -a '/Applications/" .. app_name .. ".app'"
 
   hs.execute(s)
+end
+
+local function _yabai(message)
+  return hs.execute(YABAI_PATH .. ' -m ' .. message)
+end
+
+local function yabai(message)
+  local _, status = _yabai(message)
+  return status or false
+end
+
+local function yabaiQuery(message)
+  local output = _yabai('query ' .. message)
+  return hs.json.decode(output)
 end
 
 local function airPods(deviceName)
@@ -124,7 +140,7 @@ hs.hotkey.bind({'cmd', 'shift'}, 'return', function()
 end)
 
 hs.hotkey.bind({'cmd', 'shift'}, 'i', function()
-  open_app('Firefox Developer Edition')
+  open_app('Firefox Developer Edition', true)
 end)
 
 hs.hotkey.bind({'cmd', 'shift'}, 's', function()
@@ -136,7 +152,7 @@ hs.hotkey.bind({'cmd', 'shift'}, 'a', function()
 end)
 
 hs.hotkey.bind({'cmd', 'shift'}, 'd', function()
-  hs.application.launchOrFocus('Finder')
+  hs.execute('open -R ~/Downloads')
 end)
 
 -- Relaunch
@@ -180,6 +196,40 @@ hs.hotkey.bind({'ctrl'}, 'space', function()
   closeNotifications()
 end)
 
+-- Focus on space without delay.
+for i = 0, 9 do
+  local key = tostring(i)
+  hs.hotkey.bind({'ctrl'}, key, function()
+    yabai('space --focus ' .. key)
+  end)
+end
+
+-- Focus on prev space.
+hs.hotkey.bind({'ctrl'}, '[', function()
+  return yabai('space --focus prev') or yabai('space --focus 9')
+end)
+
+-- Focus on next space.
+hs.hotkey.bind({'ctrl'}, ']', function()
+  return yabai('space --focus next') or yabai('space --focus 1')
+end)
+
+-- Toggle between float and bsp layout.
+hs.hotkey.bind({'cmd', 'ctrl'}, 'e', function()
+  local space = yabaiQuery('--spaces --space')
+  yabai('space --layout ' .. (space.type == 'float' and 'bsp' or 'float'))
+end)
+
+-- Toggle fullscreen.
+hs.hotkey.bind({'cmd', 'ctrl'}, 'f', function()
+  local space = yabaiQuery('--spaces --space')
+  if space.type == 'float' then
+    yabai('window --grid "1:1:0:0:1:1"')
+  else
+    yabai('window --toggle zoom-fullscreen')
+  end
+end)
+
 local config_path = os.getenv('HOME') .. '/.hammerspoon/'
 hs.pathwatcher.new(config_path, function(paths)
   paths = hs.fnutils.ifilter(paths, function(path)
@@ -201,224 +251,4 @@ end):start()
 
 hs.window.animationDuration = 0
 
-local function setWindowFrame(fn, window)
-  local w = window or hs.window.focusedWindow()
-
-  local windowFrame = w:frame()
-  local screenFrame = w:screen():frame()
-  w:setFrame(fn(windowFrame, screenFrame))
-end
-
--- Fullscreen
-hs.hotkey.bind({'cmd', 'alt'}, 'f', function()
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.x = screenFrame.x
-    windowFrame.y = screenFrame.y
-    windowFrame.w = screenFrame.w
-    windowFrame.h = screenFrame.h
-    return windowFrame
-  end)
-end)
-
--- Stretch tall
-hs.hotkey.bind({'cmd', 'alt'}, 't', function()
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.y = screenFrame.y
-    windowFrame.h = screenFrame.h
-    return windowFrame
-  end)
-end)
-
--- Stretch wide
-hs.hotkey.bind({'cmd', 'alt'}, 'w', function()
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.x = screenFrame.x
-    windowFrame.w = screenFrame.w
-    return windowFrame
-  end)
-end)
-
--- Center
-hs.hotkey.bind({'cmd', 'alt'}, 'c', function()
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.x = screenFrame.w * .2
-    windowFrame.y = screenFrame.h * .125
-    windowFrame.w = screenFrame.w * .6
-    windowFrame.h = screenFrame.h * .8
-    return windowFrame
-  end)
-end)
-
-hs.hotkey.bind({'cmd', 'alt'}, 'left', function()
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.x = screenFrame.x
-    windowFrame.w = screenFrame.w / 2
-    return windowFrame
-  end)
-end)
-
-hs.hotkey.bind({'cmd', 'alt'}, 'right', function()
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.x = screenFrame.x + (screenFrame.w / 2)
-    windowFrame.w = screenFrame.w / 2
-    return windowFrame
-  end)
-end)
-
-hs.hotkey.bind({'cmd', 'alt'}, 'down', function()
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.y = screenFrame.y + (screenFrame.h / 2)
-    windowFrame.h = screenFrame.h / 2
-    return windowFrame
-  end)
-end)
-
-hs.hotkey.bind({'cmd', 'alt'}, 'up', function()
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.y = 0
-    windowFrame.h = screenFrame.h / 2
-    return windowFrame
-  end)
-end)
-
--- Split vertically
-hs.hotkey.bind({'cmd', 'alt'}, 'v', function()
-  local orderedWindows = hs.window.orderedWindows()
-
-  if #orderedWindows < 2 then
-    return
-  end
-
-  local leftWindow = orderedWindows[1]
-  local rightWindow = orderedWindows[2]
-
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.x = screenFrame.x
-    windowFrame.y = screenFrame.y
-    windowFrame.w = screenFrame.w / 2
-    windowFrame.h = screenFrame.h
-    return windowFrame
-  end, leftWindow)
-
-  setWindowFrame(function(windowFrame, screenFrame)
-    windowFrame.x = screenFrame.x + (screenFrame.w / 2)
-    windowFrame.y = screenFrame.y
-    windowFrame.w = screenFrame.w / 2
-    windowFrame.h = screenFrame.h
-    return windowFrame
-  end, rightWindow)
-end)
-
--- Swap
-hs.hotkey.bind({'cmd', 'alt'}, 'e', function()
-  local orderedWindows = hs.window.orderedWindows()
-
-  if #orderedWindows < 2 then
-    return
-  end
-
-  local window1 = orderedWindows[1]
-  local window2 = orderedWindows[2]
-
-  local frame1 = window1:frame()
-  local frame2 = window2:frame()
-
-  local x = frame1.x
-  local y = frame1.y
-  local w = frame1.w
-  local h = frame1.h
-
-  setWindowFrame(function(windowFrame)
-    windowFrame.x = frame2.x
-    windowFrame.y = frame2.y
-    windowFrame.w = frame2.w
-    windowFrame.h = frame2.h
-    return windowFrame
-  end, window1)
-
-  setWindowFrame(function(windowFrame)
-    windowFrame.x = x
-    windowFrame.y = y
-    windowFrame.w = w
-    windowFrame.h = h
-    return windowFrame
-  end, window2)
-end)
-
-hs.hotkey.bind({'cmd'}, 'm', function()
-  local mainScreen = hs.screen.mainScreen()
-  local otherScreen = hs.fnutils.find(hs.screen.allScreens(), function(screen)
-    return screen:id() ~= mainScreen:id()
-  end)
-
-  local focusedWindow = hs.window.focusedWindow()
-  focusedWindow:moveToScreen(otherScreen)
-  focusedWindow:focus()
-end)
-
-hs.grid.MARGINX = 0
-hs.grid.MARGINY = 0
-hs.grid.GRIDHEIGHT = 12
-hs.grid.GRIDWIDTH = 12
-
--- Move windows.
-hs.hotkey.bind({'cmd', 'ctrl'}, 'down', hs.grid.pushWindowDown)
-hs.hotkey.bind({'cmd', 'ctrl'}, 'up', hs.grid.pushWindowUp)
-hs.hotkey.bind({'cmd', 'ctrl'}, 'left', hs.grid.pushWindowLeft)
-hs.hotkey.bind({'cmd', 'ctrl'}, 'right', hs.grid.pushWindowRight)
-
--- Resize windows.
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'down', hs.grid.resizeWindowShorter)
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'up', hs.grid.resizeWindowTaller)
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'left', hs.grid.resizeWindowThinner)
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'right', hs.grid.resizeWindowWider)
-
 hs.console.darkMode(true)
-
-local function isWindowTiled(window)
-  local windowFrame = window:frame()
-  local screenFrame = window:screen():frame()
-
-  return (
-    windowFrame.x == screenFrame.x
-    and windowFrame.y == screenFrame.y
-    and windowFrame.w == screenFrame.w
-    and windowFrame.h == screenFrame.h
-  )
-end
-
-local borderCanvas = hs.canvas.new{x=0, y=0, h=0, w=0}
-borderCanvas:appendElements({
-  type='rectangle',
-  action='stroke',
-  strokeWidth=2,
-  strokeColor={red=1},
-  frame={x=0, y=0, h=0, w=0}
-})
-
-local clearBorder = function()
-  borderCanvas:elementAttribute(1, 'frame', {x=0, y=0, h=0, w=0})
-end
-
-local showBorder = function()
-  local focusedWindow = hs.window.focusedWindow()
-
-  clearBorder()
-
-  if isWindowTiled(focusedWindow) then
-    return
-  end
-
-  local screen = focusedWindow:screen()
-  local fullFrame = screen:fullFrame()
-  local frame = focusedWindow:frame()
-
-  borderCanvas:size({x=fullFrame.x, y=fullFrame.y, h=fullFrame.h, w=fullFrame.w})
-  borderCanvas:elementAttribute(1, 'frame', {x=frame.x, y=frame.y, h=frame.h, w=frame.w})
-  borderCanvas:show()
-end
-
--- Show border around focused window when it's not tiled.
-local wf_any = hs.window.filter.new(true)
-wf_any:subscribe(hs.window.filter.windowFocused, showBorder)
-wf_any:subscribe(hs.window.filter.windowMoved, showBorder)
