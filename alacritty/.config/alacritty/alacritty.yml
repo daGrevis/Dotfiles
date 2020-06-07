@@ -3,21 +3,19 @@ env:
 
 window:
   decorations: buttonless
-  dimensions:
-    columns: 120
-    lines: 50
+  startup_mode: 'Maximized'
 
-tabspaces: 4
+dynamic_title: true
 
 font:
   normal:
     family: "JetBrainsMono Nerd Font Mono"
 
   bold:
-    family: "JetBrains Mono"
+    family: "JetBrainsMono Nerd Font Mono"
 
   italic:
-    family: "JetBrains Mono"
+    family: "JetBrainsMono Nerd Font Mono"
 
   size: 14.0
   offset:
@@ -82,7 +80,6 @@ colors:
     white:   '0xc0c5ce'
 
 visual_bell:
-  animation: EaseOutExpo
   duration: 0
 
 mouse_bindings:
@@ -91,18 +88,18 @@ mouse_bindings:
 mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
+  hide_when_typing: true
 
   url:
     launcher: open
-    # modifiers: Command
+    modifiers: Command
+
+cursor:
+  unfocused_hollow: true
 
 scrolling:
-  history: 10000
+  history: 100000
   multiplier: 1
-  auto_scroll: true
-
-selection:
-  semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
 live_config_reload: true
 
