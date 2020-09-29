@@ -4,8 +4,7 @@ env:
 window:
   decorations: buttonless
   startup_mode: 'Maximized'
-
-dynamic_title: true
+  dynamic_title: true
 
 font:
   normal:
@@ -79,7 +78,7 @@ colors:
     cyan:    '0x62b3b2'
     white:   '0xc0c5ce'
 
-visual_bell:
+bell:
   duration: 0
 
 mouse_bindings:
