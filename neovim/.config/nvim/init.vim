@@ -120,6 +120,9 @@ Plug 'https://github.com/josa42/coc-lua', {'do': 'yarn install --frozen-lockfile
 " File explorer.
 Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
 
+" Snippet engine.
+Plug 'https://github.com/neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile --force'}
+
 " Auto-close delimiters.
 Plug 'https://github.com/Raimondi/delimitMate'
 
@@ -164,9 +167,6 @@ Plug 'https://github.com/FooSoft/vim-argwrap'
 
 " Switch segments of text with predefined replacements.
 Plug 'https://github.com/AndrewRadev/switch.vim'
-
-" Snippet engine.
-Plug 'https://github.com/SirVer/ultisnips'
 
 " Move arguments left and right.
 Plug 'https://github.com/AndrewRadev/sideways.vim'
@@ -384,8 +384,12 @@ let g:SuperTabLongestEnhanced = 1
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Expand snippet under the cursor.
-" See: .config/nvim/UltiSnips/*.snippets
-let g:UltiSnipsExpandTrigger = "<C-s>"
+imap <C-s> <Plug>(coc-snippets-expand)
+
+call coc#config('snippets', {
+      \ 'extends': {
+      \   'javascriptreact': ['typescriptreact'],
+      \ }})
 
 " }}}
 
