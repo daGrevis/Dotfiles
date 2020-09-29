@@ -593,7 +593,7 @@ call coc#config('tsserver', {
 call coc#config('eslint', {
       \ 'enable': 1,
       \ 'packageManager': 'yarn',
-      \ 'filetypes': ['javascript', 'javascriptreact', 'javascript.jsx', 'javascript.flow.jsx', 'typescript'],
+      \ 'filetypes': ['javascript', 'javascriptreact', 'javascript.jsx', 'javascript.flow.jsx', 'typescript', 'typescript.jsx'],
       \ })
 
 call coc#config('languageserver.flow', {
