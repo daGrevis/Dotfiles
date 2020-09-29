@@ -8,7 +8,8 @@ v() {
     fi
 }
 alias vim=v
-alias vv='nvim -u NORC'
+alias vv='nvim'
+alias vvv='nvim -u NORC'
 
 alias serve-http='python3 -m http.server'
 
