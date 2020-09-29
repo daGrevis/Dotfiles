@@ -107,7 +107,7 @@ _fzf_compgen_dir() {
   fi
 }
 
-alias blender=/Applications/Blender/blender.app/Contents/MacOS/blender
+alias blender=/Applications/blender.app/Contents/MacOS/blender
 
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
