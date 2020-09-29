@@ -6,7 +6,7 @@ export VISUAL="$EDITOR"
 
 export LESS=-Ri
 
-export PAGER='nvim -r -'
+export PAGER='nvim -R -'
 export MANPAGER='nvim -R "+setf man" -'
 
 GPG_TTY=`tty`
