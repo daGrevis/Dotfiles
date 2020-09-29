@@ -189,6 +189,9 @@ Plug 'https://github.com/psliwka/vim-smoothie'
 
 " File-type specific plugins below.
 
+Plug 'https://github.com/vim-pandoc/vim-pandoc'
+Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
+
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'https://github.com/elzr/vim-json', {'for': 'json'}
