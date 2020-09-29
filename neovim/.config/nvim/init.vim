@@ -940,9 +940,9 @@ nnoremap <A-l> <C-w>l
 
 " Switch case of the character under the cursor, but DON'T move to the right.
 function! SwitchCase()
-    exe "normal! ~"
+    normal! ~
     if strlen(getline('.')) != virtcol('.')
-        exe "normal! h"
+        normal! h
     endif
 endfunction
 nnoremap ~ :call SwitchCase()<CR>
