@@ -196,7 +196,7 @@ Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'https://github.com/elzr/vim-json', {'for': 'json'}
 Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
-Plug 'https://github.com/HerringtonDarkholme/yats.vim', {'for': ['typescript', 'typescript.jsx']}
+Plug 'https://github.com/leafgarland/typescript-vim', {'for': ['typescript', 'typescript.jsx']}
 Plug 'https://github.com/MaxMEllon/vim-jsx-pretty', {'for': 'jsx'}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
@@ -1083,6 +1083,11 @@ function! AuFileTypeJavaScript()
     setlocal shiftwidth=2
 endfunction
 autocmd vimrc FileType javascript call AuFileTypeJavaScript()
+
+function! AuFileTypeJavaScriptReact()
+    setlocal filetype=javascript.javascriptreact
+endfunction
+autocmd vimrc FileType javascriptreact call AuFileTypeJavaScript()
 
 function! AuFileTypeTypeScript()
     setlocal filetype=typescript.jsx
