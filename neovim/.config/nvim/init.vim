@@ -951,6 +951,17 @@ function! SwitchCase()
 endfunction
 nnoremap ~ :call SwitchCase()<CR>
 
+" Just like standard <C-a> & <C-x>, but also works on letters and other characters.
+" https://github.com/siers/dotfiles/blob/1fe5bfab8771f00ee463c01b811b943ca7402d5c/vim/.config/nvim/init.vim#L418-L426
+function! s:CharacterDelta(delta) " Char analog of C-{x,a}
+    normal! yl
+    let c = nr2char(char2nr(getreg('"')) + a:delta)
+    call setreg('"', c)
+    normal! ""vP
+endf
+nnoremap <C-a> :call <SID>CharacterDelta(1)<CR>
+nnoremap <C-x> :call <SID>CharacterDelta(-1)<CR>
+
 " Just like standard f/F except it works on multiple lines.
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
