@@ -354,6 +354,7 @@ let g:CSSMinisterCreateMappings = 0
 
 " Disables creation of .netrwhist file.
 let g:netrw_dirhistmax = 0
+let g:loaded_netrw = 1
 
 " Create directory of current file if it doesn't exist.
 " https://vim.fandom.com/wiki/Mkdir_on_edit_if_needed
