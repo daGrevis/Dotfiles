@@ -18,11 +18,10 @@ gd() {
     git --no-pager diff --color --stat "$@"
     echo
 
-    command -v colordiff &> /dev/null
-    if [ "$?" != "0" ]; then
-        git diff --color "$@"
+    if ! command -v diff-so-fancy &> /dev/null; then
+        git diff --color "$@" | less -R --pattern '^diff --git'
     else
-        { git --no-pager diff --color "$@" | diff-so-fancy } | less -R --pattern '^(added|deleted|modified):'
+        git --no-pager diff --color "$@" | diff-so-fancy | less -R --pattern '^(added|deleted|modified):'
     fi
 }
 gl() {
@@ -57,7 +56,9 @@ alias grv="git revert"
 alias gs="git status -sb"
 alias gsb="git status -sb"
 alias gst="git status -sb"
-alias gsw="git show"
+gsw() {
+    git --no-pager show "$@" | less -R --pattern '^diff --git'
+}
 alias gswl="git show --name-only"
 alias gtg="git tag"
 alias gfc="git fetch"
