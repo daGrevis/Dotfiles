@@ -13,10 +13,11 @@
 --ignore-dir=cache/
 --ignore-dir=.cache/
 --ignore-dir=vendor/
---ignore-dir=assets/
 --ignore-dir=build/
+--ignore-dir=target/
 --ignore-dir=materialsLibrary/
 --ignore-dir=apidoc/
+--ignore-dir=flow-typed/
 
 --ignore-file=match:/.+\.bundle\.js$/
 --ignore-file=is:browserify-cache.json
@@ -46,3 +47,6 @@ ts=.ts,.tsx
 
 --type-add
 cs=.cs
+
+--type-add
+md=.md
