@@ -861,6 +861,12 @@ nnoremap Q @q
 " http://stackoverflow.com/a/1504373
 nnoremap "" "0
 
+" Yank selection to "0 register.
+vmap ""y "0y
+
+" Delete selection, but also yank it to "0 register.
+vmap ""d "0ygvd
+
 " Move through syntax tree.
 " For example, <PageDown> goes to next method.
 nmap <Home> [[
