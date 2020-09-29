@@ -835,7 +835,7 @@ nnoremap H ^
 vnoremap H ^
 " Goes to the end of the line.
 nnoremap L $
-vnoremap L $
+vnoremap L $h
 
 " Yank till end of the line.
 nnoremap Y y$
