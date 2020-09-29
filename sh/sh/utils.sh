@@ -11,6 +11,8 @@ alias vim=v
 alias vv='nvim'
 alias vvv='nvim -u NORC'
 
+alias o=open
+
 alias serve-http='python3 -m http.server'
 
 l() {
@@ -124,4 +126,9 @@ man() {
         page=$(command man -aWS 1 \* 2> /dev/null | xargs basename | sed 's/\.[^.]*$//' | sort -u | fzf)
     fi
     command man "$page"
+}
+
+gg() {
+    tmux clear-history
+    clear
 }
