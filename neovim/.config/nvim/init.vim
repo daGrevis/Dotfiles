@@ -800,6 +800,12 @@ set statusline+=%*
 
 " Commands {{{
 
+" Common typos.
+command! Q q
+command! Wqa wqa
+command! Wq wq
+command! Qa qa
+
 " Remove whitespace from end of lines.
 function! StripWhitespace()
     s/\s\+$//e
