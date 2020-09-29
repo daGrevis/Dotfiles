@@ -514,13 +514,14 @@ nnoremap <C-p> :Files<CR>
 nnoremap <Tab> :CocCommand explorer<CR>
 
 call coc#config('explorer', {
+      \ 'position': 'left',
       \ 'keyMappings.<tab>': 'quit',
-      \ 'keyMappings.<cr>': ['expandable?', 'expandOrCollapse', 'open'],
-      \ 'openAction.changeDirectory': 0,
+      \ 'keyMappings.<cr>': ["expandable?", ["expanded?", "collapse", "expand"], "open"],
       \ 'quitOnOpen': 1,
       \ 'sources': [{'name': 'file', 'expand': 1}],
-      \ 'file.columns': ['git', 'indent', 'icon', 'filename', 'readonly', ['fullpath'], ['size'], ['created'], ['modified']],
+      \ 'file.child.template': '[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]',
       \ 'file.showHiddenFiles': 1,
+      \ 'file.column.git.icon.mixed': 'M',
       \ 'width': 60,
       \ 'icon.enableNerdfont': 1,
       \ 'previewAction.onHover': 0,
