@@ -184,6 +184,9 @@ Plug 'https://github.com/mhartington/oceanic-next'
 " Utility functions for converting colors.
 Plug 'https://github.com/mgiuffrida/CSSMinister'
 
+" Smooth scrolling in terminal.
+Plug 'https://github.com/psliwka/vim-smoothie'
+
 " File-type specific plugins below.
 
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
