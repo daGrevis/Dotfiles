@@ -147,6 +147,6 @@ tmu() {
 if [ -z "$TMUX" ]; then
   tmu
 else
-  set_title "$(tmux display-message -p '#S')"
+  set_title "$(tmux display-message -p 'tmux: #S')"
 fi
 
