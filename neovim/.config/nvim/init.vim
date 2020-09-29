@@ -219,6 +219,8 @@ Plug 'https://github.com/chrisbra/csv.vim', {'for': 'csv'}
 
 Plug 'https://github.com/yaymukund/vim-haxe', {'for': 'haxe'}
 
+Plug 'https://github.com/amadeus/vim-mjml', {'for': 'mjml'}
+
 call plug#end()
 
 " }}}
