@@ -93,6 +93,9 @@ Plug 'https://github.com/neoclide/coc.nvim', {'do': 'yarn install --frozen-lockf
 Plug 'https://github.com/Shougo/neco-vim'
 Plug 'https://github.com/neoclide/coc-neco'
 
+" Bash source.
+Plug 'https://github.com/iamcco/coc-diagnostic', {'do': 'yarn install --frozen-lockfile --force && yarn build'}
+
 " CSS source.
 Plug 'https://github.com/neoclide/coc-css', {'do': 'yarn install --frozen-lockfile --force'}
 
@@ -107,6 +110,12 @@ Plug 'https://github.com/neoclide/coc-eslint', {'do': 'yarn install --frozen-loc
 
 " Prettier source.
 Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile --force'}
+
+" Rust source.
+Plug 'https://github.com/neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile --force'}
+
+" Lua source.
+Plug 'https://github.com/josa42/coc-lua', {'do': 'yarn install --frozen-lockfile --force'}
 
 " File explorer.
 Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
@@ -594,6 +603,15 @@ call coc#config('languageserver.flow', {
       \ 'requireRootPattern': 1,
       \ 'settings': {},
       \ 'rootPatterns': ['.flowconfig']
+      \ })
+
+call coc#config('diagnostic-languageserver', {
+      \ 'filetypes': { 'sh': 'shellcheck' },
+      \ 'formatFiletypes': { 'sh': 'shfmt' },
+      \ 'formatters': { 'shfmt': {
+      \     'command': 'shfmt',
+      \     'args': ['-i', '2', '-bn', '-ci', '-sr']
+      \ }}
       \ })
 
 " }}}
