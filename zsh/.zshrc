@@ -48,7 +48,7 @@ DISABLE_AUTO_TITLE='true'
 
 export ZSH=~/.oh-my-zsh
 
-ZSH_CUSTOM=~/.oh-my-zsh/custom
+ZSH_CUSTOM=~/.oh-my-zsh-custom
 
 ZSH_THEME='custom'
 
