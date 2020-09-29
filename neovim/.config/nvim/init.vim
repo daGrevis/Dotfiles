@@ -1122,7 +1122,6 @@ function! AuFileTypeMarkdown()
     " :help fo-table
     setlocal formatoptions-=t
     setlocal textwidth=80
-    call SetColorColumn(81)
 endfunction
 autocmd vimrc FileType markdown call AuFileTypeMarkdown()
 
@@ -1140,9 +1139,6 @@ function! AuFileTypeGitCommit()
     " Enables spell-checker for commit messages.
     setlocal spell
 
-    " http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
-    call SetColorColumn(51)
-
     " Don't be weird with colors.
     hi clear gitcommitSummary
     hi clear gitcommitOverflow
@@ -1153,6 +1149,19 @@ function! AuFileTypeVim()
     set textwidth=100
 endfunction
 autocmd vimrc FileType vim call AuFileTypeVim()
+
+function! AuColorColumn()
+  if &filetype == 'gitcommit'
+    call SetColorColumn(51) " http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+  elseif &filetype == 'help'
+    call SetColorColumn(79)
+  elseif &filetype == 'markdown'
+    call SetColorColumn(81)
+  else
+    call SetColorColumn(0)
+  endif
+endfunction
+autocmd vimrc FileType * call AuColorColumn()
 
 function! AuGrepper()
     " Sets Grepper window height to 20 lines.
