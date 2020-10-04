@@ -21,7 +21,7 @@ gd() {
     if ! command -v diff-so-fancy &> /dev/null; then
         git diff --color "$@" | less -R --pattern '^diff --git'
     else
-        git --no-pager diff --color "$@" | diff-so-fancy | less -R --pattern '^(added|deleted|modified):'
+        git --no-pager diff --color "$@" | diff-so-fancy | less -R --pattern '^(added|deleted|modified|renamed):'
     fi
 }
 gl() {
