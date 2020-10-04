@@ -1,5 +1,7 @@
 import { css, run } from 'uebersicht'
 
+const APP_ICONS = require('./app-icons.json')
+
 const YABAI_PATH = '/usr/local/bin/yabai'
 
 const config = {
@@ -117,28 +119,65 @@ const Left = ({ spaces, windows }) => (
   </div>
 )
 
-const Right = ({ spaces }) => {
+const AppIcon = ({ spaceWindow }) => {
+  const src = APP_ICONS[spaceWindow.app]
+
+  const noSrcCss =
+    !src &&
+    css`
+      width: ${config.width - 4}px;
+      background-color: ${config.colorBlack};
+    `
+
+  return (
+    <img
+      src={src}
+      className={css`
+        ${!src && `background: ${config.colorWhite};`}
+        margin-right: 8px;
+        width: auto;
+        height: ${config.height - 4}px;
+
+        ${noSrcCss}
+      `}
+      onClick={() => {
+        run(`${YABAI_PATH} -m window --focus ${spaceWindow.id}`)
+      }}
+    />
+  )
+}
+
+const Right = ({ spaces, windows }) => {
   const focusedSpace = spaces.find((space) => space.focused)
 
   if (!focusedSpace) {
     return null
   }
 
+  const spaceWindows = focusedSpace.windows.map((windowId) =>
+    windows.find((window) => window.id === windowId),
+  )
+
+  spaceWindows.sort((a, b) => {
+    if (a.app < b.app) {
+      return -1
+    }
+    if (a.app > b.app) {
+      return 1
+    }
+    return 0
+  })
+
   return (
     <div
       className={css`
-        color: ${config.colorWhite};
+        display: flex;
+        margin-right: -8px;
       `}
     >
-      <span
-        className={css`
-          font-weight: bold;
-          padding-right: 2px;
-        `}
-      >
-        {focusedSpace.type === 'float' ? 'F' : 'T'}
-      </span>
-      [{focusedSpace.windows.length}]
+      {spaceWindows.map((spaceWindow) => (
+        <AppIcon key={spaceWindow.id} spaceWindow={spaceWindow} />
+      ))}
     </div>
   )
 }
