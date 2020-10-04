@@ -25,9 +25,11 @@ const getDisplayId = () => {
   return Number(pathname.slice(1))
 }
 
-const render = (props) => {
-  console.log('render')
+const state = {
+  lastDisplay: null,
+}
 
+const render = (props) => {
   if (props.error) {
     console.log(props.error)
   }
@@ -47,7 +49,19 @@ const render = (props) => {
   }
 
   const displayId = getDisplayId()
-  const display = displays.find((display) => display.id === displayId)
+
+  let display = displays.find((display) => display.id === displayId)
+
+  if (display) {
+    state.lastDisplay = display
+  } else {
+    display = state.lastDisplay
+  }
+
+  if (!display) {
+    console.log('Error: no display was found')
+    return null
+  }
 
   spaces = spaces.filter((space) => space.display === display.index)
 

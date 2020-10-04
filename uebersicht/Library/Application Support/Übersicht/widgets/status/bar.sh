@@ -8,9 +8,9 @@ windows=$(yabai -m query --windows)
 
 output="
 {
-  \"displays\": $displays,
-  \"spaces\": $spaces,
-  \"windows\": $windows
+  \"displays\": ${displays:=[]},
+  \"spaces\": ${spaces:=[]},
+  \"windows\": ${windows:=[]}
 }
 "
 
