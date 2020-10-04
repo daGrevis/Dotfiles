@@ -14,7 +14,8 @@ const config = {
   colorGray: '#6f6f72',
 }
 
-const refreshFrequency = false
+// const refreshFrequency = false
+const refreshFrequency = 1000
 
 const command = './status/bar.sh'
 
