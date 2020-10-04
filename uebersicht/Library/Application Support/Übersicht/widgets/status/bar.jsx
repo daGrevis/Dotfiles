@@ -172,6 +172,7 @@ const Right = ({ spaces, windows }) => {
     <div
       className={css`
         display: flex;
+        justify-content: flex-end;
         margin-right: -8px;
       `}
     >
