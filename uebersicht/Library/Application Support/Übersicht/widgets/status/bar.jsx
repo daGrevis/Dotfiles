@@ -165,7 +165,7 @@ const Right = ({ spaces, windows }) => {
     if (a.app > b.app) {
       return 1
     }
-    return 0
+    return a.id > b.id ? 1 : -1
   })
 
   return (
