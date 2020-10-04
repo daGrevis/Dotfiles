@@ -25,6 +25,16 @@ l() {
     fi
 }
 
+t() {
+    # https://github.com/ogham/exa
+    command -v exa &> /dev/null
+    if [ "$?" != "0" ]; then
+        tree -a -I ".git" "$@"
+    else
+        exa -aT -I ".git" --level=7 "$@"
+    fi
+}
+
 mkcd() {
     mkdir -p "$@" && cd "$@"
 }
@@ -35,10 +45,6 @@ f() {
 
 ff() {
     find . -name "*$@*"
-}
-
-t() {
-    tree -a -I ".git" "$@"
 }
 
 dff() {
