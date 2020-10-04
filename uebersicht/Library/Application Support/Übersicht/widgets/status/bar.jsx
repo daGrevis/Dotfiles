@@ -193,7 +193,9 @@ const Space = ({ space, spaceWindows }) => {
       color: ${config.colorBlack};
     `
   const withWindowsCss =
-    spaceWindows.filter((window) => window && !window.sticky).length > 0 &&
+    spaceWindows.filter(
+      (window) => window && !window.sticky && window.app !== 'AltTab',
+    ).length > 0 &&
     css`
       border-color: ${config.colorGray};
     `
