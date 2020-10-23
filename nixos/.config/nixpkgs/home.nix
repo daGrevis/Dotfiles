@@ -86,4 +86,10 @@
     (builtins.readFile ~/Dotfiles/alacritty/.config/alacritty/alacritty.yml);
 
   # }}}
+
+  # {{{ Ack
+
+  home.file.".ackrc".source = ~/Dotfiles/ack/.ackrc;
+
+  # }}}
 }
