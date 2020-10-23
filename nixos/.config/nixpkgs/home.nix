@@ -93,4 +93,11 @@
   home.file.".ackrc".source = ~/Dotfiles/ack/.ackrc;
 
   # }}}
+
+  # {{{ Fzf
+
+  home.file.".fzf-bindings.zsh".source = ~/Dotfiles/fzf/.fzf-bindings.zsh;
+  home.file.".fzf.zsh".source = ~/Dotfiles/fzf/.fzf.zsh;
+
+  # }}}
 }
