@@ -2,3 +2,4 @@ Session.vim
 .DS_Store
 settings.py
 node_modules/
+pyvenv.cfg
