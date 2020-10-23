@@ -17,6 +17,7 @@
     zsh
     oh-my-zsh
     fzf
+    fd
     autojump
     exa
     bat
