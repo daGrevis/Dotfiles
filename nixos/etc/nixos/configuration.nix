@@ -69,8 +69,6 @@
   };
 
   virtualisation = {
-    virtualbox.guest.enable = true;
-
     docker.enable = true;
   };
 
