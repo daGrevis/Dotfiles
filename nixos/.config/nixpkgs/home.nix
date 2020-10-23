@@ -1,0 +1,89 @@
+{ lib, pkgs, ... }:
+
+{
+  # {{{ Packages
+
+  nixpkgs.config.allowUnfree = true;
+
+  home.packages = with pkgs; [
+    neovim
+    wget
+    git
+    git-lfs
+    stow
+    home-manager
+    docker
+    tmux
+    zsh
+    oh-my-zsh
+    fzf
+    autojump
+    exa
+    bat
+    gitAndTools.delta
+    ack
+    nodejs
+    yarn
+    python
+    python3
+    python38Packages.virtualenv
+    python38Packages.grip
+    alacritty
+    gist
+    firefox
+    xclip
+    xorg.xev
+    libnotify
+    htop
+    hack-font
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    # unfree:
+    ngrok
+  ];
+
+  # Manage fonts through fontconfig.
+  fonts.fontconfig.enable = true;
+
+  # }}}
+
+  # {{{ Neovim
+
+  home.file.".config/nvim/init.vim".source = ~/Dotfiles/neovim/.config/nvim/init.vim;
+  home.file.".config/coc/ultisnips/".source = ~/Dotfiles/neovim/.config/coc/ultisnips;
+
+  # }}}
+
+  # {{{ Zsh
+
+  home.file.".zshrc".source = ~/Dotfiles/zsh/.zshrc;
+  home.file.".zshenv".source = ~/Dotfiles/zsh/.zshenv;
+  home.file.".oh-my-zsh/".source = pkgs.oh-my-zsh.outPath + "/share/oh-my-zsh/";
+  home.file.".oh-my-zsh-custom/".source = ~/Dotfiles/zsh/.oh-my-zsh-custom;
+  home.file."sh/".source = ~/Dotfiles/sh/sh;
+
+  # }}}
+
+  # {{{ Tmux
+
+  home.file.".tmux.conf".source = ~/Dotfiles/tmux/.tmux.conf;
+  home.file.".tmux/plugins/tpm".source = builtins.fetchGit { url = "https://github.com/tmux-plugins/tpm"; };
+
+  # }}}
+
+  # {{{ Git
+
+  home.file.".gitconfig".source = ~/Dotfiles/git/.gitconfig;
+  home.file.".gitignore_global".source = ~/Dotfiles/git/.gitignore_global;
+
+  # }}}
+
+  # {{{ Alacritty
+
+  # Replace strings in alacritty.yml until Alacritty config import feature is released.
+  home.file.".config/alacritty/alacritty.yml".text = builtins.replaceStrings
+    ["size: 14.0" "decorations: buttonless"]
+    ["size: 11.0" "decorations: none"]
+    (builtins.readFile ~/Dotfiles/alacritty/.config/alacritty/alacritty.yml);
+
+  # }}}
+}
