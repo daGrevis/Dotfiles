@@ -512,6 +512,9 @@ vnoremap <C-c> "+y
 
 nnoremap <C-p> :Files<CR>
 
+let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_preview_window = ''
+
 " }}}
 
 " File Explorer {{{
