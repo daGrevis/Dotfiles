@@ -401,6 +401,7 @@ imap <C-s> <Plug>(coc-snippets-expand)
 
 call coc#config('snippets', {
       \ 'extends': {
+      \   'javascript': ['typescriptreact'],
       \   'javascriptreact': ['typescriptreact'],
       \ }})
 
