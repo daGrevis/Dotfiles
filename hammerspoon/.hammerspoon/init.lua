@@ -1,3 +1,6 @@
+hs.configdir = os.getenv('HOME') .. '/.hammerspoon'
+package.path = hs.configdir .. '/?.lua;' .. hs.configdir .. '/?/init.lua;' .. hs.configdir .. '/Spoons/?.spoon/init.lua;' .. package.path
+
 local YABAI_PATH = '/usr/local/bin/yabai'
 
 hs.alert.show('Hammerspoon loaded')
@@ -16,7 +19,7 @@ PassChooser:init({
 
 -- Libraries {{{
 
-local function open_app(app_name, new)
+local function openApp(app_name, new)
   new = new or false
 
   local s = 'open'
@@ -98,18 +101,6 @@ local function airPods(deviceName)
   return hs.osascript.applescript(s)
 end
 
-local function toggleDark()
-  local s = [[
-    tell application "System Events"
-      tell appearance preferences
-          set dark mode to not dark mode
-      end tell
-    end tell
-  ]]
-
-  return hs.osascript.applescript(s)
-end
-
 local function focusFrontmost()
   local frontmostWindow = hs.window.frontmostWindow()
   frontmostWindow:focus()
@@ -126,22 +117,22 @@ end)
 
 -- Alacritty.
 hs.hotkey.bind({'cmd', 'shift'}, 'return', function()
-  open_app('Alacritty', true)
+  openApp('Alacritty', true)
 end)
 
 -- Firefox DE.
 hs.hotkey.bind({'cmd', 'shift'}, 'i', function()
-  open_app('Firefox Developer Edition', true)
+  openApp('Firefox Developer Edition', true)
 end)
 
 -- Slack.
 hs.hotkey.bind({'cmd', 'shift'}, 's', function()
-  open_app('Slack')
+  openApp('Slack')
 end)
 
 -- Spark.
 hs.hotkey.bind({'cmd', 'shift'}, 'a', function()
-  open_app('Spark')
+  openApp('Spark')
 end)
 
 -- }}}
@@ -204,17 +195,33 @@ hs.hotkey.bind({'cmd'}, '`', function()
   end
 end)
 
--- Focus space without delay.
-for i = 0, 9 do
-  local key = tostring(i)
+-- Each key 1 to 9 maps to desktop 1 space X.
+-- Key 0 maps to desktop 2 space 1.
+for i = 0, 10 do
+  local space = tostring(i)
+
+  local key
+  if space == '10' then
+    key = '0'
+  else
+    key = space
+  end
+
+  -- Focus space.
   hs.hotkey.bind({'ctrl'}, key, function()
-    yabai('space --focus ' .. key)
+    yabai('space --focus ' .. space)
+  end)
+
+  -- Move windows and focus space.
+  hs.hotkey.bind({'cmd', 'ctrl'}, key, function()
+    yabai('window --space ' .. space)
+    yabai('space --focus ' .. space)
   end)
 end
 
 -- Focus the previous space.
 hs.hotkey.bind({'ctrl'}, '[', function()
-  return yabai('space --focus prev') or yabai('space --focus 9')
+  return yabai('space --focus prev') or yabai('space --focus 10') or yabai('space --focus 9')
 end)
 
 -- Focus the next space.
@@ -240,7 +247,19 @@ end)
 
 -- Center window.
 hs.hotkey.bind({'cmd', 'ctrl'}, 'c', function()
-  yabai('window --grid 4:4:1:1:2:2')
+  yabai('window --grid 8:4:1:1:2:6')
+end)
+
+-- Increase size of window.
+hs.hotkey.bind({'cmd', 'ctrl'}, 'x', function()
+  yabai('window --resize top_left:-50:-50')
+  yabai('window --resize bottom_right:50:50')
+end)
+
+-- Decrease size of window.
+hs.hotkey.bind({'cmd', 'ctrl'}, 'z', function()
+  yabai('window --resize top_left:50:50')
+  yabai('window --resize bottom_right:-50:-50')
 end)
 
 -- Fill left-half of screen.
