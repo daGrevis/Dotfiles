@@ -20,6 +20,12 @@
     initrd.checkJournalingFS = false;
   };
 
+  fileSystems."/mnt/nixos-shared" = {
+    device = "NixOS-Shared";
+    fsType = "vboxsf";
+    options = [ "rw,nofail" ];
+  };
+
   networking = {
     useDHCP = false;
     interfaces.enp0s3.useDHCP = true;
@@ -76,7 +82,7 @@
     users = {
       dagrevis = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "docker" ];
+        extraGroups = [ "wheel" "networkmanager" "docker" "vboxsf" ];
         shell = pkgs.zsh;
       };
     };
