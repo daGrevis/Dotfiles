@@ -44,7 +44,17 @@
     stow
     home-manager
     docker
+    man
   ];
+
+  documentation = {
+    enable = true;
+
+    man = {
+      enable = true;
+      generateCaches = true;
+    };
+  };
 
   services = {
     openssh.enable = true;
