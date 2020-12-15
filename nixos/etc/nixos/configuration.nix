@@ -45,6 +45,7 @@
     home-manager
     docker
     docker-compose
+    gnupg
     man
   ];
 
@@ -102,6 +103,8 @@
   nix.trustedUsers = ["root" "dagrevis"];
 
   security.sudo.wheelNeedsPassword = false;
+
+  programs.gnupg.agent.enable = true;
 
   system.stateVersion = "20.03";
 
