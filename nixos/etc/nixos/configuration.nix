@@ -58,6 +58,10 @@
     };
   };
 
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=15s
+  '';
+
   services = {
     openssh.enable = true;
 
