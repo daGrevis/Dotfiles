@@ -44,6 +44,7 @@
     stow
     home-manager
     docker
+    docker-compose
     man
   ];
 
