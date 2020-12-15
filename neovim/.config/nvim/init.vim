@@ -526,8 +526,8 @@ nnoremap <Tab> :CocCommand explorer<CR>
 
 call coc#config('explorer', {
       \ 'position': 'left',
-      \ 'keyMappings.<tab>': 'quit',
-      \ 'keyMappings.<cr>': ["expandable?", ["expanded?", "collapse", "expand"], "open"],
+      \ 'keyMappings.global.<tab>': 'quit',
+      \ 'keyMappings.global.<cr>': ["expandable?", ["expanded?", "collapse", "expand"], "open"],
       \ 'quitOnOpen': 1,
       \ 'sources': [{'name': 'file', 'expand': 1}],
       \ 'file.child.template': '[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]',
