@@ -845,7 +845,7 @@ nnoremap <Leader>j :join<CR>
 vnoremap <Leader>j :join<CR>
 
 " Clear currently highlighted phrase and close all floating windows.
-nnoremap <C-l> :nohlsearch \| :call coc#util#float_hide()<CR>
+nnoremap <C-l> :nohlsearch \| :call coc#float#close_all()<CR>
 
 " Goes to the first non-blank character of the line.
 nnoremap H ^
