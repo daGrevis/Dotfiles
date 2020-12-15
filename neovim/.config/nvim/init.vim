@@ -221,6 +221,8 @@ Plug 'https://github.com/yaymukund/vim-haxe', {'for': 'haxe'}
 
 Plug 'https://github.com/amadeus/vim-mjml', {'for': 'mjml'}
 
+Plug 'https://github.com/pantharshit00/vim-prisma', {'for': 'prisma'}
+
 call plug#end()
 
 " }}}
