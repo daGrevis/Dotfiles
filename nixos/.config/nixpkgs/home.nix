@@ -27,19 +27,27 @@
     yarn
     python
     python3
+    shellcheck
     python38Packages.virtualenv
     python38Packages.grip
     alacritty
     gist
-    firefox
+    firefox-bin
     xclip
     xorg.xev
+    killall
+    patchelf
     libnotify
     htop
     hack-font
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    neofetch
+    maestral
+    gnupg
+    pinentry-curses
     pass
     xkcdpass
+    pandoc
     # unfree:
     ngrok
   ];
