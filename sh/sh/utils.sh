@@ -131,7 +131,7 @@ port-used() {
 man() {
     page="$1"
     if [ $# -eq 0 ]; then
-        page=$(command man -aWS 1 \* 2> /dev/null | xargs basename | sed 's/\.[^.]*$//' | sort -u | fzf)
+        page=$(apropos . | awk '{print $1}' | sort -u | fzf)
     fi
     command man "$page"
 }
