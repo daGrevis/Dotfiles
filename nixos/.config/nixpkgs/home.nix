@@ -80,11 +80,10 @@
 
   # {{{ Alacritty
 
-  # Replace strings in alacritty.yml until Alacritty config import feature is released.
-  home.file.".config/alacritty/alacritty.yml".text = builtins.replaceStrings
-    ["size: 14.0" "decorations: buttonless"]
-    ["size: 11.0" "decorations: none"]
-    (builtins.readFile ~/Dotfiles/alacritty/.config/alacritty/alacritty.yml);
+  home.file.".config/alacritty/alacritty.yml".source = ~/Dotfiles/alacritty/.config/alacritty/alacritty.yml;
+  home.file.".config/alacritty/common.yml".source = ~/Dotfiles/alacritty/.config/alacritty/common.yml;
+  home.file.".config/alacritty/nixos.yml".source = ~/Dotfiles/alacritty/.config/alacritty/nixos.yml;
+  home.file.".config/alacritty/colors/".source = ~/Dotfiles/alacritty/.config/alacritty/colors;
 
   # }}}
 
