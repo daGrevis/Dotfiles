@@ -138,3 +138,11 @@ gg() {
     tmux clear-history
     clear
 }
+
+clip() {
+  if [ "$(uname)" = "Darwin" ]; then
+    pbcopy "$@"
+  else
+    xclip -f "$@" | xclip -selection clipboard
+  fi
+}

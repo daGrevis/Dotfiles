@@ -38,6 +38,8 @@
     htop
     hack-font
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    pass
+    xkcdpass
     # unfree:
     ngrok
   ];
