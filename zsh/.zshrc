@@ -4,10 +4,10 @@ export LANG=en_US.UTF-8
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
 
-export LESS=-Ri
-
-export PAGER='nvim -R -'
+export PAGER='less'
+export LESS='-RXi+gg'
 export MANPAGER='nvim -R "+setf man" -'
+export GIT_PAGER='delta'
 
 GPG_TTY=`tty`
 export GPG_TTY

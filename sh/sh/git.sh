@@ -14,16 +14,7 @@ alias gcm="git commit -v"
 alias gco="git checkout"
 alias gcob="git checkout -b"
 alias gcp="git cherry-pick"
-gd() {
-    git --no-pager diff --color --stat "$@"
-    echo
-
-    if ! command -v diff-so-fancy &> /dev/null; then
-        git diff --color "$@" | less -R --pattern '^diff --git'
-    else
-        git --no-pager diff --color "$@" | diff-so-fancy | less -R --pattern '^(added|deleted|modified|renamed):'
-    fi
-}
+alias gd="git diff"
 gl() {
     rev_before=$(git rev-parse HEAD)
 

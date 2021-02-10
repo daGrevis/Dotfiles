@@ -2,7 +2,6 @@
 	name = Raitis Stengrevics
 	email = dagrevis@gmail.com
 [core]
-	pager = less -+F
 	excludesfile = ~/.gitignore_global
 [color]
 	ui = true
@@ -25,3 +24,11 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	paging = always
+	line-numbers = true
+	side-by-side = true
+	hunk-header-style = omit
+	syntax-theme = base16
