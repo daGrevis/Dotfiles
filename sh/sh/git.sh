@@ -54,8 +54,6 @@ alias grm="git rm"
 alias grs="git reset"
 alias grv="git revert"
 alias gs="git status -sb"
-alias gsb="git status -sb"
-alias gst="git status -sb"
 gsw() {
     git --no-pager show "$@" | less -R --pattern '^diff --git'
 }
