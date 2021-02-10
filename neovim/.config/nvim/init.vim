@@ -405,6 +405,7 @@ call coc#config('snippets', {
       \ 'extends': {
       \   'javascript': ['typescriptreact'],
       \   'javascriptreact': ['typescriptreact'],
+      \   'typescript': ['typescriptreact'],
       \ }})
 
 " }}}
@@ -532,7 +533,6 @@ call coc#config('explorer', {
       \ 'sources': [{'name': 'file', 'expand': 1}],
       \ 'file.child.template': '[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]',
       \ 'file.showHiddenFiles': 1,
-      \ 'file.column.git.icon.mixed': 'M',
       \ 'width': 60,
       \ 'icon.enableNerdfont': 1,
       \ 'previewAction.onHover': 0,
@@ -1125,16 +1125,6 @@ function! AuFileTypeJavaScriptReact()
 endfunction
 autocmd vimrc FileType javascriptreact call AuFileTypeJavaScript()
 
-function! AuFileTypeTypeScript()
-    setlocal filetype=typescript.jsx
-endfunction
-autocmd vimrc FileType typescript call AuFileTypeTypeScript()
-
-function! AuBufEnterBufNewTsx()
-    setlocal filetype=typescript.jsx
-endfunction
-autocmd vimrc BufEnter,BufNew *.tsx call AuBufEnterBufNewTsx()
-
 function! AuFileTypeSass()
     setlocal shiftwidth=4
 endfunction
@@ -1265,6 +1255,8 @@ function! AuVimEnter()
         hi link CocErrorFloat CocFloating
         hi link CocWarningFloat CocFloating
         hi link CocInfoFloat CocFloating
+
+        hi link JavaScriptLineComment Comment
 
         " srcery
 
