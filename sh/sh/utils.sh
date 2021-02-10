@@ -13,6 +13,8 @@ alias vvv='nvim -u NORC'
 
 alias o=open
 
+alias g='grep -i'
+
 alias serve-http='python3 -m http.server'
 
 l() {
