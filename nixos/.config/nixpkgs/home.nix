@@ -109,4 +109,10 @@
   home.file.".fzf.zsh".source = ~/Dotfiles/fzf/.fzf.zsh;
 
   # }}}
+
+  # {{{ Awesome
+
+  home.file.".config/awesome/rc.lua".source = ~/Dotfiles/awesome/.config/awesome/rc.lua;
+
+  # }}}
 }
