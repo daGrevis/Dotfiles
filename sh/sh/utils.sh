@@ -137,8 +137,8 @@ man() {
 }
 
 gg() {
-    tmux clear-history
     clear
+    tmux clear-history
 }
 
 clip() {
