@@ -14,6 +14,7 @@
     home-manager
     docker
     tmux
+    tmuxinator
     zsh
     oh-my-zsh
     fzf

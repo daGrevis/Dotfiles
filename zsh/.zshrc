@@ -117,36 +117,7 @@ set_title() {
   echo -ne "\033]2;$@\007"
 }
 
-tm() {
-  if [ "$1" = "ls" ]; then
-    tmux ls
-  elif [ "$1" = "" ]; then
-    tmux attach -t "default" || tmux new -s "default"
-  else
-    tmux new -s "$1" || tmux attach -t "$1"
-  fi
-}
-
-tmu() {
-  sessions=$(tmux ls 2> /dev/null)
-  if [ "$?" != '0' ]; then
-    sessions=''
-  fi
-
-  sessions=$(echo "$sessions" | cut -d \: -f 1)
-
-  sessions=$(echo "$sessions" | grep -v '^default$')
-  sessions=$(echo "default\n$sessions")
-
-  session=$(echo "$sessions" | fzf --print-query | tail -n1)
-
-  tm "$session" &> /dev/null
-}
-
-
 if [ -z "$TMUX" ]; then
-  tmu
-else
-  set_title "$(tmux display-message -p 'tmux: #S')"
+  # Start default tmux session if not already running inside of tmux.
+  mux default
 fi
-
