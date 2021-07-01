@@ -508,7 +508,7 @@ cnoremap <C-v> <C-r>+
 inoremap <C-v> <C-c>"+pi
 
 " Copy text (also exits visual mode cause it's <C-c>).
-vnoremap <C-c> "*y
+vnoremap <C-c> "*ygv"+y
 
 " }}}
 
