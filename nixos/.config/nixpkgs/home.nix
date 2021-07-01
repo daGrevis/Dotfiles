@@ -56,6 +56,9 @@
   # Manage fonts through fontconfig.
   fonts.fontconfig.enable = true;
 
+  # Do not display notifications about home-manager news.
+  news.display = "silent";
+
   # }}}
 
   # {{{ Neovim
