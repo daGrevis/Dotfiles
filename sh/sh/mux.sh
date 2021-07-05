@@ -10,7 +10,9 @@ mux() {
 
   tmux_sessions=$(printf '%s' "$tmux_sessions" | cut -d : -f 1)
 
-  tmuxinator_sessions=$(find ~/.config/tmuxinator/ -type f -exec basename -s '.yml' {} \;)
+  if ! tmuxinator_sessions=$(find ~/.config/tmuxinator/ -type f -exec basename -s '.yml' {} \; 2> /dev/null) ; then
+    tmuxinator_sessions=''
+  fi
 
   # Concat tmux and tmuxinator sessions without empty lines.
   sessions=$(printf '%s\n%s' "$tmuxinator_sessions" "$tmux_sessions" | sed '/^$/d')
