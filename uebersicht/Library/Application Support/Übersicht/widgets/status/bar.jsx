@@ -24,7 +24,9 @@ const command = './status/bar.sh'
 const getDisplayId = () => {
   // Not documented, but href contains display ID.
   const { pathname } = new URL(location.href)
-  return Number(pathname.slice(1))
+  const parts = pathname.split('/')
+  const [, displayId] = parts
+  return Number(displayId)
 }
 
 const state = {
