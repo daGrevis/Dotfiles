@@ -120,9 +120,9 @@ hs.hotkey.bind({'cmd', 'shift'}, 'return', function()
   openApp('Alacritty', true)
 end)
 
--- Firefox DE.
+-- Firefox.
 hs.hotkey.bind({'cmd', 'shift'}, 'i', function()
-  openApp('Firefox Developer Edition', true)
+  openApp('Firefox', true)
 end)
 
 -- Slack.
