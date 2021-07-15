@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 v() {
-    if [ -f Session.vim ] && [ $# -eq 0 ]; then
-        nvim -S
+    session_path="$HOME/.obsessions/$(basename "$PWD").vim"
+    if [ -f "$session_path" ] && [ $# -eq 0 ]; then
+        nvim -S "$session_path"
     else
         nvim -p "$@"
     fi

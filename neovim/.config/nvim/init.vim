@@ -829,6 +829,21 @@ function! TailF()
 endfunction
 command! TailF call TailF()
 
+function! S()
+    let obsessions_dir = '~/.obsessions'
+
+    exe ':!mkdir -p ' . obsessions_dir
+
+    let path = expand(obsessions_dir) . '/' . fnamemodify(getcwd(), ':t') . '.vim'
+
+    if !filereadable(path)
+      exe ':Obsession ' . path
+    else
+      exe ':Obsession!'
+    endif
+endfunction
+command! S call S()
+
 " }}}
 
 " Mappings {{{
