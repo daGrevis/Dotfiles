@@ -192,6 +192,9 @@ Plug 'https://github.com/psliwka/vim-smoothie'
 
 " File-type specific plugins below.
 
+" Markdown preview in browser.
+Plug 'https://github.com/iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install --frozen-lockfile --force'}
+
 Plug 'https://github.com/vim-pandoc/vim-pandoc'
 Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
 
@@ -227,6 +230,11 @@ function! SetColorColumn(v)
     if &columns > a:v
         exe 'set colorcolumn=' . a:v
     endif
+endfunction
+
+function g:Copy(text)
+  let @* = a:text
+  let @+ = a:text
 endfunction
 
 " }}}
@@ -930,7 +938,10 @@ nnoremap <Leader>c ^v$h
 nnoremap <Leader>v ggVG
 
 " Copy path of current buffer to system clipboard.
-noremap <Leader>d :let @* = fnamemodify(expand("%"), ":~:.")<CR>
+function! CopyPath()
+  call Copy(fnamemodify(expand("%"), ":~:."))
+endfunction
+noremap <Leader>d :call CopyPath()<CR>
 
 " Format the current paragraph.
 nnoremap gw vapgw
@@ -1263,6 +1274,21 @@ autocmd vimrc VimResized * exe "redraw!"
 
 " https://github.com/vim/vim/issues/4738
 nmap gx yiW:!open <cWORD><CR><CR>
+
+let g:mkdp_open_to_the_world = 1
+let g:mkdp_port = '7777'
+let g:mkdp_page_title = 'Md: ${name}'
+let g:mkdp_browserfunc = 'g:Mkdp_browserfunc'
+
+function g:Mkdp_browserfunc(url)
+  echom a:url
+  call Copy(a:url)
+endfunction
+
+function! Md()
+    exe ':MarkdownPreview'
+endfunction
+command! Md call Md()
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
