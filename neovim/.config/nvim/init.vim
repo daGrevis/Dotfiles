@@ -96,7 +96,7 @@ Plug 'https://github.com/neoclide/coc.nvim', {'do': 'yarn install --frozen-lockf
 Plug 'https://github.com/Shougo/neco-vim'
 Plug 'https://github.com/neoclide/coc-neco'
 
-" Bash source.
+" Linter source. Used with shellcheck.
 Plug 'https://github.com/iamcco/coc-diagnostic', {'do': 'yarn install --frozen-lockfile --force && yarn build'}
 
 " CSS source.
