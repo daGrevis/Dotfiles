@@ -86,6 +86,9 @@ Plug 'https://github.com/tpope/vim-obsession'
 " Insert-mode completion with tab.
 Plug 'https://github.com/ervandew/supertab'
 
+" Interface with tree-sitter for more robust syntax highlighting and more.
+Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 " IntelliSense engine.
 Plug 'https://github.com/neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile --force'}
 
@@ -194,22 +197,11 @@ Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
 
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 
-Plug 'https://github.com/elzr/vim-json', {'for': 'json'}
-Plug 'https://github.com/pangloss/vim-javascript', {'for': ['json', 'javascript', 'javascript.jsx']}
-Plug 'https://github.com/leafgarland/typescript-vim', {'for': ['typescript', 'typescript.jsx']}
-Plug 'https://github.com/MaxMEllon/vim-jsx-pretty', {'for': 'jsx'}
-
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
 
 Plug 'https://github.com/keith/swift.vim', {'for': 'swift'}
 
-Plug 'https://github.com/dart-lang/dart-vim-plugin', {'for': 'dart'}
-
 Plug 'https://github.com/chr4/nginx.vim', {'for': 'nginx'}
-
-Plug 'https://github.com/cespare/vim-toml', {'for': 'toml'}
-
-Plug 'https://github.com/LnL7/vim-nix', {'for': 'nix'}
 
 Plug 'https://github.com/tmux-plugins/vim-tmux', {'for': 'tmux'}
 
@@ -340,12 +332,6 @@ endif
 " Incremental %s/ in split.
 set inccommand=split
 
-" Don't conceal JSON quotes.
-let g:vim_json_syntax_conceal = 0
-
-" Enable Flow syntax support.
-let g:javascript_plugin_flow = 1
-
 " Make it a bit wider.
 let g:gundo_width = 60
 
@@ -404,7 +390,6 @@ imap <C-s> <Plug>(coc-snippets-expand)
 call coc#config('snippets', {
       \ 'extends': {
       \   'javascript': ['typescriptreact'],
-      \   'javascriptreact': ['typescriptreact'],
       \   'typescript': ['typescriptreact'],
       \ }})
 
@@ -604,7 +589,6 @@ call coc#config('tsserver', {
 call coc#config('eslint', {
       \ 'enable': 1,
       \ 'packageManager': 'yarn',
-      \ 'filetypes': ['javascript', 'javascriptreact', 'javascript.jsx', 'javascript.flow.jsx', 'typescript', 'typescript.jsx'],
       \ })
 
 call coc#config('languageserver.flow', {
@@ -1122,33 +1106,13 @@ function! AuFileTypeNginx()
 endfunction
 autocmd vimrc FileType nginx call AuFileTypeNginx()
 
-function! AuFileTypeJavaScript()
-    " All JavaScript will be parsed as JSX because some people put JSX into .js files. :(
-    let first_line = getline(1)
-    if first_line =~ '@flow'
-      setlocal filetype=javascript.flow.jsx
-    else
-      setlocal filetype=javascript.jsx
-    endif
-
-    setlocal shiftwidth=2
-endfunction
-autocmd vimrc FileType javascript call AuFileTypeJavaScript()
-
-function! AuFileTypeJavaScriptReact()
-    setlocal filetype=javascript.javascriptreact
-endfunction
-autocmd vimrc FileType javascriptreact call AuFileTypeJavaScript()
+autocmd BufEnter *.nix :setlocal filetype=nix
+autocmd BufEnter *.md :setlocal filetype=markdown
 
 function! AuFileTypeSass()
     setlocal shiftwidth=4
 endfunction
 autocmd vimrc FileType sass call AuFileTypeSass()
-
-function! AuFileTypeYaml()
-    setlocal shiftwidth=2
-endfunction
-autocmd vimrc FileType yaml call AuFileTypeYaml()
 
 function! AuFileTypeMarkdown()
     " :help fo-table
@@ -1299,5 +1263,45 @@ autocmd vimrc VimResized * exe "redraw!"
 
 " https://github.com/vim/vim/issues/4738
 nmap gx yiW:!open <cWORD><CR><CR>
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {
+    "bash",
+    "c",
+    "c_sharp",
+    "clojure",
+    "cmake",
+    "comment",
+    "cpp",
+    "css",
+    "dart",
+    "dockerfile",
+    "go",
+    "html",
+    "java",
+    "javascript",
+    "json",
+    "lua",
+    "nix",
+    "php",
+    "python",
+    "regex",
+    "rst",
+    "ruby",
+    "rust",
+    "scss",
+    "toml",
+    "typescript",
+    "yaml",
+  },
+  highlight = {
+    enable = true,
+  },
+  indent = {
+    enable = true
+  }
+}
+EOF
 
 " }}}
