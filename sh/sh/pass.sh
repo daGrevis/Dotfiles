@@ -28,7 +28,7 @@ _pass-fzf() {
   fi
 
   if [ "$pw" = "" ] || [ $has_dir ]; then
-    pws=$(find "$PASS_PATH/$pw" -type f -name '*.gpg' -printf '%P\n' | sed -n 's/\.gpg$//p')
+    pws=$(find "$PASS_PATH/$pw" -type f -name '*.gpg' | awk -F '//' '{print $2}' | sed -n 's/\.gpg$//p')
     pw=$(echo "$pws" | fzf --print-query | tail -n1)
   fi
 
