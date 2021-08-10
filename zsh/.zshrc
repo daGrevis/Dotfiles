@@ -18,31 +18,8 @@ s+=":/usr/local/opt"
 s+=":/opt/local/bin"
 s+=":/opt/local/sbin"
 s+=":$HOME/.cargo/bin"
-s+=":$HOME/.nvm/versions/node/v14.2.0/bin"
 s+=":$PATH"
 export PATH="$s"
-
-# Lazy-loaded nvm, node & npm.
-NVM_DIR=~/.nvm
-NVM_SH="/usr/local/opt/nvm/nvm.sh"
-
-nvm() {
-  unset -f nvm
-  . $NVM_SH
-  nvm "$@"
-}
-
-node() {
-  unset -f node
-  . $NVM_SH
-  node "$@"
-}
-
-npm() {
-  unset -f npm
-  . $NVM_SH
-  npm "$@"
-}
 
 DISABLE_AUTO_TITLE='true'
 
@@ -64,12 +41,6 @@ ZSH_SYNTAX_HIGHLIGHTING="/usr/local/share/zsh-syntax-highlighting/zsh-syntax-hig
 ZSH_THEME_TERM_TAB_TITLE_IDLE='$(basename ${PWD/$HOME/"~"})/'
 
 bindkey '^X' edit-command-line
-
-precmd() {
-  if [ -f 'package.json' ] && [ -z "$NVM_DIR" ]; then
-    nvm > /dev/null
-  fi
-}
 
 # gcloud
 if [ -f '/Users/dagrevis/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dagrevis/google-cloud-sdk/path.zsh.inc'; fi
@@ -108,14 +79,6 @@ _fzf_compgen_dir() {
 }
 
 alias blender=/Applications/blender.app/Contents/MacOS/blender
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
-set_title() {
-  echo -ne "\033]2;$@\007"
-}
 
 if [ -z "$TMUX" ]; then
   # Start default tmux session if not already running inside of tmux.
