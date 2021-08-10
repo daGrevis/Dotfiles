@@ -577,6 +577,16 @@ nnoremap <C-p> :Files<CR>
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_preview_window = ''
 
+" Hide fzf buffer statusline.
+autocmd! FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+" Makes sure to open the existing buffer if one is already open.
+let g:fzf_action = {
+  \ 'enter': 'drop',
+  \ 'ctrl-t': 'tab drop',
+  \ }
+
 " }}}
 
 " File Explorer {{{
