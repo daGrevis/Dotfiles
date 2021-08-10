@@ -174,8 +174,8 @@ Plug 'https://github.com/AndrewRadev/switch.vim'
 " Move arguments left and right.
 Plug 'https://github.com/AndrewRadev/sideways.vim'
 
-" Restores FocusGained & FocusLost auto-commands when running inside tmux.
-Plug 'https://github.com/tmux-plugins/vim-tmux-focus-events'
+" Switch between vim splits and tmux splits with the same key bindings.
+Plug 'christoomey/vim-tmux-navigator'
 
 " Colorful parentheses for lisp-like languages.
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
@@ -406,6 +406,17 @@ call coc#config('snippets', {
 
 set splitbelow
 set splitright
+
+" Create a new horizontal/vertical split.
+nnoremap <Leader>- :new<CR>
+nnoremap <Leader>\ :vnew<CR>
+
+" Switch between splits easily.
+let g:tmux_navigator_no_mappings = 1
+nnoremap <M-Left> :TmuxNavigateLeft<CR>
+nnoremap <M-Down> :TmuxNavigateDown<CR>
+nnoremap <M-Up> :TmuxNavigateUp<CR>
+nnoremap <M-Right> :TmuxNavigateRight<CR>
 
 " }}}
 
@@ -957,12 +968,6 @@ noremap <Leader>i :only<CR>
 " Switch between tabs easily.
 noremap <silent> gr :tabm +<CR>
 noremap <silent> gR :tabm -<CR>
-
-" Switch between splits easily.
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
 
 " Switch case of the character under the cursor, but DON'T move to the right.
 function! SwitchCase()
