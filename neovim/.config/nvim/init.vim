@@ -231,7 +231,7 @@ function! SetColorColumn(v)
     endif
 endfunction
 
-function g:Copy(text)
+function! g:Copy(text)
   let @* = a:text
   let @+ = a:text
 endfunction
@@ -633,7 +633,7 @@ nmap <silent> gn <Plug>(coc-rename)
 
 function! s:show_documentation()
   if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
+    exe 'h ' . expand('<cword>')
   else
     call CocAction('doHover')
   endif
@@ -916,8 +916,15 @@ nnoremap <expr> k v:count ? 'k' : 'gk'
 nnoremap <Leader>j :join<CR>
 vnoremap <Leader>j :join<CR>
 
+function! Clear()
+  " Clear the highlighted search.
+  let @/ = ""
+  call coc#float#close_all()
+  call sneak#cancel()
+endfunction
+
 " Clear currently highlighted phrase and close all floating windows.
-nnoremap <C-l> :nohlsearch \| :call coc#float#close_all()<CR>
+nnoremap <C-l> :call Clear()<CR>
 
 " Goes to the first non-blank character of the line.
 nnoremap H ^
@@ -990,7 +997,7 @@ cnoremap <C-t> <Home>tabe \| <End>
 nnoremap <Leader>m :messages<CR>
 
 " Source Vimscript.
-nnoremap <Leader>x :source %<CR>
+nnoremap <Leader>x :w \| source %<CR>
 vnoremap <Leader>x y:@"<CR>
 
 " Replace in current buffer.
@@ -1103,11 +1110,6 @@ function! AuTabLeave()
 endfunction
 autocmd vimrc TabLeave * call AuTabLeave()
 
-function! AuFocusGained()
-    exe ':checktime'
-endfunction
-autocmd vimrc FocusGained * call AuFocusGained()
-
 function! AuBufEnter()
     exe ':checktime'
 endfunction
@@ -1127,6 +1129,11 @@ function! AuFocusLost()
     endif
 endfunction
 autocmd vimrc FocusLost * call AuFocusLost()
+
+function! AuFocusGained()
+    exe ':checktime'
+endfunction
+autocmd vimrc FocusGained * call AuFocusGained()
 
 function! AuBufLeave()
     " Save when leaving buffer.
@@ -1290,7 +1297,7 @@ let g:mkdp_port = '7777'
 let g:mkdp_page_title = 'Md: ${name}'
 let g:mkdp_browserfunc = 'g:Mkdp_browserfunc'
 
-function g:Mkdp_browserfunc(url)
+function! g:Mkdp_browserfunc(url)
   echom a:url
   call Copy(a:url)
 endfunction
