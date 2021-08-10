@@ -33,18 +33,22 @@ end
 modkey = "Mod1"
 terminal = "alacritty"
 
+mono_1 = "#abb2bf"
+syntax_bg = "#282c34"
+pmenu = "#333841"
+
 beautiful.init({
-  font = "JetBrainsMono Nerd Font Mono 11",
-  bg_normal = "#1b2b34",
-  fg_normal = "#65737e",
-  bg_focus = "#343d46",
-  fg_focus = "#65737e",
+  font = "VictorMono Nerd Font 12",
+  bg_normal = syntax_bg,
+  fg_normal = mono_1,
+  bg_focus = pmenu,
+  fg_focus = mono_1,
   useless_gap = 0,
   border_width = 0,
   tasklist_plain_task_name = true,
 })
 
-gears.wallpaper.set("#1b2b34")
+gears.wallpaper.set(syntax_bg)
 
 menubar.utils.terminal = terminal
 menubar.show_categories = false

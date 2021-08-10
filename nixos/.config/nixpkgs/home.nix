@@ -41,7 +41,7 @@
     libnotify
     htop
     hack-font
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (nerdfonts.override { fonts = [ "VictorMono" ]; })
     neofetch
     maestral
     gnupg

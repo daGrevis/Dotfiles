@@ -2,4 +2,4 @@ import:
   - ~/.config/alacritty/common.yml
   - ~/.config/alacritty/macos.yml
   - ~/.config/alacritty/nixos.yml
-  - ~/.config/alacritty/colors/OceanicNext.yml
+  - ~/.config/alacritty/colors/OneDark.yml

@@ -31,4 +31,4 @@
 	line-numbers = true
 	side-by-side = true
 	hunk-header-style = omit
-	syntax-theme = base16
+	syntax-theme = ansi

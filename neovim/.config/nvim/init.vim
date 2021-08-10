@@ -181,8 +181,7 @@ Plug 'https://github.com/tmux-plugins/vim-tmux-focus-events'
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 
 " Fave color-scheme.
-Plug 'https://github.com/mhartington/oceanic-next'
-" Plug 'https://github.com/srcery-colors/srcery-vim'
+Plug 'https://github.com/rakr/vim-one'
 
 " Utility functions for converting colors.
 Plug 'https://github.com/mgiuffrida/CSSMinister'
@@ -1182,87 +1181,38 @@ endfunction
 autocmd vimrc FileType tagbar call AuFileTypeTagbar()
 
 function! AuVimEnter()
-    try
-        set background=dark
-        colorscheme OceanicNext
-
-        let g:colorscheme_loaded = 1
-    catch
-        let g:colorscheme_loaded = 0
-    endtry
-
-    " Fallback to a color-scheme called slate.
-    if !g:colorscheme_loaded
-        echom "Fallbacking to slate colorscheme"
-        colorscheme slate
-    endif
-
-    if g:colorscheme_loaded
-        " OceanicNext
-
-        hi NonText gui=none
-
-        hi ModeMsg guifg=#d8dee9
-        hi WildMenu gui=bold
-        hi StatusLine guifg=#65737e guibg=#343d46 gui=bold
-        hi StatusLineNC guifg=#65737e guibg=#343d46 gui=bold
-
-        hi PmenuSel gui=bold
-        hi Pmenu guifg=#65737e
-        hi PmenuThumb guibg=#65737e
-
-        hi TabLineFill guifg=#1b2b34 guibg=#343d46
-        hi TabLine guifg=#65737e guibg=#1b2b34 gui=none
-        hi TabLineSel guifg=#65737e guibg=#343d46
-
-        hi QuickFixLine guibg=none
-
-        hi htmlTag guifg=#6699cc
-        hi htmlTagName guifg=#6699cc
-
-        hi xmlTagName guifg=#6699cc
-        hi xmlEndTag guifg=#6699cc
-        hi xmlTagN guifg=#6699cc
-
-        hi IncSearch guibg=#fac863 guifg=#343d46
-
-        hi Sneak guibg=#fac863 guifg=#343d46
-
-        hi SignatureMarkText guifg=#ec5f67
-
-        hi SignifySignChange guifg=#fac863
-        hi SignifySignChangeDelete guifg=#f99157
-
-        hi CocErrorSign guifg=#ec5f67
-        hi CocWarningSign guifg=#fac863
-        hi CocInfoSign guifg=#6699cc
-
-        hi CocErrorHighlight guifg=#ec5f67
-        hi CocWarningHighlight guifg=#fac863
-        hi CocInfoHighlight guifg=#6699cc
-
-        hi CocFloating guifg=#d8dee9 guibg=#4f5b66
-        hi link CocErrorFloat CocFloating
-        hi link CocWarningFloat CocFloating
-        hi link CocInfoFloat CocFloating
-
-        hi link JavaScriptLineComment Comment
-
-        " srcery
-
-        " hi TabLineFill guifg=#918175
-        " hi TabLineSel guifg=#FCE8C3 guibg=#2D2C29
-
-        " hi CocErrorSign guifg=#EF2F27
-        " hi CocWarningSign guifg=#FBB829
-
-        " hi CocErrorHighlight gui=underline
-        " hi CocWarningHighlight gui=italic
-    endif
-
     autocmd vimrc BufReadPost * call AuBufReadPost()
 endfunction
 autocmd vimrc VimEnter * call AuVimEnter()
+
+" }}}
+
+" Colors {{{
+
+set background=dark
+
+let g:one_allow_italics = 1
+
+colorscheme one
+
+highlight Comment cterm=italic
+
+let mono_1 = '#abb2bf'
+let mono_3 = '#5c6370'
+let syntax_bg = '#282c34'
+let syntax_cursor = '#2c323c'
+let syntax_accent = '#528bff'
+let special_grey = '#3b4048'
+
+exe 'hi TabLine guibg=' . syntax_cursor . ' guifg= ' . mono_1
+exe 'hi TabLineFill guibg=' . syntax_bg . ' guifg= ' . mono_1
+exe 'hi TabLineSel guibg=' . special_grey . ' guifg= ' . mono_1
+
+exe 'hi QuickFixLine guibg=' . special_grey . ' guifg= ' . mono_1
+
+exe 'hi SignatureMarkText guifg=' . syntax_accent
+
+exe 'hi Sneak guibg= ' . syntax_accent
 
 " }}}
 

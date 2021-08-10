@@ -1,5 +1,7 @@
 env:
   TERM: xterm-256color
+  # This is needed for italic fonts to work under tmux.
+  # TERM: screen-256color
 
 live_config_reload: true
 
