@@ -149,3 +149,7 @@ clip() {
     xclip -f "$@" | xclip -selection clipboard
   fi
 }
+
+n() {
+  nix-shell --command "$SHELL" -p "$1"
+}
