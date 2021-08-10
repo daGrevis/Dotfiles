@@ -24,13 +24,16 @@
     bat
     gitAndTools.delta
     ack
+    gcc
     nodejs
     yarn
     python
     python3
+    lua
     shellcheck
     python38Packages.virtualenv
     python38Packages.grip
+    ffmpeg
     alacritty
     gist
     firefox-bin
@@ -39,16 +42,25 @@
     killall
     patchelf
     libnotify
+    pstree
+    lsof
     htop
     hack-font
     (nerdfonts.override { fonts = [ "VictorMono" ]; })
     neofetch
-    maestral
     gnupg
     pinentry-curses
     pass
     xkcdpass
+    jq
+    sops
+    kubectl
+    google-cloud-sdk
+    terraform
+    postgresql
+    sqlite
     pandoc
+    asciinema
     # unfree:
     ngrok
   ];
