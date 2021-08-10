@@ -439,40 +439,95 @@ endfunction
 call MapGoToTab()
 
 " Overrides how tab names are shown.
+" Shows shortest possible tail of filename.
 function! TabLine()
-    let s = ''
+  let tabs = []
+  let s = ''
 
-    let t = tabpagenr()
-    let tt = tabpagenr('$')
+  let t = tabpagenr()
+  let tt = tabpagenr('$')
 
-    for i in range(tt)
-        let tab = i + 1
-        let buflist = tabpagebuflist(tab)
-        let winnr = tabpagewinnr(tab)
-        let bufnr = buflist[winnr - 1]
-        let bufname = bufname(bufnr)
-        let buftype = getbufvar(bufnr, 'buftype')
+  for i in range(tt)
+    let tabNr = i + 1
+    let buflist = tabpagebuflist(tabNr)
+    let winnr = tabpagewinnr(tabNr)
+    let bufnr = buflist[winnr - 1]
+    let bufname = bufname(bufnr)
+    let buftype = getbufvar(bufnr, '&buftype')
 
-        if bufname == ''
-            let tabname = '[No Name]'
-        elseif buftype == ''
-            let tabname = fnamemodify(bufname, ':~:.')
-            let tabname = matchstr(tabname, '[^\/]\+\/[^\/]\+$')
+    let path = ''
+    let segments = []
+
+    if bufname != ''
+      let path = fnamemodify(bufname, ':p')
+      let segments = split(path, '[/\\]')
+    endif
+
+    let tab = {
+      \ 'nr': tabNr,
+      \ 'type': buftype,
+      \ 'path': path,
+      \ 'segments': segments,
+      \ 'isSel': tabNr == t
+      \ }
+
+    call add(tabs, tab)
+  endfor
+
+  for tab in tabs
+    let tab_name = tab.path
+
+    if tab.path == ''
+      let tab_name = '[No Name]'
+    elseif tab.type == 'terminal'
+      let tab_name = '[Terminal]'
+    else
+      let i = 0
+      while 1
+        let i += 1
+
+        let current_tail = join(tab.segments[-i:-1], '/')
+        let is_valid = 1
+        let is_dupe = 0
+
+        for tab2 in tabs
+          if (tab.nr != tab2.nr) && (current_tail == join(tab2.segments[-i:-1], '/'))
+            if join(tab.segments, '/') == join(tab2.segments, '/')
+              let is_dupe = tab.nr > tab2.nr
+              break
+            endif
+
+            let is_valid = 0
+            break
+          endif
+        endfor
+
+        if is_valid
+          let tab_name = current_tail
+
+          if is_dupe
+            let tab_name = tab_name . ' [Dupe]'
+          endif
+
+          break
         endif
 
-        if tabname == ''
-            let tabname = bufname
+        if i == len(segments)
+          break
         endif
+      endwhile
+    endif
 
-        let s .= '%' . tab . 'T'
-        let s .= (tab == t ? '%#TabLineSel#' : '%#TabLine#')
-        let s .= ' ' . tab . ' ' . tabname . ' '
-    endfor
+    let s .= '%' . tab.nr . 'T'
+    let s .= (tab.isSel ? '%#TabLineSel#' : '%#TabLine#')
+    let s .= ' ' . tab.nr . ' ' . tab_name . ' '
+  endfor
 
-    let s .= '%#TabLineFill#'
+  let s .= '%#TabLineFill#'
 
-    return s
+  return s
 endfunction
+
 set tabline=%!TabLine()
 
 " }}}
