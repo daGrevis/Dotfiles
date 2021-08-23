@@ -30,6 +30,7 @@
     python
     python3
     lua
+    asdf-vm
     shellcheck
     python38Packages.virtualenv
     python38Packages.grip
@@ -70,6 +71,10 @@
 
   # Do not display notifications about home-manager news.
   news.display = "silent";
+
+  home.sessionVariables = {
+    ASDF_SH = "${pkgs.asdf-vm.outPath}/share/asdf-vm/asdf.sh";
+  };
 
   # }}}
 

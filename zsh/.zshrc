@@ -21,6 +21,17 @@ s+=":$HOME/.cargo/bin"
 s+=":$PATH"
 export PATH="$s"
 
+# Load env from home-manager home.sessionVariables.
+HM_SESSION_VARS_SH="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+if [ -f $HM_SESSION_VARS_SH ]; then
+  source "$HM_SESSION_VARS_SH"
+fi
+
+# Load asdf.sh needed for shell integration.
+if [ -n $ASDF_SH ]; then
+  source "$ASDF_SH"
+fi
+
 DISABLE_AUTO_TITLE='true'
 
 export ZSH=~/.oh-my-zsh
