@@ -1092,7 +1092,7 @@ nnoremap <Leader>. :SidewaysRight<CR>
 nnoremap <Leader>u :GundoToggle<CR>
 
 " Git blame current buffer.
-nnoremap <Leader>b :Gblame<CR>
+nnoremap <Leader>b :Git blame<CR>
 
 " Quickfix mappings for opening files.
 autocmd FileType qf nnoremap <buffer><silent> o <CR><C-w>w :q<CR>
