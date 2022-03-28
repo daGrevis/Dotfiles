@@ -27,10 +27,11 @@ if [ -f $HM_SESSION_VARS_SH ]; then
   source "$HM_SESSION_VARS_SH"
 fi
 
-# Load asdf.sh needed for shell integration.
-if [ -n $ASDF_SH ]; then
-  source "$ASDF_SH"
+# Load asdf for managing multiple runtime versions of node, ruby and so on.
+if [ -z "$ASDF_SH" ]; then
+  ASDF_SH="/usr/local/opt/asdf/libexec/asdf.sh"
 fi
+source "$ASDF_SH"
 
 DISABLE_AUTO_TITLE='true'
 
