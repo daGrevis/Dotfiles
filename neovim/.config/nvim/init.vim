@@ -1347,6 +1347,7 @@ require'nvim-treesitter.configs'.setup {
     "toml",
     "typescript",
     "yaml",
+    "elixir",
   },
   highlight = {
     enable = true,
