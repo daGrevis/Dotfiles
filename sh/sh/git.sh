@@ -3,6 +3,8 @@
 # Disable automatic git-lfs downloads.
 export GIT_LFS_SKIP_SMUDGE=1
 
+GIT_LOG_PRETTY_FORMAT='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cs, %cr) %C(bold blue)<%an>%Creset'
+
 alias ga="git add"
 alias gaa="git add -A"
 alias gbr="git branch"
@@ -32,12 +34,12 @@ gl() {
         echo
         echo "$rev_range_short"
         git --no-pager log "$rev_range" \
-            --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+            --pretty=format:"$GIT_LOG_PRETTY_FORMAT"
         echo
     fi
 }
 glg() {
-    git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' "$@"
+    git log --graph --pretty=format:"$GIT_LOG_PRETTY_FORMAT" "$@"
 }
 alias gmr="git merge"
 alias gp="git push"
