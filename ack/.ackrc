@@ -18,6 +18,7 @@
 --ignore-dir=materialsLibrary/
 --ignore-dir=apidoc/
 --ignore-dir=flow-typed/
+--ignore-dir=.yarn/
 
 --ignore-file=match:/.+\.bundle\.js$/
 --ignore-file=is:browserify-cache.json
