@@ -84,7 +84,7 @@ view-markdown() {
 
 aux() {
     ps aux | head -n 1
-    ps aux | grep -i $@ | grep -v 'grep -i'
+    ps aux | grep -i "$@" | grep -v 'grep -i'
 }
 
 auxpid() {
