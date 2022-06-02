@@ -6,7 +6,7 @@ export VISUAL="$EDITOR"
 
 export PAGER='less'
 export LESS='-RXi+gg'
-export MANPAGER='nvim -R "+setf man" -'
+export MANPAGER="nvim -R -c \"execute 'Man ' . \$MAN_PN\" -c 'only' -"
 export GIT_PAGER='delta'
 
 GPG_TTY=`tty`
