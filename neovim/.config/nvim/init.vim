@@ -189,6 +189,9 @@ Plug 'https://github.com/mgiuffrida/CSSMinister'
 " Smooth scrolling in terminal.
 Plug 'https://github.com/psliwka/vim-smoothie'
 
+" Indent guides.
+Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
+
 " File-type specific plugins below.
 
 " Markdown preview in browser.
@@ -344,6 +347,10 @@ let g:gundo_width = 60
 
 " Character pairs to colorize in Lisp-like languages.
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+
+let g:indent_blankline_char_list = ['¦', '┊']
+let g:indent_blankline_show_first_indent_level = v:false
+let g:indent_blankline_filetype_exclude = ['help']
 
 let g:CSSMinisterCreateMappings = 0
 
