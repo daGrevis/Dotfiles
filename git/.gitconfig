@@ -26,6 +26,8 @@
 	required = true
 [interactive]
 	diffFilter = delta --color-only
+[add.interactive]
+	useBuiltin = false
 [delta]
 	paging = always
 	line-numbers = true
