@@ -310,8 +310,12 @@ set cursorline
 " Always show sign column to avoid flickering.
 set signcolumn=yes
 
-" Enables mouse (super useful in rare situations).
-set mouse=a
+" Enables support for mouse in normal and visual modes.
+" Sometimes useful for scrolling and maybe selection.
+set mouse=nv
+
+" The right mouse button should extend the selection.
+set mousemodel=extend
 
 " Any action not typed will not cause the screen to redraw. Good for macros.
 set lazyredraw
