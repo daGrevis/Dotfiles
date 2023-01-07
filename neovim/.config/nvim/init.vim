@@ -681,16 +681,6 @@ call coc#config('eslint', {
       \ 'packageManager': 'yarn',
       \ })
 
-call coc#config('languageserver.flow', {
-      \ 'command': './node_modules/.bin/flow',
-      \ 'args': ['lsp'],
-      \ 'filetypes': ['javascript.flow.jsx'],
-      \ 'initializationOptions': {},
-      \ 'requireRootPattern': 1,
-      \ 'settings': {},
-      \ 'rootPatterns': ['.flowconfig']
-      \ })
-
 call coc#config('diagnostic-languageserver', {
       \ 'filetypes': { 'sh': 'shellcheck' },
       \ 'formatFiletypes': { 'sh': 'shfmt' },
