@@ -191,9 +191,6 @@ Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
 " Markdown preview in browser.
 Plug 'https://github.com/iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install --frozen-lockfile --force'}
 
-Plug 'https://github.com/vim-pandoc/vim-pandoc'
-Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
-
 Plug 'https://github.com/hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'https://github.com/kchmck/vim-coffee-script', {'for': 'coffee'}
