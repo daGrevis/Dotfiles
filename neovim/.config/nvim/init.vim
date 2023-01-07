@@ -83,9 +83,6 @@ Plug 'https://github.com/tpope/vim-abolish'
 " Saves your Vim sessions.
 Plug 'https://github.com/tpope/vim-obsession'
 
-" Insert-mode completion with tab.
-Plug 'https://github.com/ervandew/supertab'
-
 " Interface with tree-sitter for more robust syntax highlighting and more.
 Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -380,20 +377,25 @@ set completeopt+=menu
 " Only insert the longest common text of the matches.
 set completeopt+=longest
 
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+  \ coc#pum#visible() ? coc#pum#next(1) :
+  \ CheckBackspace() ? "\<Tab>" :
+  \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 set dictionary=
 set dictionary+=/usr/share/dict/words
 
 " Dictionary completion.
 inoremap <C-z> <C-x><C-k>
-
-" Complete top to bottom.
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" Match case when completing.
-let g:SuperTabCompleteCase = 'match'
-
-" Complete the longest common match.
-let g:SuperTabLongestEnhanced = 1
 
 " Confirm completion.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
