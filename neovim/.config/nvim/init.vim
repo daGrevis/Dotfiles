@@ -114,9 +114,6 @@ Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-l
 " Rust source.
 Plug 'https://github.com/neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile --force'}
 
-" Lua source.
-Plug 'https://github.com/josa42/coc-lua', {'do': 'yarn install --frozen-lockfile --force'}
-
 " File explorer.
 Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
 
