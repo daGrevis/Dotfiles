@@ -1286,7 +1286,11 @@ exe 'hi QuickFixLine guibg=' . special_grey . ' guifg= ' . mono_1
 
 exe 'hi SignatureMarkText guifg=' . syntax_accent
 
-exe 'hi Sneak guibg= ' . syntax_accent
+exe 'hi Sneak guibg=' . syntax_accent
+
+exe 'hi IlluminatedWordText gui=none guibg= ' . special_grey
+hi link IlluminatedWordRead IlluminatedWordText
+hi link IlluminatedWordWrite IlluminatedWordText
 
 " }}}
 
