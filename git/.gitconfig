@@ -34,3 +34,5 @@
 	side-by-side = true
 	hunk-header-style = omit
 	syntax-theme = ansi
+[init]
+	defaultBranch = main
