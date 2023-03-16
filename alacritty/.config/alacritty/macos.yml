@@ -16,10 +16,6 @@ mouse:
   triple_click: { threshold: 300 }
   hide_when_typing: true
 
-  url:
-    launcher: open
-    modifiers: Command
-
 cursor:
   unfocused_hollow: true
 
