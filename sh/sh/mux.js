@@ -44,7 +44,15 @@ const getActiveSessions = async () => {
 }
 
 const getTmuxinatorSessions = async () => {
-  const fileNames = await fsPromises.readdir(TMUXINATOR_PATH)
+  let fileNames = []
+  try {
+    fileNames = await fsPromises.readdir(TMUXINATOR_PATH)
+  } catch (e) {
+    if (e.code === 'ENOENT') {
+      return []
+    }
+    throw e
+  }
 
   return fileNames.map((fileName) => fileName.replace(/\.yml$/, ''))
 }
