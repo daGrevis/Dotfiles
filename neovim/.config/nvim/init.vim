@@ -665,6 +665,7 @@ call coc#config('coc.preferences', {
       \ 'diagnostic.warningSign': 'W',
       \ 'diagnostic.infoSign': 'I',
       \ 'diagnostic.hintSign': 'H',
+      \ 'formatOnSaveFiletypes': ['*'],
       \ })
 
 call coc#config('diagnostic', {
