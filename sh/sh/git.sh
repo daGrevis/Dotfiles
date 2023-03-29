@@ -38,6 +38,7 @@ gl() {
         echo
     fi
 }
+alias gll='git-lfs pull'
 glg() {
     git log --graph --pretty=format:"$GIT_LOG_PRETTY_FORMAT" "$@"
 }
