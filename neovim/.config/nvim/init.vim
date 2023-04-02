@@ -1350,6 +1350,7 @@ require'nvim-treesitter.configs'.setup {
     "typescript",
     "yaml",
     "elixir",
+    "terraform",
   },
   highlight = {
     enable = true,
