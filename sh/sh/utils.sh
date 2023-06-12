@@ -54,14 +54,6 @@ mkcd() {
     mkdir -p "$@" && cd "$@"
 }
 
-f() {
-    find . -name "$@"
-}
-
-ff() {
-    find . -name "*$@*"
-}
-
 dff() {
     command -v colordiff &> /dev/null
     if [ "$?" != "0" ]; then
