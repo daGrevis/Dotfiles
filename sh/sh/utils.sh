@@ -12,7 +12,19 @@ alias vim=v
 alias vv='nvim'
 alias vvv='nvim -u NORC'
 
-alias o=open
+o() {
+    if command -v xdg-open; then
+      xdg-open "$@"
+      return
+    fi
+
+    if command -v open; then
+      open "$@"
+      return
+    fi
+
+    return 1
+}
 
 alias g='grep -i'
 
