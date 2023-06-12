@@ -337,6 +337,8 @@ endif
 " Incremental %s/ in split.
 set inccommand=split
 
+set shada="NONE"
+
 " Make it a bit wider.
 let g:gundo_width = 60
 
