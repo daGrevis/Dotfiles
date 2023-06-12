@@ -105,9 +105,6 @@ Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockf
 " JavaScript and TypeScript source.
 Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
 
-" ESLint source.
-Plug 'https://github.com/neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile --force'}
-
 " Prettier source.
 Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile --force'}
 
@@ -677,11 +674,6 @@ call coc#config('diagnostic', {
 
 call coc#config('tsserver', {
       \ 'enableJavascript': 0,
-      \ })
-
-call coc#config('eslint', {
-      \ 'enable': 1,
-      \ 'packageManager': 'yarn',
       \ })
 
 call coc#config('diagnostic-languageserver', {
