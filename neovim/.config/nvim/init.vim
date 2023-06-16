@@ -105,6 +105,9 @@ Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockf
 " JavaScript and TypeScript source.
 Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --force'}
 
+" Deno source.
+Plug 'https://github.com/fannheyward/coc-deno', {'do': 'yarn install --frozen-lockfile --force'}
+
 " Prettier source.
 Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile --force'}
 
