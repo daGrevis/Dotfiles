@@ -28,7 +28,6 @@
     ack
     gcc
     nodejs
-    yarn
     python
     python3
     lua
