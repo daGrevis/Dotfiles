@@ -68,6 +68,13 @@
     ngrok
   ];
 
+  # }}}
+
+  # {{{ Misc
+
+  # https://github.com/NixOS/nixpkgs/issues/196651#issuecomment-1283814322
+  manual.manpages.enable = false;
+
   # Manage fonts through fontconfig.
   fonts.fontconfig.enable = true;
 
