@@ -157,3 +157,42 @@ clip() {
 n() {
   nix-shell --command "$SHELL" -p "$1"
 }
+
+yt2mp3() {
+  local output="/mnt/nixos-shared/youtube-dled"
+  local url="$1"
+  local year="$2"
+
+  if [ -z "$1" ]; then
+    echo "No URL"
+    return 1
+  fi
+
+  if [ -z "$2" ]; then
+    echo "No year"
+    return 1
+  fi
+
+  local working_dir=$(mktemp -d)
+
+  cd "$working_dir"
+
+  yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 \
+         --embed-thumbnail \
+         --embed-metadata \
+         --parse-metadata "youtube\:track\:%(id)s:%(meta_comment)s" \
+         --parse-metadata "%(playlist_index)s:%(meta_track)s" \
+         --parse-metadata "%(release_year)s:%(meta_year)s" \
+         --output "%(album)s/%(artist)s - %(track)s.%(ext)s" \
+         "$url"
+
+  # Fixing up the year because YouTube is not reliable.
+  for d in */; do
+    cd "$d"
+    id3v2 --year "$year" *
+  done
+
+  mv "$working_dir"/* "$output"
+
+  cd "$output"
+}
