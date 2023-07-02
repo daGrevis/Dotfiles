@@ -1,56 +1,45 @@
-# Dotfiles for my UNIX workstation(s)
+# daGrevis' Dotfiles
 
-This repo uses [GNU Stow](http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html).
+This repository contains configuration files for all kinds of software I'm using
+on daily basis. Also known as "dotfiles", these files allow to replicate my
+setup on another machine with relative ease.
 
-To symlink Neovim dotfiles, run:
+I'm using this to have practically identical setup between:
 
-```sh
-stow -t ~ -d ~/Projects/Dotfiles -v neovim
-```
+- MacOS running on MacBook Pro
+- NixOS via VirtualBox running on desktop Windows
+- Ubuntu running on my private server
 
-To symlink other things, change that `neovim` part to something else. Extra
-setup may be required.
+## Installation
 
-## Neovim
+On both NixOS and MacOS I have Nix and home-manager installed. Then `home.nix`
+(in `nix/.config/.nixpkgs`) can be used to manage symlinks, installed packages
+and other configuration.
 
-My
-[`init.vim`](https://github.com/daGrevis/Dotfiles/blob/master/neovim/.config/nvim/init.vim)
-(`.vimrc` replacement for [Neovim](https://neovim.io/)).
-
-Move `init.vim` to `~/.config/nvim/init.vim` with `stow` command.
-
-If you're in a hurry, use `curl` like this:
+In theory, all you have to do is clone the repo and make symlinks to `nix`.
 
 ```sh
-curl -Lo ~/.config/nvim/init.vim --create-dirs http://dagrev.is/init.vim
+sudo ln -s /home/dagrevis/Dotfiles/nix/etc/nixos /etc/nixos
+ln -s /home/dagrevis/Dotfiles/nix/.config/nixpkgs /home/dagrevis/.config/nixpkgs
 ```
 
-After opening the Vim, required plugins will be installed automatically. Restart
-the editor to load them!
-
-It's recommended to read `init.vim` line by line and copy paste what's relevant.
-The source is heavily documented just for that reason alone.
-
-![Neovim Preview](vim1.png)
-
-![Neovim Preview](vim2.png)
-
-![Neovim Preview](vim3.png)
-
-## Zsh
-
-Install [`oh-my-zsh`](https://github.com/robbyrussell/oh-my-zsh) by running:
+Then rebuilding the system and user environment should hopefully bring
+everything up!
 
 ```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sudo nixos-rebuild switch --upgrade
+home-manager switch
 ```
 
-(Keep in mind that you're blindly running a random shell-script from the
-internet)
+In practice, you will probably need to know what you are doing because things
+might need some bit of tweaking here and there. :)
 
-Then you'll want to remove `~/.zshrc` that was created by `oh-my-zsh`. Instead
-run `stow zsh` to get my [`.zshrc`](https://github.com/daGrevis/Dotfiles/blob/master/zsh/.zshrc).
+Alternatively you can use `stow` to create the symlinks and skip all this fancy
+schmancy nix business.
 
-My setup depends on `sh` scripts so run `stow sh` for that.
+```sh
+stow -t ~ -d ~/Dotfiles -v neovim
+```
 
-![Zsh Preview](zsh1.png)
+Example above would make symlinks for "neovim" package. All top-level
+directories in this repo can be symlinked in this way.
