@@ -62,6 +62,14 @@
     sqlite
     pandoc
     asciinema
+    cargo
+    deno
+    gnumake
+    id3v2
+    inetutils
+    luakit
+    openssl
+    yt-dlp
     # unfree:
     ngrok
   ];
