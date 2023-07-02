@@ -8,68 +8,68 @@
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
-    neovim
-    wget
-    git
-    git-lfs
-    stow
-    home-manager
-    docker
-    tmux
-    tmuxinator
-    zsh
-    oh-my-zsh
-    fzf
-    fd
-    autojump
-    exa
-    bat
-    gitAndTools.delta
     ack
-    gcc
-    nodejs
-    python
-    python3
-    lua
-    asdf-vm
-    shellcheck
-    python38Packages.grip
-    ffmpeg
     alacritty
-    gist
-    firefox-bin
-    xclip
-    xorg.xev
-    killall
-    patchelf
-    libnotify
-    pstree
-    lsof
-    htop
-    hack-font
-    (nerdfonts.override { fonts = [ "VictorMono" ]; })
-    neofetch
-    gnupg
-    pinentry-curses
-    pass
-    xkcdpass
-    jq
-    sops
-    kubectl
-    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
-    terraform
-    postgresql
-    sqlite
-    pandoc
     asciinema
+    asdf-vm
+    autojump
+    bat
     cargo
     deno
+    docker
+    exa
+    fd
+    ffmpeg
+    firefox-bin
+    fzf
+    gcc
+    gist
+    git
+    git-lfs
+    gitAndTools.delta
     gnumake
+    gnupg
+    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
+    hack-font
+    home-manager
+    htop
     id3v2
     inetutils
+    jq
+    killall
+    kubectl
+    libnotify
+    lsof
+    lua
     luakit
+    neofetch
+    neovim
+    (nerdfonts.override { fonts = [ "VictorMono" ]; })
+    nodejs
+    oh-my-zsh
     openssl
+    pandoc
+    pass
+    patchelf
+    pinentry-curses
+    postgresql
+    pstree
+    python
+    python3
+    python38Packages.grip
+    shellcheck
+    sops
+    sqlite
+    stow
+    terraform
+    tmux
+    tmuxinator
+    wget
+    xclip
+    xkcdpass
+    xorg.xev
     yt-dlp
+    zsh
     # unfree:
     ngrok
   ];
