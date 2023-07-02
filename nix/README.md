@@ -1,6 +1,8 @@
 # Nix
 
-## VirtualBox
+Nix & NixOS configuration for declarative, reliable and reproducible system.
+
+## Setup for VirtualBox on Windows
 
 ### Setting the Icon File
 
