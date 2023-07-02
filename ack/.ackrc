@@ -1,7 +1,6 @@
 --smart-case
 
 --ignore-dir=COMPILED/
---ignore-dir=bin/
 --ignore-dir=bower_components/
 --ignore-dir=bundles/
 --ignore-dir=dist/
