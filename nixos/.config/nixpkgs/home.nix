@@ -33,7 +33,6 @@
     lua
     asdf-vm
     shellcheck
-    python38Packages.virtualenv
     python38Packages.grip
     ffmpeg
     alacritty
