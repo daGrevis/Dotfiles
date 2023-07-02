@@ -1,6 +1,8 @@
 { lib, pkgs, ... }:
 
 {
+  home.stateVersion = "20.03";
+
   # {{{ Packages
 
   nixpkgs.config.allowUnfree = true;
