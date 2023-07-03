@@ -6,6 +6,9 @@
   home.username = "dagrevis";
   home.homeDirectory = "/Users/dagrevis";
 
+  # Let home-manager install and manage itself.
+  programs.home-manager.enable = true;
+
   # {{{ Packages
 
   nixpkgs.config.allowUnfree = true;
@@ -23,7 +26,6 @@
     exa
     fd
     ffmpeg
-    firefox-bin
     fzf
     gcc
     gist
@@ -34,7 +36,6 @@
     gnupg
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
     hack-font
-    home-manager
     htop
     id3v2
     inetutils
@@ -44,7 +45,6 @@
     libnotify
     lsof
     lua
-    luakit
     neofetch
     neovim
     (nerdfonts.override { fonts = [ "VictorMono" ]; })
@@ -57,7 +57,6 @@
     pinentry-curses
     postgresql
     pstree
-    python
     python3
     python38Packages.grip
     shellcheck
