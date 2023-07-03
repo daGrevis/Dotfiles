@@ -3,6 +3,9 @@
 {
   home.stateVersion = "22.11";
 
+  home.username = "dagrevis";
+  home.homeDirectory = "/Users/dagrevis";
+
   # {{{ Packages
 
   nixpkgs.config.allowUnfree = true;
