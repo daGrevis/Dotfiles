@@ -18,9 +18,19 @@ and other configuration.
 
 In theory, all you have to do is clone the repo and make symlinks to `nix`.
 
+### On NixOS
+
 ```sh
 sudo ln -s /home/dagrevis/Dotfiles/nix/etc/nixos /etc/nixos
 ln -s /home/dagrevis/Dotfiles/nix/.config/nixpkgs /home/dagrevis/.config/nixpkgs
+ln -s /home/dagrevis/Dotfiles/nix/.config/home-manager /home/dagrevis/.config/home-manager
+```
+
+### On macOS
+
+```sh
+ln -s /Users/dagrevis/Dotfiles/nix/.config/nixpkgs /Users/dagrevis/.config/nixpkgs
+ln -s /Users/dagrevis/Dotfiles/nix/.config/home-manager /Users/dagrevis/.config/home-manager
 ```
 
 Then rebuilding the system and user environment should hopefully bring
