@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 
 {
-  home.stateVersion = "20.03";
+  home.stateVersion = "22.11";
 
   # {{{ Packages
 
