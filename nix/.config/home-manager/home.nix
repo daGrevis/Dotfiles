@@ -153,4 +153,10 @@
   home.file.".config/awesome/rc.lua".source = ~/Dotfiles/awesome/.config/awesome/rc.lua;
 
   # }}}
+
+  # {{{ Hammerspoon
+
+  home.file.".hammerspoon/init.lua".source = ~/Dotfiles/hammerspoon/.hammerspoon/init.lua;
+
+  # }}}
 }
