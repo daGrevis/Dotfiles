@@ -13,10 +13,12 @@ I'm using this to have practically identical setup between:
 ## Installation
 
 On both NixOS and MacOS I have Nix and home-manager installed. Then `home.nix`
-(in `nix/.config/.nixpkgs`) can be used to manage symlinks, installed packages
-and other configuration.
+(in `nix/.config/home-manager`) can be used to manage symlinks, installed
+packages and other configuration.
 
-In theory, all you have to do is clone the repo and make symlinks to `nix`.
+In theory, on a working Nix installation with home-manager installed as a
+standalone tool, all you would have to do is to symlink my `nix` configuration
+and rebuild the system.
 
 ### On NixOS
 

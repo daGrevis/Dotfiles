@@ -43,7 +43,6 @@
     wget
     git
     stow
-    home-manager
     docker
     docker-compose
     gnupg
