@@ -132,9 +132,14 @@ in
   # {{{ Alacritty
 
   home.file.".config/alacritty/alacritty.yml".source = ~/Dotfiles/alacritty/.config/alacritty/alacritty.yml;
-  home.file.".config/alacritty/common.yml".source = ~/Dotfiles/alacritty/.config/alacritty/common.yml;
-  home.file.".config/alacritty/nixos.yml".source = ~/Dotfiles/alacritty/.config/alacritty/nixos.yml;
-  home.file.".config/alacritty/colors/".source = ~/Dotfiles/alacritty/.config/alacritty/colors;
+  home.file.".config/alacritty/nixos.yml" = {
+    enable = stdenv.isLinux;
+    source = ~/Dotfiles/alacritty/.config/alacritty/nixos.yml;
+  };
+  home.file.".config/alacritty/macos.yml" = {
+    enable = stdenv.isDarwin;
+    source = ~/Dotfiles/alacritty/.config/alacritty/macos.yml;
+  };
 
   # }}}
 

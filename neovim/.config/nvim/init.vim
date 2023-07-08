@@ -175,7 +175,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
 
 " Fave color-scheme.
-Plug 'https://github.com/rakr/vim-one'
+Plug 'https://github.com/EdenEast/nightfox.nvim'
 
 " Utility functions for converting colors.
 Plug 'https://github.com/mgiuffrida/CSSMinister'
@@ -1263,32 +1263,38 @@ autocmd vimrc VimEnter * call AuVimEnter()
 
 set background=dark
 
-let g:one_allow_italics = 1
+colorscheme nightfox
 
-colorscheme one
+" https://github.com/EdenEast/nightfox.nvim/blob/main/lua/nightfox/palette/nightfox.lua
+let black = '#393b44'
+let red = '#c94f6d'
+let green = '#81b29a'
+let yellow = '#dbc074'
+let blue = '#719cd6'
+let magenta = '#9d79d6'
+let cyan = '#63cdcf'
+let white = '#dfdfe0'
+let orange = '#f4a261'
+let pink = '#d67ad2'
+let comment = '#738091'
+let bg0 = '#131a24'
+let bg1 = '#192330'
+let bg2 = '#212e3f'
+let bg3 = '#29394f'
+let bg4 = '#39506d'
+let fg0 = '#d6d6d7'
+let fg1 = '#cdcecf'
+let fg2 = '#aeafb0'
+let fg3 = '#71839b'
+let sel0 = '#2b3b51'
+let sel1 = '#3c5372'
 
-highlight Comment cterm=italic
+exe 'hi TabLine guibg=' . bg0 . ' guifg= ' . fg1
+exe 'hi TabLineSel guibg=' . bg1 . ' guifg= ' . white
 
-let mono_1 = '#abb2bf'
-let mono_3 = '#5c6370'
-let syntax_bg = '#282c34'
-let syntax_cursor = '#2c323c'
-let syntax_accent = '#528bff'
-let special_grey = '#3b4048'
+exe 'hi SignatureMarkText guifg=' . pink
 
-exe 'hi TabLine guibg=' . syntax_cursor . ' guifg= ' . mono_1
-exe 'hi TabLineFill guibg=' . syntax_bg . ' guifg= ' . mono_1
-exe 'hi TabLineSel guibg=' . special_grey . ' guifg= ' . mono_1
-
-exe 'hi QuickFixLine guibg=' . special_grey . ' guifg= ' . mono_1
-
-exe 'hi SignatureMarkText guifg=' . syntax_accent
-
-exe 'hi Sneak guibg=' . syntax_accent
-
-exe 'hi IlluminatedWordText gui=none guibg= ' . special_grey
-hi link IlluminatedWordRead IlluminatedWordText
-hi link IlluminatedWordWrite IlluminatedWordText
+exe 'hi Sneak guibg=' . yellow
 
 " }}}
 
