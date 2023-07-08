@@ -136,7 +136,7 @@ global_keys = gears.table.join(
 
   awful.key(
     {modkey},
-    "space",
+    "p",
     function()
       menubar.show()
     end
