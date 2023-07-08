@@ -1290,7 +1290,7 @@ let sel0 = '#2b3b51'
 let sel1 = '#3c5372'
 
 exe 'hi TabLine guibg=' . bg0 . ' guifg= ' . fg1
-exe 'hi TabLineSel guibg=' . bg1 . ' guifg= ' . white
+exe 'hi TabLineSel guibg=' . bg3 . ' guifg= ' . white
 
 exe 'hi SignatureMarkText guifg=' . pink
 

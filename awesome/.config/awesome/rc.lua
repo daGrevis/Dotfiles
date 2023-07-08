@@ -35,14 +35,14 @@ terminal = "alacritty"
 
 fg1 = "#d6d6d7"
 bg0 = "#131a24"
-bg1 = "#192330"
+bg3 = "#29394f"
 white = "#dfdfe0"
 
 beautiful.init({
   font = "VictorMono Nerd Font 12",
   bg_normal = bg0,
   fg_normal = fg1,
-  bg_focus = bg1,
+  bg_focus = bg3,
   fg_focus = white,
   useless_gap = 0,
   border_width = 0,
