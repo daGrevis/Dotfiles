@@ -2,12 +2,13 @@
 
 let
   inherit (pkgs) stdenv;
+  username = "dagrevis";
 in
 {
   home.stateVersion = "22.11";
 
-  home.username = "dagrevis";
-  home.homeDirectory = if stdenv.isLinux then "/home/dagrevis" else "/Users/dagrevis";
+  home.username = username;
+  home.homeDirectory = if stdenv.isLinux then "/home/${username}" else "/Users/${username}";
 
   # Let home-manager install and manage itself.
   programs.home-manager.enable = true;
