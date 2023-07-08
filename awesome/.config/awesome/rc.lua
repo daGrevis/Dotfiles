@@ -74,47 +74,6 @@ local tasklist_buttons = gears.table.join(
 
 awful.screen.connect_for_each_screen(function(s)
   awful.tag({"1"}, s, awful.layout.layouts[1])
-
-  s.prompt = awful.widget.prompt()
-
-  s.tasklist = awful.widget.tasklist {
-    screen = s,
-    filter = awful.widget.tasklist.filter.currenttags,
-    buttons = tasklist_buttons,
-    layout = {
-      layout = wibox.layout.fixed.horizontal,
-    },
-    widget_template = {
-      {
-        {
-          {
-            id = "text_role",
-            widget = wibox.widget.textbox,
-          },
-          layout = wibox.layout.fixed.horizontal,
-        },
-        left = 10,
-        right = 10,
-        widget = wibox.container.margin,
-      },
-      id = "background_role",
-      widget = wibox.container.background,
-    }
-  }
-  s.tasklist.update_callback = function()
-  end
-
-  s.wibar = awful.wibar({
-    position = "top",
-    screen = s,
-    height = 20
-  })
-
-  s.wibar:setup {
-    layout = wibox.layout.align.horizontal,
-    s.tasklist,
-    s.prompt
-  }
 end)
 
 global_keys = gears.table.join(
