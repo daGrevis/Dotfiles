@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (pkgs) stdenv;
@@ -100,65 +100,69 @@ in
 
   # {{{ Neovim
 
-  home.file.".config/nvim/init.vim".source = ~/Dotfiles/neovim/.config/nvim/init.vim;
-  home.file.".config/coc/ultisnips/".source = ~/Dotfiles/neovim/.config/coc/ultisnips;
+  home.file.".config/nvim/init.vim".source = "${config.home.homeDirectory}/Dotfiles/neovim/.config/nvim/init.vim";
+  home.file.".config/coc/ultisnips/".source = "${config.home.homeDirectory}/Dotfiles/neovim/.config/coc/ultisnips";
 
   # }}}
 
   # {{{ Zsh
 
-  home.file.".zshrc".source = ~/Dotfiles/zsh/.zshrc;
-  home.file.".zshenv".source = ~/Dotfiles/zsh/.zshenv;
-  home.file.".oh-my-zsh/".source = pkgs.oh-my-zsh.outPath + "/share/oh-my-zsh/";
-  home.file.".oh-my-zsh-custom/".source = ~/Dotfiles/zsh/.oh-my-zsh-custom;
-  home.file."sh/".source = ~/Dotfiles/sh/sh;
+  home.file.".zshrc".source = "${config.home.homeDirectory}/Dotfiles/zsh/.zshrc";
+  home.file.".zshenv".source = "${config.home.homeDirectory}/Dotfiles/zsh/.zshenv";
+  home.file.".oh-my-zsh/".source = "${pkgs.oh-my-zsh.outPath}/share/oh-my-zsh/";
+  home.file.".oh-my-zsh-custom/".source = "${config.home.homeDirectory}/Dotfiles/zsh/.oh-my-zsh-custom";
+  home.file."sh/".source = "${config.home.homeDirectory}/Dotfiles/sh/sh";
 
   # }}}
 
   # {{{ Tmux
 
-  home.file.".tmux.conf".source = ~/Dotfiles/tmux/.tmux.conf;
+  home.file.".tmux.conf".source = "${config.home.homeDirectory}/Dotfiles/tmux/.tmux.conf";
   home.file.".tmux/plugins/tpm".source = builtins.fetchGit { url = "https://github.com/tmux-plugins/tpm"; };
 
   # }}}
 
   # {{{ Git
 
-  home.file.".gitconfig".source = ~/Dotfiles/git/.gitconfig;
-  home.file.".gitignore_global".source = ~/Dotfiles/git/.gitignore_global;
+  home.file.".gitconfig".source = "${config.home.homeDirectory}/Dotfiles/git/.gitconfig";
+  home.file.".gitignore_global".source = "${config.home.homeDirectory}/Dotfiles/git/.gitignore_global";
 
   # }}}
 
   # {{{ Alacritty
 
-  home.file.".config/alacritty/alacritty.yml".source = ~/Dotfiles/alacritty/.config/alacritty/alacritty.yml;
-  home.file.".config/alacritty/nixos.yml" = (lib.mkIf stdenv.isLinux { source = ~/Dotfiles/alacritty/.config/alacritty/nixos.yml; });
-  home.file.".config/alacritty/macos.yml" = (lib.mkIf stdenv.isDarwin { source = ~/Dotfiles/alacritty/.config/alacritty/macos.yml; });
+  home.file.".config/alacritty/alacritty.yml".source = "${config.home.homeDirectory}/Dotfiles/alacritty/.config/alacritty/alacritty.yml";
+  home.file.".config/alacritty/nixos.yml" = (lib.mkIf stdenv.isLinux {
+    source = "${config.home.homeDirectory}/Dotfiles/alacritty/.config/alacritty/nixos.yml";
+  });
+  home.file.".config/alacritty/macos.yml" = (lib.mkIf stdenv.isDarwin {
+    source = "${config.home.homeDirectory}/Dotfiles/alacritty/.config/alacritty/macos.yml";
+  });
 
   # }}}
 
   # {{{ Ack
 
-  home.file.".ackrc".source = ~/Dotfiles/ack/.ackrc;
+  home.file.".ackrc".source = "${config.home.homeDirectory}/Dotfiles/ack/.ackrc";
 
   # }}}
 
   # {{{ Fzf
 
-  home.file.".fzf-bindings.zsh".source = ~/Dotfiles/fzf/.fzf-bindings.zsh;
-  home.file.".fzf.zsh".source = ~/Dotfiles/fzf/.fzf.zsh;
+  home.file.".fzf-bindings.zsh".source = "${config.home.homeDirectory}/Dotfiles/fzf/.fzf-bindings.zsh";
+  home.file.".fzf.zsh".source = "${config.home.homeDirectory}/Dotfiles/fzf/.fzf.zsh";
 
   # }}}
 
   # {{{ Awesome
 
-  home.file.".config/awesome/rc.lua".source = ~/Dotfiles/awesome/.config/awesome/rc.lua;
+  home.file.".config/awesome/rc.lua".source = "${config.home.homeDirectory}/Dotfiles/awesome/.config/awesome/rc.lua";
 
   # }}}
 
   # {{{ Hammerspoon
 
-  home.file.".hammerspoon/init.lua".source = ~/Dotfiles/hammerspoon/.hammerspoon/init.lua;
+  home.file.".hammerspoon/init.lua".source = "${config.home.homeDirectory}/Dotfiles/hammerspoon/.hammerspoon/init.lua";
 
   # }}}
 }
