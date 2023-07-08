@@ -1,10 +1,13 @@
 { lib, pkgs, ... }:
 
+let
+  inherit (pkgs) stdenv;
+in
 {
   home.stateVersion = "22.11";
 
   home.username = "dagrevis";
-  home.homeDirectory = "/Users/dagrevis";
+  home.homeDirectory = if stdenv.isLinux then "/home/dagrevis" else "/Users/dagrevis";
 
   # Let home-manager install and manage itself.
   programs.home-manager.enable = true;
