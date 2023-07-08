@@ -2,6 +2,8 @@
 
 {
 
+  system.stateVersion = "22.11";
+
   imports =
     [
       ./hardware-configuration.nix
@@ -11,7 +13,6 @@
     loader = {
       grub = {
         enable = true;
-        version = 2;
         device = "/dev/sda";
       };
       timeout = 1;
@@ -110,6 +111,6 @@
 
   programs.gnupg.agent.enable = true;
 
-  system.stateVersion = "20.03";
+  programs.zsh.enable = true;
 
 }
