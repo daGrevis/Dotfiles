@@ -39,7 +39,7 @@ bg3 = "#29394f"
 white = "#dfdfe0"
 
 beautiful.init({
-  font = "VictorMono Nerd Font 12",
+  font = "Recursive Mono Linear Static",
   bg_normal = bg0,
   fg_normal = fg1,
   bg_focus = bg3,
