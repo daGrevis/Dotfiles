@@ -5,8 +5,8 @@ window:
 
 font:
   normal:
-    family: "VictorMono Nerd Font"
-  size: 14
+    family: "Recursive Mono Linear Static"
+  size: 13
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }

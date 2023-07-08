@@ -51,7 +51,6 @@ in
     lua
     neofetch
     neovim
-    (nerdfonts.override { fonts = [ "VictorMono" ]; })
     nodejs
     oh-my-zsh
     openssl
@@ -63,6 +62,7 @@ in
     pstree
     python3
     python38Packages.grip
+    recursive
     shellcheck
     sops
     sqlite
