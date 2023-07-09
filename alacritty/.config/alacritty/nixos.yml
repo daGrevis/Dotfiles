@@ -1,5 +1,5 @@
 font:
-  size: 9
+  size: 10
 
 key_bindings:
   - { key: V, mods: Alt, action: PasteSelection }
