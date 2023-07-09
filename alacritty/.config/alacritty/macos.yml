@@ -31,7 +31,7 @@ key_bindings:
       mods: Command,
       command:
         {
-          program: "/usr/local/bin/tmux",
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
           args: ["send-keys", "-X", "copy-pipe", "pbcopy"],
         },
     }
@@ -39,12 +39,19 @@ key_bindings:
       key: T,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["new-window", "-c", "~"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["new-window", "-c", "~"],
+        },
     }
   - {
       key: W,
       mods: Command,
-      command: { program: "/usr/local/bin/tmux", args: ["kill-pane"] },
+      command:
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["kill-pane"],
+        },
     }
   - {
       key: H,
@@ -63,20 +70,26 @@ key_bindings:
       key: LBracket,
       mods: Command|Shift,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t:-"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t:-"],
+        },
     }
   - {
       key: RBracket,
       mods: Command|Shift,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t:+"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t:+"],
+        },
     }
   - {
       key: LBracket,
       mods: Command|Alt,
       command:
         {
-          program: "/usr/local/bin/tmux",
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
           args: ["swap-window", "-t", "-1", ";", "select-window", "-t", "-1"],
         },
     }
@@ -85,7 +98,7 @@ key_bindings:
       mods: Command|Alt,
       command:
         {
-          program: "/usr/local/bin/tmux",
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
           args: ["swap-window", "-t", "+1", ";", "select-window", "-t", "+1"],
         },
     }
@@ -93,73 +106,116 @@ key_bindings:
       key: Key1,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "1"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "1"],
+        },
     }
   - {
       key: Key2,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "2"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "2"],
+        },
     }
   - {
       key: Key3,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "3"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "3"],
+        },
     }
   - {
       key: Key4,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "4"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "4"],
+        },
     }
   - {
       key: Key5,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "5"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "5"],
+        },
     }
   - {
       key: Key6,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "6"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "6"],
+        },
     }
   - {
       key: Key7,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "7"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "7"],
+        },
     }
   - {
       key: Key8,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "8"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "8"],
+        },
     }
   - {
       key: Key9,
       mods: Command,
       command:
-        { program: "/usr/local/bin/tmux", args: ["select-window", "-t", "9"] },
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-window", "-t", "9"],
+        },
     }
   - {
       key: Left,
       mods: Command,
-      command: { program: "/usr/local/bin/tmux", args: ["select-pane", "-L"] },
+      command:
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-pane", "-L"],
+        },
     }
   - {
       key: Right,
       mods: Command,
-      command: { program: "/usr/local/bin/tmux", args: ["select-pane", "-R"] },
+      command:
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-pane", "-R"],
+        },
     }
   - {
       key: Up,
       mods: Command,
-      command: { program: "/usr/local/bin/tmux", args: ["select-pane", "-U"] },
+      command:
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-pane", "-U"],
+        },
     }
   - {
       key: Down,
       mods: Command,
-      command: { program: "/usr/local/bin/tmux", args: ["select-pane", "-D"] },
+      command:
+        {
+          program: "/Users/dagrevis/.nix-profile/bin/tmux",
+          args: ["select-pane", "-D"],
+        },
     }
