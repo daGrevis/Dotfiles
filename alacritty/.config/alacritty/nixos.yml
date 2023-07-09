@@ -1,14 +1,5 @@
-# Find font family name by running `fc-scan --format "%{family}\n" font.ttf`.
 font:
-  normal:
-    family: "Recursive Mono Linear Static"
   size: 11
-
-mouse_bindings:
-  - { mouse: Middle, action: PasteSelection }
-
-mouse:
-  hide_when_typing: true
 
 key_bindings:
   - { key: V, mods: Alt, action: PasteSelection }

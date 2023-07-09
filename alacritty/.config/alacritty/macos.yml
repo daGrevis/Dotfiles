@@ -1,29 +1,5 @@
-window:
-  decorations: buttonless
-  startup_mode: "Maximized"
-  dynamic_title: true
-
 font:
-  normal:
-    family: "Recursive Mono Linear Static"
   size: 13
-
-mouse_bindings:
-  - { mouse: Middle, action: PasteSelection }
-
-mouse:
-  double_click: { threshold: 300 }
-  triple_click: { threshold: 300 }
-  hide_when_typing: true
-
-cursor:
-  unfocused_hollow: true
-
-scrolling:
-  history: 100000
-  multiplier: 1
-
-live_config_reload: true
 
 key_bindings:
   - {

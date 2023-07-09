@@ -1,21 +1,33 @@
+live_config_reload: true
+
 env:
   TERM: xterm-256color
 
-live_config_reload: true
+window:
+  decorations: None
+  startup_mode: "Maximized"
 
 scrolling:
   history: 100000
   multiplier: 1
 
+font:
+  normal:
+    # Find font family name by running `fc-scan --format "%{family}\n" font.ttf`.
+    family: "Recursive Mono Linear Static"
+  offset:
+    y: 2
+
 cursor:
   unfocused_hollow: true
 
-bell:
-  duration: 0
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: true
 
-window:
-  startup_mode: "Maximized"
-  dynamic_title: true
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
 
 colors:
   primary:
