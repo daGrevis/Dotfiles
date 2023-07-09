@@ -47,6 +47,7 @@ alias gp="git push"
 alias grm="git rm"
 alias grs="git reset"
 alias grv="git revert"
+alias grb="git rebase"
 alias gs="git status -sb"
 gsw() {
     git --no-pager show "$@" | less -R --pattern '^diff --git'
