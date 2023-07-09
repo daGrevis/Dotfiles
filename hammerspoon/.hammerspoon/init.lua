@@ -1,9 +1,8 @@
+-- This allows to use "hs" command from the terminal.
+require("hs.ipc")
+
 hs.configdir = os.getenv('HOME') .. '/.hammerspoon'
 package.path = hs.configdir .. '/?.lua;' .. hs.configdir .. '/?/init.lua;' .. hs.configdir .. '/Spoons/?.spoon/init.lua;' .. package.path
-
-local YABAI_PATH = '/usr/local/bin/yabai'
-
-hs.alert.show('Hammerspoon loaded')
 
 -- Plugins (aka Spoons) {{{
 
@@ -29,20 +28,6 @@ local function openApp(app_name, new)
   s = s .. " -a '/Applications/" .. app_name .. ".app'"
 
   hs.execute(s)
-end
-
-local function _yabai(message)
-  return hs.execute(YABAI_PATH .. ' -m ' .. message)
-end
-
-local function yabai(message)
-  local _, status = _yabai(message)
-  return status or false
-end
-
-local function yabaiQuery(message)
-  local output = _yabai('query ' .. message)
-  return hs.json.decode(output)
 end
 
 local function closeNotifications()
@@ -106,6 +91,16 @@ local function focusFrontmost()
   frontmostWindow:focus()
 end
 
+local function setFrontmostWindowPosition(fn)
+  local frontmostWindow = hs.window.frontmostWindow()
+  local currentScreen = frontmostWindow:screen()
+  local frame = currentScreen:frame()
+  local nextFrame = currentScreen:localToAbsolute(
+    fn(frame.w, frame.h, frame.x, frame.y)
+  )
+  frontmostWindow:setFrame(nextFrame)
+end
+
 -- }}}
 
 -- Applications {{{
@@ -139,20 +134,15 @@ end)
 
 -- Utils {{{
 
--- Start screensaver.
+-- Close notifications.
 hs.hotkey.bind({'cmd'}, '/', function()
-  hs.caffeinate.startScreensaver()
+  closeNotifications()
 end)
 
 -- Clear clipboard.
 hs.hotkey.bind({'cmd'}, '.', function()
   hs.pasteboard.setContents('')
   hs.alert.show('Clipboard cleared')
-end)
-
--- Close notifications.
-hs.hotkey.bind({'ctrl'}, 'space', function()
-  closeNotifications()
 end)
 
 -- Connect AirPods.
@@ -170,7 +160,7 @@ end)
 -- Window Management {{{
 
 -- Focus previously used window of the same app.
-hs.hotkey.bind({'cmd'}, '`', function()
+hs.hotkey.bind({'cmd'}, 0x32, function() -- 0x32 is grave accent
   local front_app = hs.application.frontmostApplication()
 
   local windows
@@ -195,173 +185,63 @@ hs.hotkey.bind({'cmd'}, '`', function()
   end
 end)
 
--- Each key 1 to 9 maps to desktop 1 space X.
--- Key 0 maps to desktop 2 space 1.
-for i = 0, 10 do
-  local space = tostring(i)
-
-  local key
-  if space == '10' then
-    key = '0'
-  else
-    key = space
-  end
-
-  -- Focus space.
-  hs.hotkey.bind({'ctrl'}, key, function()
-    yabai('space --focus ' .. space)
-  end)
-
-  -- Move windows and focus space.
-  hs.hotkey.bind({'cmd', 'ctrl'}, key, function()
-    yabai('window --space ' .. space)
-    yabai('space --focus ' .. space)
-  end)
-end
-
--- Focus the previous space.
-hs.hotkey.bind({'ctrl'}, '[', function()
-  return yabai('space --focus prev') or yabai('space --focus 10') or yabai('space --focus 9')
-end)
-
--- Focus the next space.
-hs.hotkey.bind({'ctrl'}, ']', function()
-  return yabai('space --focus next') or yabai('space --focus 1')
-end)
-
--- Toggle between float and bsp layout.
-hs.hotkey.bind({'cmd', 'ctrl'}, 'e', function()
-  local space = yabaiQuery('--spaces --space')
-  yabai('space --layout ' .. (space.type == 'float' and 'bsp' or 'float'))
-end)
-
 -- Toggle fullscreen.
 hs.hotkey.bind({'cmd', 'ctrl'}, 'f', function()
-  local space = yabaiQuery('--spaces --space')
-  if space.type == 'float' then
-    yabai('window --grid 1:1:0:0:1:1')
-  else
-    yabai('window --toggle zoom-fullscreen')
+  local frontmostWindow = hs.window.frontmostWindow()
+  frontmostWindow:maximize()
+end)
+
+-- Move window to other screen.
+hs.hotkey.bind({'cmd', 'ctrl'}, 'tab', function()
+  local frontmostWindow = hs.window.frontmostWindow()
+  local currentScreen = frontmostWindow:screen()
+  local allScreens = hs.screen.allScreens()
+  local nextScreen = hs.fnutils.find(allScreens, function(screen)
+    return screen:id() ~= currentScreen:id()
+  end)
+  if nextScreen then
+    frontmostWindow:moveToScreen(nextScreen)
+    frontmostWindow:maximize()
   end
 end)
 
 -- Center window.
 hs.hotkey.bind({'cmd', 'ctrl'}, 'c', function()
-  yabai('window --grid 8:4:1:1:2:6')
-end)
-
--- Increase size of window.
-hs.hotkey.bind({'cmd', 'ctrl'}, 'x', function()
-  yabai('window --resize top_left:-50:-50')
-  yabai('window --resize bottom_right:50:50')
-end)
-
--- Decrease size of window.
-hs.hotkey.bind({'cmd', 'ctrl'}, 'z', function()
-  yabai('window --resize top_left:50:50')
-  yabai('window --resize bottom_right:-50:-50')
+  local frontmostWindow = hs.window.frontmostWindow()
+  frontmostWindow:setSize({ w=1024, h=768 })
+  frontmostWindow:centerOnScreen()
 end)
 
 -- Fill left-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'left', function()
-  yabai('window --grid 1:2:0:0:1:1')
+  setFrontmostWindowPosition(function(w, h, x, y)
+    return { w=w / 2, h=h, x=0, y=y }
+  end)
 end)
 
 -- Fill right-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'right', function()
-  yabai('window --grid 1:2:1:0:1:1')
+  setFrontmostWindowPosition(function(w, h, x, y)
+    return { w=w / 2, h=h, x=w / 2, y=y }
+  end)
 end)
 
 -- Fill top-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'up', function()
-  yabai('window --grid 2:1:0:0:1:1')
+  setFrontmostWindowPosition(function(w, h, x, y)
+    return { w=w, h=h / 2, x=0, y=0 }
+  end)
 end)
 
 -- Fill bottom-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'down', function()
-  yabai('window --grid 2:1:0:1:1:1')
+  setFrontmostWindowPosition(function(w, h, x, y)
+    return { w=w, h=h / 2, x=0, y=h / 2 }
+  end)
 end)
 
--- Move window to left.
-hs.hotkey.bind({'cmd', 'ctrl'}, 'left', function()
-  yabai('window --move rel:-50:0')
-end)
-
--- Move window to right.
-hs.hotkey.bind({'cmd', 'ctrl'}, 'right', function()
-  yabai('window --move rel:50:0')
-end)
-
--- Move window to top.
-hs.hotkey.bind({'cmd', 'ctrl'}, 'up', function()
-  yabai('window --move rel:0:-50')
-end)
-
--- Move window to bottom.
-hs.hotkey.bind({'cmd', 'ctrl'}, 'down', function()
-  yabai('window --move rel:0:50')
-end)
-
--- Increase size of window to left.
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'left', function()
-  yabai('window --resize left:-50:0')
-end)
-
--- Increase size of window to right.
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'right', function()
-  yabai('window --resize right:50:0')
-end)
-
--- Increase size of window to top.
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'up', function()
-  yabai('window --resize top:0:-50')
-end)
-
--- Increase size of window to bottom.
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'down', function()
-  yabai('window --resize bottom:0:50')
-end)
-
--- Decrease size of window to left.
-hs.hotkey.bind({'cmd', 'ctrl', 'alt'}, 'left', function()
-  yabai('window --resize left:50:0')
-end)
-
--- Decrease size of window to right.
-hs.hotkey.bind({'cmd', 'ctrl', 'alt'}, 'right', function()
-  yabai('window --resize right:-50:0')
-end)
-
--- Decrease size of window to top.
-hs.hotkey.bind({'cmd', 'ctrl', 'alt'}, 'up', function()
-  yabai('window --resize top:0:50')
-end)
-
--- Decrease size of window to bottom.
-hs.hotkey.bind({'cmd', 'ctrl', 'alt'}, 'down', function()
-  yabai('window --resize bottom:0:-50')
-end)
 
 -- }}}
-
--- Config & Development {{{
-
--- Auto-restart on config changes.
-local config_path = os.getenv('HOME') .. '/.hammerspoon/init.lua'
-hs.pathwatcher.new(config_path, function()
-  hs.reload()
-end):start()
-
--- Restart.
-hs.hotkey.bind({'cmd', 'shift'}, 'r', function()
-  hs.relaunch()
-end)
-
--- Toggle console.
-hs.hotkey.bind({'cmd', 'shift'}, 'e', function()
-  hs.toggleConsole()
-  focusFrontmost()
-end)
 
 -- }}}
 
