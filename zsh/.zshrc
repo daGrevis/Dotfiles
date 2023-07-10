@@ -61,7 +61,10 @@ if [ -f '/Users/dagrevis/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_OPTS="--bind ctrl-n:next-history,ctrl-p:previous-history,ctrl-r:up,change:top --color=hl+:1,hl:3,gutter:0,bg+:0 --no-separator --history=$HOME/.fzf_history"
+export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history \
+    --bind ctrl-n:next-history,ctrl-p:previous-history,ctrl-r:up,change:top \
+    --color='bg+:#29394f' --color='pointer:#dfdfe0' --color='hl:#81b29a' \
+    --no-separator"
 
 command -v fd &> /dev/null
 if [ "$?" != "0" ]; then
