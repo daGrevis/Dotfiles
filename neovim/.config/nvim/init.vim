@@ -1372,6 +1372,7 @@ require'nvim-treesitter.configs'.setup {
     "scss",
     "sql",
     "toml",
+    "tsx",
     "typescript",
     "yaml",
     "elixir",
