@@ -75,6 +75,7 @@ in
     xclip
     xkcdpass
     xorg.xev
+    yarn
     yt-dlp
     zsh
     # unfree:
