@@ -1199,7 +1199,7 @@ endfunction
 autocmd vimrc InsertLeave * call AuInsertLeave()
 
 function! AuFileTypePo()
-    setlocal commentstring=#~\ %s
+    setlocal commentstring=#\ %s
 endfunction
 autocmd vimrc FileType po call AuFileTypePo()
 
