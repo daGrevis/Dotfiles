@@ -40,13 +40,7 @@
 
   environment.systemPackages = with pkgs; [
     neovim
-    wget
     git
-    stow
-    docker
-    docker-compose
-    gnupg
-    man
   ];
 
   documentation = {

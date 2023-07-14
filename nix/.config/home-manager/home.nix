@@ -28,6 +28,7 @@ in
     cargo
     deno
     docker
+    docker-compose
     exa
     fd
     ffmpeg
@@ -50,6 +51,7 @@ in
     libnotify
     lsof
     lua
+    man
     neofetch
     neovim
     nodejs
