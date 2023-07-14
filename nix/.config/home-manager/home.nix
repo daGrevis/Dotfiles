@@ -6,7 +6,7 @@ let
   homeDirectory = if stdenv.isLinux then "/home/${username}" else "/Users/${username}";
 in
 {
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 
   home.username = username;
   home.homeDirectory = homeDirectory;
