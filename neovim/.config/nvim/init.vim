@@ -794,7 +794,7 @@ vnoremap <Leader>g :ShareGist
 
 " Status-line {{{
 
-function! StatusLineGitHead()
+function! StatusLineGit()
     if winwidth(0) < 120
         return ''
     endif
@@ -812,34 +812,49 @@ function! StatusLineGitHead()
     return ' ' . s:head . ' '
 endfunction
 
-function! StatusLineDiagnostics()
-    let info = get(b:, 'coc_diagnostic_info', {})
-    if empty(info) | return '' | endif
-    let msgs = []
-    if get(info, 'error', 0)
-      call add(msgs, 'E' . info['error'])
+function! StatusLineDiagnosticsInformation()
+    let count = get(get(b:, 'coc_diagnostic_info', {}), 'information', 0)
+    if count == 0
+      return ''
     endif
-    if get(info, 'warning', 0)
-      call add(msgs, 'W' . info['warning'])
+    return '[i' . count . ']'
+endfunction
+
+function! StatusLineDiagnosticsHint()
+    let count = get(get(b:, 'coc_diagnostic_info', {}), 'hint', 0)
+    if count == 0
+      return ''
     endif
-    return join(msgs, ' ')
+    return '[h' . count . ']'
+endfunction
+
+function! StatusLineDiagnosticsWarning()
+    let count = get(get(b:, 'coc_diagnostic_info', {}), 'warning', 0)
+    if count == 0
+      return ''
+    endif
+    return '[W' . count . ']'
+endfunction
+
+function! StatusLineDiagnosticsError()
+    let count = get(get(b:, 'coc_diagnostic_info', {}), 'error', 0)
+    if count == 0
+      return ''
+    endif
+    return '[E' . count . ']'
 endfunction
 
 function! StatusLineFileSize()
-    if winwidth(0) < 120
-        return ''
-    endif
-
-    let bytes = getfsize(expand("%:p"))
+    let bytes = getfsize(expand('%:p'))
     if bytes <= 0
-        return ""
+        return ''
     endif
     if bytes < 1024
         return bytes . 'B'
     elseif bytes < 1024 * 1024
-        return (bytes / 1024) . 'K'
+        return printf('%.1f', bytes / 1024.0) . 'kB'
     else
-        return (bytes / 1024 / 1024) . 'M'
+        return printf('%.1f', bytes / 1024.0 / 1024.0) . 'MB'
     endif
 endfunction
 
@@ -848,20 +863,30 @@ set statusline=
 set statusline+=\ %m%r
 " Current path.
 set statusline+=%f\ 
-" Start highlight.
 set statusline+=%1*
-" Git revision.
-set statusline+=%{StatusLineGitHead()}
-" End highlight.
+set statusline+=%{StatusLineGit()}
 set statusline+=%*
 
 " Right align.
 set statusline+=%=
-set statusline+=%{StatusLineDiagnostics()}\ 
-set statusline+=%{StatusLineFileSize()}\ 
+set statusline+=%#DiagnosticVirtualTextInfo#
+set statusline+=%{StatusLineDiagnosticsInformation()}
+set statusline+=%*
+set statusline+=%#DiagnosticVirtualTextHint#
+set statusline+=%{StatusLineDiagnosticsHint()}
+set statusline+=%*
+set statusline+=%#DiagnosticVirtualTextWarn#
+set statusline+=%{StatusLineDiagnosticsWarning()}
+set statusline+=%*
+set statusline+=%#DiagnosticVirtualTextError#
+set statusline+=%{StatusLineDiagnosticsError()}
+set statusline+=%*
+set statusline+=\ 
 set statusline+=%1*
+set statusline+=\ 
+set statusline+=%{StatusLineFileSize()}
 " Position.
-set statusline+=\ %l:%c/%L\ %p%%\ 
+set statusline+=\ %l:%c/%L\ 
 set statusline+=%*
 
 " }}}
