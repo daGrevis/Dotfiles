@@ -663,16 +663,16 @@ nnoremap <silent> gk :call <SID>show_documentation()<CR>
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 call coc#config('coc.preferences', {
-      \ 'diagnostic.errorSign': 'E',
-      \ 'diagnostic.warningSign': 'W',
-      \ 'diagnostic.infoSign': 'I',
-      \ 'diagnostic.hintSign': 'H',
       \ 'formatOnSaveFiletypes': ['*'],
       \ })
 
 call coc#config('diagnostic', {
       \ 'refreshAfterSave': 0,
       \ 'maxWindowHeight': 16,
+      \ 'errorSign': 'E',
+      \ 'warningSign': 'W',
+      \ 'infoSign': 'i',
+      \ 'hintSign': 'h',
       \ })
 
 call coc#config('tsserver', {
