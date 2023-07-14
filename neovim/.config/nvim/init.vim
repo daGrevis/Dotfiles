@@ -1208,14 +1208,6 @@ function! AuFileTypeSql()
 endfunction
 autocmd vimrc FileType sql call AuFileTypeSql()
 
-function! AuFileTypeNginx()
-    setlocal commentstring=#\ %s
-endfunction
-autocmd vimrc FileType nginx call AuFileTypeNginx()
-
-autocmd BufEnter *.nix :setlocal filetype=nix
-autocmd BufEnter *.md :setlocal filetype=markdown
-
 function! AuFileTypeSass()
     setlocal shiftwidth=4
 endfunction
