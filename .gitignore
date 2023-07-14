@@ -11,7 +11,7 @@
 /neovim/.config/nvim/autoload/
 /neovim/.config/nvim/plugged/
 
-/nixos/etc/nixos/hardware-configuration.nix
+/nix/etc/nixos/hardware-configuration.nix
 
 __pycache__
 /tags
