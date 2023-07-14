@@ -71,6 +71,7 @@ in
     terraform
     tmux
     tmuxinator
+    unzip
     wget
     xclip
     xkcdpass
