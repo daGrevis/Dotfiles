@@ -155,7 +155,7 @@ clip() {
 }
 
 n() {
-  nix-shell --command "$SHELL" -p "$1"
+  nix-shell --command "SHELL=$SHELL $SHELL" -p "$1"
 }
 
 yt2mp3() {
