@@ -83,8 +83,11 @@ Plug 'https://github.com/tpope/vim-abolish'
 " Saves your Vim sessions.
 Plug 'https://github.com/tpope/vim-obsession'
 
-" Interface with tree-sitter for more robust syntax highlighting and more.
+" Interface with treesitter for more robust syntax highlighting and more.
 Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Set commentstring based on the cursor location in a file.
+Plug 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'
 
 " IntelliSense engine.
 Plug 'https://github.com/neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile --force'}
@@ -1380,7 +1383,10 @@ require'nvim-treesitter.configs'.setup {
   additional_vim_regex_highlighting = false,
   indent = {
     enable = true
-  }
+  },
+  context_commentstring = {
+    enable = true,
+  },
 }
 EOF
 
