@@ -94,9 +94,13 @@ in
   # Do not display notifications about home-manager news.
   news.display = "silent";
 
-  home.sessionVariables = {
-    ASDF_SH = "${pkgs.asdf-vm.outPath}/share/asdf-vm/asdf.sh";
-  };
+  # }}}
+
+  # {{{ Asdf
+
+  home.sessionVariables.ASDF_SH = "${pkgs.asdf-vm.outPath}/share/asdf-vm/asdf.sh";
+
+  home.file.".tool-versions".source = "${homeDirectory}/Dotfiles/asdf/.tool-versions";
 
   # }}}
 
