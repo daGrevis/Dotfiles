@@ -24,7 +24,7 @@ cursor:
 mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
-  hide_when_typing: true
+  hide_when_typing: false
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
