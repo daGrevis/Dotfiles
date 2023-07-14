@@ -800,7 +800,7 @@ function! StatusLineGitHead()
     endif
 
     try
-        let s:head = fugitive#head(7)
+        let s:head = FugitiveHead(7)
     catch
         return ''
     endtry
