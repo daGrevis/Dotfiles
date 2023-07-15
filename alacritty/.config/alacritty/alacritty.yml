@@ -16,7 +16,8 @@ font:
     # Find font family name by running `fc-scan --format "%{family}\n" font.ttf`.
     family: "RecursiveMnLnrSt Nerd Font"
   bold:
-    style: "ExtraBold"
+    family: "RecursiveMnLnrStBlk Nerd Font"
+    style: "Regular"
   offset:
     y: 2
 
