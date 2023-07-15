@@ -1315,9 +1315,17 @@ let sel1 = '#3c5372'
 exe 'hi TabLine guibg=' . bg0 . ' guifg= ' . fg1
 exe 'hi TabLineSel guibg=' . bg3 . ' guifg= ' . white . ' gui=bold'
 
-exe 'hi SignatureMarkText guifg=' . pink
+exe 'hi SignatureMarkText guifg=' . pink . ' gui=bold'
 
-exe 'hi Sneak guibg=' . yellow
+exe 'hi Sneak guibg=' . yellow . ' gui=bold'
+
+exe 'hi Comment gui=italic'
+
+exe 'hi @text.uri guifg=' . fg3 . ' gui=italic'
+exe 'hi @text.todo gui=bold'
+exe 'hi @text.note gui=bold'
+exe 'hi @text.warning gui=bold'
+exe 'hi @text.danger gui=bold'
 
 " }}}
 
