@@ -18,6 +18,9 @@ font:
   bold:
     family: "RecursiveMnLnrStBlk Nerd Font"
     style: "Regular"
+  bold_italic:
+    family: "RecursiveMnLnrStBlk Nerd Font"
+    style: "Italic"
   offset:
     y: 2
 
