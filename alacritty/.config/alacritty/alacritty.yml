@@ -14,7 +14,7 @@ scrolling:
 font:
   normal:
     # Find font family name by running `fc-scan --format "%{family}\n" font.ttf`.
-    family: "RecursiveMonoLnrSt Nerd Font"
+    family: "RecursiveMnLnrSt Nerd Font"
   bold:
     style: "ExtraBold"
   offset:
