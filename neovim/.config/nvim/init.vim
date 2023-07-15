@@ -86,6 +86,9 @@ Plug 'https://github.com/tpope/vim-obsession'
 " Interface with treesitter for more robust syntax highlighting and more.
 Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" Treesitter playground for debugging. Use :TSHighlightCapturesUnderCursor and :TSPlaygroundToggle.
+Plug 'https://github.com/nvim-treesitter/playground'
+
 " Set commentstring based on the cursor location in a file.
 Plug 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring'
 
@@ -1365,6 +1368,7 @@ require'nvim-treesitter.configs'.setup {
     "php",
     "po",
     "python",
+    "query",
     "regex",
     "rst",
     "ruby",
