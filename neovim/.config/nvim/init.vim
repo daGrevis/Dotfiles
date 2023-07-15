@@ -853,11 +853,11 @@ function! StatusLineFileSize()
         return ''
     endif
     if bytes < 1024
-        return bytes . 'B'
+        return bytes . 'B '
     elseif bytes < 1024 * 1024
-        return printf('%.1f', bytes / 1024.0) . 'kB'
+        return printf('%.1f', bytes / 1024.0) . 'kB '
     else
-        return printf('%.1f', bytes / 1024.0 / 1024.0) . 'MB'
+        return printf('%.1f', bytes / 1024.0 / 1024.0) . 'MB '
     endif
 endfunction
 
@@ -889,7 +889,7 @@ set statusline+=%1*
 set statusline+=\ 
 set statusline+=%{StatusLineFileSize()}
 " Position.
-set statusline+=\ %l:%c/%L\ 
+set statusline+=%l:%c/%L\ 
 set statusline+=%*
 
 " }}}
