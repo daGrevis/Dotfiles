@@ -4,6 +4,7 @@ let
   inherit (pkgs) stdenv;
   username = "dagrevis";
   homeDirectory = if stdenv.isLinux then "/home/${username}" else "/Users/${username}";
+  recursive-nerd = pkgs.callPackage ./recursive-nerd.nix { };
 in
 {
   home.stateVersion = "23.05";
@@ -65,6 +66,7 @@ in
     python3
     python38Packages.grip
     recursive
+    recursive-nerd
     shellcheck
     sops
     sqlite
