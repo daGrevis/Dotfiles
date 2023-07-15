@@ -4,6 +4,7 @@ let
   inherit (pkgs) stdenv;
   username = "dagrevis";
   homeDirectory = if stdenv.isLinux then "/home/${username}" else "/Users/${username}";
+  dotfilesDirectory = "${homeDirectory}/Dotfiles";
   recursive-nerd = pkgs.callPackage ./recursive-nerd.nix { };
 in
 {
@@ -105,75 +106,75 @@ in
 
   home.sessionVariables.ASDF_SH = "${pkgs.asdf-vm.outPath}/share/asdf-vm/asdf.sh";
 
-  home.file.".tool-versions".source = "${homeDirectory}/Dotfiles/asdf/.tool-versions";
+  home.file.".tool-versions".source = "${dotfilesDirectory}/asdf/.tool-versions";
 
   # }}}
 
   # {{{ Neovim
 
-  home.file.".config/nvim/init.vim".source = "${homeDirectory}/Dotfiles/neovim/.config/nvim/init.vim";
-  home.file.".config/coc/ultisnips/".source = "${homeDirectory}/Dotfiles/neovim/.config/coc/ultisnips";
+  home.file.".config/nvim/init.vim".source = "${dotfilesDirectory}/neovim/.config/nvim/init.vim";
+  home.file.".config/coc/ultisnips/".source = "${dotfilesDirectory}/neovim/.config/coc/ultisnips";
 
   # }}}
 
   # {{{ Zsh
 
-  home.file.".zshrc".source = "${homeDirectory}/Dotfiles/zsh/.zshrc";
-  home.file.".zshenv".source = "${homeDirectory}/Dotfiles/zsh/.zshenv";
+  home.file.".zshrc".source = "${dotfilesDirectory}/zsh/.zshrc";
+  home.file.".zshenv".source = "${dotfilesDirectory}/zsh/.zshenv";
   home.file.".oh-my-zsh/".source = "${pkgs.oh-my-zsh.outPath}/share/oh-my-zsh/";
-  home.file.".oh-my-zsh-custom/".source = "${homeDirectory}/Dotfiles/zsh/.oh-my-zsh-custom";
-  home.file."sh/".source = "${homeDirectory}/Dotfiles/sh/sh";
+  home.file.".oh-my-zsh-custom/".source = "${dotfilesDirectory}/zsh/.oh-my-zsh-custom";
+  home.file."sh/".source = "${dotfilesDirectory}/sh/sh";
 
   # }}}
 
   # {{{ Tmux
 
-  home.file.".tmux.conf".source = "${homeDirectory}/Dotfiles/tmux/.tmux.conf";
+  home.file.".tmux.conf".source = "${dotfilesDirectory}/tmux/.tmux.conf";
   home.file.".tmux/plugins/tpm".source = builtins.fetchGit { url = "https://github.com/tmux-plugins/tpm"; };
 
   # }}}
 
   # {{{ Git
 
-  home.file.".gitconfig".source = "${homeDirectory}/Dotfiles/git/.gitconfig";
-  home.file.".gitignore_global".source = "${homeDirectory}/Dotfiles/git/.gitignore_global";
+  home.file.".gitconfig".source = "${dotfilesDirectory}/git/.gitconfig";
+  home.file.".gitignore_global".source = "${dotfilesDirectory}/git/.gitignore_global";
 
   # }}}
 
   # {{{ Alacritty
 
-  home.file.".config/alacritty/alacritty.yml".source = "${homeDirectory}/Dotfiles/alacritty/.config/alacritty/alacritty.yml";
+  home.file.".config/alacritty/alacritty.yml".source = "${dotfilesDirectory}/alacritty/.config/alacritty/alacritty.yml";
   home.file.".config/alacritty/nixos.yml" = (lib.mkIf stdenv.isLinux {
-    source = "${homeDirectory}/Dotfiles/alacritty/.config/alacritty/nixos.yml";
+    source = "${dotfilesDirectory}/alacritty/.config/alacritty/nixos.yml";
   });
   home.file.".config/alacritty/macos.yml" = (lib.mkIf stdenv.isDarwin {
-    source = "${homeDirectory}/Dotfiles/alacritty/.config/alacritty/macos.yml";
+    source = "${dotfilesDirectory}/alacritty/.config/alacritty/macos.yml";
   });
 
   # }}}
 
   # {{{ Ack
 
-  home.file.".ackrc".source = "${homeDirectory}/Dotfiles/ack/.ackrc";
+  home.file.".ackrc".source = "${dotfilesDirectory}/ack/.ackrc";
 
   # }}}
 
   # {{{ Fzf
 
-  home.file.".fzf-bindings.zsh".source = "${homeDirectory}/Dotfiles/fzf/.fzf-bindings.zsh";
-  home.file.".fzf.zsh".source = "${homeDirectory}/Dotfiles/fzf/.fzf.zsh";
+  home.file.".fzf-bindings.zsh".source = "${dotfilesDirectory}/fzf/.fzf-bindings.zsh";
+  home.file.".fzf.zsh".source = "${dotfilesDirectory}/fzf/.fzf.zsh";
 
   # }}}
 
   # {{{ Awesome
 
-  home.file.".config/awesome/rc.lua".source = "${homeDirectory}/Dotfiles/awesome/.config/awesome/rc.lua";
+  home.file.".config/awesome/rc.lua".source = "${dotfilesDirectory}/awesome/.config/awesome/rc.lua";
 
   # }}}
 
   # {{{ Hammerspoon
 
-  home.file.".hammerspoon/init.lua".source = "${homeDirectory}/Dotfiles/hammerspoon/.hammerspoon/init.lua";
+  home.file.".hammerspoon/init.lua".source = "${dotfilesDirectory}/hammerspoon/.hammerspoon/init.lua";
 
   # }}}
 }
