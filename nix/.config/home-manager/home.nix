@@ -41,7 +41,6 @@ in
     gnumake
     gnupg
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
-    hack-font
     htop
     id3v2
     inetutils
