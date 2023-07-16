@@ -68,6 +68,7 @@ in
     python38Packages.grip
     recursive
     recursive-nerd
+    rename
     shellcheck
     sops
     sqlite
