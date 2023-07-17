@@ -215,14 +215,14 @@ end)
 -- Fill left-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'left', function()
   setFrontmostWindowPosition(function(w, h, x, y)
-    return { w=w / 2, h=h, x=0, y=y }
+    return { w=w / 2, h=h, x=0, y=0 }
   end)
 end)
 
 -- Fill right-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'right', function()
   setFrontmostWindowPosition(function(w, h, x, y)
-    return { w=w / 2, h=h, x=w / 2, y=y }
+    return { w=w / 2, h=h, x=w / 2, y=0 }
   end)
 end)
 
