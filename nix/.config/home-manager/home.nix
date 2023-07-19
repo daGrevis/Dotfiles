@@ -65,7 +65,6 @@ in
     postgresql
     pstree
     python3
-    python38Packages.grip
     recursive
     recursive-nerd
     rename

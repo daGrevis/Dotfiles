@@ -82,10 +82,6 @@ ip-addresses() {
     echo
 }
 
-view-markdown() {
-    grip "$1" 7777 -b
-}
-
 aux() {
     ps aux | head -n 1
     ps aux | grep -i "$@" | grep -v 'grep -i'
