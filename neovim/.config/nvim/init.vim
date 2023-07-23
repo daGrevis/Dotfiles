@@ -1286,46 +1286,27 @@ autocmd vimrc VimEnter * call AuVimEnter()
 
 set background=dark
 
-colorscheme nightfox
+let envs = environ()
 
-" https://github.com/EdenEast/nightfox.nvim/blob/main/lua/nightfox/palette/nightfox.lua
-let black = '#393b44'
-let red = '#c94f6d'
-let green = '#81b29a'
-let yellow = '#dbc074'
-let blue = '#719cd6'
-let magenta = '#9d79d6'
-let cyan = '#63cdcf'
-let white = '#dfdfe0'
-let orange = '#f4a261'
-let pink = '#d67ad2'
-let comment = '#738091'
-let bg0 = '#131a24'
-let bg1 = '#192330'
-let bg2 = '#212e3f'
-let bg3 = '#29394f'
-let bg4 = '#39506d'
-let fg0 = '#d6d6d7'
-let fg1 = '#cdcecf'
-let fg2 = '#aeafb0'
-let fg3 = '#71839b'
-let sel0 = '#2b3b51'
-let sel1 = '#3c5372'
+if has_key(envs, 'THEME')
+  exe 'colorscheme ' . envs['THEME']
 
-exe 'hi TabLine guibg=' . bg0 . ' guifg= ' . fg1
-exe 'hi TabLineSel guibg=' . bg3 . ' guifg= ' . white . ' gui=bold'
+  exe 'hi TabLine guibg=' . envs['THEME_BG0'] . ' guifg= ' . envs['THEME_FG1']
+  exe 'hi TabLineSel guibg=' . envs['THEME_BG3'] . ' guifg= ' . envs['THEME_WHITE']
+  exe 'hi @text.uri guifg=' . envs['THEME_FG3']
+  exe 'hi SignatureMarkText guifg=' . envs['THEME_PINK']
+  exe 'hi Sneak guibg=' . envs['THEME_YELLOW']
+endif
 
-exe 'hi SignatureMarkText guifg=' . pink . ' gui=bold'
-
-exe 'hi Sneak guibg=' . yellow . ' gui=bold'
-
+exe 'hi TabLineSel gui=bold'
 exe 'hi Comment gui=italic'
-
-exe 'hi @text.uri guifg=' . fg3 . ' gui=italic'
+exe 'hi @text.uri gui=italic'
 exe 'hi @text.todo gui=bold'
 exe 'hi @text.note gui=bold'
 exe 'hi @text.warning gui=bold'
 exe 'hi @text.danger gui=bold'
+exe 'hi SignatureMarkText gui=bold'
+exe 'hi Sneak gui=bold'
 
 " }}}
 

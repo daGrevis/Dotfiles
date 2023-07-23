@@ -3,9 +3,24 @@
 let
   inherit (pkgs) stdenv;
   username = "dagrevis";
+  theme = "nightfox";
+  themeColors = builtins.fromJSON (builtins.readFile "${dotfilesDirectory}/sh/sh/themes/${theme}.json");
   homeDirectory = if stdenv.isLinux then "/home/${username}" else "/Users/${username}";
   dotfilesDirectory = "${homeDirectory}/Dotfiles";
   recursive-nerd = pkgs.callPackage ./recursive-nerd.nix { };
+  nix-rice = pkgs.callPackage (
+    fetchTarball {
+      url = "https://github.com/bertof/nix-rice/archive/refs/tags/v0.2.7.tar.gz";
+      sha256 = "0kdh1f1cr0d8y4pcplzfgfkkif80drx3mjab9sfcss7svbr6wfd3";
+    }
+  ) {};
+  brighten = hex:
+    let
+      rgba = nix-rice.color.hexToRgba hex;
+      rgbaBrighter = nix-rice.color.brighten "10%" rgba;
+      hexBrighter = nix-rice.color.toRgbHex rgbaBrighter;
+    in
+      hexBrighter;
 in
 {
   home.stateVersion = "23.05";
@@ -124,6 +139,34 @@ in
   home.file.".oh-my-zsh/".source = "${pkgs.oh-my-zsh.outPath}/share/oh-my-zsh/";
   home.file.".oh-my-zsh-custom/".source = "${dotfilesDirectory}/zsh/.oh-my-zsh-custom";
   home.file."sh/".source = "${dotfilesDirectory}/sh/sh";
+  home.file."theme.sh".text =
+    ''
+      #!/usr/bin/env bash
+
+      export THEME='${theme}'
+      export THEME_BLACK='${themeColors.black}'
+      export THEME_RED='${themeColors.red}'
+      export THEME_GREEN='${themeColors.green}'
+      export THEME_YELLOW='${themeColors.yellow}'
+      export THEME_BLUE='${themeColors.blue}'
+      export THEME_MAGENTA='${themeColors.magenta}'
+      export THEME_CYAN='${themeColors.cyan}'
+      export THEME_WHITE='${themeColors.white}'
+      export THEME_ORANGE='${themeColors.orange}'
+      export THEME_PINK='${themeColors.pink}'
+      export THEME_COMMENT='${themeColors.comment}'
+      export THEME_BG0='${themeColors.bg0}'
+      export THEME_BG1='${themeColors.bg1}'
+      export THEME_BG2='${themeColors.bg2}'
+      export THEME_BG3='${themeColors.bg3}'
+      export THEME_BG4='${themeColors.bg4}'
+      export THEME_FG0='${themeColors.fg0}'
+      export THEME_FG1='${themeColors.fg1}'
+      export THEME_FG2='${themeColors.fg2}'
+      export THEME_FG3='${themeColors.fg3}'
+      export THEME_SEL0='${themeColors.sel0}'
+      export THEME_SEL1='${themeColors.sel1}'
+    '';
 
   # }}}
 
@@ -150,6 +193,33 @@ in
   home.file.".config/alacritty/macos.yml" = (lib.mkIf stdenv.isDarwin {
     source = "${dotfilesDirectory}/alacritty/.config/alacritty/macos.yml";
   });
+  home.file.".config/alacritty/theme.yml".text =
+    ''
+      colors:
+        primary:
+          background: "${themeColors.bg1}"
+          foreground: "${themeColors.fg1}"
+
+        normal:
+          black: "${themeColors.black}"
+          red: "${themeColors.red}"
+          green: "${themeColors.green}"
+          yellow: "${themeColors.yellow}"
+          blue: "${themeColors.blue}"
+          magenta: "${themeColors.magenta}"
+          cyan: "${themeColors.cyan}"
+          white: "${themeColors.white}"
+
+        bright:
+          black: "${brighten themeColors.black}"
+          red: "${brighten themeColors.red}"
+          green: "${brighten themeColors.green}"
+          yellow: "${brighten themeColors.yellow}"
+          blue: "${brighten themeColors.blue}"
+          magenta: "${brighten themeColors.magenta}"
+          cyan: "${brighten themeColors.cyan}"
+          white: "${brighten themeColors.white}"
+    '';
 
   # }}}
 
