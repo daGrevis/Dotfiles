@@ -240,6 +240,25 @@ hs.hotkey.bind({'cmd', 'alt'}, 'down', function()
   end)
 end)
 
+-- Minimize window.
+hs.hotkey.bind({'cmd'}, 'h', function()
+  local frontmostWindow = hs.window.frontmostWindow()
+  frontmostWindow:minimize()
+end)
+
+-- Minimize everything aka go to the desktop.
+hs.hotkey.bind({'cmd', 'ctrl'}, 'h', function()
+  local frontmostWindow = hs.window.frontmostWindow()
+  local currentScreeen = frontmostWindow:screen()
+
+  local allWindows = hs.window.allWindows()
+
+  for _, window in pairs(allWindows) do
+    if currentScreeen == window:screen() then
+      window:minimize()
+    end
+  end
+end)
 
 -- }}}
 
