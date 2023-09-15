@@ -46,7 +46,7 @@ in
     deno
     docker
     docker-compose
-    exa
+    eza
     fd
     ffmpeg
     fzf

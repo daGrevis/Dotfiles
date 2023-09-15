@@ -31,22 +31,22 @@ alias g='grep -i'
 alias serve-http='python3 -m http.server'
 
 l() {
-    # https://github.com/ogham/exa
-    command -v exa &> /dev/null
+    # https://github.com/eza-community/eza
+    command -v eza &> /dev/null
     if [ "$?" != "0" ]; then
         ls -lahtr "$@"
     else
-        exa -lag -s modified "$@"
+        eza -lag -s modified "$@"
     fi
 }
 
 t() {
-    # https://github.com/ogham/exa
-    command -v exa &> /dev/null
+    # https://github.com/eza-community/eza
+    command -v eza &> /dev/null
     if [ "$?" != "0" ]; then
         tree -a -I ".git" "$@"
     else
-        exa -aT -I ".git" --level=7 "$@"
+        eza -aT -I ".git" --level=7 "$@"
     fi
 }
 
