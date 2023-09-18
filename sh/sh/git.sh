@@ -48,6 +48,9 @@ alias grm="git rm"
 alias grs="git reset"
 alias grv="git revert"
 alias grb="git rebase"
+alias grbc="git rebase --continue"
+alias grbs="git rebase --skip"
+alias grba="git rebase --abort"
 alias gs="git status -sb"
 gsw() {
     git --no-pager show "$@" | less -R --pattern '^diff --git'
