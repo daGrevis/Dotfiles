@@ -5,8 +5,8 @@ export GIT_LFS_SKIP_SMUDGE=1
 
 GIT_LOG_PRETTY_FORMAT='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cs, %cr) %C(bold blue)<%an>%Creset'
 
-alias ga="git add"
-alias gaa="git add -A"
+alias ga="git add --all"
+alias gap="git add -p"
 alias gbr="git branch"
 alias gc="git commit -v"
 alias gc!="git commit -v --amend --date=now"
@@ -14,6 +14,7 @@ alias gcl="git clone"
 alias gcls="git clone --depth 1"
 alias gcm="git commit -v"
 alias gco="git checkout"
+alias gcop="git checkout -p"
 alias gcob="git checkout -b"
 alias gcp="git cherry-pick"
 alias gd="git diff"
