@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 mux() {
-  "$HOME/sh/mux.js" "$1"
+  ASDF_NODEJS_VERSION=system "$HOME/sh/mux.js" "$1"
 }

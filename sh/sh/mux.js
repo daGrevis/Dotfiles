@@ -8,6 +8,9 @@ const fsPromises = require('fs/promises')
 const path = require('path')
 const os = require('os')
 
+// Resets ASDF_NODEJS_VERSION from system so that spawned sessions can use .tool-versions again.
+process.env['ASDF_NODEJS_VERSION'] = ''
+
 const TMUXINATOR_PATH = path.join(os.homedir(), '.config/tmuxinator')
 const HISTORY_PATH = path.join(os.homedir(), '.mux-history')
 
