@@ -734,7 +734,7 @@ nnoremap // :Grepper<CR>
 " Enabled greppers sorted by priority.
 " TODO: Maybe use location list, not quickfix list, as it's private.
 let g:grepper = {
-    \ 'tools': ['ack', 'git', 'grep'],
+    \ 'tools': ['rg', 'git', 'grep'],
     \ 'simple_prompt': 1,
     \ 'highlight': 1,
     \ 'prompt_mapping_tool': '<leader>g',

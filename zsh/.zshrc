@@ -34,6 +34,8 @@ if [ -z "$ASDF_SH" ]; then
 fi
 source "$ASDF_SH"
 
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
+
 source ~/theme.sh
 
 DISABLE_AUTO_TITLE='true'

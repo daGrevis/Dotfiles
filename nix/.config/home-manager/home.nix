@@ -36,7 +36,6 @@ in
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
-    ack
     alacritty
     asciinema
     asdf-vm
@@ -83,6 +82,7 @@ in
     recursive
     recursive-nerd
     rename
+    ripgrep
     shellcheck
     sops
     sqlite
@@ -223,12 +223,6 @@ in
 
   # }}}
 
-  # {{{ Ack
-
-  home.file.".ackrc".source = "${dotfilesDirectory}/ack/.ackrc";
-
-  # }}}
-
   # {{{ Fzf
 
   home.file.".fzf-bindings.zsh".source = "${dotfilesDirectory}/fzf/.fzf-bindings.zsh";
@@ -245,6 +239,12 @@ in
   # {{{ Hammerspoon
 
   home.file.".hammerspoon/init.lua".source = "${dotfilesDirectory}/hammerspoon/.hammerspoon/init.lua";
+
+  # }}}
+
+  # {{{ Ripgrep
+
+  home.file.".ripgreprc".source = "${dotfilesDirectory}/ripgrep/.ripgreprc";
 
   # }}}
 }

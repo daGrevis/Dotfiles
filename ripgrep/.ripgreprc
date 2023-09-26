@@ -1,0 +1,14 @@
+--hidden
+
+--smart-case
+
+--max-columns=1000
+
+--glob
+!.git/*
+
+--glob
+!.yarn/*
+
+--glob
+!*.gltf
