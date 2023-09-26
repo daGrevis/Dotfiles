@@ -3,14 +3,14 @@
 v() {
     session_path="$HOME/.obsessions/$(basename "$PWD").vim"
     if [ -f "$session_path" ] && [ $# -eq 0 ]; then
-        nvim -S "$session_path"
+        ASDF_NODEJS_VERSION=system nvim -S "$session_path"
     else
-        nvim -p "$@"
+        ASDF_NODEJS_VERSION=system nvim -p "$@"
     fi
 }
 alias vim=v
-alias vv='nvim'
-alias vvv='nvim -u NORC'
+alias vv='ASDF_NODEJS_VERSION=system nvim'
+alias vvv='ASDF_NODEJS_VERSION=system nvim -u NORC'
 
 o() {
     if command -v xdg-open; then
