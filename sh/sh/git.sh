@@ -45,6 +45,7 @@ glg() {
 }
 alias gmr="git merge"
 alias gp="git push"
+alias gpf="git push -f"
 alias grm="git rm"
 alias grs="git reset"
 alias grv="git revert"
