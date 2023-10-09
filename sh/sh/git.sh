@@ -17,6 +17,9 @@ alias gco="git checkout"
 alias gcop="git checkout -p"
 alias gcob="git checkout -b"
 alias gcp="git cherry-pick"
+alias gcpc="git cherry-pick --continue"
+alias gcps="git cherry-pick --skip"
+alias gcpa="git cherry-pick --abort"
 alias gd="git diff"
 gl() {
     rev_before=$(git rev-parse HEAD)
