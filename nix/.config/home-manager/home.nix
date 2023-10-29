@@ -48,6 +48,7 @@ in
     eza
     fd
     ffmpeg
+    file
     fzf
     gcc
     gist
