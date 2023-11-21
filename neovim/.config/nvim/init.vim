@@ -117,9 +117,6 @@ Plug 'https://github.com/fannheyward/coc-deno', {'do': 'yarn install --frozen-lo
 " Prettier source.
 Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile --force'}
 
-" Rust source.
-Plug 'https://github.com/neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile --force'}
-
 " File explorer.
 Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile --force'}
 
