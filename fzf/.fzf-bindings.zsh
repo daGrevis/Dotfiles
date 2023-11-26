@@ -65,7 +65,7 @@ bindkey '\ec' fzf-cd-widget
 
 # CTRL-R - Paste the selected command from history into the command line
 fzf-history-widget() {
-  local selected=$(history -rn | sed 's/ *$//' | awk '!seen[$0]++' | FZF_DEFAULT_OPTS="--height 40% --tiebreak=index $FZF_DEFAULT_OPTS" fzf)
+  local selected=$(history -rn 1 | sed 's/ *$//' | awk '!seen[$0]++' | FZF_DEFAULT_OPTS="--height 40% --tiebreak=index $FZF_DEFAULT_OPTS" fzf)
   local ret=1
 
   if [ -n "$selected" ]; then

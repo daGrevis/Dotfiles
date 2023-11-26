@@ -71,7 +71,6 @@ in
     neofetch
     neovim
     nodejs
-    oh-my-zsh
     openssl
     pandoc
     pass
@@ -137,8 +136,6 @@ in
 
   home.file.".zshrc".source = "${dotfilesDirectory}/zsh/.zshrc";
   home.file.".zshenv".source = "${dotfilesDirectory}/zsh/.zshenv";
-  home.file.".oh-my-zsh/".source = "${pkgs.oh-my-zsh.outPath}/share/oh-my-zsh/";
-  home.file.".oh-my-zsh-custom/".source = "${dotfilesDirectory}/zsh/.oh-my-zsh-custom";
   home.file."sh/".source = "${dotfilesDirectory}/sh/sh";
   home.file."theme.sh".text =
     ''

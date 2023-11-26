@@ -9,8 +9,7 @@ export LESS='-RXi+gg'
 export MANPAGER="nvim -R -c \"execute 'Man ' . \$MAN_PN\" -c 'only' -"
 export GIT_PAGER='delta'
 
-GPG_TTY=`tty`
-export GPG_TTY
+export GPG_TTY=`tty`
 
 s=""
 s+=":/usr/local/bin"
@@ -21,6 +20,34 @@ s+=":/opt/homebrew/bin"
 s+=":$HOME/.cargo/bin"
 s+=":$PATH"
 export PATH="$s"
+
+# man zshoptions
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+
+export HISTSIZE=100000
+export SAVEHIST=$HISTSIZE
+
+# Emacs bindings like <C-a> and <C-e>.
+bindkey -e
+
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "$terminfo[kcuu1]" up-line-or-beginning-search
+bindkey "$terminfo[kcud1]" down-line-or-beginning-search
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey '^X' edit-command-line
+
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
 
 # Load env from home-manager home.sessionVariables.
 HM_SESSION_VARS_SH="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
@@ -34,30 +61,17 @@ if [ -z "$ASDF_SH" ]; then
 fi
 source "$ASDF_SH"
 
-export RIPGREP_CONFIG_PATH=~/.ripgreprc
+# Load autojump zsh wrapper.
+AUTOJUMP_ZSH="$HOME/.nix-profile/share/autojump/autojump.zsh"
+if [ -f $AUTOJUMP_ZSH ]; then
+  source "$AUTOJUMP_ZSH"
+fi
 
 source ~/theme.sh
 
-DISABLE_AUTO_TITLE='true'
-
-export ZSH=~/.oh-my-zsh
-
-ZSH_CUSTOM=~/.oh-my-zsh-custom
-
-ZSH_THEME='custom'
-
-plugins=(autojump)
-
-source $ZSH/oh-my-zsh.sh
+source ~/sh/prompt.sh
 
 unalias l
-
-ZSH_SYNTAX_HIGHLIGHTING="/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-[ -s "$ZSH_SYNTAX_HIGHLIGHTING" ] && . "$ZSH_SYNTAX_HIGHLIGHTING"
-
-ZSH_THEME_TERM_TAB_TITLE_IDLE='$(basename ${PWD/$HOME/"~"})/'
-
-bindkey '^X' edit-command-line
 
 # gcloud
 if [ -f '/Users/dagrevis/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dagrevis/google-cloud-sdk/path.zsh.inc'; fi
