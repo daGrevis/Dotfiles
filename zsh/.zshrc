@@ -49,6 +49,10 @@ bindkey '^X' edit-command-line
 
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
 
+# Alias l might or might not exist so try to remove it.
+# If it exists, it would be called instead of the function below.
+unalias l 2> /dev/null
+
 # Load env from home-manager home.sessionVariables.
 HM_SESSION_VARS_SH="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 if [ -f $HM_SESSION_VARS_SH ]; then
@@ -70,8 +74,6 @@ fi
 source ~/theme.sh
 
 source ~/sh/prompt.sh
-
-unalias l
 
 # gcloud
 if [ -f '/Users/dagrevis/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dagrevis/google-cloud-sdk/path.zsh.inc'; fi
