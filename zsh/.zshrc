@@ -21,20 +21,43 @@ s+=":$HOME/.cargo/bin"
 s+=":$PATH"
 export PATH="$s"
 
-# man zshoptions
+setopt AUTO_MENU
+setopt ALWAYS_TO_END
+setopt COMPLETE_ALIASES
+setopt COMPLETE_IN_WORD
+setopt LIST_PACKED
+setopt AUTO_PARAM_KEYS
+setopt AUTO_PARAM_SLASH
+setopt AUTO_REMOVE_SLASH
+
+# History.
 setopt SHARE_HISTORY
-setopt EXTENDED_HISTORY
-setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
-
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 
+# Makes the current selection stand out.
+zstyle ':completion:*' menu select
+
+# Disables "do you whish to see all possibilities?".
+zstyle ':completion:*' list-prompt ''
+zstyle ':completion:*' select-prompt ''
+
+autoload -Uz compinit && compinit
+
 # Emacs bindings like <C-a> and <C-e>.
 bindkey -e
+
+# Don't count "/" character as part of word when backward deleting.
+my-backward-kill-word() {
+    local WORDCHARS=${WORDCHARS/\//}
+    zle backward-delete-word
+}
+zle -N my-backward-kill-word
+bindkey '^W' my-backward-kill-word
 
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
