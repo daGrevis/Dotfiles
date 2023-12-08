@@ -154,6 +154,10 @@ n() {
   nix-shell --command "SHELL=$SHELL $SHELL" -p "$1"
 }
 
+sud() {
+    sudo -E su -p
+}
+
 yt2mp3() {
   local output="/mnt/nixos-shared/youtube-dled"
   local url="$1"
