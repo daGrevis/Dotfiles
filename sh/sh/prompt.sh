@@ -109,23 +109,33 @@ timing_prompt() {
             echo -n "%B%F{black}${duration} %f%b"
             return
         fi;
-
-        unset timer
     fi
 
     echo -n ''
 }
 
 preexec() {
+    is_execed=0
     timer=$(print -P '%D{%s%3.}')
 }
 
 precmd() {
     exit_code="$?"
 
+    if [ "$is_execed" = '1' ]; then
+        # If we have rendered the prompt already, <Enter>, <C-c> or something similar has been pressed.
+        # In such case, act as no command was run and pretend the exit code is successful.
+        exit_code=0
+    fi
+
     PROMPT="$(char_prompt $exit_code) $(properties_prompt)%F{cyan}%c%f $(git_prompt)"
     export PROMPT
 
     RPROMPT="$(exit_code_prompt $exit_code)$(timing_prompt)"
     export RPROMPT
+
+    if [ "$is_execed" = '0' ]; then
+        is_execed=1
+        unset timer
+    fi
 }
