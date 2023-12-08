@@ -23,7 +23,6 @@ export PATH="$s"
 
 setopt AUTO_MENU
 setopt ALWAYS_TO_END
-setopt COMPLETE_ALIASES
 setopt COMPLETE_IN_WORD
 setopt LIST_PACKED
 setopt AUTO_PARAM_KEYS
