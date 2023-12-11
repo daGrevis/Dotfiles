@@ -3,13 +3,9 @@
 # Needed for function expansion to work in PROMPT.
 setopt PROMPT_SUBST
 
-char_prompt() {
-    local exit_code="$1"
-
-    if [ "$exit_code" != '0' ]; then
-        echo -n '%B%F{red}!%f%b'
-    else
-        echo -n '%B%F{green}>%f%b'
+user_and_host_prompt() {
+    if [ -z "$is_user_and_host_echoed" ]; then
+        echo -n "%F{yellow}$USER%f%F{black}@%f%F{green}$HOST%f "
     fi
 }
 
@@ -26,7 +22,7 @@ properties_prompt() {
         echo -n '%B%F{yellow}[ssh]%f%b'
     fi
 
-    if [ $has_output -eq 1 ]; then
+    if [ $has_output = 1 ]; then
         echo -n ' '
     fi
 }
@@ -46,7 +42,7 @@ git_prompt() {
         fi
     fi
 
-    if [ "$is_repo" -eq 0 ]; then
+    if [ "$is_repo" = 0 ]; then
         echo -n ''
         return
     fi
@@ -66,11 +62,19 @@ git_prompt() {
     fi
 
     local dirty=''
-    if [ $is_dirty -eq 1 ]; then
+    if [ $is_dirty = 1 ]; then
         dirty='±'
     fi
 
-    echo -n "%B%F{blue}git[%f%F{white}$location%f%F{yellow}$dirty%f%F{blue}]%f%b "
+    echo -n "%F{cyan}git%f:%B%F{white}$location%f%b%F{yellow}$dirty%f "
+}
+
+char_prompt() {
+    if [ "$USER" = 'root' ]; then
+        echo -n '%F{white}#%f'
+    else
+        echo -n '%F{white}%%%f'
+    fi
 }
 
 exit_code_prompt() {
@@ -80,8 +84,6 @@ exit_code_prompt() {
         echo -n "%B%F{red}$exit_code%f%b "
         return
     fi
-
-    echo -n ''
 }
 
 timing_prompt() {
@@ -106,17 +108,16 @@ timing_prompt() {
         fi
 
         if [ "$duration" ]; then
-            echo -n "%B%F{black}${duration} %f%b"
+            echo -n "%F{black}${duration}%f"
             return
         fi;
     fi
-
-    echo -n ''
 }
 
 preexec() {
     is_execed=0
     timer=$(print -P '%D{%s%3.}')
+    is_user_and_host_echoed=0
 }
 
 precmd() {
@@ -128,11 +129,13 @@ precmd() {
         exit_code=0
     fi
 
-    PROMPT="$(char_prompt $exit_code) $(properties_prompt)%F{cyan}%c%f $(git_prompt)"
+    PROMPT="$(user_and_host_prompt)%B%F{blue}%c%f%b $(properties_prompt)$(git_prompt)$(char_prompt) "
     export PROMPT
 
-    RPROMPT="$(exit_code_prompt $exit_code)$(timing_prompt)"
+    RPROMPT=" $(exit_code_prompt $exit_code)$(timing_prompt)"
     export RPROMPT
+
+    is_user_and_host_echoed=1
 
     if [ "$is_execed" = '0' ]; then
         is_execed=1
