@@ -28,23 +28,17 @@ properties_prompt() {
 }
 
 git_prompt() {
-    local is_dirty=0
-    local is_repo=1
+    local git_status
+    git_status=$(git status --porcelain 2> /dev/null)
 
-    if git diff-files --quiet 2> /dev/null; then
-        is_dirty=0
-    else
-        local exit_code="$?"
-        if [ "$exit_code" = 128 ]; then
-            is_repo=0
-        else
-            is_dirty=1
-        fi
+    local git_status_exit_code="$?"
+    if [ "$git_status_exit_code" != '0' ]; then
+        return
     fi
 
-    if [ "$is_repo" = 0 ]; then
-        echo -n ''
-        return
+    local is_dirty=0
+    if [ -n "$git_status" ]; then
+        is_dirty=1
     fi
 
     local branch
