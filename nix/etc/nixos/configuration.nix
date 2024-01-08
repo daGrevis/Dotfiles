@@ -41,6 +41,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     git
+    earlyoom
   ];
 
   documentation = {
@@ -67,6 +68,14 @@
 
     serviceConfig.ExecStart = "${config.boot.kernelPackages.virtualboxGuestAdditions}/bin/VBoxClient -fv --vmsvga";
   };
+
+  systemd.user.services.earlyoom = {
+    wantedBy = [ "graphical-session.target" ];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.earlyoom}/bin/earlyoom -g";
+      Restart = "on-failure";
+    };
   };
 
   services = {
