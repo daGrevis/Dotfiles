@@ -56,22 +56,17 @@
     DefaultTimeoutStopSec=15s
   '';
 
-  systemd.user.services = let
-    # https://discourse.nixos.org/t/does-anybody-have-working-automatic-resizing-in-virtualbox/7391/14
-    vbox-client = desc: flags: {
-      description = "VirtualBox Guest: ${desc}";
+  systemd.user.services.virtualbox-resize = {
+    description = "VirtualBox Guest: Resize";
 
-      wantedBy = [ "graphical-session.target" ];
-      requires = [ "dev-vboxguest.device" ];
-      after = [ "dev-vboxguest.device" ];
+    wantedBy = [ "graphical-session.target" ];
+    requires = [ "dev-vboxguest.device" ];
+    after = [ "dev-vboxguest.device" ];
 
-      unitConfig.ConditionVirtualization = "oracle";
+    unitConfig.ConditionVirtualization = "oracle";
 
-      serviceConfig.ExecStart = "${config.boot.kernelPackages.virtualboxGuestAdditions}/bin/VBoxClient -fv ${flags}";
-      };
-  in {
-    virtualbox-resize = vbox-client "Resize" "--vmsvga";
-    virtualbox-clipboard = vbox-client "Clipboard" "--clipboard";
+    serviceConfig.ExecStart = "${config.boot.kernelPackages.virtualboxGuestAdditions}/bin/VBoxClient -fv --vmsvga";
+  };
   };
 
   services = {
