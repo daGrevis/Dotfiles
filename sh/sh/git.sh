@@ -57,9 +57,7 @@ alias grbc="git rebase --continue"
 alias grbs="git rebase --skip"
 alias grba="git rebase --abort"
 alias gs="git status -sb"
-gsw() {
-    git --no-pager show "$@" | less -R --pattern '^diff --git'
-}
+alias gsw="git show"
 alias gswl="git show --name-only"
 alias gtg="git tag"
 alias gfc="git fetch"
