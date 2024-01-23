@@ -74,6 +74,30 @@ zle -N down-line-or-beginning-search
 bindkey "${key[Up]}" up-line-or-beginning-search
 bindkey "${key[Down]}" down-line-or-beginning-search
 
+# https://stackoverflow.com/a/41420448/458610
+function expand-dots() {
+    local MATCH
+    if [[ $LBUFFER =~ '(^| )\.\.\.+' ]]; then
+        LBUFFER=$LBUFFER:fs%\.\.\.%../..%
+    fi
+}
+
+function expand-dots-then-expand-or-complete() {
+    zle expand-dots
+    zle expand-or-complete
+}
+
+function expand-dots-then-accept-line() {
+    zle expand-dots
+    zle accept-line
+}
+
+zle -N expand-dots
+zle -N expand-dots-then-expand-or-complete
+zle -N expand-dots-then-accept-line
+bindkey '^I' expand-dots-then-expand-or-complete
+bindkey '^M' expand-dots-then-accept-line
+
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey '^X' edit-command-line
