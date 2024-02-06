@@ -60,13 +60,13 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
     add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
-# Don't count "/" character as part of word when backward deleting.
-my-backward-kill-word() {
-    local WORDCHARS=${WORDCHARS/\//}
+# Don't count "/" or "." characters as part of word when backward deleting.
+my-backward-delete-word() {
+    local WORDCHARS="*?_-[]~=&;!#$%^(){}<>"
     zle backward-delete-word
 }
-zle -N my-backward-kill-word
-bindkey '^W' my-backward-kill-word
+zle -N my-backward-delete-word
+bindkey '^W' my-backward-delete-word
 
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
