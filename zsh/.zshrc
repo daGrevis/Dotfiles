@@ -46,6 +46,9 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-prompt ''
 zstyle ':completion:*' select-prompt ''
 
+# Make capital and small letters the same when auto-completing.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
 autoload -Uz compinit && compinit
 
 # Emacs bindings like <C-a> and <C-e>.
