@@ -147,7 +147,7 @@ const switchToTmuxSession = async (session) => {
   const isRunningInTmux = process.env['TMUX'] !== undefined
 
   const { ok } = await spawnSh(
-    `tmux ${isRunningInTmux ? 'switch' : 'attach'} -t '${session}'`,
+    `tmux ${isRunningInTmux ? 'switch' : 'attach'} -t '=${session}'`,
   )
 
   return ok
