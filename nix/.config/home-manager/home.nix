@@ -184,39 +184,38 @@ in
 
   # {{{ Alacritty
 
-  home.file.".config/alacritty/alacritty.yml".source = "${dotfilesDirectory}/alacritty/.config/alacritty/alacritty.yml";
-  home.file.".config/alacritty/nixos.yml" = (lib.mkIf stdenv.isLinux {
-    source = "${dotfilesDirectory}/alacritty/.config/alacritty/nixos.yml";
+  home.file.".config/alacritty/alacritty.toml".source = "${dotfilesDirectory}/alacritty/.config/alacritty/alacritty.toml";
+  home.file.".config/alacritty/nixos.toml" = (lib.mkIf stdenv.isLinux {
+    source = "${dotfilesDirectory}/alacritty/.config/alacritty/nixos.toml";
   });
-  home.file.".config/alacritty/macos.yml" = (lib.mkIf stdenv.isDarwin {
-    source = "${dotfilesDirectory}/alacritty/.config/alacritty/macos.yml";
+  home.file.".config/alacritty/macos.toml" = (lib.mkIf stdenv.isDarwin {
+    source = "${dotfilesDirectory}/alacritty/.config/alacritty/macos.toml";
   });
-  home.file.".config/alacritty/theme.yml".text =
+  home.file.".config/alacritty/theme.toml".text =
     ''
-      colors:
-        primary:
-          background: "${themeColors.bg1}"
-          foreground: "${themeColors.fg1}"
+      [colors.primary]
+      background = "${themeColors.bg1}"
+      foreground = "${themeColors.fg1}"
 
-        normal:
-          black: "${themeColors.black}"
-          red: "${themeColors.red}"
-          green: "${themeColors.green}"
-          yellow: "${themeColors.yellow}"
-          blue: "${themeColors.blue}"
-          magenta: "${themeColors.magenta}"
-          cyan: "${themeColors.cyan}"
-          white: "${themeColors.white}"
+      [colors.normal]
+      black = "${themeColors.black}"
+      red = "${themeColors.red}"
+      green = "${themeColors.green}"
+      yellow = "${themeColors.yellow}"
+      blue = "${themeColors.blue}"
+      magenta = "${themeColors.magenta}"
+      cyan = "${themeColors.cyan}"
+      white = "${themeColors.white}"
 
-        bright:
-          black: "${brighten themeColors.black}"
-          red: "${brighten themeColors.red}"
-          green: "${brighten themeColors.green}"
-          yellow: "${brighten themeColors.yellow}"
-          blue: "${brighten themeColors.blue}"
-          magenta: "${brighten themeColors.magenta}"
-          cyan: "${brighten themeColors.cyan}"
-          white: "${brighten themeColors.white}"
+      [colors.bright]
+      black = "${brighten themeColors.black}"
+      red = "${brighten themeColors.red}"
+      green = "${brighten themeColors.green}"
+      yellow = "${brighten themeColors.yellow}"
+      blue = "${brighten themeColors.blue}"
+      magenta = "${brighten themeColors.magenta}"
+      cyan = "${brighten themeColors.cyan}"
+      white = "${brighten themeColors.white}"
     '';
 
   # }}}

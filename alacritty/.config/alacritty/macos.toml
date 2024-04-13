@@ -1,0 +1,170 @@
+[font]
+size = 14
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["send-keys", "-X", "copy-pipe", "pbcopy"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["new-window", "-c", "~"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "W"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["kill-pane"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "H"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["-e", "tell application \"System Events\" to tell process \"Alacritty\" to set visible to false"]
+program = "osascript"
+
+[[keyboard.bindings]]
+key = "LBracket"
+mods = "Command|Shift"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t:-"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "RBracket"
+mods = "Command|Shift"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t:+"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "LBracket"
+mods = "Command|Alt"
+
+[keyboard.bindings.command]
+args = ["swap-window", "-t", "-1", ";", "select-window", "-t", "-1"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "RBracket"
+mods = "Command|Alt"
+
+[keyboard.bindings.command]
+args = ["swap-window", "-t", "+1", ";", "select-window", "-t", "+1"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key1"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "1"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key2"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "2"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key3"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "3"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key4"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "4"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key5"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "5"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key6"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "6"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key7"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "7"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key8"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "8"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Key9"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-window", "-t", "9"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Left"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-pane", "-L"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Right"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-pane", "-R"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Up"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-pane", "-U"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
+
+[[keyboard.bindings]]
+key = "Down"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["select-pane", "-D"]
+program = "/Users/dagrevis/.nix-profile/bin/tmux"
