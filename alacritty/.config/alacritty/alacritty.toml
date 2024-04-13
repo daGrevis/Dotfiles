@@ -21,9 +21,6 @@ family = "RecursiveMnLnrSt Nerd Font"
 [font.offset]
 y = 2
 
-[mouse]
-hide_when_typing = false
-
 [[mouse.bindings]]
 action = "PasteSelection"
 mouse = "Middle"
