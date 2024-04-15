@@ -81,19 +81,22 @@
   services = {
     openssh.enable = true;
 
+    displayManager = {
+      defaultSession = "none+awesome";
+
+      autoLogin = {
+        enable = true;
+        user = "dagrevis";
+      };
+    };
+
     xserver = {
       enable = true;
 
-      layout = "lv";
+      xkb.layout = "lv";
 
       displayManager = {
-        defaultSession = "none+awesome";
         lightdm.enable = true;
-
-        autoLogin = {
-          enable = true;
-          user = "dagrevis";
-        };
       };
 
       windowManager = {
