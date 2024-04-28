@@ -68,7 +68,7 @@ in
     lsof
     lua
     man
-    neofetch
+    fastfetch
     neovim
     nodejs
     openssl
