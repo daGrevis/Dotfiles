@@ -30,6 +30,16 @@ local function openApp(app_name, new)
   hs.execute(s)
 end
 
+local function trim(s)
+  s = string.gsub(s, "%s+", "")
+  return s
+end
+
+local function resolveSymlink(path)
+  local output = hs.execute('readlink -f ' .. path, true)
+  return trim(output)
+end
+
 local function closeNotifications()
   local s = [[
     tell application "System Events"
@@ -112,7 +122,8 @@ end)
 
 -- Alacritty.
 hs.hotkey.bind({'cmd', 'shift'}, 'return', function()
-  openApp('Alacritty', true)
+  -- Because it's installed with home-manager, it has different location and it's also a symlink.
+  hs.execute("open -n '" .. resolveSymlink('~/.nix-profile/Applications/Alacritty.app') .. "'")
 end)
 
 -- Firefox.
