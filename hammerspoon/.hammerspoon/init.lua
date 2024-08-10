@@ -219,35 +219,35 @@ end)
 -- Center window.
 hs.hotkey.bind({'cmd', 'ctrl'}, 'c', function()
   local frontmostWindow = hs.window.frontmostWindow()
-  frontmostWindow:setSize({ w=1024, h=768 })
+  frontmostWindow:setSize({w=1024, h=768})
   frontmostWindow:centerOnScreen()
 end)
 
 -- Fill left-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'left', function()
   setFrontmostWindowPosition(function(w, h, x, y)
-    return { w=w / 2, h=h, x=0, y=0 }
+    return {w=w / 2, h=h, x=0, y=0}
   end)
 end)
 
 -- Fill right-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'right', function()
   setFrontmostWindowPosition(function(w, h, x, y)
-    return { w=w / 2, h=h, x=w / 2, y=0 }
+    return {w=w / 2, h=h, x=w / 2, y=0}
   end)
 end)
 
 -- Fill top-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'up', function()
   setFrontmostWindowPosition(function(w, h, x, y)
-    return { w=w, h=h / 2, x=0, y=0 }
+    return {w=w, h=h / 2, x=0, y=0}
   end)
 end)
 
 -- Fill bottom-half of screen.
 hs.hotkey.bind({'cmd', 'alt'}, 'down', function()
   setFrontmostWindowPosition(function(w, h, x, y)
-    return { w=w, h=h / 2, x=0, y=h / 2 }
+    return {w=w, h=h / 2, x=0, y=h / 2}
   end)
 end)
 
