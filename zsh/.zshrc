@@ -175,6 +175,11 @@ _fzf_compgen_dir() {
 
 alias blender=/Applications/blender.app/Contents/MacOS/blender
 
+# Disable homebrew from auto-updating everything when installing a package.
+export HOMEBREW_NO_AUTO_UPDATE=1
+# Disable homebrew from hinting the ways it can be configured with env variables.
+export HOMEBREW_NO_ENV_HINTS=1
+
 if [ -z "$TMUX" ]; then
   # Start default tmux session if not already running inside of tmux.
   mux default
