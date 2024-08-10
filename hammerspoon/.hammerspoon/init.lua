@@ -171,7 +171,7 @@ end)
 -- Window Management {{{
 
 -- Focus previously used window of the same app.
-hs.hotkey.bind({'cmd'}, 0x32, function() -- 0x32 is grave accent
+local function focusPreviouslyUsedWindow(fn)
   local front_app = hs.application.frontmostApplication()
 
   local windows
@@ -194,7 +194,16 @@ hs.hotkey.bind({'cmd'}, 0x32, function() -- 0x32 is grave accent
   if #windows > 1 then
     windows[2]:focus()
   end
-end)
+end
+
+-- For some reason, need to bind backtick/grave key in different ways to make sure it always works for the keyboards I'm using.
+local backticks = {'`', 0x32, 10}
+
+for _, backtick in ipairs(backticks) do
+  hs.hotkey.bind({'cmd'}, backtick, function()
+    focusPreviouslyUsedWindow()
+  end)
+end
 
 -- Toggle fullscreen.
 hs.hotkey.bind({'cmd', 'ctrl'}, 'f', function()
