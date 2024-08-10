@@ -143,11 +143,15 @@ const selectWithFzf = async (sessions) => {
   return selection
 }
 
-const switchToTmuxSession = async (session) => {
+const getRunningInTmux = () => {
   const isRunningInTmux = process.env['TMUX'] !== undefined
 
+  return isRunningInTmux
+}
+
+const switchToTmuxSession = async (session) => {
   const { ok } = await spawnSh(
-    `tmux ${isRunningInTmux ? 'switch' : 'attach'} -t '=${session}'`,
+    `tmux ${getRunningInTmux() ? 'switch' : 'attach'} -t '=${session}'`,
   )
 
   return ok
@@ -202,7 +206,7 @@ const main = async () => {
   }
 
   // No need to switch, do nothing.
-  if (currentSession === nextSession) {
+  if (currentSession === nextSession && getRunningInTmux()) {
     return
   }
 
