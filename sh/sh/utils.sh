@@ -150,6 +150,14 @@ clip() {
   fi
 }
 
+clap() {
+  if [ "$(uname)" = "Darwin" ]; then
+    pbpaste
+  else
+    xclip -o -selection clipboard
+  fi
+}
+
 n() {
   nix-shell --command "SHELL=$SHELL $SHELL" -p "$1"
 }
