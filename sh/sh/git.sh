@@ -3,7 +3,7 @@
 # Disable automatic git-lfs downloads.
 export GIT_LFS_SKIP_SMUDGE=1
 
-GIT_LOG_PRETTY_FORMAT='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cs, %cr) %C(bold blue)<%an>%Creset'
+GIT_LOG_PRETTY_FORMAT='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cs, %cr) %C(bold blue)%aN%Creset %C(magenta)<%aE>%Creset'
 
 alias ga="git add --all"
 alias gap="git add -p"
