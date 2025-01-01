@@ -1,3 +1,4 @@
+[general]
 import = ["~/.config/alacritty/nixos.toml", "~/.config/alacritty/macos.toml", "~/.config/alacritty/theme.toml"]
 live_config_reload = true
 
