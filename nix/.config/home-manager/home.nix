@@ -43,6 +43,7 @@ in
     bat
     cargo
     deno
+    dig
     docker
     docker-compose
     eza
