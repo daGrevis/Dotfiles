@@ -30,19 +30,11 @@ vim.opt.shortmess:append 'I'
 -- Don't show ins-completion-menu messages.
 vim.opt.shortmess:append 'c'
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
-end)
-
--- Enable break indent
-vim.opt.breakindent = true
-
--- Save undo history
+-- Do create undo files.
 vim.opt.undofile = true
+
+-- Do NOT create swap files.
+vim.opt.swapfile = false
 
 -- Ignore case when all characters are in lower case.
 vim.opt.ignorecase = true
@@ -90,9 +82,33 @@ vim.keymap.set({ 'n', 'v' }, 'H', '^')
 -- Move to end of line with L.
 vim.keymap.set({ 'n', 'v' }, 'L', '$')
 
--- Visually select word under the cursor without moving.
+-- Just like regular * and #, but doesn't move.
+-- TODO: Add this to visual mode.
 vim.keymap.set('n', '*', 'g*N')
 vim.keymap.set('n', '#', 'g#N')
+
+-- Just like regular ~, but doesn't move.
+vim.keymap.set('n', '~', function()
+  vim.api.nvim_feedkeys('~', 'n', true)
+  -- Move one character left if we are not on the last character of current line.
+  if #vim.api.nvim_get_current_line() ~= vim.fn.virtcol '.' then
+    vim.api.nvim_feedkeys('h', 'n', true)
+  end
+end)
+
+-- Indent visually selected text without leaving selection.
+vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv')
+
+-- Character-wise marks.
+vim.keymap.set('n', "'", '`')
+
+-- Run macro called q.
+vim.keymap.set('n', 'Q', '@q')
+
+-- Yank X, delete Y, paste X with ""p.
+-- http://stackoverflow.com/a/1504373
+vim.keymap.set('n', '""', '"0')
 
 -- Join lines with <Leader>j.
 vim.keymap.set({ 'n', 'v' }, '<leader>j', ':join<cr>')
@@ -125,9 +141,15 @@ vim.api.nvim_create_autocmd('TabLeave', {
 vim.keymap.set('n', '<leader>q', 'ZZ')
 vim.keymap.set('n', '<leader>w', ':w<CR>')
 vim.keymap.set('n', '<leader>e', ':e ')
--- vim.keymap.set('n', '<leader>r', '')
+vim.keymap.set('n', '<leader>r', function()
+  local dir = vim.fn.expand '%:h'
+  vim.api.nvim_feedkeys(':e ' .. dir .. '/', 'n', true)
+end)
 vim.keymap.set('n', '<leader>t', ':tabe ')
--- vim.keymap.set('n', '<leader>h', ':help ')
+vim.keymap.set('n', '<leader>y', function()
+  local dir = vim.fn.expand '%:h'
+  vim.api.nvim_feedkeys(':tabe ' .. dir .. '/', 'n', true)
+end)
 
 -- Select line without newline at the end.
 vim.keymap.set('n', '<leader>c', '^v$h')
@@ -142,8 +164,8 @@ vim.keymap.set('n', '<leader>o', '<C-W>T')
 vim.keymap.set('v', '<C-c>', '"*ygv"+y')
 
 -- Paste from system clipboard with <C-v>.
-vim.keymap.set('i', '<C-v>', '<Esc>"*pa')
-vim.keymap.set('c', '<C-v>', '<C-r>*')
+vim.keymap.set('i', '<C-v>', '<Esc>"+pi')
+vim.keymap.set('c', '<C-v>', '<C-r>+')
 
 -- Common typos.
 vim.cmd 'command! Q q'
@@ -465,6 +487,7 @@ require('lazy').setup {
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          -- TODO: Open in new split.
 
           -- Find references for the word under your cursor.
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -681,17 +704,6 @@ require('lazy').setup {
           end
           return 'make install_jsregexp'
         end)(),
-        dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
-        },
       },
       'saadparwaiz1/cmp_luasnip',
 
@@ -706,6 +718,9 @@ require('lazy').setup {
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
+
+      -- Load SnipMate-like snippet files.
+      require('luasnip.loaders.from_snipmate').lazy_load()
 
       cmp.setup {
         snippet = {
@@ -733,12 +748,7 @@ require('lazy').setup {
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
           ['<CR>'] = cmp.mapping.confirm { select = true },
-
-          -- If you prefer more traditional completion keymaps,
-          -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<C-s>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -768,13 +778,16 @@ require('lazy').setup {
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
         sources = {
+          -- TODO: Improve sorting of completion items.
+          -- https://github.com/hrsh7th/nvim-cmp/issues/73
+          -- https://github.com/hrsh7th/nvim-cmp/issues/381
+          { name = 'luasnip' },
           {
             name = 'lazydev',
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
           },
           { name = 'nvim_lsp' },
-          { name = 'luasnip' },
           { name = 'path' },
         },
       }
@@ -954,7 +967,7 @@ require('lazy').setup {
     main = 'ibl',
     opts = {
       indent = {
-        char = { '┆', '┇', '┊', '┋' },
+        char = { '┆', '┇' },
       },
       scope = {
         enabled = true,
@@ -977,6 +990,11 @@ require('lazy').setup {
 
   { -- Handle line and column numbers in file names.
     'kopischke/vim-fetch',
+  },
+
+  {
+    -- Multi-line support for f, F, t & T.
+    'dahu/vim-fanfingtastic',
   },
 
   { -- Colorscheme.
