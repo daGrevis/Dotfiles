@@ -113,6 +113,14 @@ vim.keymap.set('n', '""', '"0')
 -- Join lines with <Leader>j.
 vim.keymap.set({ 'n', 'v' }, '<leader>j', ':join<cr>')
 
+-- Treat a wrapped-line like many lines when navigating with j and k.
+vim.keymap.set('n', 'j', function()
+  return vim.v.count > 0 and 'j' or 'gj'
+end, { expr = true })
+vim.keymap.set('n', 'k', function()
+  return vim.v.count > 0 and 'k' or 'gk'
+end, { expr = true })
+
 -- Switch to adjacent tab with J or K.
 vim.keymap.set('n', 'J', 'gt')
 vim.keymap.set('n', 'K', 'gT')
