@@ -74,8 +74,22 @@ vim.opt.cursorline = true
 -- Keeps cursor at the center region of screen.
 vim.opt.scrolloff = 25
 
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Go to prev/next diagnostic.
+vim.keymap.set('n', '[l', function()
+  vim.diagnostic.goto_prev()
+end)
+vim.keymap.set('n', ']l', function()
+  vim.diagnostic.goto_next()
+end)
+-- Go to prev/next error.
+vim.keymap.set('n', '[L', function()
+  vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR }
+end)
+vim.keymap.set('n', ']L', function()
+  vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR }
+end)
 
 -- Move to start of line with H.
 vim.keymap.set({ 'n', 'v' }, 'H', '^')
@@ -491,11 +505,12 @@ require('lazy').setup {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- Jump to the definition of the word under your cursor.
-          --  This is where a variable was first declared, or where a function is defined, etc.
-          --  To jump back, press <C-t>.
+          -- Jump to the definition of the word under the cursor.
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-          -- TODO: Open in new split.
+          map('gD', function()
+            vim.cmd 'vsplit'
+            require('telescope.builtin').lsp_definitions()
+          end, '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -524,10 +539,6 @@ require('lazy').setup {
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
-
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -828,7 +839,7 @@ require('lazy').setup {
       --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup {}
+      statusline.setup { use_icons = false }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
