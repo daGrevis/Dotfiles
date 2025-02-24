@@ -228,7 +228,7 @@ end)
 -- Center window.
 hs.hotkey.bind({'cmd', 'ctrl'}, 'c', function()
   local frontmostWindow = hs.window.frontmostWindow()
-  frontmostWindow:setSize({w=1024, h=768})
+  frontmostWindow:setSize({w=1280, h=800})
   frontmostWindow:centerOnScreen()
 end)
 
