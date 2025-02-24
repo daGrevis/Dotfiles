@@ -42,6 +42,7 @@ in
     autojump
     bat
     cargo
+    cloc
     deno
     dig
     docker
