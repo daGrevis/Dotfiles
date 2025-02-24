@@ -1032,14 +1032,22 @@ require('lazy').setup {
   },
 
   { -- Colorscheme.
-    'folke/tokyonight.nvim',
+    'EdenEast/nightfox.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-      vim.cmd.colorscheme 'tokyonight-night'
+      local theme = os.getenv 'THEME'
+
+      if theme == nil then
+        vim.cmd.colorscheme 'nightfox'
+        return
+      end
+
+      vim.cmd.colorscheme(theme)
+
+      vim.api.nvim_set_hl(0, 'TabLine', { fg = os.getenv 'THEME_FG1', bg = os.getenv 'THEME_BG0' })
+      vim.api.nvim_set_hl(0, 'TabLineSel', { fg = os.getenv 'THEME_WHITE', bg = os.getenv 'THEME_BG3', bold = true })
     end,
   },
-
-  -- require 'kickstart.plugins.lint',
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
