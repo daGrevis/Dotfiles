@@ -204,6 +204,24 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Auto-save buffer.
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'VimLeavePre' }, {
+  callback = function(event)
+    if event.file == '' then
+      return
+    end
+
+    local buf = event.buf
+    if vim.api.nvim_get_option_value('modified', { buf = buf }) then
+      vim.schedule(function()
+        vim.api.nvim_buf_call(buf, function()
+          vim.cmd 'silent! write'
+        end)
+      end)
+    end
+  end,
+})
+
 -- Installs `lazy.nvim` plugin manager.
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
