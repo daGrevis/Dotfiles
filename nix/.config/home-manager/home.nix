@@ -129,8 +129,9 @@ in
 
   # {{{ Neovim
 
-  home.file.".config/nvim/init.vim".source = "${dotfilesDirectory}/neovim/.config/nvim/init.vim";
-  home.file.".config/coc/ultisnips/".source = "${dotfilesDirectory}/neovim/.config/coc/ultisnips";
+  home.file.".config/nvim/init.lua".source = "${dotfilesDirectory}/neovim/.config/nvim/init.lua";
+  home.file.".config/nvim/lua/".source = "${dotfilesDirectory}/neovim/.config/nvim/lua";
+  home.file.".config/nvim/snippets/".source = "${dotfilesDirectory}/neovim/.config/nvim/snippets";
 
   # }}}
 
