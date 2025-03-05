@@ -79,6 +79,7 @@ in
     patchelf
     pinentry-curses
     postgresql
+    prettierd
     pstree
     python3
     recursive
