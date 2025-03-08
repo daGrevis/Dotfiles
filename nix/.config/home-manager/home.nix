@@ -81,6 +81,7 @@ in
     postgresql
     prettierd
     pstree
+    pv
     python3
     recursive
     recursive-nerd
