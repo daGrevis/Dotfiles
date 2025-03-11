@@ -420,8 +420,8 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<C-p>', builtin.find_files)
-      vim.keymap.set('n', '//', builtin.grep_string)
-      vim.keymap.set('n', '??', builtin.live_grep)
+      vim.keymap.set('n', '//', builtin.live_grep)
+      vim.keymap.set('n', '??', builtin.grep_string)
     end,
   },
 
