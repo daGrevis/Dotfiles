@@ -862,23 +862,107 @@ require('lazy').setup {
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
 
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = false }
 
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
+      local sign_levels = {
+        { name = 'added', text = '+', hl = 'GitSignsAdd' },
+        { name = 'changed', text = '~', hl = 'GitSignsChange' },
+        { name = 'removed', text = '-', hl = 'GitSignsDelete' },
+      }
+
+      local section_git = function(args)
+        if MiniStatusline.is_truncated(args.trunc_width) then
+          return ''
+        end
+
+        if vim.b.gitsigns_head == nil then
+          return ''
+        end
+
+        local t = {}
+        for _, sign in ipairs(sign_levels) do
+          local n = vim.b.gitsigns_status_dict[sign.name] or 0
+          if n > 0 then
+            table.insert(t, ' %#' .. sign.hl .. '#' .. sign.text .. n .. '%*')
+          end
+        end
+
+        return '%#TabLineSel# ' .. vim.b.gitsigns_head .. ' %*' .. (#t == 0 and '' or (table.concat(t, '') .. ' '))
       end
 
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
+      local section_location = function()
+        return '%l:%v/%L'
+      end
+
+      local diagnostic_levels = {
+        { name = 'ERROR', text = 'E', hl = 'DiagnosticVirtualTextError' },
+        { name = 'WARN', text = 'W', hl = 'DiagnosticVirtualTextWarn' },
+        { name = 'INFO', text = 'I', hl = 'DiagnosticVirtualTextInfo' },
+        { name = 'HINT', text = 'H', hl = 'DiagnosticVirtualTextHint' },
+      }
+      local diagnostic_counts = {}
+
+      local get_diagnostic_count = function(buf_id)
+        local res = {}
+        for _, d in ipairs(vim.diagnostic.get(buf_id)) do
+          res[d.severity] = (res[d.severity] or 0) + 1
+        end
+        return res
+      end
+
+      local track_diagnostics = vim.schedule_wrap(function(data)
+        diagnostic_counts[data.buf] = vim.api.nvim_buf_is_valid(data.buf) and get_diagnostic_count(data.buf) or nil
+        vim.cmd 'redrawstatus'
+      end)
+      vim.api.nvim_create_autocmd('DiagnosticChanged', { pattern = '*', callback = track_diagnostics })
+
+      local section_diagnostics = function(args)
+        if MiniStatusline.is_truncated(args.trunc_width) then
+          return ''
+        end
+
+        local count = diagnostic_counts[vim.api.nvim_get_current_buf()]
+        if count == nil then
+          return ''
+        end
+
+        local t = {}
+        for _, level in ipairs(diagnostic_levels) do
+          local n = count[vim.diagnostic.severity[level.name]] or 0
+          if n > 0 then
+            table.insert(t, ' %#' .. level.hl .. '#[' .. level.text .. n .. ']%*')
+          end
+        end
+        if #t == 0 then
+          return ''
+        end
+
+        return table.concat(t, '')
+      end
+
+      statusline.setup {
+        use_icons = false,
+        content = {
+          active = function()
+            local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+            local diagnostics = section_diagnostics { trunc_width = 75 }
+            local filename = MiniStatusline.section_filename { trunc_width = 140 }
+            local git = section_git { trunc_width = 40 }
+            local fileinfo = MiniStatusline.section_fileinfo { trunc_width = 120 }
+            local location = section_location()
+            local search = MiniStatusline.section_searchcount { trunc_width = 75 }
+
+            return MiniStatusline.combine_groups {
+              { hl = mode_hl, strings = { mode } },
+              '%<', -- Mark general truncate point
+              { hl = 'MiniStatuslineFilename', strings = { filename, git } },
+              '%=', -- End left alignment
+              { strings = { diagnostics, fileinfo } },
+              { hl = mode_hl, strings = { search, location } },
+            }
+          end,
+        },
+      }
     end,
   },
 
