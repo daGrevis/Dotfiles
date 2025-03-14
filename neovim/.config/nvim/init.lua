@@ -163,6 +163,7 @@ vim.api.nvim_create_autocmd('TabLeave', {
 vim.keymap.set('n', '<leader>q', 'ZZ')
 vim.keymap.set('n', '<leader>w', ':w<CR>')
 vim.keymap.set('n', '<leader>e', ':e ')
+vim.keymap.set('n', '<leader>ee', ':e!<CR>')
 vim.keymap.set('n', '<leader>r', function()
   local dir = vim.fn.expand '%:h'
   vim.api.nvim_feedkeys(':e ' .. dir .. '/', 'n', true)
