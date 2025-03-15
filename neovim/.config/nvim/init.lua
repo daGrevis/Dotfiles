@@ -4,6 +4,14 @@
 
 -- If you experience any errors, start with running `:checkhealth`.
 
+local function close_all_floating_windows()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.api.nvim_win_get_config(win).relative == 'win' then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
+end
+
 -- Vim has this abstract button called Leader. Sets Leader to Space.
 -- This means that <leader>w mapping can be invoked by pressing <Space>w.
 vim.g.mapleader = ' '
@@ -73,6 +81,15 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 -- Keeps cursor at the center region of screen.
 vim.opt.scrolloff = 25
+
+vim.keymap.set('n', '<C-c>', function()
+  close_all_floating_windows()
+end)
+
+vim.keymap.set('n', '<C-l>', function()
+  vim.cmd 'nohlsearch'
+  close_all_floating_windows()
+end)
 
 vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
