@@ -753,6 +753,10 @@ require('lazy').setup {
           require('luasnip.loaders.from_snipmate').lazy_load()
         end,
       },
+      {
+        'Kaiser-Yang/blink-cmp-dictionary',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+      },
     },
 
     -- Download pre-built Rust binary.
@@ -761,6 +765,16 @@ require('lazy').setup {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+      completion = {
+        documentation = {
+          auto_show = true,
+        },
+      },
+
+      fuzzy = {
+        implementation = 'prefer_rust_with_warning',
+      },
+
       keymap = {
         preset = 'enter',
 
@@ -768,30 +782,65 @@ require('lazy').setup {
         ['<S-Tab>'] = { 'select_prev', 'fallback' },
       },
 
-      sources = {
-        default = { 'snippets', 'lsp', 'path', 'buffer' },
-
-        providers = {
-          snippets = {
-            score_offset = 1000,
-          },
-        },
-      },
-
-      fuzzy = { implementation = 'prefer_rust_with_warning' },
-
-      snippets = { preset = 'luasnip' },
-
       signature = {
         enabled = true,
       },
 
-      completion = {
-        documentation = {
-          auto_show = true,
+      snippets = { preset = 'luasnip' },
+
+      sources = {
+        default = { 'snippets', 'lsp', 'path', 'buffer', 'dictionary' },
+
+        providers = {
+          snippets = {
+            score_offset = 100,
+            max_items = 1,
+            min_keyword_length = 1,
+          },
+
+          lsp = {
+            score_offset = 50,
+          },
+
+          path = {
+            score_offset = 20,
+            opts = {
+              -- Completion from cwd instead of current buffer's parent dir.
+              get_cwd = function(_)
+                return vim.fn.getcwd()
+              end,
+            },
+          },
+
+          buffer = {
+            score_offset = 10,
+            max_items = 10,
+            opts = {
+              -- Completion from all buffers.
+              get_bufnrs = function()
+                return vim.tbl_filter(function(bufnr)
+                  return vim.bo[bufnr].buftype == ''
+                end, vim.api.nvim_list_bufs())
+              end,
+            },
+          },
+
+          dictionary = {
+            score_offset = 0,
+            module = 'blink-cmp-dictionary',
+            name = 'Dict',
+            min_keyword_length = 3,
+            max_items = 10,
+            opts = {
+              dictionary_files = function()
+                return { vim.fn.expand '~/Dropbox/Assets/english-words.txt' }
+              end,
+            },
+          },
         },
       },
     },
+
     opts_extend = { 'sources.default' },
   },
 
