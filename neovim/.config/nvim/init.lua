@@ -759,6 +759,9 @@ require('lazy').setup {
       },
     },
 
+    -- Download pre-built Rust binary.
+    version = '*',
+
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
