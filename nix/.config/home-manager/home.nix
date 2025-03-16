@@ -96,6 +96,7 @@ in
     tmuxinator
     unzip
     wget
+    wordnet
     xclip
     xkcdpass
     xorg.xev
