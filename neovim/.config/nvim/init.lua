@@ -1172,7 +1172,7 @@ require('lazy').setup {
       vim.cmd.colorscheme(theme)
 
       local function hi(hl, opts)
-        local hl_opts = {}
+        local hl_opts = opts or {}
 
         if opts.fg then
           hl_opts.fg = os.getenv(opts.fg)
