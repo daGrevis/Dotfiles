@@ -262,6 +262,9 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
+  -- Allow plugins to add their own repeats onto . mapping.
+  'tpope/vim-repeat',
+
   -- Add/delete/replace surroundings (brackets, quotes, etc.).
   'tpope/vim-surround',
 
