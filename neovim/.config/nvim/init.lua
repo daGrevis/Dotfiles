@@ -177,6 +177,16 @@ vim.api.nvim_create_autocmd('TabLeave', {
   end,
 })
 
+-- Create directory of current file if it doesn't exist.
+vim.api.nvim_create_autocmd('BufNewFile', {
+  pattern = '*',
+  callback = function()
+    local bufname = vim.fn.bufname '%'
+    local dir = vim.fn.fnamemodify(bufname, ':p:h')
+    vim.fn.mkdir(dir, 'p')
+  end,
+})
+
 vim.keymap.set('n', '<leader>q', 'ZZ')
 vim.keymap.set('n', '<leader>w', ':w<CR>')
 vim.keymap.set('n', '<leader>e', ':e ')
