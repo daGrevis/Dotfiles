@@ -734,17 +734,9 @@ require('lazy').setup {
     },
   },
 
-  -- {
-
   { -- Completion.
     'saghen/blink.cmp',
     dependencies = {
-      {
-        'L3MON4D3/LuaSnip',
-        config = function()
-          require('luasnip.loaders.from_snipmate').lazy_load()
-        end,
-      },
       {
         'Kaiser-Yang/blink-cmp-dictionary',
         dependencies = { 'nvim-lua/plenary.nvim' },
@@ -778,18 +770,10 @@ require('lazy').setup {
         enabled = true,
       },
 
-      snippets = { preset = 'luasnip' },
-
       sources = {
-        default = { 'snippets', 'lsp', 'path', 'buffer', 'dictionary' },
+        default = { 'lsp', 'path', 'buffer', 'dictionary' },
 
         providers = {
-          snippets = {
-            score_offset = 100,
-            max_items = 1,
-            min_keyword_length = 1,
-          },
-
           lsp = {
             score_offset = 50,
           },
@@ -834,6 +818,19 @@ require('lazy').setup {
     },
 
     opts_extend = { 'sources.default' },
+  },
+
+  { -- Snippets.
+    'L3MON4D3/LuaSnip',
+    config = function()
+      require('luasnip.loaders.from_snipmate').lazy_load()
+
+      local ls = require 'luasnip'
+
+      vim.keymap.set({ 'i' }, '<C-s>', function()
+        ls.expand()
+      end, { silent = true })
+    end,
   },
 
   -- Highlight todo, notes, etc in comments
