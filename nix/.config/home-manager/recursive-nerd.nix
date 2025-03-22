@@ -6,7 +6,7 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "recursive-nerd";
-  version = "3.0.2";
+  version = "3.3.0";
 
   src = fetchgit {
     url = "https://github.com/ryanoasis/nerd-fonts";
@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
       "src/"
       "!src/unpatched-fonts/"
     ];
-    sha256 = "sha256-fxnmem3JFG+QfbICrHUMkPxBxxxaTprKMgH1j72Rkgg=";
+    sha256 = "sha256-EupyDZ+CT+TpWeY96CRoR7311iaPiyi/cs/DtfMqZl4=";
   };
 
   nativeBuildInputs = with python3Packages; [
