@@ -863,7 +863,33 @@ require('lazy').setup {
         search_method = 'cover_or_nearest',
       }
 
+      local CTRL_S = vim.api.nvim_replace_termcodes('<C-S>', true, true, true)
+      local CTRL_V = vim.api.nvim_replace_termcodes('<C-V>', true, true, true)
+
+      local modes = {
+        ['n'] = { name = 'Normal', hl = 'StatuslineModeNormal' },
+        ['v'] = { name = 'Visual', hl = 'StatuslineModeVisual' },
+        ['V'] = { name = 'V-Line', hl = 'StatuslineModeVisual' },
+        [CTRL_V] = { name = 'V-Block', hl = 'StatuslineModeVisual' },
+        ['s'] = { name = 'Select', hl = 'StatuslineModeVisual' },
+        ['S'] = { name = 'S-Line', hl = 'StatuslineModeVisual' },
+        [CTRL_S] = { name = 'S-Block', hl = 'StatuslineModeVisual' },
+        ['i'] = { name = 'Insert', hl = 'StatuslineModeInsert' },
+        ['R'] = { name = 'Replace', hl = 'StatuslineModeReplace' },
+        ['c'] = { name = 'Command', hl = 'StatuslineModeCommand' },
+        ['r'] = { name = 'Prompt', hl = 'StatuslineModeOther' },
+        ['!'] = { name = 'Shell', hl = 'StatuslineModeOther' },
+        ['t'] = { name = 'Terminal', hl = 'StatuslineModeOther' },
+      }
+
       local statusline = require 'mini.statusline'
+
+      local section_mode = function()
+        local icon = ''
+        local mode_info = modes[vim.fn.mode()]
+
+        return icon, mode_info.hl
+      end
 
       local sign_levels = {
         { name = 'added', text = '+', hl = 'GitSignsAdd' },
@@ -945,7 +971,7 @@ require('lazy').setup {
         use_icons = false,
         content = {
           active = function()
-            local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+            local mode, mode_hl = section_mode()
             local diagnostics = section_diagnostics { trunc_width = 75 }
             local filename = MiniStatusline.section_filename { trunc_width = 140 }
             local git = section_git { trunc_width = 40 }
@@ -959,7 +985,7 @@ require('lazy').setup {
               { hl = 'MiniStatuslineFilename', strings = { filename, git } },
               '%=', -- End left alignment
               { strings = { diagnostics, fileinfo } },
-              { hl = mode_hl, strings = { search, location } },
+              { hl = 'TabLineSel', strings = { search, location } },
             }
           end,
         },
@@ -1145,8 +1171,30 @@ require('lazy').setup {
 
       vim.cmd.colorscheme(theme)
 
-      vim.api.nvim_set_hl(0, 'TabLine', { fg = os.getenv 'THEME_FG1', bg = os.getenv 'THEME_BG0' })
-      vim.api.nvim_set_hl(0, 'TabLineSel', { fg = os.getenv 'THEME_WHITE', bg = os.getenv 'THEME_BG3', bold = true })
+      local function hi(hl, opts)
+        local hl_opts = {}
+
+        if opts.fg then
+          hl_opts.fg = os.getenv(opts.fg)
+        end
+        if opts.bg then
+          hl_opts.bg = os.getenv(opts.bg)
+        end
+
+        vim.api.nvim_set_hl(0, hl, hl_opts)
+      end
+
+      hi('TabLine', { fg = 'THEME_FG1', bg = 'THEME_BG0' })
+      hi('TabLineSel', { fg = 'THEME_WHITE', bg = 'THEME_BG3', bold = true })
+
+      hi('IncSearch', { fg = 'THEME_BLACK', bg = 'THEME_YELLOW', bold = true })
+
+      hi('StatuslineModeCommand', { fg = 'THEME_YELLOW', bg = 'THEME_BG0' })
+      hi('StatuslineModeNormal', { fg = 'THEME_BLUE', bg = 'THEME_BG0' })
+      hi('StatuslineModeInsert', { fg = 'THEME_GREEN', bg = 'THEME_BG0' })
+      hi('StatuslineModeVisual', { fg = 'THEME_MAGENTA', bg = 'THEME_BG0' })
+      hi('StatuslineModeReplace', { fg = 'THEME_RED', bg = 'THEME_BG0' })
+      hi('StatuslineModeOther', { fg = 'THEME_ORANGE', bg = 'THEME_BG0' })
     end,
   },
 }
