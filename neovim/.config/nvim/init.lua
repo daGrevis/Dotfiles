@@ -22,6 +22,12 @@ vim.g.maplocalleader = ' '
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- Default to 2 spaces for indentation.
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+
 -- Enables mouse mode support.
 -- Sometimes useful for scrolling, resizing splits and selecting something.
 vim.opt.mouse = 'a'
