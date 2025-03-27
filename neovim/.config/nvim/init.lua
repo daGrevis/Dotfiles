@@ -846,8 +846,21 @@ require('lazy').setup {
     end,
   },
 
-  -- Highlight todo, notes, etc in comments
+  -- Highlight TODO, FIXME etc..
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+
+  { -- Commenting.
+    'numToStr/Comment.nvim',
+    dependencies = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    },
+    config = function()
+      local pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+      require('Comment').setup {
+        pre_hook = pre_hook,
+      }
+    end,
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
