@@ -354,6 +354,9 @@ require('lazy').setup {
     'chentoast/marks.nvim',
     event = 'VeryLazy',
     opts = {},
+    -- mappings:
+    -- dmx Delete mark x
+    -- dm<space> Delete all marks in the current buffer
   },
 
   { -- Fuzzy Finder (files, lsp, etc)
