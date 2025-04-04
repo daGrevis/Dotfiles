@@ -768,78 +768,93 @@ require('lazy').setup {
     -- Download pre-built Rust binary.
     version = '*',
 
-    ---@module 'blink.cmp'
-    ---@type blink.cmp.Config
-    opts = {
-      completion = {
-        documentation = {
-          auto_show = true,
-        },
-      },
+    config = function()
+      local source_priority = {
+        lsp = 3,
+        path = 2,
+        buffer = 1,
+        dictionary = 0,
+      }
 
-      fuzzy = {
-        implementation = 'prefer_rust_with_warning',
-      },
-
-      keymap = {
-        preset = 'enter',
-
-        ['<Tab>'] = { 'select_next', 'fallback' },
-        ['<S-Tab>'] = { 'select_prev', 'fallback' },
-      },
-
-      signature = {
-        enabled = true,
-      },
-
-      sources = {
-        default = { 'lsp', 'path', 'buffer', 'dictionary' },
-
-        providers = {
-          lsp = {
-            score_offset = 50,
-          },
-
-          path = {
-            score_offset = 20,
-            opts = {
-              -- Completion from cwd instead of current buffer's parent dir.
-              get_cwd = function(_)
-                return vim.fn.getcwd()
-              end,
-            },
-          },
-
-          buffer = {
-            score_offset = 10,
-            max_items = 10,
-            opts = {
-              -- Completion from all buffers.
-              get_bufnrs = function()
-                return vim.tbl_filter(function(bufnr)
-                  return vim.bo[bufnr].buftype == ''
-                end, vim.api.nvim_list_bufs())
-              end,
-            },
-          },
-
-          dictionary = {
-            score_offset = 0,
-            module = 'blink-cmp-dictionary',
-            name = 'Dict',
-            min_keyword_length = 3,
-            max_items = 10,
-            opts = {
-              dictionary_files = function()
-                return { vim.fn.expand '~/Dropbox/Assets/english-words.txt' }
-              end,
-            },
+      require('blink-cmp').setup {
+        completion = {
+          documentation = {
+            auto_show = true,
           },
         },
-      },
-    },
 
-    opts_extend = { 'sources.default' },
+        fuzzy = {
+          implementation = 'prefer_rust_with_warning',
+
+          sorts = {
+            function(a, b)
+              local a_priority = source_priority[a.source_id]
+              local b_priority = source_priority[b.source_id]
+              if a_priority ~= b_priority then
+                return a_priority > b_priority
+              end
+            end,
+            -- defaults
+            'score',
+            'sort_text',
+          },
+        },
+
+        keymap = {
+          preset = 'enter',
+
+          ['<Tab>'] = { 'select_next', 'fallback' },
+          ['<S-Tab>'] = { 'select_prev', 'fallback' },
+        },
+
+        signature = {
+          enabled = true,
+        },
+
+        sources = {
+          default = { 'lsp', 'path', 'buffer', 'dictionary' },
+
+          providers = {
+            lsp = {
+              -- async = true,
+            },
+
+            path = {
+              opts = {
+                -- Completion from cwd instead of current buffer's parent dir.
+                get_cwd = function(_)
+                  return vim.fn.getcwd()
+                end,
+              },
+            },
+
+            buffer = {
+              max_items = 10,
+              opts = {
+                -- Completion from all buffers.
+                get_bufnrs = function()
+                  return vim.tbl_filter(function(bufnr)
+                    return vim.bo[bufnr].buftype == ''
+                  end, vim.api.nvim_list_bufs())
+                end,
+              },
+            },
+
+            dictionary = {
+              module = 'blink-cmp-dictionary',
+              name = 'Dict',
+              min_keyword_length = 3,
+              max_items = 10,
+              opts = {
+                dictionary_files = function()
+                  return { vim.fn.expand '~/Dropbox/Assets/english-words.txt' }
+                end,
+              },
+            },
+          },
+        },
+      }
+    end,
   },
 
   { -- Snippets.
