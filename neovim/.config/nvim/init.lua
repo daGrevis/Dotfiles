@@ -256,6 +256,98 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'VimLeavePre' }, {
   end,
 })
 
+-- Tabline on top.
+
+-- Always show the tabline.
+vim.o.showtabline = 2
+
+-- Generate unique labels for paths by shortening them.
+local function generate_unique_tabline_labels(paths, segments)
+  segments = segments or 1
+  local groups = {} -- [subpath] = { index1, index2, ... }
+
+  -- Group paths by their shortened suffix.
+  for i, path in ipairs(paths) do
+    -- Split path by '/'.
+    local parts = {}
+    for part in string.gmatch(path, '([^/]+)') do
+      table.insert(parts, part)
+    end
+
+    -- Take the last 'segments' parts of the path safely.
+    local sub = #parts >= segments and table.concat({ unpack(parts, #parts - segments + 1) }, '/') or path
+
+    -- Add path to the group.
+    groups[sub] = groups[sub] or {}
+    table.insert(groups[sub], i)
+  end
+
+  local output = {} -- Indexed by original path index.
+
+  for sub, indices in pairs(groups) do
+    if #indices == 1 then
+      output[indices[1]] = sub
+    else
+      -- If multiple paths share the same suffix, we recurse.
+      local conflicting_paths = {}
+      for _, i in ipairs(indices) do
+        conflicting_paths[#conflicting_paths + 1] = paths[i]
+      end
+      -- Recurse to resolve conflicts.
+      local resolved = generate_unique_tabline_labels(conflicting_paths, segments + 1)
+      for j, i in ipairs(indices) do
+        output[i] = resolved[j]
+      end
+    end
+  end
+
+  -- Final check to append "/" only when needed.
+  for i, label in ipairs(output) do
+    -- If the label prefixed with '/' equals the full path, prepend '/'.
+    if '/' .. label == paths[i] then
+      output[i] = '/' .. label
+    end
+  end
+
+  return output
+end
+
+-- Get paths for each tab’s active buffer and shorten them.
+local function get_tabline_labels(tabs)
+  local paths = {}
+
+  for _, tab in ipairs(tabs) do
+    local win = vim.api.nvim_tabpage_get_win(tab)
+    local buf = vim.api.nvim_win_get_buf(win)
+    local name = vim.api.nvim_buf_get_name(buf)
+    table.insert(paths, name ~= '' and name or '[No Name]')
+  end
+
+  return generate_unique_tabline_labels(paths)
+end
+
+-- Tabline rendering function.
+function _G.my_tabline()
+  local s = ''
+  local tabs = vim.api.nvim_list_tabpages()
+  local current = vim.api.nvim_get_current_tabpage()
+
+  local labels = get_tabline_labels(tabs)
+
+  for i, tab in ipairs(tabs) do
+    local hl = (tab == current) and '%#TabLineSel#' or '%#TabLine#'
+    s = s .. hl
+    s = s .. '%' .. i .. 'T'
+    s = s .. ' ' .. i .. ' ' .. labels[i] .. ' '
+  end
+
+  s = s .. '%#TabLineFill#%T'
+
+  return s
+end
+
+vim.o.tabline = '%!v:lua.my_tabline()'
+
 -- Installs `lazy.nvim` plugin manager.
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
