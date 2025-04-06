@@ -193,15 +193,28 @@ vim.api.nvim_create_autocmd('BufNewFile', {
   end,
 })
 
+-- Save and close buffer.
 vim.keymap.set('n', '<leader>q', 'ZZ')
+
+-- Save buffer.
 vim.keymap.set('n', '<leader>w', ':w<CR>')
+
+-- Prefill command to edit buffer.
 vim.keymap.set('n', '<leader>e', ':e ')
+
+-- Reload buffer.
 vim.keymap.set('n', '<leader>ee', ':e!<CR>')
+
+-- Prefill command to edit buffer from current directory.
 vim.keymap.set('n', '<leader>r', function()
   local dir = vim.fn.expand '%:h'
   vim.api.nvim_feedkeys(':e ' .. dir .. '/', 'n', true)
 end)
+
+-- Prefill command to open a new tab.
 vim.keymap.set('n', '<leader>t', ':tabe ')
+
+-- Prefill command to open a new tab from current directory.
 vim.keymap.set('n', '<leader>y', function()
   local dir = vim.fn.expand '%:h'
   vim.api.nvim_feedkeys(':tabe ' .. dir .. '/', 'n', true)
@@ -213,8 +226,11 @@ vim.keymap.set('n', '<leader>c', '^v$h')
 -- Select buffer without newline at end.
 vim.keymap.set('n', '<leader>v', 'ggVG')
 
---
+-- Open buffer in a new tab.
 vim.keymap.set('n', '<leader>o', '<C-W>T')
+
+-- Open help.
+vim.keymap.set('n', '<leader>h', ':help ')
 
 -- Copy to system clipboard with <C-c>.
 vim.keymap.set('v', '<C-c>', '"*ygv"+y')
