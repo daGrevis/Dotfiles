@@ -259,7 +259,7 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'VimLeavePre' }, {
 -- Tabline on top.
 
 -- Always show the tabline.
-vim.o.showtabline = 2
+vim.opt.showtabline = 2
 
 -- Generate unique labels for paths by shortening them.
 local function generate_unique_tabline_labels(paths, segments)
@@ -346,7 +346,7 @@ function _G.my_tabline()
   return s
 end
 
-vim.o.tabline = '%!v:lua.my_tabline()'
+vim.opt.tabline = '%!v:lua.my_tabline()'
 
 -- Installs `lazy.nvim` plugin manager.
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
