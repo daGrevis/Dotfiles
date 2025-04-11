@@ -280,10 +280,24 @@ vim.opt.showtabline = 2
 -- Generate unique labels for paths by shortening them.
 local function generate_unique_tabline_labels(paths, segments)
   segments = segments or 1
+
+  local seen = {} -- [path] = true
+  local unique_paths = {} -- Deduplicated list.
+  local path_to_indices = {} -- [path] = { original_index1, original_index2, ... }
+
+  for i, path in ipairs(paths) do
+    if not seen[path] then
+      seen[path] = true
+      table.insert(unique_paths, path)
+      path_to_indices[path] = { i }
+    else
+      table.insert(path_to_indices[path], i)
+    end
+  end
+
   local groups = {} -- [subpath] = { index1, index2, ... }
 
-  -- Group paths by their shortened suffix.
-  for i, path in ipairs(paths) do
+  for i, path in ipairs(unique_paths) do
     -- Split path by '/'.
     local parts = {}
     for part in string.gmatch(path, '([^/]+)') do
@@ -293,39 +307,45 @@ local function generate_unique_tabline_labels(paths, segments)
     -- Take the last 'segments' parts of the path safely.
     local sub = #parts >= segments and table.concat({ unpack(parts, #parts - segments + 1) }, '/') or path
 
-    -- Add path to the group.
+    -- Group by suffix.
     groups[sub] = groups[sub] or {}
     table.insert(groups[sub], i)
   end
 
-  local output = {} -- Indexed by original path index.
+  local unique_labels = {}
 
   for sub, indices in pairs(groups) do
     if #indices == 1 then
-      output[indices[1]] = sub
+      unique_labels[indices[1]] = sub
     else
       -- If multiple paths share the same suffix, we recurse.
       local conflicting_paths = {}
       for _, i in ipairs(indices) do
-        conflicting_paths[#conflicting_paths + 1] = paths[i]
+        conflicting_paths[#conflicting_paths + 1] = unique_paths[i]
       end
-      -- Recurse to resolve conflicts.
       local resolved = generate_unique_tabline_labels(conflicting_paths, segments + 1)
       for j, i in ipairs(indices) do
-        output[i] = resolved[j]
+        unique_labels[i] = resolved[j]
       end
     end
   end
 
-  -- Final check to append "/" only when needed.
-  for i, label in ipairs(output) do
-    -- If the label prefixed with '/' equals the full path, prepend '/'.
-    if '/' .. label == paths[i] then
-      output[i] = '/' .. label
+  for i, label in ipairs(unique_labels) do
+    -- Check to append "/" only when needed.
+    if '/' .. label == unique_paths[i] then
+      unique_labels[i] = '/' .. label
     end
   end
 
-  return output
+  -- Map back to original paths.
+  local final_labels = {} -- Indexed like `paths`.
+  for i, path in ipairs(unique_paths) do
+    for _, original_index in ipairs(path_to_indices[path]) do
+      final_labels[original_index] = unique_labels[i]
+    end
+  end
+
+  return final_labels
 end
 
 -- Get paths for each tab’s active buffer and shorten them.
