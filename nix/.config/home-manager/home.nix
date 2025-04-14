@@ -200,7 +200,7 @@ in
   home.file.".config/alacritty/theme.toml".text =
     ''
       [colors.primary]
-      background = "${themeColors.bg1}"
+      background = "${themeColors.bg0}"
       foreground = "${themeColors.fg1}"
 
       [colors.normal]

@@ -1349,6 +1349,9 @@ require('lazy').setup {
         vim.api.nvim_set_hl(0, hl, hl_opts)
       end
 
+      hi('Normal', { bg = 'THEME_BG0' })
+      hi('NormalNC', { bg = 'THEME_BG0' })
+
       hi('TabLine', { fg = 'THEME_FG1', bg = 'THEME_BG0' })
       hi('TabLineSel', { fg = 'THEME_WHITE', bg = 'THEME_BG3', bold = true })
 
