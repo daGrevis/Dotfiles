@@ -481,7 +481,17 @@ require('lazy').setup {
   { -- Adds marks to the gutter.
     'chentoast/marks.nvim',
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      builtin_marks = {
+        -- Position where the cursor was the last time.
+        '^',
+        -- Position where the last change was made.
+        '.',
+        -- Last selected visual area.
+        '<',
+        '>',
+      },
+    },
     -- mappings:
     -- dmx Delete mark x
     -- dm<space> Delete all marks in the current buffer
