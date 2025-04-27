@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+confirm() {
+  local prompt=${1:-"Confirm?"}
+  while true; do
+    print "$prompt [y/n]"
+    read
+    case $REPLY in
+      [Yy]) return 0 ;;
+      *) return 1 ;;
+    esac
+  done
+}
+
 v() {
     session_path="$HOME/.obsessions/$(basename "$PWD").vim"
     if [ -f "$session_path" ] && [ $# -eq 0 ]; then
@@ -164,6 +176,14 @@ n() {
 
 sud() {
     sudo -E su -p
+}
+
+bb() {
+    confirm "Shutdown?" && sudo shutdown -h now
+}
+
+brb() {
+    confirm "Reboot?" && sudo reboot
 }
 
 yt2mp3() {
