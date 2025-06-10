@@ -1263,6 +1263,8 @@ require('lazy').setup {
         window = {
           mappings = {
             ['<Tab>'] = 'close_window',
+            -- Keep the regular search, don't go into filter mode.
+            ['/'] = 'noop',
           },
         },
       },
