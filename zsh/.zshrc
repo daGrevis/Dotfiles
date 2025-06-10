@@ -78,6 +78,9 @@ zle -N down-line-or-beginning-search
 bindkey "${key[Up]}" up-line-or-beginning-search
 bindkey "${key[Down]}" down-line-or-beginning-search
 
+# Enable <S-Tab> to select previous menu completion.
+bindkey '^[[Z' reverse-menu-complete
+
 # https://stackoverflow.com/a/41420448/458610
 function expand-dots() {
     local MATCH
