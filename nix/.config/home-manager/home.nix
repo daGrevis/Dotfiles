@@ -59,13 +59,11 @@ in
     gitAndTools.delta
     gnumake
     gnupg
-    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
     htop
     id3v2
     inetutils
     jq
     killall
-    kubectl
     libnotify
     lsof
     lua
@@ -91,7 +89,6 @@ in
     sops
     sqlite
     stow
-    terraform
     tmux
     tmuxinator
     unzip
