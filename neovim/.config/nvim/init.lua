@@ -1377,6 +1377,38 @@ require('lazy').setup {
       hi('StatuslineModeOther', { fg = 'THEME_ORANGE', bg = 'THEME_BG0' })
     end,
   },
+
+  {
+    'olimorris/codecompanion.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require('codecompanion').setup {
+        strategies = {
+          chat = {
+            adapter = 'anthropic',
+            keymaps = {
+              close = {
+                -- Don't close on <C-c>
+                modes = { n = '<Nop>', i = '<Nop>' },
+              },
+            },
+          },
+          inline = {
+            adapter = 'anthropic',
+          },
+        },
+      }
+
+      local function C()
+        vim.cmd 'CodeCompanionChat'
+      end
+
+      vim.api.nvim_create_user_command('C', C, {})
+    end,
+  },
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
