@@ -69,6 +69,7 @@ in
     lua
     man
     fastfetch
+    ncdu
     neovim
     nodejs
     openssl
