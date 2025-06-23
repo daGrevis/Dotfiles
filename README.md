@@ -4,11 +4,11 @@ This repository contains configuration files for all kinds of software I'm using
 on daily basis. Also known as "dotfiles", these files allow to replicate my
 setup on another machine with relative ease.
 
-I'm using this to have practically identical setup between:
+I'm using nix & home-manager to have practically identical setup between:
 
 - MacOS running on MacBook Pro
+- NixOS running on my private server
 - NixOS via VirtualBox running on desktop Windows
-- Ubuntu running on my private server
 
 ## Installation
 
