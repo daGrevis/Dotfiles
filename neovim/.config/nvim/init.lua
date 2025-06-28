@@ -1378,6 +1378,27 @@ require('lazy').setup {
     end,
   },
 
+  { -- Convert between color notations.
+    'NTBBloodbath/color-converter.nvim',
+    config = function()
+      local color_converter = require 'color-converter'
+
+      color_converter.setup {}
+
+      vim.api.nvim_create_user_command('ColorConverterToHex', function()
+        color_converter.to_hex()
+      end, {})
+
+      vim.api.nvim_create_user_command('ColorConverterToRgb', function()
+        color_converter.to_rgb()
+      end, {})
+
+      vim.api.nvim_create_user_command('ColorConverterToHsl', function()
+        color_converter.to_hsl()
+      end, {})
+    end,
+  },
+
   {
     'olimorris/codecompanion.nvim',
     dependencies = {
