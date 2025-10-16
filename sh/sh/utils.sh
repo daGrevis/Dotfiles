@@ -186,6 +186,11 @@ brb() {
     confirm "Reboot?" && sudo reboot
 }
 
+xrandr-fzf() {
+    xrandr | grep -E '^\s+[0-9]+x[0-9]+' | awk '{print $1}' | sort -t 'x' -k1,1n -k2,2n -u | fzf \
+        | xargs -I {} xrandr --output $(xrandr | grep " connected" | head -1 | awk '{print $1}') --mode {}
+}
+
 yt2mp3() {
   local output="/mnt/nixos-shared/youtube-dled"
   local url="$1"
