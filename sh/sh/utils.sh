@@ -106,6 +106,8 @@ auxpid() {
 alias ka='killall'
 alias k9='kill -9'
 
+alias ssh='TERM=xterm-256color ssh'
+
 open-preview() {
     open -a /Applications/Preview.app $@
 }
