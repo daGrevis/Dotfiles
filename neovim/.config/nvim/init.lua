@@ -395,6 +395,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+---@diagnostic disable: missing-fields
 require('lazy').setup {
   -- Allow plugins to add their own repeats onto . mapping.
   'tpope/vim-repeat',
