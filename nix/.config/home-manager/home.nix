@@ -101,6 +101,8 @@ in
     yarn
     yt-dlp
     zsh
+    pnpm
+    yalc
     # unfree:
     ngrok
   ];
