@@ -7,6 +7,7 @@ GIT_LOG_PRETTY_FORMAT='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cs, %cr) 
 
 alias ga="git add --all"
 alias gap="git add -p"
+alias gac="ga && gc"
 alias gbr="git branch"
 alias gc="git commit -v"
 alias gc!="git commit -v --amend --date=now"
