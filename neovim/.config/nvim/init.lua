@@ -942,7 +942,7 @@ require('lazy').setup {
         keymap = {
           preset = 'enter',
 
-          ['<Tab>'] = { 'select_next', 'fallback' },
+          ['<Tab>'] = { 'show', 'select_next', 'fallback' },
           ['<S-Tab>'] = { 'select_prev', 'fallback' },
         },
 
