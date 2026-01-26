@@ -1439,5 +1439,12 @@ require('lazy').setup {
   },
 }
 
+local function search_for_diff_marker()
+  vim.cmd '/\\v[=><]{4,}'
+end
+
+-- Create the user command
+vim.api.nvim_create_user_command('SearchForDiffMarker', search_for_diff_marker, {})
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
