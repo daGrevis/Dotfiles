@@ -1443,8 +1443,17 @@ local function search_for_diff_marker()
   vim.cmd '/\\v[=><]{4,}'
 end
 
--- Create the user command
 vim.api.nvim_create_user_command('SearchForDiffMarker', search_for_diff_marker, {})
+
+vim.api.nvim_create_user_command('ReverseLines', function(opts)
+  if opts.range > 0 then
+    -- Work with visual selection
+    vim.cmd(string.format('%d,%dg/^/m%d', opts.line1, opts.line2, opts.line1 - 1))
+  else
+    -- Work with entire buffer
+    vim.cmd 'g/^/m0'
+  end
+end, { range = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
