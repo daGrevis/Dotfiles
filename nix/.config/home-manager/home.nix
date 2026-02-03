@@ -48,6 +48,7 @@ in
     docker
     docker-compose
     eza
+    fastfetch
     fd
     ffmpeg
     file
@@ -68,7 +69,7 @@ in
     lsof
     lua
     man
-    fastfetch
+    mkcert
     ncdu
     neovim
     nodejs
