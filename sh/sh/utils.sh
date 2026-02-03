@@ -172,6 +172,10 @@ clap() {
   fi
 }
 
+clear-clipboard() {
+  echo -n '' | clip
+}
+
 n() {
   nix-shell --command "SHELL=$SHELL $SHELL" -p "$1"
 }
