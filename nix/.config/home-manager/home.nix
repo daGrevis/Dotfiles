@@ -57,7 +57,7 @@ in
     gist
     git
     git-lfs
-    gitAndTools.delta
+    delta
     gnumake
     gnupg
     htop
@@ -98,7 +98,7 @@ in
     wordnet
     xclip
     xkcdpass
-    xorg.xev
+    xev
     yarn
     yt-dlp
     zsh
@@ -125,7 +125,7 @@ in
 
   # {{{ Asdf
 
-  home.sessionVariables.ASDF_SH = "${pkgs.asdf-vm.outPath}/share/asdf-vm/asdf.sh";
+  home.sessionVariables.ASDF_SH = "${pkgs.asdf-vm.outPath}/etc/profile.d/asdf-prepare.sh";
 
   home.file.".tool-versions".source = "${dotfilesDirectory}/asdf/.tool-versions";
 
