@@ -176,6 +176,29 @@ _fzf_compgen_dir() {
   fi
 }
 
+# Git diff via delta. Press r to reload which will update thee diff and keep the scroll postion.
+unalias gd 2> /dev/null
+gd() {
+    local cmd_file="/tmp/.gd-cmd-$$"
+    local out_file="/tmp/.gd-out-$$"
+    local hist_file="/tmp/.gd-hist-$$"
+    local keyfile=$(mktemp)
+    echo "git diff --color=always $* | delta --paging=never --width=$COLUMNS" > "$cmd_file"
+    printf '#command\nr set-mark a^X\n^X quit r\n' > "$keyfile"
+    local start_cmd=""
+    while true; do
+        sh "$cmd_file" > "$out_file"
+        LESSHISTFILE="$hist_file" less --save-marks -R --lesskey-src="$keyfile" ${start_cmd:+"$start_cmd"} "$out_file"
+        [ $? -ne 114 ] && break
+        local offset=$(awk '/^m a /{print $4}' "$hist_file" | tail -1)
+        if [ -n "$offset" ]; then
+            local line_num=$(( $(head -c "$offset" "$out_file" | wc -l) + 1 ))
+            start_cmd="+${line_num}g"
+        fi
+    done
+    rm -f "$cmd_file" "$out_file" "$hist_file" "$keyfile"
+}
+
 alias blender=/Applications/blender.app/Contents/MacOS/blender
 
 # Disable homebrew from auto-updating everything when installing a package.
