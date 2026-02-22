@@ -146,7 +146,8 @@ if [ -f '/Users/dagrevis/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history \
     --bind ctrl-n:next-history,ctrl-p:previous-history,ctrl-r:up,change:top \
     --color='bg+:$THEME_BG3' --color='pointer:$THEME_WHITE' --color='hl:$THEME_GREEN' \
-    --no-separator"
+    --no-separator \
+    --cycle"
 
 command -v fd &> /dev/null
 if [ "$?" != "0" ]; then
