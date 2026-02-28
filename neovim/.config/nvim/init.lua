@@ -1406,8 +1406,7 @@ require('lazy').setup {
 
   {
     'olimorris/codecompanion.nvim',
-    -- https://github.com/olimorris/codecompanion.nvim/pull/2439
-    version = 'v17.33.0',
+    version = 'v18.5.1',
     dependencies = {
       { 'nvim-lua/plenary.nvim', branch = 'master' },
       'nvim-treesitter/nvim-treesitter',
@@ -1424,17 +1423,23 @@ require('lazy').setup {
               },
             },
           },
-          inline = {
-            adapter = 'anthropic',
+        },
+        adapters = {
+          acp = {
+            opts = {
+              show_presets = false,
+            },
           },
         },
       }
 
-      local function C()
-        vim.cmd 'CodeCompanionChat'
-      end
+      -- Toggle CodeCompanion chat buffer
+      vim.keymap.set({ 'n' }, '<Leader>a', '<cmd>CodeCompanionChat Toggle<CR>', { noremap = true, silent = true })
 
-      vim.api.nvim_create_user_command('C', C, {})
+      -- Expand 'cc' into 'CodeCompanion' in the command line
+      vim.cmd [[cab cc CodeCompanion]]
+
+      -- TODO: https://codecompanion.olimorris.dev/configuration/prompt-library
     end,
   },
 }
