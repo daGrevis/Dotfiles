@@ -4,3 +4,4 @@ Session.vim
 settings.py
 node_modules/
 pyvenv.cfg
+.claude/
