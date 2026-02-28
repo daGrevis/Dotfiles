@@ -58,6 +58,7 @@ in
     git
     git-lfs
     delta
+    gh
     gnumake
     gnupg
     htop
@@ -65,6 +66,7 @@ in
     inetutils
     jq
     killall
+    less
     libnotify
     lsof
     lua
