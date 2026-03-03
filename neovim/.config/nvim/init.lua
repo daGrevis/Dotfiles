@@ -580,7 +580,153 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<C-p>', builtin.find_files)
+      vim.keymap.set('n', '<C-p>', function()
+        local pickers = require 'telescope.pickers'
+        local finders = require 'telescope.finders'
+        local previewers = require 'telescope.previewers'
+        local conf = require('telescope.config').values
+        -- Collect diff stats
+        local diff_stats = {}
+        local function parse_numstat(lines)
+          for _, line in ipairs(lines) do
+            local added, removed, file = line:match '^(%d+)\t(%d+)\t(.+)$'
+            if added and file then
+              local existing = diff_stats[file]
+              if existing and existing.added then
+                diff_stats[file] = { added = existing.added + tonumber(added), removed = existing.removed + tonumber(removed) }
+              else
+                diff_stats[file] = { added = tonumber(added), removed = tonumber(removed) }
+              end
+            end
+          end
+        end
+        parse_numstat(vim.fn.systemlist 'git diff --numstat 2>/dev/null')
+        parse_numstat(vim.fn.systemlist 'git diff --cached --numstat 2>/dev/null')
+        for _, file in ipairs(vim.fn.systemlist 'git ls-files --others --exclude-standard 2>/dev/null') do
+          if file ~= '' and not diff_stats[file] then
+            diff_stats[file] = { new = true }
+          end
+        end
+
+        -- Collect first hunk line per file
+        local first_hunk_line = {}
+        local function parse_diff_hunks(lines)
+          local current_file = nil
+          for _, line in ipairs(lines) do
+            local file = line:match '^%+%+%+ b/(.+)$'
+            if file then
+              current_file = file
+            elseif current_file and not first_hunk_line[current_file] then
+              local hunk_line = line:match '^@@ %S+ %+(%d+)'
+              if hunk_line then
+                first_hunk_line[current_file] = tonumber(hunk_line)
+              end
+            end
+          end
+        end
+        parse_diff_hunks(vim.fn.systemlist 'git diff --no-color --unified=0 2>/dev/null')
+        parse_diff_hunks(vim.fn.systemlist 'git diff --cached --no-color --unified=0 2>/dev/null')
+
+        local function make_display(entry)
+          -- Get devicon
+          local icon, icon_hl = '', nil
+          local ok, devicons = pcall(require, 'nvim-web-devicons')
+          if ok then
+            local filename = vim.fn.fnamemodify(entry.value, ':t')
+            local ext = vim.fn.fnamemodify(entry.value, ':e')
+            icon, icon_hl = devicons.get_icon(filename, ext, { default = true })
+            icon = icon .. ' '
+          end
+
+          local file_part = icon .. entry.value
+
+          -- Build stat string
+          local stats = diff_stats[entry.value] or {}
+          local stat_text = ''
+          local stat_hl_ranges = {}
+          if stats.new then
+            stat_text = 'new'
+            stat_hl_ranges = { { 'GitSignsAdd', 0, 3 } }
+          elseif stats.added then
+            local add_str = '+' .. stats.added
+            local rem_str = '-' .. stats.removed
+            stat_text = add_str .. ' ' .. rem_str
+            stat_hl_ranges = {
+              { 'GitSignsAdd', 0, #add_str },
+              { 'GitSignsDelete', #add_str + 1, #add_str + 1 + #rem_str },
+            }
+          end
+
+          -- Get results window width for right-alignment
+          local telescope_state = require 'telescope.state'
+          local status = telescope_state.get_status(vim.api.nvim_get_current_buf())
+          local width = vim.api.nvim_win_get_width(status.results_win) - #status.picker.selection_caret
+
+          -- Build display: file + padding + stats (right-aligned)
+          local file_dw = vim.fn.strdisplaywidth(file_part)
+          local stat_dw = vim.fn.strdisplaywidth(stat_text)
+          local padding = math.max(1, width - file_dw - stat_dw)
+          local display = file_part .. string.rep(' ', padding) .. stat_text
+
+          -- Build highlights
+          local highlights = {}
+          if icon_hl then
+            table.insert(highlights, { { 0, #icon - 1 }, icon_hl })
+          end
+          local stat_byte_start = #file_part + padding
+          for _, hl in ipairs(stat_hl_ranges) do
+            table.insert(highlights, { { stat_byte_start + hl[2], stat_byte_start + hl[3] }, hl[1] })
+          end
+
+          return display, highlights
+        end
+
+        local function entry_maker(line)
+          return {
+            value = line,
+            ordinal = line,
+            display = make_display,
+            path = line,
+            lnum = first_hunk_line[line],
+          }
+        end
+
+        -- Git-changed files first (unstaged, staged, untracked), then all files, deduplicated
+        local cmd = {
+          'bash',
+          '-c',
+          '{ git diff --name-only --diff-filter=d; git diff --cached --name-only --diff-filter=d; git ls-files --others --exclude-standard; fd --type f --hidden --exclude .git; } 2>/dev/null | awk "seen[\\$0]++ == 0"',
+        }
+
+        pickers
+          .new({}, {
+            prompt_title = 'Find Files',
+            finder = finders.new_oneshot_job(cmd, {
+              entry_maker = entry_maker,
+            }),
+            sorter = conf.file_sorter {},
+            previewer = previewers.new_buffer_previewer {
+              title = 'File Preview',
+              define_preview = function(self, entry)
+                conf.buffer_previewer_maker(entry.path, self.state.bufnr, {
+                  bufname = self.state.bufname,
+                  winid = self.state.winid,
+                  callback = function(bufnr)
+                    if entry.lnum then
+                      local line_count = vim.api.nvim_buf_line_count(bufnr)
+                      local target = math.min(entry.lnum, line_count)
+                      pcall(vim.api.nvim_win_set_cursor, self.state.winid, { target, 0 })
+                      vim.api.nvim_win_call(self.state.winid, function()
+                        vim.cmd 'normal! zz'
+                      end)
+                    end
+                  end,
+                })
+              end,
+            },
+          })
+          :find()
+      end)
       vim.keymap.set('n', '//', builtin.live_grep)
       vim.keymap.set('n', '??', builtin.grep_string)
     end,
