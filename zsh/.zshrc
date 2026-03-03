@@ -193,7 +193,7 @@ gd() {
         LESSHISTFILE="$hist_file" less --save-marks -R --lesskey-src="$keyfile" ${start_cmd:+"$start_cmd"} "$out_file"
         [ $? -ne 114 ] && break
         local offset=$(awk '/^m a /{print $4}' "$hist_file" | tail -1)
-        if [ -n "$offset" ]; then
+        if [ -n "$offset" ] && [ "$offset" -gt 0 ]; then
             local line_num=$(( $(head -c "$offset" "$out_file" | wc -l) + 1 ))
             start_cmd="+${line_num}g"
         fi
