@@ -42,6 +42,7 @@ in
     autojump
     bat
     cargo
+    claude-code
     cloc
     deno
     dig
