@@ -1,26 +1,4 @@
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-export EDITOR='nvim'
-export VISUAL="$EDITOR"
-
-export PAGER='less'
-export LESS='-RXi+gg'
-export MANPAGER="nvim -R -c \"execute 'Man ' . \$MAN_PN\" -c 'only' -"
-export GIT_PAGER='delta'
-
 export GPG_TTY=`tty`
-
-s=""
-s+=":/usr/local/bin"
-s+=":/usr/local/opt"
-s+=":/opt/local/bin"
-s+=":/opt/local/sbin"
-s+=":/opt/homebrew/bin"
-s+=":$HOME/.local/bin"
-s+=":$HOME/.cargo/bin"
-s+=":$PATH"
-export PATH="$s"
 
 setopt AUTO_MENU
 setopt ALWAYS_TO_END
@@ -109,8 +87,6 @@ bindkey '^M' expand-dots-then-accept-line
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey '^X' edit-command-line
-
-export RIPGREP_CONFIG_PATH=~/.ripgreprc
 
 # Alias l might or might not exist so try to remove it.
 # If it exists, it would be called instead of the function below.
@@ -202,11 +178,6 @@ gd() {
 }
 
 alias blender=/Applications/blender.app/Contents/MacOS/blender
-
-# Disable homebrew from auto-updating everything when installing a package.
-export HOMEBREW_NO_AUTO_UPDATE=1
-# Disable homebrew from hinting the ways it can be configured with env variables.
-export HOMEBREW_NO_ENV_HINTS=1
 
 if [ -z "$TMUX" ]; then
   # Start default tmux session if not already running inside of tmux.
