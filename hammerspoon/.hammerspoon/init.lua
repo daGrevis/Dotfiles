@@ -63,7 +63,8 @@ local function closeNotifications()
     end tell
   ]]
 
-  return hs.osascript.applescript(s)
+  hs.osascript.applescript(s)
+  hs.execute('/opt/homebrew/bin/alerter --remove "notify" --sender "org.alacritty" 2>/dev/null', true)
 end
 
 local function airPods(deviceName)

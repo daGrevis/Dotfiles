@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+IS_DARWIN=false
+if [ "$(uname)" = "Darwin" ]; then
+  IS_DARWIN=true
+fi
+
+notify() {
+  ~/sh/notify.sh "$@"
+}
+
 confirm() {
   local prompt=${1:-"Confirm?"}
   while true; do
@@ -157,7 +166,7 @@ gg() {
 }
 
 clip() {
-  if [ "$(uname)" = "Darwin" ]; then
+  if $IS_DARWIN; then
     pbcopy "$@"
   else
     xclip -f "$@" | xclip -selection clipboard
@@ -165,7 +174,7 @@ clip() {
 }
 
 clap() {
-  if [ "$(uname)" = "Darwin" ]; then
+  if $IS_DARWIN; then
     pbpaste
   else
     xclip -o -selection clipboard

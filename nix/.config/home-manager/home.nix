@@ -109,6 +109,8 @@ in
     yalc
     # unfree:
     ngrok
+  ] ++ lib.optionals stdenv.isLinux [
+    xdotool
   ];
 
   # }}}
