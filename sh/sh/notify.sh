@@ -91,7 +91,7 @@ else
           else
             result="$first_line"
           fi
-        } < <(notify-send "$title" "$message" --action=click=Open --wait --print-id 2>/dev/null)
+        } < <(notify-send "$title" "$message" -t 0 --action=click=Open --wait --print-id 2>/dev/null)
         rm -f "$notify_id_file"
         "$tmux_bin" -S "$socket" set-hook -p -t "$TMUX_PANE" -u pane-focus-in 2>/dev/null
         if [ "$result" = "click" ]; then
@@ -105,7 +105,7 @@ else
       fi
     fi
   else
-    notify-send "$title" "$message" 2>/dev/null
+    notify-send "$title" "$message" -t 0 2>/dev/null
   fi
 fi
 
