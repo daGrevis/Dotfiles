@@ -46,6 +46,7 @@ beautiful.init({
   useless_gap = 0,
   border_width = 0,
   tasklist_plain_task_name = true,
+  notification_width = 350,
 })
 
 gears.wallpaper.set(bg0)
