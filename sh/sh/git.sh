@@ -21,7 +21,28 @@ alias gcp="git cherry-pick"
 alias gcpc="git cherry-pick --continue"
 alias gcps="git cherry-pick --skip"
 alias gcpa="git cherry-pick --abort"
-alias gd="git diff"
+unalias gd 2>/dev/null
+# Git diff via delta. Press r to reload which will update the diff and keep the scroll position.
+gd() {
+    local cmd_file="/tmp/.gd-cmd-$$"
+    local out_file="/tmp/.gd-out-$$"
+    local hist_file="/tmp/.gd-hist-$$"
+    local keyfile=$(mktemp)
+    echo "git diff --color=always $* | delta --paging=never --width=$COLUMNS" > "$cmd_file"
+    printf '#command\nr set-mark a^X\n^X quit r\n' > "$keyfile"
+    local start_cmd=""
+    while true; do
+        sh "$cmd_file" > "$out_file"
+        LESSHISTFILE="$hist_file" less --save-marks -R --lesskey-src="$keyfile" ${start_cmd:+"$start_cmd"} "$out_file"
+        [ $? -ne 114 ] && break
+        local offset=$(awk '/^m a /{print $4}' "$hist_file" | tail -1)
+        if [ -n "$offset" ] && [ "$offset" -gt 0 ]; then
+            local line_num=$(( $(head -c "$offset" "$out_file" | wc -l) + 1 ))
+            start_cmd="+${line_num}g"
+        fi
+    done
+    rm -f "$cmd_file" "$out_file" "$hist_file" "$keyfile"
+}
 gl() {
     rev_before=$(git rev-parse HEAD)
 
@@ -61,7 +82,33 @@ alias grb="git rebase"
 alias grbc="git rebase --continue"
 alias grbs="git rebase --skip"
 alias grba="git rebase --abort"
-alias gs="git status -sb"
+unalias gs 2>/dev/null
+gs() {
+    # Branch line.
+    local gs_out
+    gs_out=$(git -c color.status=always status -sb) || return
+    echo "${gs_out%%$'\n'*}"
+    # Show line-level diff stats (added/deleted) including untracked files.
+    local stats
+    stats=$(git diff --numstat HEAD 2>/dev/null; git ls-files --others --exclude-standard 2>/dev/null | while read -r f; do test -f "$f" && wc -l < "$f"; done | awk '{print $1 "\t" 0 "\t(new file)"}')
+
+    # Line stats.
+    if [ -n "$stats" ]; then
+        local added=0 deleted=0
+        while IFS=$'\t' read -r a d _; do
+            [ "$a" != "-" ] && added=$((added + a))
+            [ "$d" != "-" ] && deleted=$((deleted + d))
+        done <<< "$stats"
+        if [ "$added" -gt 0 ] || [ "$deleted" -gt 0 ]; then
+            echo -e " \033[32m+${added}\033[0m \033[31m-${deleted}\033[0m"
+        fi
+    fi
+    # File list.
+    local files="${gs_out#*$'\n'}"
+    if [ "$files" != "$gs_out" ]; then
+        echo "$files"
+    fi
+}
 alias gsw="git show"
 alias gswl="git show --name-only"
 alias gsh="git stash"
