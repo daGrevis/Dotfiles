@@ -27,7 +27,12 @@ if [ "$event" = "Notification" ] && [ "$notification_type" = "permission_prompt"
   exit 0
 fi
 
-# For Stop and non-permission Notification events, show duration.
+# Ignore all other Notification events — Stop hook already handles completion.
+if [ "$event" = "Notification" ]; then
+  exit 0
+fi
+
+# For Stop events, show duration.
 message="Done"
 
 start_file="/tmp/.claude-prompt-start-${sid:-default}"
@@ -42,7 +47,6 @@ if [ -f "$start_file" ]; then
   else
     message="${secs}s"
   fi
-  rm -f "$start_file"
 fi
 
 nohup ~/sh/notify.sh "$title" "$message" > /dev/null 2>&1 &
