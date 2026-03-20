@@ -23,7 +23,7 @@ const spawnSh = (command) =>
     const response = { ok: false, stdout: '' }
 
     sh.stdout.on('data', (data) => {
-      response.stdout = data.toString()
+      response.stdout += data.toString()
     })
 
     sh.on('close', (code) => {
@@ -101,6 +101,98 @@ const removeDuplicates = (list) => {
   return list.filter((item, index) => list.indexOf(item) === index)
 }
 
+const getListeningPorts = async () => {
+  const { ok, stdout } = await spawnSh(
+    'lsof -iTCP -sTCP:LISTEN -P -n 2>/dev/null',
+  )
+  if (!ok || !stdout) return {}
+
+  const pidPorts = {}
+  for (const line of stdout.split('\n')) {
+    const parts = line.trim().split(/\s+/)
+    if (parts.length >= 9 && parts[0] !== 'COMMAND') {
+      const pid = parts[1]
+      const portMatch = parts[8].match(/:(\d+)$/)
+      if (portMatch) {
+        if (!pidPorts[pid]) pidPorts[pid] = new Set()
+        pidPorts[pid].add(portMatch[1])
+      }
+    }
+  }
+  return pidPorts
+}
+
+const getProcessTree = async () => {
+  const { ok, stdout } = await spawnSh('ps -eo pid=,ppid=')
+  if (!ok || !stdout) return {}
+
+  const children = {}
+  for (const line of stdout.split('\n')) {
+    const match = line.trim().match(/^(\d+)\s+(\d+)$/)
+    if (match) {
+      const [, pid, ppid] = match
+      if (!children[ppid]) children[ppid] = []
+      children[ppid].push(pid)
+    }
+  }
+  return children
+}
+
+const getAllDescendantPids = (pid, processTree) => {
+  const pids = new Set()
+  const stack = [pid]
+  while (stack.length > 0) {
+    const current = stack.pop()
+    for (const child of processTree[current] || []) {
+      pids.add(child)
+      stack.push(child)
+    }
+  }
+  return pids
+}
+
+const getSessionDescriptions = async () => {
+  const { ok, stdout } = await spawnSh(
+    "tmux list-sessions -F '#{session_name}\t#{@description}' 2>/dev/null",
+  )
+  if (!ok || !stdout) return {}
+
+  const descriptions = {}
+  for (const line of stdout.trim().split('\n')) {
+    const [name, ...descParts] = line.split('\t')
+    const desc = descParts.join('\t').trim()
+    if (name && desc) {
+      descriptions[name] = desc
+    }
+  }
+  return descriptions
+}
+
+const getSessionPorts = async (session, processTree, listeningPorts) => {
+  const { ok, stdout } = await spawnSh(
+    `tmux list-panes -s -t '=${session}' -F '#{pane_pid}'`,
+  )
+  if (!ok || !stdout) return []
+
+  const panePids = stdout.trim().split('\n').filter(Boolean)
+  const ports = new Set()
+
+  for (const panePid of panePids) {
+    const descendants = getAllDescendantPids(panePid, processTree)
+    descendants.add(panePid)
+    for (const pid of descendants) {
+      const pidPorts = listeningPorts[pid]
+      if (pidPorts) {
+        for (const port of pidPorts) {
+          ports.add(port)
+        }
+      }
+    }
+  }
+
+  return [...ports].sort((a, b) => Number(a) - Number(b))
+}
+
 const sessionSorter = (activeSessions, historySessions) => (a, b) => {
   const isActiveA = activeSessions.includes(a)
   const isActiveB = activeSessions.includes(b)
@@ -134,7 +226,7 @@ const sessionSorter = (activeSessions, historySessions) => (a, b) => {
 
 const selectWithFzf = async (sessions) => {
   const { stdout, ok } = await spawnSh(
-    `echo '${sessions.join('\n')}' | fzf --tac --print-query`,
+    `echo '${sessions.join('\n')}' | fzf --tac --print-query --ansi --no-scrollbar`,
   )
 
   const [query, match] = stdout.split('\n')
@@ -180,13 +272,60 @@ const main = async () => {
   )
   const currentSession = await getCurrentSession()
 
-  const sessions = removeDuplicates([...activeSessions, ...tmuxinatorSessions])
+  const [processTree, listeningPorts, sessionDescriptions, termWidth] =
+    await Promise.all([
+    getProcessTree(),
+    getListeningPorts(),
+    getSessionDescriptions(),
+    spawnSh('stty size 2>/dev/null').then(({ ok, stdout }) => {
+      const RIGHT_PAD = 3
+      if (ok && stdout.trim()) {
+        const cols = parseInt(stdout.trim().split(/\s+/)[1], 10)
+        if (cols > 0) return cols - RIGHT_PAD
+      }
+      return 80 - RIGHT_PAD
+    }),
+  ])
+
+  const sortedSessions = removeDuplicates([
+    ...activeSessions,
+    ...tmuxinatorSessions,
+  ])
     .filter((session) => session !== currentSession)
     .sort(sessionSorter(activeSessions, historySessions))
+
+  const sessionPortsMap = {}
+  await Promise.all(
+    activeSessions.map(async (session) => {
+      sessionPortsMap[session] = await getSessionPorts(
+        session,
+        processTree,
+        listeningPorts,
+      )
+    }),
+  )
+
+  const sessions = sortedSessions
     .map((session) => {
       const isActive = activeSessions.includes(session)
+      const ports = sessionPortsMap[session] || []
+      const desc = sessionDescriptions[session] || ''
+      const prefix = isActive ? '[+]' : '[ ]'
 
-      return `${isActive ? '[+]' : '[ ]'} ${session}`
+      const descPart = desc ? ` \x1b[2m${desc}\x1b[0m` : ''
+      const leftSide = `${prefix} ${session}${descPart}`
+      const leftLen =
+        prefix.length + 1 + session.length + (desc ? 1 + desc.length : 0)
+
+      if (ports.length > 0) {
+        const portsStr = ports.map((p) => ':' + p).join(',')
+        const padding = ' '.repeat(
+          Math.max(2, termWidth - leftLen - portsStr.length),
+        )
+        return `${leftSide}${padding}\x1b[33m${portsStr}\x1b[0m`
+      }
+      const padding = ' '.repeat(Math.max(0, termWidth - leftLen))
+      return `${leftSide}${padding}`
     })
     .reverse()
 
@@ -196,7 +335,7 @@ const main = async () => {
     nextSession = await selectWithFzf(sessions)
 
     if (nextSession) {
-      nextSession = nextSession.replace(/^\[[+ ]\] /, '')
+      nextSession = nextSession.replace(/^\[[+ ]\] /, '').split(/\s/)[0]
     }
   }
 
