@@ -49,13 +49,9 @@
 
     man = {
       enable = true;
-      generateCaches = true;
+      cache.enable = true;
     };
   };
-
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=15s
-  '';
 
   systemd.user.services.virtualbox-resize = {
     description = "VirtualBox Guest: Resize";
