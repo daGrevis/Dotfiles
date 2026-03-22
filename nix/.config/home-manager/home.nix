@@ -256,4 +256,10 @@ in
   home.file.".ripgreprc".source = "${dotfilesDirectory}/ripgrep/.ripgreprc";
 
   # }}}
+
+  # {{{ Claude
+
+  home.file.".claude/settings.json".source = "${dotfilesDirectory}/claude/.claude/settings.json";
+
+  # }}}
 }
