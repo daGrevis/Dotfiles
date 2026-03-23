@@ -119,6 +119,11 @@ alias gsha="git stash apply"
 alias gtg="git tag"
 alias gfc="git fetch"
 alias gfca="git fetch --all"
-
+gpo() {
+    git -C "${1:-.}" diff
+}
+gpi() {
+    git -C "${1:-.}" apply -
+}
 alias git-delete-local-branch="git branch -D"
 alias git-delete-remote-branch="git push origin --delete"
