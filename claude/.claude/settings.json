@@ -1,5 +1,14 @@
 {
   "model": "opus[1m]",
+  "permissions": {
+    "allow": [
+      "Edit",
+      "Write",
+      "WebFetch *",
+      "WebSearch *",
+      "mcp__*"
+    ]
+  },
   "hooks": {
     "UserPromptSubmit": [
       {
