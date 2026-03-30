@@ -21,24 +21,17 @@ fi
 
 notification_type=$(echo "$input" | jq -r '.notification_type // empty')
 
-# For permission prompts, show "Waiting for input..." and exit early.
-if [ "$event" = "Notification" ] && [ "$notification_type" = "permission_prompt" ]; then
-  nohup ~/sh/notify.sh "$title" "Waiting for input..." > /dev/null 2>&1 &
+# Ignore non-permission Notification events — Stop hook handles completion.
+if [ "$event" = "Notification" ] && [ "$notification_type" != "permission_prompt" ]; then
   exit 0
 fi
 
-# Ignore all other Notification events — Stop hook already handles completion.
-if [ "$event" = "Notification" ]; then
-  exit 0
-fi
-
-# For Stop events, show duration.
-message="Done"
-
+# Compute elapsed time from the last prompt/permission event.
 start_file="/tmp/.claude-prompt-start-${sid:-default}"
+now=$(date +%s)
+message="Done"
 if [ -f "$start_file" ]; then
   start=$(cat "$start_file")
-  now=$(date +%s)
   elapsed=$((now - start))
   mins=$((elapsed / 60))
   secs=$((elapsed % 60))
@@ -49,4 +42,12 @@ if [ -f "$start_file" ]; then
   fi
 fi
 
-nohup ~/sh/notify.sh "$title" "$message" > /dev/null 2>&1 &
+if [ "$notification_type" = "permission_prompt" ]; then
+  # Reset start time so the next segment measures from now (after user approves).
+  echo "$now" > "$start_file"
+  nohup ~/sh/notify.sh "$title" "Waiting for input... ($message)" > /dev/null 2>&1 &
+else
+  # Stop event — clean up the start file.
+  rm -f "$start_file"
+  nohup ~/sh/notify.sh "$title" "$message" > /dev/null 2>&1 &
+fi
