@@ -119,7 +119,10 @@
     };
   };
 
-  nix.settings.trusted-users = ["root" "dagrevis"];
+  nix.settings = {
+    trusted-users = [ "root" "dagrevis" ];
+    experimental-features = [ "nix-command" ];
+  };
 
   security.sudo.wheelNeedsPassword = false;
 
