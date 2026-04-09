@@ -53,19 +53,7 @@
     };
   };
 
-  systemd.user.services.virtualbox-resize = {
-    description = "VirtualBox Guest: Resize";
-
-    wantedBy = [ "graphical-session.target" ];
-    requires = [ "dev-vboxguest.device" ];
-    after = [ "dev-vboxguest.device" ];
-
-    unitConfig.ConditionVirtualization = "oracle";
-
-    serviceConfig.ExecStart = "${config.boot.kernelPackages.virtualboxGuestAdditions}/bin/VBoxClient -fv --vmsvga";
-  };
-
-  systemd.user.services.earlyoom = {
+systemd.user.services.earlyoom = {
     wantedBy = [ "graphical-session.target" ];
 
     serviceConfig = {
@@ -107,6 +95,7 @@
 
   virtualisation = {
     docker.enable = true;
+    virtualbox.guest.enable = true;
   };
 
   users = {
