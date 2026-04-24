@@ -8,6 +8,7 @@ let
   homeDirectory = if stdenv.isLinux then "/home/${username}" else "/Users/${username}";
   dotfilesDirectory = "${homeDirectory}/Dotfiles";
   recursive-nerd = pkgs.callPackage ./recursive-nerd.nix { };
+  claude-code = pkgs.callPackage ./claude-code.nix { };
   nix-rice = pkgs.callPackage (
     fetchTarball {
       url = "https://github.com/bertof/nix-rice/archive/refs/tags/v0.2.7.tar.gz";
