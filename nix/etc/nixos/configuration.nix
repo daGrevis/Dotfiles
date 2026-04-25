@@ -117,6 +117,8 @@ systemd.user.services.earlyoom = {
 
   programs.gnupg.agent.enable = true;
 
+  programs.nix-ld.enable = true;
+
   programs.zsh.enable = true;
 
 }

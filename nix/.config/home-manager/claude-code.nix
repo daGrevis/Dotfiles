@@ -1,13 +1,16 @@
 { lib
 , stdenvNoCC
 , fetchurl
-, autoPatchelfHook
 }:
 let
   platforms = {
     aarch64-darwin = {
       platform = "darwin-arm64";
       hash = "sha256-TLTZRkP8YTXwgvS4+eadLkClHmAyFI0lgRKcrsxO5Cw=";
+    };
+    x86_64-linux = {
+      platform = "linux-x64";
+      hash = "sha256-Dd5UjGmM7nF0dRqSQmEj6QqV9WvwknFCNoHdiD2L8Oo=";
     };
   };
   current = platforms.${stdenvNoCC.hostPlatform.system} or (throw "unsupported platform");
@@ -20,6 +23,9 @@ stdenvNoCC.mkDerivation rec {
     url = "https://registry.npmjs.org/@anthropic-ai/claude-code-${current.platform}/-/claude-code-${current.platform}-${version}.tgz";
     hash = current.hash;
   };
+
+  dontStrip = true;
+  dontPatchELF = true;
 
   installPhase = ''
     mkdir -p $out/bin
