@@ -224,9 +224,10 @@ const sessionSorter = (activeSessions, historySessions) => (a, b) => {
   return 0
 }
 
-const selectWithFzf = async (sessions) => {
+const selectWithFzf = async (sessions, hasCurrent) => {
+  const bind = hasCurrent ? `--bind 'load:up'` : ''
   const { stdout, ok } = await spawnSh(
-    `echo '${sessions.join('\n')}' | fzf --tac --print-query --ansi --no-scrollbar`,
+    `echo '${sessions.join('\n')}' | fzf ${bind} --print-query --ansi --no-scrollbar`,
   )
 
   const [query, match] = stdout.split('\n')
@@ -287,12 +288,19 @@ const main = async () => {
     }),
   ])
 
-  const sortedSessions = removeDuplicates([
+  const isCurrentActive =
+    currentSession && activeSessions.includes(currentSession)
+
+  const otherSessions = removeDuplicates([
     ...activeSessions,
     ...tmuxinatorSessions,
   ])
     .filter((session) => session !== currentSession)
     .sort(sessionSorter(activeSessions, historySessions))
+
+  const sortedSessions = isCurrentActive
+    ? [currentSession, ...otherSessions]
+    : otherSessions
 
   const sessionPortsMap = {}
   await Promise.all(
@@ -308,9 +316,10 @@ const main = async () => {
   const sessions = sortedSessions
     .map((session) => {
       const isActive = activeSessions.includes(session)
+      const isCurrent = session === currentSession
       const ports = sessionPortsMap[session] || []
       const desc = sessionDescriptions[session] || ''
-      const prefix = isActive ? '[+]' : '[ ]'
+      const prefix = isCurrent ? '[*]' : isActive ? '[+]' : '[ ]'
 
       const descPart = desc ? ` \x1b[2m${desc}\x1b[0m` : ''
       const leftSide = `${prefix} ${session}${descPart}`
@@ -327,15 +336,14 @@ const main = async () => {
       const padding = ' '.repeat(Math.max(0, termWidth - leftLen))
       return `${leftSide}${padding}`
     })
-    .reverse()
 
   let nextSession = process.argv[2]
 
   if (!nextSession) {
-    nextSession = await selectWithFzf(sessions)
+    nextSession = await selectWithFzf(sessions, isCurrentActive)
 
     if (nextSession) {
-      nextSession = nextSession.replace(/^\[[+ ]\] /, '').split(/\s/)[0]
+      nextSession = nextSession.replace(/^\[[*+ ]\] /, '').split(/\s/)[0]
     }
   }
 
