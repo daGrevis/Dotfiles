@@ -15,8 +15,9 @@
     "allow": [
       "Edit",
       "Write",
-      "WebFetch *",
-      "WebSearch *",
+      "WebFetch",
+      "WebSearch",
+      "Bash(curl:*)",
       "mcp__*"
     ]
   },
