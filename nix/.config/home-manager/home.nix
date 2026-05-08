@@ -260,7 +260,24 @@ in
 
   # {{{ Claude
 
-  home.file.".claude/settings.json".source = "${dotfilesDirectory}/claude/.claude/settings.json";
+  # NOTE: settings.json is copied (not symlinked) because `claude plugin install`
+  # mutates it, and the read-only nix store path causes EACCES.
+  # Upstream issue: anthropics/claude-code#3575
+  home.activation.claudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    dst="$HOME/.claude/settings.json"
+    $DRY_RUN_CMD mkdir -p "$(dirname "$dst")"
+    if [ -L "$dst" ]; then
+      $DRY_RUN_CMD rm "$dst"
+    fi
+    $DRY_RUN_CMD install -m 0644 "${dotfilesDirectory}/claude/.claude/settings.json" "$dst"
+  '';
+
+  home.activation.installClaudePlugins = lib.hm.dag.entryAfter [ "claudeSettings" ] ''
+    PATH="${claude-code}/bin:$PATH"
+    if ! ${pkgs.jq}/bin/jq -e '.plugins | has("caveman@caveman")' "$HOME/.claude/plugins/installed_plugins.json" >/dev/null 2>&1; then
+      $DRY_RUN_CMD claude plugin install caveman@caveman || true
+    fi
+  '';
 
   # }}}
 }
