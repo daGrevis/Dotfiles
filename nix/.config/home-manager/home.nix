@@ -275,6 +275,7 @@ in
   home.activation.installClaudePlugins = lib.hm.dag.entryAfter [ "claudeSettings" ] ''
     PATH="${claude-code}/bin:$PATH"
     if ! ${pkgs.jq}/bin/jq -e '.plugins | has("caveman@caveman")' "$HOME/.claude/plugins/installed_plugins.json" >/dev/null 2>&1; then
+      $DRY_RUN_CMD claude plugin marketplace add JuliusBrussee/caveman || true
       $DRY_RUN_CMD claude plugin install caveman@caveman || true
     fi
   '';
