@@ -45,6 +45,7 @@ in
     cargo
     claude-code
     cloc
+    codex
     deno
     dig
     docker
