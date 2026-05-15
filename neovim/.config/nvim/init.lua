@@ -4,6 +4,11 @@
 
 -- If you experience any errors, start with running `:checkhealth`.
 
+-- Keep Treesitter parsers in Neovim's writable data dir instead of the plugin checkout.
+local treesitter_runtime_dir = vim.fn.stdpath 'data' .. '/site'
+-- Put that runtime dir first so Neovim prefers those parser binaries and queries.
+vim.opt.runtimepath:prepend(treesitter_runtime_dir)
+
 local function close_all_floating_windows()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.api.nvim_win_get_config(win).relative == 'win' then
@@ -1325,6 +1330,8 @@ require('lazy').setup {
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
+      -- nvim-treesitter appends `/parser` internally, so pass the runtime root here.
+      parser_install_dir = treesitter_runtime_dir,
       ensure_installed = {
         'bash',
         'c',
