@@ -9,6 +9,18 @@ notify() {
   ~/sh/notify.sh "$@"
 }
 
+codex() {
+  case "${1:-}" in
+    exec|review|login|logout|mcp|mcp-server|app-server|app|completion|sandbox|debug|apply|cloud|features|help|-h|--help|-V|--version)
+      command codex "$@"
+      ;;
+    *)
+      # Wrap interactive Codex sessions so rollout events can trigger desktop notifications.
+      ~/sh/codex-notify.sh run "$@"
+      ;;
+  esac
+}
+
 confirm() {
   local prompt=${1:-"Confirm?"}
   while true; do
