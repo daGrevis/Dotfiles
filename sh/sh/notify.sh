@@ -81,7 +81,7 @@ else
     focused=$(xdotool getactivewindow getwindowclassname 2>/dev/null)
     if [ "$target" != "$current_target" ] || [[ "${focused,,}" != "alacritty" ]]; then
       notify_id_file="/tmp/.notify-id-${TMUX_PANE#%}"
-      gdbus_bin=$(which gdbus 2>/dev/null)
+      dbus_bin=$(which dbus-send 2>/dev/null)
       (
         {
           read -r first_line
@@ -99,9 +99,9 @@ else
           "$tmux_bin" -S "$socket" switch-client -c "$client" -t "$target" 2>/dev/null
         fi
       ) &
-      if [ -n "$gdbus_bin" ]; then
+      if [ -n "$dbus_bin" ]; then
         "$tmux_bin" -S "$socket" set-hook -p -t "$TMUX_PANE" pane-focus-in \
-          "run-shell '{ nid=\$(cat ${notify_id_file} 2>/dev/null) && ${gdbus_bin} call --session --dest org.freedesktop.Notifications --object-path /org/freedesktop/Notifications --method org.freedesktop.Notifications.CloseNotification \$nid; rm -f ${notify_id_file}; ${tmux_bin} -S ${socket} set-hook -p -t ${TMUX_PANE} -u pane-focus-in; } >/dev/null 2>&1'"
+          "run-shell '{ nid=\$(cat ${notify_id_file} 2>/dev/null) && ${dbus_bin} --session --dest=org.freedesktop.Notifications --type=method_call /org/freedesktop/Notifications org.freedesktop.Notifications.CloseNotification uint32:\$nid; rm -f ${notify_id_file}; ${tmux_bin} -S ${socket} set-hook -p -t ${TMUX_PANE} -u pane-focus-in; } >/dev/null 2>&1'"
       fi
     fi
   else
