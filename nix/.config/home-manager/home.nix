@@ -98,6 +98,7 @@ in
     stow
     tmux
     tmuxinator
+    tree-sitter
     unzip
     wget
     wordnet
