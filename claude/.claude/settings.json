@@ -12,6 +12,7 @@
     "caveman@caveman": true
   },
   "permissions": {
+    "defaultMode": "auto",
     "allow": [
       "Edit",
       "Write",
