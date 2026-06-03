@@ -1338,6 +1338,7 @@ require('lazy').setup {
         'diff',
         'dockerfile',
         'elixir',
+        'gitcommit',
         'go',
         'html',
         'java',
