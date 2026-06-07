@@ -9,7 +9,7 @@ setopt AUTO_PARAM_SLASH
 setopt AUTO_REMOVE_SLASH
 setopt INTERACTIVE_COMMENTS
 
-# History.
+HISTFILE=$HOME/.zsh_history
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
@@ -28,19 +28,17 @@ zstyle ':completion:*' select-prompt ''
 # Make capital and small letters the same when auto-completing.
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-autoload -Uz compinit && compinit
+# -C skips the slow security re-audit of completion dirs.
+autoload -Uz compinit && compinit -C
 
 # Emacs bindings like <C-a> and <C-e>.
 bindkey -e
 
-# Apparently this is needed for $key[Up] and alike binds to work on both Linux and MacOS.
-if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
-    autoload -Uz add-zle-hook-widget
-    function zle_application_mode_start { echoti smkx }
-    function zle_application_mode_stop { echoti rmkx }
-    add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
-    add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
-fi
+bindkey "^[[H" beginning-of-line; bindkey "^[OH" beginning-of-line
+bindkey "^[[F" end-of-line;       bindkey "^[OF" end-of-line
+bindkey "^[[3~" delete-char
+bindkey "^[[D" backward-char;     bindkey "^[OD" backward-char
+bindkey "^[[C" forward-char;      bindkey "^[OC" forward-char
 
 # Don't count "/" or "." characters as part of word when backward deleting.
 my-backward-delete-word() {
@@ -54,8 +52,8 @@ autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-bindkey "${key[Up]}" up-line-or-beginning-search
-bindkey "${key[Down]}" down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search;   bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search; bindkey "^[OB" down-line-or-beginning-search
 
 # Enable <S-Tab> to select previous menu completion.
 bindkey '^[[Z' reverse-menu-complete

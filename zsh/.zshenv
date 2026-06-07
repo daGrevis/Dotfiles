@@ -1,3 +1,6 @@
+# Skip global rcs; we set up everything ourselves below.
+setopt no_global_rcs
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -17,6 +20,8 @@ s+=":/opt/local/sbin"
 s+=":/opt/homebrew/bin"
 s+=":$HOME/.local/bin"
 s+=":$HOME/.cargo/bin"
+s+=":$HOME/.nix-profile/bin"
+s+=":/nix/var/nix/profiles/default/bin"
 s+=":$PATH"
 export PATH="$s"
 
