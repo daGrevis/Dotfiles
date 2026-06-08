@@ -42,7 +42,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "input=$(cat); sid=$(echo \"$input\" | jq -r '.session_id // empty'); date +%s > /tmp/.claude-prompt-start-${sid:-default}"
+            "command": "input=$(cat); sid=$(echo \"$input\" | jq -r '.session_id // empty'); date +%s > /tmp/.claude-prompt-start-${sid:-default}; rm -f /tmp/.claude-prompt-pause-${sid:-default}"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/sh/claude-notify.sh"
           }
         ]
       }
