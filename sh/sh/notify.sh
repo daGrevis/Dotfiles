@@ -34,7 +34,14 @@ message="${2:-Done}"
 # Shared tmux variables (used by both macOS and Linux paths).
 if [ -n "$TMUX" ]; then
   target=$(tmux display-message -t "$TMUX_PANE" -p '#{session_name}:#{window_index}.#{pane_index}')
-  current_target=$(tmux display-message -p '#{session_name}:#{window_index}.#{pane_index}')
+  # The user's actual current view, taken from the most-recently-active attached
+  # client server-wide. Must NOT use `display-message -p` here: this script runs
+  # as a background process that inherited $TMUX from Claude's pane, so a bare
+  # display-message resolves to that session's active window/pane regardless of
+  # where the user really is. If they switched to another tmux session while
+  # Claude's tab is still active, current_target would wrongly equal target and
+  # the notification would be suppressed. Empty when no client is attached.
+  current_target=$(tmux list-clients -F '#{client_activity} #{session_name}:#{window_index}.#{pane_index}' | sort -rn | head -n1 | cut -d' ' -f2-)
   socket=$(echo "$TMUX" | cut -d, -f1)
   client=$(tmux display-message -p '#{client_tty}')
   tmux_bin=$(which tmux)
