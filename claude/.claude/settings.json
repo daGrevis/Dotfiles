@@ -1,5 +1,8 @@
 {
   "model": "opus",
+  "env": {
+    "DISABLE_UPDATES": "1"
+  },
   "extraKnownMarketplaces": {
     "caveman": {
       "source": {
@@ -18,8 +21,7 @@
       "Write",
       "WebFetch",
       "WebSearch",
-      "Bash(curl:*)",
-      "mcp__*"
+      "Bash(curl:*)"
     ]
   },
   "hooks": {

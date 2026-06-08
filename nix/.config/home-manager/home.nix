@@ -262,8 +262,6 @@ in
 
   # {{{ Claude
 
-  home.sessionVariables.DISABLE_UPDATES = "1";
-
   # NOTE: settings.json is copied (not symlinked) because `claude plugin install`
   # mutates it, and the read-only nix store path causes EACCES.
   # Upstream issue: anthropics/claude-code#3575
