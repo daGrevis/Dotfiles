@@ -274,6 +274,10 @@ in
     $DRY_RUN_CMD install -m 0644 "${dotfilesDirectory}/claude/.claude/settings.json" "$dst"
   '';
 
+  # claude (nix) is a Bun exe detected as "native" at runtime, so it warns
+  # "command not found at ~/.local/bin/claude". Disable that check.
+  home.sessionVariables.DISABLE_INSTALLATION_CHECKS = "1";
+
   home.activation.installClaudePlugins = lib.hm.dag.entryAfter [ "claudeSettings" ] ''
     PATH="${claude-code}/bin:$PATH"
     if ! ${pkgs.jq}/bin/jq -e '.plugins | has("caveman@caveman")' "$HOME/.claude/plugins/installed_plugins.json" >/dev/null 2>&1; then
