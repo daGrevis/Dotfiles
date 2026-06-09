@@ -1,5 +1,6 @@
 {
   "model": "opus",
+  "tui": "default",
   "env": {
     "DISABLE_UPDATES": "1"
   },
