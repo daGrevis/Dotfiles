@@ -84,7 +84,7 @@ bindkey '^M' expand-dots-then-accept-line
 
 autoload -z edit-command-line
 zle -N edit-command-line
-bindkey '^X' edit-command-line
+bindkey '^G' edit-command-line
 
 # Alias l might or might not exist so try to remove it.
 # If it exists, it would be called instead of the function below.
