@@ -1,0 +1,14 @@
+[Unit]
+Description=UniFi Protect floodlight keepalive
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root
+ExecStart=/root/floodlight-keepalive.sh -m 24:5A:4C:B0:40:05 -i 5 -w 300 -b 6 -B 1 -c F4:E2:C6:0F:EB:90,28:70:4E:1D:D3:23,D0:21:F9:99:37:0D -s person,animal,face
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

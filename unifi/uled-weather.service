@@ -1,0 +1,16 @@
+[Unit]
+Description=UniFi LED weather color
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root
+# --detached skips the script's own nohup/PID daemonization and runs the
+# fetch loop in the foreground, so systemd owns the process directly.
+ExecStart=/root/uled-weather.sh --detached
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
