@@ -1611,5 +1611,27 @@ vim.api.nvim_create_user_command('ReverseLines', function(opts)
   end
 end, { range = true })
 
+local function md_free_port()
+  local server = vim.uv.new_tcp()
+  server:bind('127.0.0.1', 0)
+  local port = server:getsockname().port
+  server:close()
+  return port
+end
+
+vim.api.nvim_create_user_command('Md', function()
+  local file = vim.fn.expand '%:p'
+  if file == '' then
+    vim.notify('Md: buffer has no file', vim.log.levels.ERROR)
+    return
+  end
+  local port = md_free_port()
+  vim.fn.jobstart { vim.fn.expand '~/sh/md.js', file, '0.0.0.0:' .. tostring(port) }
+  local host = vim.env.MD_HOSTNAME or 'localhost'
+  local url = 'http://' .. host .. ':' .. port
+  vim.fn.setreg('+', url)
+  vim.notify('Md: preview at ' .. url .. ' (copied to clipboard)', vim.log.levels.INFO)
+end, {})
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
