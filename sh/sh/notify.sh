@@ -18,9 +18,11 @@
 # identity, since the latter follows the user's current view.
 #
 # On Linux, uses notify-send with --action/--wait for click-to-focus (same
-# pattern as alerter on macOS). xdotool replaces osascript for detecting the
-# focused window and activating Alacritty. Falls back to plain notify-send
-# when not in tmux.
+# pattern as alerter on macOS). Two actions are registered: "default" is the
+# spec's body-click action (invisible, fires when clicking anywhere on the
+# notification) and "click" renders the visible Open entry. xdotool replaces
+# osascript for detecting the focused window and activating Alacritty. Falls
+# back to plain notify-send when not in tmux.
 # The bell (\a) triggers the dock icon bounce on macOS (Alacritty doesn't support
 # the red dot badge — see https://github.com/alacritty/alacritty/issues/4472).
 # The bounce only works if you've switched away from Alacritty to another app.
@@ -98,10 +100,10 @@ else
           else
             result="$first_line"
           fi
-        } < <(notify-send "$title" "$message" -t 0 --action=click=Open --wait --print-id 2>/dev/null)
+        } < <(notify-send "$title" "$message" -t 0 --action=default=Open --action=click=Open --wait --print-id 2>/dev/null)
         rm -f "$notify_id_file"
         "$tmux_bin" -S "$socket" set-hook -p -t "$TMUX_PANE" -u pane-focus-in 2>/dev/null
-        if [ "$result" = "click" ]; then
+        if [ "$result" = "default" ] || [ "$result" = "click" ]; then
           xdotool search --class Alacritty windowactivate 2>/dev/null
           "$tmux_bin" -S "$socket" switch-client -c "$client" -t "$target" 2>/dev/null
         fi
