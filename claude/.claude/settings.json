@@ -32,6 +32,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "~/sh/update-claude-usage-tmux.sh"
+          },
+          {
+            "type": "command",
             "command": "[ -f ~/Dropbox/claude-memory.md ] && cat ~/Dropbox/claude-memory.md || true"
           }
         ]
@@ -74,6 +78,10 @@
       {
         "matcher": "",
         "hooks": [
+          {
+            "type": "command",
+            "command": "~/sh/update-claude-usage-tmux.sh"
+          },
           {
             "type": "command",
             "command": "~/sh/claude-notify.sh"
