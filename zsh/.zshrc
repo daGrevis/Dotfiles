@@ -156,6 +156,8 @@ alias blender=/Applications/blender.app/Contents/MacOS/blender
 
 alias claude-usage=~/sh/claude-usage.sh
 
+alias generate-password=~/sh/generate-password.sh
+
 if [ -z "$TMUX" ]; then
   # Start default tmux session if not already running inside of tmux.
   mux default

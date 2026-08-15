@@ -100,10 +100,6 @@ json-prettify() {
     python -c 'import fileinput, json; print(json.dumps(json.loads("".join(fileinput.input())), indent=2))'
 }
 
-generate-password() {
-    xkcdpass -d "-"
-}
-
 format-json() {
     cat "$@" | python -m json.tool
 }
