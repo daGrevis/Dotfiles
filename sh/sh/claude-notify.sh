@@ -21,6 +21,13 @@ sid=$(echo "$input" | jq -r '.session_id // empty')
 start_file="/tmp/.claude-prompt-start-${sid:-default}"
 pause_file="/tmp/.claude-prompt-pause-${sid:-default}"
 
+# Subagent/Task completions fire the same Stop hook, just with
+# hook_event_name rewritten to SubagentStop — skip so only the top-level
+# agent's finish beeps, not every subagent.
+if [ "$event" = "SubagentStop" ]; then
+  exit 0
+fi
+
 # Claude resumed after waiting on the user: restamp the start so the away time
 # isn't counted. Triggers on a pending permission pause, or on an input tool
 # (AskUserQuestion/ExitPlanMode) completing. Mid-turn tools with no pause pending
