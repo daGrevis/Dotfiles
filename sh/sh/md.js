@@ -2,8 +2,10 @@
 
 // Local GitHub-style markdown preview. No external API.
 //
-// Usage: md <file.md> [host:port]
+// Usage: md <root-dir> [host:port]
 //
+// Serves every markdown file under the root dir, with the URL path mapping to
+// the file path relative to it (e.g. /home/test.md -> <root>/home/test.md).
 // Parses markdown with pandoc (GFM) and serves it with vendored
 // github-markdown.css. Browser live-reloads when the file changes.
 
@@ -28,10 +30,10 @@ const page = ({ title, css, body, mtime }) => `<!doctype html>
 let mtime = "${mtime}";
 setInterval(async () => {
   try {
-    const s = await (await fetch("/state")).text();
+    const s = await (await fetch(location.pathname + "?state")).text();
     if (s !== mtime) {
       mtime = s;
-      document.getElementById("content").innerHTML = await (await fetch("/body")).text();
+      document.getElementById("content").innerHTML = await (await fetch(location.pathname + "?body")).text();
     }
   } catch (e) {}
 }, 500);
@@ -63,22 +65,34 @@ const escapeHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 const main = () => {
-  const file = process.argv[2]
-  if (!file) {
-    console.error('usage: md <file.md> [host:port]')
+  const dir = process.argv[2]
+  if (!dir) {
+    console.error('usage: md <root-dir> [host:port]')
     process.exit(1)
   }
-  const abs = path.resolve(file)
+  const root = path.resolve(dir)
   const [host, port] = (process.argv[3] || 'localhost:6419').split(':')
 
   const server = http.createServer(async (req, res) => {
     try {
-      if (req.url === '/state') {
+      const url = new URL(req.url, 'http://localhost')
+      const abs = path.resolve(root, '.' + decodeURIComponent(url.pathname))
+      if (
+        !abs.startsWith(root + path.sep) ||
+        path.extname(abs).toLowerCase() !== '.md' ||
+        !fs.existsSync(abs) ||
+        !fs.statSync(abs).isFile()
+      ) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' })
+        res.end('not found')
+        return
+      }
+      if (url.searchParams.has('state')) {
         res.writeHead(200, { 'Content-Type': 'text/plain' })
         res.end(mtime(abs))
         return
       }
-      if (req.url === '/body') {
+      if (url.searchParams.has('body')) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
         res.end(await render(abs))
         return
@@ -100,7 +114,7 @@ const main = () => {
   })
 
   server.listen(Number(port), host, () => {
-    console.log(`serving ${abs} at http://${host || 'localhost'}:${port}`)
+    console.log(`serving ${root} at http://${host || 'localhost'}:${port}`)
   })
 }
 

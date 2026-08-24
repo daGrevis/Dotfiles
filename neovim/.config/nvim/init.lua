@@ -1611,12 +1611,15 @@ vim.api.nvim_create_user_command('ReverseLines', function(opts)
   end
 end, { range = true })
 
-local function md_free_port()
+local MD_PORT = 7777
+
+local function md_port_free()
   local server = vim.uv.new_tcp()
-  server:bind('127.0.0.1', 0)
-  local port = server:getsockname().port
+  local ok = pcall(function()
+    assert(server:bind('0.0.0.0', MD_PORT))
+  end)
   server:close()
-  return port
+  return ok
 end
 
 vim.api.nvim_create_user_command('Md', function()
@@ -1625,10 +1628,17 @@ vim.api.nvim_create_user_command('Md', function()
     vim.notify('Md: buffer has no file', vim.log.levels.ERROR)
     return
   end
-  local port = md_free_port()
-  vim.fn.jobstart { vim.fn.expand '~/sh/md.js', file, '0.0.0.0:' .. tostring(port) }
+  local cwd = vim.fn.getcwd()
+  local rel = vim.fn.fnamemodify(file, ':.')
+  if rel == file then
+    vim.notify('Md: file is outside cwd ' .. cwd, vim.log.levels.ERROR)
+    return
+  end
+  if md_port_free() then
+    vim.fn.jobstart { vim.fn.expand '~/sh/md.js', cwd, '0.0.0.0:' .. tostring(MD_PORT) }
+  end
   local host = vim.env.MD_HOSTNAME or 'localhost'
-  local url = 'http://' .. host .. ':' .. port
+  local url = 'http://' .. host .. ':' .. MD_PORT .. '/' .. rel
   vim.fn.setreg('+', url)
   vim.notify('Md: preview at ' .. url .. ' (copied to clipboard)', vim.log.levels.INFO)
 end, {})
