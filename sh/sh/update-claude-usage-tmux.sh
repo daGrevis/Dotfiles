@@ -9,14 +9,16 @@
 # belongs to one conversation and is reported per pane by
 # update-claude-context-tmux.sh.
 #
-# Unsets the option when there is no usage to report, so that the status bar
-# leaves out the whole widget instead of drawing an empty one.
+# Unsets the option when the account has no such limits, so that the status bar
+# leaves out that part instead of drawing an empty one. A failed request (exit
+# 2, usually a rate limited endpoint) leaves the last numbers up, because they
+# are still roughly right and blinking out on every 429 is worse.
 
-if usage=$("$HOME/sh/claude-usage.sh"); then
-    tmux set-option -g @claude_usage "$usage" 2> /dev/null
-else
-    tmux set-option -gu @claude_usage 2> /dev/null
-fi
+usage=$("$HOME/sh/claude-usage.sh")
+case $? in
+    0) tmux set-option -g @claude_usage "$usage" 2> /dev/null ;;
+    1) tmux set-option -gu @claude_usage 2> /dev/null ;;
+esac
 
 tmux refresh-client -S 2> /dev/null
 
