@@ -5,6 +5,10 @@
 # Stop hooks: the numbers are stale until claude opens and only change when
 # Claude answers.
 #
+# The limits belong to the account, so the option is global. The context window
+# belongs to one conversation and is reported per pane by
+# update-claude-context-tmux.sh.
+#
 # Unsets the option when there is no usage to report, so that the status bar
 # leaves out the whole widget instead of drawing an empty one.
 

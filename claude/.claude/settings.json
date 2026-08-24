@@ -16,6 +16,10 @@
     "simple-english@simple-english": true
   },
   "outputStyle": "simple-english:simple-english",
+  "statusLine": {
+    "type": "command",
+    "command": "~/sh/update-claude-context-tmux.sh"
+  },
   "permissions": {
     "defaultMode": "auto",
     "allow": [
