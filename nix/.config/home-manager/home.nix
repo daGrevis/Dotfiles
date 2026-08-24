@@ -185,7 +185,17 @@ in
 
   # {{{ Tmux
 
-  home.file.".tmux.conf".source = "${dotfilesDirectory}/tmux/.tmux.conf";
+  # A rebuild writes the file, but a tmux that already runs keeps the config it
+  # read at start, so the status bar stays on the version from before the
+  # rebuild. onChange runs only when the file changed.
+  home.file.".tmux.conf" = {
+    source = "${dotfilesDirectory}/tmux/.tmux.conf";
+    onChange = ''
+      if ${pkgs.tmux}/bin/tmux has-session 2> /dev/null; then
+        $DRY_RUN_CMD ${pkgs.tmux}/bin/tmux source-file "$HOME/.tmux.conf" || true
+      fi
+    '';
+  };
   home.file.".tmux/plugins/tpm".source = builtins.fetchGit { url = "https://github.com/tmux-plugins/tpm"; };
 
   # }}}
