@@ -5,16 +5,17 @@
     "DISABLE_UPDATES": "1"
   },
   "extraKnownMarketplaces": {
-    "caveman": {
+    "simple-english": {
       "source": {
         "source": "github",
-        "repo": "JuliusBrussee/caveman"
+        "repo": "AminBlg/SimpleEnglish"
       }
     }
   },
   "enabledPlugins": {
-    "caveman@caveman": true
+    "simple-english@simple-english": true
   },
+  "outputStyle": "simple-english:simple-english",
   "permissions": {
     "defaultMode": "auto",
     "allow": [
