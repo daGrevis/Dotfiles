@@ -6,6 +6,11 @@ LOG_FILE='uled-weather.log'
 
 PID_FILE='uled-weather.pid'
 
+# Seconds between successful updates, and between retries after a failure.
+# The retry interval is short because on boot the WAN is not up yet.
+FETCH_INTERVAL=3600
+RETRY_INTERVAL=30
+
 declare -a COLOR_MAP=(
     "-25:000033"    # Dark navy blue (extreme cold)
     "-24:000044"    # Dark navy blue
@@ -117,7 +122,7 @@ fetch_and_update() {
 
     # Fetch weather
     local response
-    response=$(curl -s "$API_URL")
+    response=$(curl -s --max-time 30 "$API_URL")
 
     if [[ $? -eq 0 && -n "$response" ]]; then
         local temperature
@@ -132,9 +137,11 @@ fetch_and_update() {
             update_color "$color"
         else
             logger "Could not extract temperature from response"
+            return 1
         fi
     else
         logger "Failed to fetch weather"
+        return 1
     fi
 }
 
@@ -167,8 +174,10 @@ fi
 
 shift
 
-# Add cleanup trap
-trap 'rm -f "$PID_FILE"' EXIT INT TERM
+# Add cleanup trap. INT and TERM must exit, otherwise the loop keeps running
+# after systemd sends SIGTERM and the stop times out.
+trap 'rm -f "$PID_FILE"' EXIT
+trap 'exit 0' INT TERM
 
 logger "Starting uled-weather.sh with PID $$"
 
@@ -187,10 +196,10 @@ if ! command -v jq &> /dev/null; then
     exit 1
 fi
 
-# Initial update
-fetch_and_update
-
 while true; do
-    sleep 3600
-    fetch_and_update
+    if fetch_and_update; then
+        sleep "$FETCH_INTERVAL"
+    else
+        sleep "$RETRY_INTERVAL"
+    fi
 done
