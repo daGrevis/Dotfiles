@@ -212,6 +212,20 @@ hs.hotkey.bind({'cmd', 'ctrl'}, 'f', function()
   frontmostWindow:maximize()
 end)
 
+-- Maximize Alacritty windows that don't fit on their screen. Alacritty has no
+-- decorations, so macOS doesn't know that a window is maximized and keeps the
+-- old size when a screen goes away. macOS still moves the window, and that move
+-- triggers this. Global, so that it isn't garbage collected.
+alacrittyWindowFilter = hs.window.filter.new(false)
+  :setAppFilter('Alacritty', {allowRoles='AXStandardWindow'})
+  :subscribe(hs.window.filter.windowMoved, function(window)
+    local screenFrame = window:screen():frame()
+    local windowFrame = window:frame()
+    if windowFrame.w > screenFrame.w or windowFrame.h > screenFrame.h then
+      window:maximize()
+    end
+  end)
+
 -- Move window to other screen.
 hs.hotkey.bind({'cmd', 'ctrl'}, 'tab', function()
   local frontmostWindow = hs.window.frontmostWindow()
