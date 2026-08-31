@@ -28,7 +28,15 @@ gd() {
     local out_file="/tmp/.gd-out-$$"
     local hist_file="/tmp/.gd-hist-$$"
     local keyfile=$(mktemp)
-    echo "git diff --color=always $* | delta --paging=never --width=$COLUMNS" > "$cmd_file"
+    {
+        echo "git diff --color=always $* | delta --paging=never --width=$COLUMNS"
+        # Without args, show untracked files as fully added.
+        if [ $# -eq 0 ]; then
+            echo "git ls-files --others --exclude-standard | while read -r f; do"
+            echo "    git diff --no-index --color=always /dev/null \"\$f\" | delta --paging=never --width=$COLUMNS"
+            echo "done"
+        fi
+    } > "$cmd_file"
     printf '#command\nr set-mark a^X\n^X quit r\n' > "$keyfile"
     local start_cmd=""
     while true; do
