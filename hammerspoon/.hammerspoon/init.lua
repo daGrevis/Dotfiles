@@ -267,18 +267,43 @@ hs.hotkey.bind({'cmd'}, 'h', function()
   frontmostWindow:minimize()
 end)
 
--- Minimize everything aka go to the desktop.
+-- Minimize everything aka go to the desktop. Press again to bring it all back.
+local minimizedWindows = {}
+local windowToRefocus = nil
+
 hs.hotkey.bind({'cmd', 'ctrl'}, 'h', function()
+  if #minimizedWindows > 0 then
+    -- Reverse order, so that the last minimized window ends up on top.
+    for i = #minimizedWindows, 1, -1 do
+      local window = minimizedWindows[i]
+      if window:isMinimized() then
+        window:unminimize()
+      end
+    end
+
+    minimizedWindows = {}
+
+    if windowToRefocus then
+      windowToRefocus:focus()
+      windowToRefocus = nil
+    end
+
+    return
+  end
+
   local frontmostWindow = hs.window.frontmostWindow()
   local currentScreeen = frontmostWindow:screen()
 
   local allWindows = hs.window.allWindows()
 
   for _, window in pairs(allWindows) do
-    if currentScreeen == window:screen() then
+    if currentScreeen == window:screen() and not window:isMinimized() then
       window:minimize()
+      table.insert(minimizedWindows, window)
     end
   end
+
+  windowToRefocus = frontmostWindow
 end)
 
 -- }}}
