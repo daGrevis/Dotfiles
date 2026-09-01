@@ -5,8 +5,12 @@ size = 14
 key = "C"
 mods = "Command"
 
+# `pbcopy` here would skip the clipboard filter that every other copy path
+# goes through, so read tmux's own option instead. copy-pipe expands the
+# format, and the expansion is single pass, so the option value is used
+# verbatim. See tmux/.tmux.conf for what the filter does.
 [keyboard.bindings.command]
-args = ["send-keys", "-X", "copy-pipe", "pbcopy"]
+args = ["send-keys", "-X", "copy-pipe", "#{@override_copy_command}"]
 program = "/Users/dagrevis/.nix-profile/bin/tmux"
 
 [[keyboard.bindings]]
