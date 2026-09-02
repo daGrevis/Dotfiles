@@ -5,9 +5,9 @@
 # Stop hooks: the numbers are stale until claude opens and only change when
 # Claude answers.
 #
-# The limits belong to the account, so the option is global. The context window
-# belongs to one conversation and is reported per pane by
-# update-claude-context-tmux.sh.
+# The limits belong to the account, so the option is global. The model, effort
+# and context window belong to one conversation and are reported per pane by
+# update-claude-status-tmux.sh.
 #
 # Unsets the option when the account has no such limits, so that the status bar
 # leaves out that part instead of drawing an empty one. A failed request (exit

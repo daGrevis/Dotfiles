@@ -18,7 +18,7 @@
   "outputStyle": "simple-english:simple-english",
   "statusLine": {
     "type": "command",
-    "command": "~/sh/update-claude-context-tmux.sh"
+    "command": "~/sh/update-claude-status-tmux.sh"
   },
   "permissions": {
     "defaultMode": "auto",

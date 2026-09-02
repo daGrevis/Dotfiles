@@ -1,12 +1,13 @@
 #!/bin/sh
 
-# Puts which model Claude runs and how full its context window is into the
-# @claude_model and @claude_context tmux options, which .tmux.conf renders in
-# the status bar, and redraws them. Meant for Claude's statusLine: Claude sends
-# both on every redraw, so they follow the conversation.
+# Puts which model Claude runs, how much it reasons and how full its context
+# window is into the @claude_model, @claude_effort and @claude_context tmux
+# options, which .tmux.conf renders in the status bar, and redraws them. Meant
+# for Claude's statusLine: Claude sends all of them on every redraw, so they
+# follow the conversation.
 #
-# Model and context belong to one conversation, so the options are set on the
-# pane claude runs in and several claudes each report their own.
+# Model, effort and context belong to one conversation, so the options are set
+# on the pane claude runs in and several claudes each report their own.
 #
 # Claude's hooks cannot do this. They get no token counts, and the transcript
 # does not say how large the window is, which is 200k for one model and 1M for
@@ -23,6 +24,11 @@ status=$(cat)
 model=""
 id=$(printf '%s' "$status" | jq -r '.model.id // empty | sub("^claude-";"")' 2> /dev/null)
 [ -n "$id" ] && model="(model $id)"
+
+# Only models that take an effort setting report one, so this is often absent.
+effort=""
+level=$(printf '%s' "$status" | jq -r '.effort.level // empty' 2> /dev/null)
+[ -n "$level" ] && effort="(effort $level)"
 
 context=""
 percentage=$(printf '%s' "$status" | jq -r '.context_window.used_percentage // empty' 2> /dev/null)
@@ -41,6 +47,7 @@ update() {
 
 changed=""
 update @claude_model "$model" && changed=1
+update @claude_effort "$effort" && changed=1
 update @claude_context "$context" && changed=1
 [ -n "$changed" ] && tmux refresh-client -S 2> /dev/null
 
