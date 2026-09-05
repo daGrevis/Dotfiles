@@ -10,7 +10,8 @@ _pass-fzf() {
   # - top-level directory to limit selection (eg `home`)
   # - path to GPG file without extension (eg `home/github`)
 
-  pw=$1
+  local pw=$1
+  local has_dir pws
 
   if [ "$pw" != "" ] && [ -f "$PASS_PATH/$pw.gpg" ]; then
     echo "$pw"
@@ -23,35 +24,41 @@ _pass-fzf() {
   fi
 
   if [ "$pw" != "" ] && [ $has_dir = 0 ]; then
-    echo 'Error: Directory not found'
+    echo 'Error: Directory not found' >&2
     return 1
   fi
 
-  if [ "$pw" = "" ] || [ $has_dir ]; then
+  if [ "$pw" = "" ] || [ $has_dir = 1 ]; then
     pws=$(cd "$PASS_PATH" && find "./$pw" -type f -name '*.gpg' | sed -n 's/^\.\///p' | sed -n 's/\.gpg$//p')
     pw=$(echo "$pws" | fzf --print-query | tail -n1)
   fi
 
-  if [ $has_dir = 1 ]; then
-    echo "$1/$pw"
-  else
-    echo "$pw"
+  if [ "$pw" = "" ]; then
+    return 1
   fi
+
+  echo "$pw"
 }
 
 pws() {
-  pass show "$(_pass-fzf "$1")"
+  local pw
+  pw=$(_pass-fzf "$1") || return
+  pass show "$pw" | nvim -R -n -i NONE -
 }
 
 pwe() {
-  pass edit "$(_pass-fzf "$1")"
+  local pw
+  pw=$(_pass-fzf "$1") || return
+  EDITOR='nvim -n -i NONE' pass edit "$pw"
 }
 
 pwi() {
-  pass edit "$1"
+  EDITOR='nvim -n -i NONE' pass edit "$1"
 }
 
 pwc() {
-  pw=$(pass show "$(_pass-fzf "$1")" | head -n 1)
+  local entry pw
+  entry=$(_pass-fzf "$1") || return
+  pw=$(pass show "$entry" | head -n 1)
   echo -n "$pw" | clip
 }

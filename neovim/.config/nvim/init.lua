@@ -183,6 +183,14 @@ vim.api.nvim_create_autocmd('TabLeave', {
   end,
 })
 
+-- Don't create undo files for `pass edit` temp files.
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPre' }, {
+  pattern = { '/dev/shm/pass.*/*', '/tmp/pass.*/*' },
+  callback = function()
+    vim.opt_local.undofile = false
+  end,
+})
+
 -- Create directory of current file if it doesn't exist.
 vim.api.nvim_create_autocmd('BufNewFile', {
   pattern = '*',
