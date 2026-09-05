@@ -79,7 +79,14 @@ if [ "$notification_type" = "permission_prompt" ]; then
   echo "$now" > "$pause_file"
   nohup ~/sh/notify.sh "$title" "Waiting for input... ($message)" > /dev/null 2>&1 &
 else
-  # Stop event — clean up the start and pause files.
+  # Stop event. Turns the user never started end here too — a background task
+  # completing, a scheduled wake-up, a subagent report — and the SubagentStop
+  # guard above does not catch them, because the top-level agent is what stops.
+  # UserPromptSubmit writes the start file and the previous Stop removed it, so
+  # a missing start file means no prompt is outstanding. Stay silent.
+  [ -f "$start_file" ] || exit 0
+
+  # Clean up the start and pause files.
   rm -f "$start_file" "$pause_file"
   nohup ~/sh/notify.sh "$title" "$message" > /dev/null 2>&1 &
 fi
