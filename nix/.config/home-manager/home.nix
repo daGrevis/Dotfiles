@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (pkgs) stdenv;
@@ -283,6 +283,13 @@ in
     fi
     $DRY_RUN_CMD install -m 0644 "${dotfilesDirectory}/claude/.claude/settings.json" "$dst"
   '';
+
+  # NOTE: skills are symlinked out of the store, so that a change to a SKILL.md
+  # applies in the next session without a rebuild.
+  home.file.".claude/skills/handoff".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/claude/.claude/skills/handoff";
+  home.file.".claude/skills/pickup".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/claude/.claude/skills/pickup";
 
   # claude (nix) is a Bun exe detected as "native" at runtime, so it warns
   # "command not found at ~/.local/bin/claude". Disable that check.
