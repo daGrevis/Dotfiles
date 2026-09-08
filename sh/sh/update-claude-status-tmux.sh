@@ -15,24 +15,26 @@
 #
 # Unsets an option when there is nothing to report, so that the status bar
 # leaves that part out instead of drawing an empty one.
+#
+# The values are bare ("opus-5", not "(model opus-5)"), because .tmux.conf says
+# which one is which by layout and by label.
 
 status=$(cat)
 
 # The id, not the display name, because it says which exact model answers, e.g.
 # "opus-5[1m]" over "Opus 5 (1M context)". Every id starts with "claude-", which
 # says nothing here and is dropped.
-model=""
-id=$(printf '%s' "$status" | jq -r '.model.id // empty | sub("^claude-";"")' 2> /dev/null)
-[ -n "$id" ] && model="(model $id)"
+model=$(printf '%s' "$status" | jq -r '.model.id // empty | sub("^claude-";"")' 2> /dev/null)
 
 # Only models that take an effort setting report one, so this is often absent.
-effort=""
-level=$(printf '%s' "$status" | jq -r '.effort.level // empty' 2> /dev/null)
-[ -n "$level" ] && effort="(effort $level)"
+effort=$(printf '%s' "$status" | jq -r '.effort.level // empty' 2> /dev/null)
 
+# A bar, like the limit usage has, so that how full the window is reads at a
+# glance. The bar carries the "%" of the value, because .tmux.conf cannot write
+# one itself. See the comment on status-right.
 context=""
-percentage=$(printf '%s' "$status" | jq -r '.context_window.used_percentage // empty' 2> /dev/null)
-[ -n "$percentage" ] && context="(context $percentage%)"
+percentage=$(printf '%s' "$status" | jq -r '.context_window.used_percentage // empty | round' 2> /dev/null)
+[ -n "$percentage" ] && context=$("$HOME/sh/bar.sh" --tmux "$percentage")
 
 # The status line redraws many times per answer, so tmux only hears about a
 # value that changed. Returns 0 when it did.

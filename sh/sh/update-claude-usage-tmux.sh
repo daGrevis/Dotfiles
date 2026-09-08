@@ -14,7 +14,7 @@
 # 2, usually a rate limited endpoint) leaves the last numbers up, because they
 # are still roughly right and blinking out on every 429 is worse.
 
-usage=$("$HOME/sh/claude-usage.sh")
+usage=$("$HOME/sh/claude-usage.sh" --tmux)
 case $? in
     0) tmux set-option -g @claude_usage "$usage" 2> /dev/null ;;
     1) tmux set-option -gu @claude_usage 2> /dev/null ;;
