@@ -7,7 +7,6 @@ GIT_LOG_PRETTY_FORMAT='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cs, %cr) 
 
 alias ga="git add --all"
 alias gap="git add -p"
-alias gac="ga && gc"
 alias gbr="git branch"
 alias gc="git commit -v"
 alias gc!="git commit -v --amend --date=now"
@@ -21,6 +20,11 @@ alias gcp="git cherry-pick"
 alias gcpc="git cherry-pick --continue"
 alias gcps="git cherry-pick --skip"
 alias gcpa="git cherry-pick --abort"
+# Git add and commit. Arguments go to git add, so `gac sh` only stages sh.
+gac() {
+    git add --all "$@" && git commit -v
+}
+
 unalias gd 2>/dev/null
 # Git diff via delta. Press r to reload which will update the diff and keep the scroll position.
 gd() {
