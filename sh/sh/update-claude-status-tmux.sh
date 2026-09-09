@@ -32,9 +32,13 @@ effort=$(printf '%s' "$status" | jq -r '.effort.level // empty' 2> /dev/null)
 # A bar, like the limit usage has, so that how full the window is reads at a
 # glance. The bar carries the "%" of the value, because .tmux.conf cannot write
 # one itself. See the comment on status-right.
-context=""
-percentage=$(printf '%s' "$status" | jq -r '.context_window.used_percentage // empty | round' 2> /dev/null)
-[ -n "$percentage" ] && context=$("$HOME/sh/bar.sh" --tmux "$percentage")
+#
+# A conversation that has no answer yet reports no count, and that one reads as
+# 0, so that the bar is there from the moment claude starts instead of turning
+# up with the first answer.
+percentage=$(printf '%s' "$status" | jq -r '.context_window.used_percentage // 0 | round' 2> /dev/null)
+[ -n "$percentage" ] || percentage=0
+context=$("$HOME/sh/bar.sh" --tmux "$percentage")
 
 # The status line redraws many times per answer, so tmux only hears about a
 # value that changed. Returns 0 when it did.
