@@ -43,6 +43,7 @@ in
     autojump
     bat
     cargo
+    chafa
     claude-code
     cloc
     codex
@@ -66,6 +67,7 @@ in
     gnupg
     htop
     id3v2
+    imagemagick
     inetutils
     jq
     killall

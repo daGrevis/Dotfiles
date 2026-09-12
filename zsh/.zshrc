@@ -158,6 +158,8 @@ alias claude-usage=~/sh/claude-usage.sh
 
 alias generate-password=~/sh/generate-password.sh
 
+alias view-images=~/sh/view-images.sh
+
 if [ -z "$TMUX" ]; then
   # Start default tmux session if not already running inside of tmux.
   mux default

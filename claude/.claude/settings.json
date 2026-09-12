@@ -27,7 +27,8 @@
       "Write",
       "WebFetch",
       "WebSearch",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(~/sh/view-images.sh:*)"
     ]
   },
   "hooks": {
@@ -53,6 +54,10 @@
           {
             "type": "command",
             "command": "input=$(cat); sid=$(echo \"$input\" | jq -r '.session_id // empty'); date +%s > /tmp/.claude-prompt-start-${sid:-default}; rm -f /tmp/.claude-prompt-pause-${sid:-default}"
+          },
+          {
+            "type": "command",
+            "command": "~/sh/view-images.sh --close"
           }
         ]
       }
