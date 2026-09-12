@@ -291,6 +291,11 @@ in
   home.file.".claude/skills/pickup".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/claude/.claude/skills/pickup";
 
+  # NOTE: the built-in Concise style and the simple-english plugin style cannot
+  # both be active, because outputStyle takes one name. concise-ste merges them.
+  home.file.".claude/output-styles/concise-ste.md".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/claude/.claude/output-styles/concise-ste.md";
+
   # claude (nix) is a Bun exe detected as "native" at runtime, so it warns
   # "command not found at ~/.local/bin/claude". Disable that check.
   home.sessionVariables.DISABLE_INSTALLATION_CHECKS = "1";

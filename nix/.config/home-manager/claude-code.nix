@@ -6,18 +6,18 @@ let
   platforms = {
     aarch64-darwin = {
       platform = "darwin-arm64";
-      hash = "sha256-rTr4re4yGiqx27Ox/y6L+PZsVLW039bzeSzm8MRqubY=";
+      hash = "sha256-xZeLjmVJvfORMOU0BKiNwllyS+2KxJyC7of4zSMe1ag=";
     };
     x86_64-linux = {
       platform = "linux-x64";
-      hash = "sha256-JdLiyubT0dXO6vDaAug8RcFkVeRe+hqzBTldwFInrQ0=";
+      hash = "sha256-FzEEwnWYfltG2BOMx43ROUYMxOGxX62JbcwjbkkKtig=";
     };
   };
   current = platforms.${stdenvNoCC.hostPlatform.system} or (throw "unsupported platform");
 in
 stdenvNoCC.mkDerivation rec {
   pname = "claude-code";
-  version = "2.1.220";
+  version = "2.1.237";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/@anthropic-ai/claude-code-${current.platform}/-/claude-code-${current.platform}-${version}.tgz";

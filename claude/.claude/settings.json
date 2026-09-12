@@ -15,7 +15,7 @@
   "enabledPlugins": {
     "simple-english@simple-english": true
   },
-  "outputStyle": "simple-english:simple-english",
+  "outputStyle": "concise-ste",
   "statusLine": {
     "type": "command",
     "command": "~/sh/update-claude-status-tmux.sh"
