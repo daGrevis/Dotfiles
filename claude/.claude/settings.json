@@ -38,6 +38,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "~/sh/update-claude-status-tmux.sh"
+          },
+          {
+            "type": "command",
             "command": "~/sh/update-claude-usage-tmux.sh"
           },
           {

@@ -6,6 +6,9 @@
 # for Claude's statusLine: Claude sends all of them on every redraw, so they
 # follow the conversation.
 #
+# Also meant for Claude's SessionStart hook, which sends a different input and
+# gets the context bar up before the conversation starts. See below.
+#
 # Model, effort and context belong to one conversation, so the options are set
 # on the pane claude runs in and several claudes each report their own.
 #
@@ -20,6 +23,29 @@
 # which one is which by layout and by label.
 
 status=$(cat)
+
+# Which pane to put the options on. Without a target tmux takes the pane that
+# is active in the session, which is another one when this claude runs in a
+# window that nobody looks at, so the pane comes from TMUX_PANE, which claude
+# passes on to what it starts. The variable holds both words and is on purpose
+# not quoted, because an empty one must add no argument at all.
+pane_target=${TMUX_PANE:+-t $TMUX_PANE}
+
+# Claude runs a statusLine command for the first time with the first answer, so
+# a session that only opened shows no bar at all. The SessionStart hook runs
+# this script with its own input, which puts the bar up at 0 until the first
+# answer replaces it. A resumed or a compacted session keeps the bar it has,
+# because its context is not 0.
+if [ "$(printf '%s' "$status" | jq -r '.hook_event_name // empty' 2> /dev/null)" = "SessionStart" ]; then
+    case $(printf '%s' "$status" | jq -r '.source // empty' 2> /dev/null) in
+        startup | clear)
+            # shellcheck disable=SC2086 # See pane_target.
+            tmux set-option -p $pane_target @claude_context "$("$HOME/sh/bar.sh" --tmux 0)" 2> /dev/null
+            tmux refresh-client -S 2> /dev/null
+            ;;
+    esac
+    exit 0
+fi
 
 # The id, not the display name, because it says which exact model answers, e.g.
 # "opus-5[1m]" over "Opus 5 (1M context)". Every id starts with "claude-", which
@@ -42,12 +68,13 @@ context=$("$HOME/sh/bar.sh" --tmux "$percentage")
 
 # The status line redraws many times per answer, so tmux only hears about a
 # value that changed. Returns 0 when it did.
+# shellcheck disable=SC2086 # See pane_target.
 update() {
-    [ "$2" = "$(tmux show-options -pqv "$1" 2> /dev/null)" ] && return 1
+    [ "$2" = "$(tmux show-options -pqv $pane_target "$1" 2> /dev/null)" ] && return 1
     if [ -n "$2" ]; then
-        tmux set-option -p "$1" "$2" 2> /dev/null
+        tmux set-option -p $pane_target "$1" "$2" 2> /dev/null
     else
-        tmux set-option -pu "$1" 2> /dev/null
+        tmux set-option -pu $pane_target "$1" 2> /dev/null
     fi
 }
 
