@@ -5,12 +5,17 @@
 # used, and the number to the right of them.
 #
 # htop is the only meter this setup has, so the bars in the tmux status bar copy
-# it, down to how it paints them: the cells in green and the number bold in
-# bright black, which is what htop's own capture shows. Only the brackets are
-# dimmer, see below.
+# it, down to how it paints them. htop has one scale that follows the value:
+# METER_VALUE_OK is green, METER_VALUE_WARN is bold yellow and
+# METER_VALUE_ERROR is bold red, and its load bar steps through the three. The
+# bars here step through the same three, by percentage. See $warn and $error.
 #
-# "green" and "brightblack" are the terminal's colours, and home.nix paints
-# those from the theme, so a bar in tmux and a bar in htop come out the same.
+# The cells and the number take that colour, so that the reading is visible
+# even where the bar is narrow. The empty cells and the brackets stay dim.
+#
+# "green", "yellow", "red" and "brightblack" are the terminal's colours, and
+# home.nix paints those from the theme, so a bar in tmux and a bar in htop come
+# out the same.
 #
 # Takes the percentage as the first argument, as a whole number, with or
 # without a "%".
@@ -23,6 +28,12 @@
 # carry, but ten cells would lose their top third under it, hence the number
 # beside them here.
 cells=10
+
+# Where the colour changes. htop puts its own steps at load 1.0 and at the
+# number of CPUs, which says nothing about a percentage, so these are the
+# points where a window that fills up starts to matter.
+warn=60
+error=90
 
 styled=false
 if [ "$1" = "--tmux" ]; then
@@ -53,16 +64,24 @@ while [ "$cell" -lt "$cells" ]; do
     fi
 done
 
-# The cells that are free and the number are one run of dim text, like htop
-# draws them.
+# The cells that are free stay dim, like htop draws them.
 #
 # The brackets are grey. htop draws its own bold in the colour of the text
 # around them, where they carry a meter that fills a quarter of the screen, but
 # in a status bar a frame that bright reads as louder than the reading it holds.
 # $THEME_FG3 is the theme's own grey, and a terminal has no name for one.
 if $styled; then
-    printf '#[fg=%s][#[fg=green]%s#[fg=brightblack,bold]%s%s#[default]#[fg=%s]]#[default]\n' \
-        "${THEME_FG3:-brightblack}" "$used" "$free" "$text" "${THEME_FG3:-brightblack}"
+    if [ "$percentage" -ge "$error" ]; then
+        colour=red
+    elif [ "$percentage" -ge "$warn" ]; then
+        colour=yellow
+    else
+        colour=green
+    fi
+
+    printf '#[fg=%s][#[fg=%s]%s#[fg=brightblack,bold]%s#[fg=%s,bold]%s#[default]#[fg=%s]]#[default]\n' \
+        "${THEME_FG3:-brightblack}" "$colour" "$used" "$free" "$colour" "$text" \
+        "${THEME_FG3:-brightblack}"
 else
     printf '[%s%s%s]\n' "$used" "$free" "$text"
 fi
