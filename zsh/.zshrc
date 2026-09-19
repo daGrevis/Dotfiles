@@ -154,6 +154,8 @@ _fzf_compgen_dir() {
 
 alias blender=/Applications/blender.app/Contents/MacOS/blender
 
+alias c=claude
+
 alias claude-usage=~/sh/claude-usage.sh
 
 alias generate-password=~/sh/generate-password.sh
