@@ -91,6 +91,10 @@ bindkey '^G' edit-command-line
 unalias l 2> /dev/null
 
 # Load env from home-manager home.sessionVariables.
+# The file returns early if __HM_SESS_VARS_SOURCED is set. A long-lived tmux
+# server keeps that flag in its environment and passes it to every new pane,
+# so new vars never load after a switch. Unset it to force a re-source.
+unset __HM_SESS_VARS_SOURCED
 HM_SESSION_VARS_SH="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 if [ -f $HM_SESSION_VARS_SH ]; then
   source "$HM_SESSION_VARS_SH"

@@ -302,6 +302,17 @@ in
   # "command not found at ~/.local/bin/claude". Disable that check.
   home.sessionVariables.DISABLE_INSTALLATION_CHECKS = "1";
 
+  # NOTE: the org default model (Sonnet) has override enabled, so it beats the
+  # `model` key in settings.json on every launch. ANTHROPIC_MODEL takes
+  # precedence over the org default, so it is the only way to pin Opus.
+  home.sessionVariables.ANTHROPIC_MODEL = "claude-opus-5-5";
+
+  # NOTE: effort is per-model since 2.1.280, and the top-level effortLevel in
+  # settings.json does not apply to Opus 5.5, which starts at medium. The
+  # settings schema has no modelSettings key, so the env var is the only pin.
+  # It locks the level, so /effort cannot change it in a session.
+  home.sessionVariables.CLAUDE_CODE_EFFORT_LEVEL = "xhigh";
+
   home.activation.installClaudePlugins = lib.hm.dag.entryAfter [ "claudeSettings" ] ''
     PATH="${claude-code}/bin:$PATH"
     if ! ${pkgs.jq}/bin/jq -e '.plugins | has("simple-english@simple-english")' "$HOME/.claude/plugins/installed_plugins.json" >/dev/null 2>&1; then

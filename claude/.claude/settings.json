@@ -1,5 +1,6 @@
 {
-  "model": "opus",
+  "model": "claude-opus-5-5",
+  "effortLevel": "xhigh",
   "tui": "default",
   "env": {
     "DISABLE_UPDATES": "1"
