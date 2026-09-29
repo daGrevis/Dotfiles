@@ -95,14 +95,15 @@ alias grbc="git rebase --continue"
 alias grbs="git rebase --skip"
 alias grba="git rebase --abort"
 unalias gs 2>/dev/null
+# Arguments are pathspecs, so `gs src` only counts changes in src.
 gs() {
     # Branch line.
     local gs_out
-    gs_out=$(git -c color.status=always status -sb) || return
+    gs_out=$(git -c color.status=always status -sb -- "$@") || return
     echo "${gs_out%%$'\n'*}"
     # Show line-level diff stats (added/deleted) including untracked files.
     local stats
-    stats=$(git diff --numstat HEAD 2>/dev/null; git ls-files --others --exclude-standard 2>/dev/null | while read -r f; do test -f "$f" && wc -l < "$f"; done | awk '{print $1 "\t" 0 "\t(new file)"}')
+    stats=$(git diff --numstat HEAD -- "$@" 2>/dev/null; git ls-files --others --exclude-standard -- "$@" 2>/dev/null | while read -r f; do test -f "$f" && wc -l < "$f"; done | awk '{print $1 "\t" 0 "\t(new file)"}')
 
     # Line stats.
     if [ -n "$stats" ]; then
