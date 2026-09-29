@@ -41,9 +41,11 @@ _pass-fzf() {
 }
 
 pws() {
-  local pw
+  local pw content
   pw=$(_pass-fzf "$1") || return
-  pass show "$pw" | nvim -R -n -i NONE -
+  # Decrypt before nvim starts, so that nvim does not take the keys from pinentry-curses.
+  content=$(pass show "$pw") || return
+  printf '%s\n' "$content" | nvim -R -n -i NONE -
 }
 
 pwe() {

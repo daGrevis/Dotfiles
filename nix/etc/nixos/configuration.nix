@@ -125,6 +125,7 @@ systemd.user.services.earlyoom = {
   security.sudo.wheelNeedsPassword = false;
 
   programs.gnupg.agent.enable = true;
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-curses;
 
   programs.nix-ld.enable = true;
 

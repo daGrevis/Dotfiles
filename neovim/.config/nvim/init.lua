@@ -1492,6 +1492,28 @@ require('lazy').setup {
 
   { -- Edit GPG encrypted files.
     'jamessan/vim-gnupg',
+    init = function()
+      -- Do not let gpg start pinentry-curses because it fights with Neovim for keys.
+      vim.g.GPGExecutable = 'gpg --trust-model always --pinentry-mode error'
+
+      -- Ask for the passphrase in Neovim instead and cache it in gpg-agent before vim-gnupg decrypts.
+      vim.api.nvim_create_autocmd('BufReadCmd', {
+        pattern = '*.{gpg,asc,pgp}',
+        callback = function(args)
+          if vim.fn.filereadable(args.file) == 0 then
+            return
+          end
+
+          local check = vim.system({ 'gpg', '--batch', '--status-fd', '1', '--pinentry-mode', 'error', '--output', '/dev/null', '--decrypt', args.file }):wait()
+          if not check.stdout:find 'pkdecrypt_failed' then
+            return
+          end
+
+          local passphrase = vim.fn.inputsecret 'Passphrase: '
+          vim.system({ 'gpg', '--batch', '--pinentry-mode', 'loopback', '--passphrase-fd', '0', '--output', '/dev/null', '--decrypt', args.file }, { stdin = passphrase }):wait()
+        end,
+      })
+    end,
   },
 
   { -- Handle line and column numbers in file names.
