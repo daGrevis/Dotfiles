@@ -1140,7 +1140,11 @@ require('lazy').setup {
               max_items = 10,
               opts = {
                 dictionary_files = function()
-                  return { vim.fn.expand '~/Dropbox/Assets/english-words.txt' }
+                  local path = vim.fn.expand '~/Dropbox/Assets/english-words.txt'
+                  if vim.fn.filereadable(path) == 0 then
+                    return {}
+                  end
+                  return { path }
                 end,
               },
             },
