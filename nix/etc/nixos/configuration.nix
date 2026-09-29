@@ -63,7 +63,16 @@ systemd.user.services.earlyoom = {
   };
 
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        # Tunnel clients all come from loopback, so scans would lock them out.
+        PerSourcePenaltyExemptList = "127.0.0.1,::1";
+      };
+    };
 
     displayManager = {
       defaultSession = "none+awesome";

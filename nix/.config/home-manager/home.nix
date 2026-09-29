@@ -322,4 +322,26 @@ in
   '';
 
   # }}}
+
+  # {{{ Tunnel
+
+  # NOTE: not systemd.user.services, because its Install.WantedBy enables the
+  # unit on every host. systemd takes the unit name from the store file name.
+  home.file.".config/systemd/user/tunnel.service" = (lib.mkIf stdenv.isLinux {
+    source = "${pkgs.writeTextDir "tunnel.service" ''
+      [Unit]
+      Description=Reverse SSH tunnel to dagrev.is
+      StartLimitIntervalSec=0
+
+      [Service]
+      ExecStart=${pkgs.openssh}/bin/ssh -F none -N -i %h/.ssh/tunnel_ed25519 -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o StrictHostKeyChecking=yes -R 0.0.0.0:2222:localhost:22 tunnel@dagrev.is
+      Restart=always
+      RestartSec=10
+
+      [Install]
+      WantedBy=default.target
+    ''}/tunnel.service";
+  });
+
+  # }}}
 }
