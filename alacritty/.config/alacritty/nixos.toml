@@ -6,122 +6,18 @@ action = "PasteSelection"
 key = "V"
 mods = "Alt"
 
+# The tmux keys (Alt+digit, Alt+T, Alt+W, Alt+Shift+[ and ]) are not bound
+# here, so they go to tmux as keys, and tmux binds them. A "tmux" command
+# that alacritty runs is not in a client, and tmux then acts on the client with
+# the most recent key. After Termius, that is the phone, and the keys went to
+# the phone's session. Super does not get to tmux, so Alt+Super+[ and ] send
+# the sequences of user-keys in tmux/.tmux.conf.
 [[keyboard.bindings]]
-key = "T"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["new-window", "-c", "~"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "W"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["kill-pane"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "LBracket"
-mods = "Alt|Shift"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "-1"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "RBracket"
-mods = "Alt|Shift"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "+1"]
-program = "tmux"
-
-[[keyboard.bindings]]
+chars = "\u001b[5;30001~"
 key = "LBracket"
 mods = "Alt|Super"
 
-[keyboard.bindings.command]
-args = ["swap-window", "-t", "-1", ";", "select-window", "-t", "-1"]
-program = "tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b[5;30002~"
 key = "RBracket"
 mods = "Alt|Super"
-
-[keyboard.bindings.command]
-args = ["swap-window", "-t", "+1", ";", "select-window", "-t", "+1"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key1"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "1"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key2"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "2"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key3"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "3"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key4"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "4"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key5"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "5"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key6"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "6"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key7"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "7"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key8"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "8"]
-program = "tmux"
-
-[[keyboard.bindings]]
-key = "Key9"
-mods = "Alt"
-
-[keyboard.bindings.command]
-args = ["select-window", "-t", "9"]
-program = "tmux"

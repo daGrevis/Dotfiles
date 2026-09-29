@@ -1,33 +1,24 @@
 [font]
 size = 14
 
+# The tmux keys are not run here as "tmux" commands, see nixos.toml for why.
+# Cmd+digit, Cmd+T, Cmd+W and Cmd+Shift+[ and ] send the Alt keys that tmux
+# binds for alacritty on NixOS and for Termius. The other keys send the
+# sequences of user-keys in tmux/.tmux.conf.
 [[keyboard.bindings]]
+chars = "\u001b[5;30003~"
 key = "C"
 mods = "Command"
 
-# `pbcopy` here would skip the clipboard filter that every other copy path
-# goes through, so read tmux's own option instead. copy-pipe expands the
-# format, and the expansion is single pass, so the option value is used
-# verbatim. See tmux/.tmux.conf for what the filter does.
-[keyboard.bindings.command]
-args = ["send-keys", "-X", "copy-pipe", "#{@override_copy_command}"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001bt"
 key = "T"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["new-window", "-c", "~"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001bw"
 key = "W"
 mods = "Command"
-
-[keyboard.bindings.command]
-args = ["kill-pane"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
 
 [[keyboard.bindings]]
 key = "H"
@@ -38,137 +29,86 @@ args = ["-e", "tell application \"System Events\" to tell process \"Alacritty\" 
 program = "osascript"
 
 [[keyboard.bindings]]
+chars = "\u001b{"
 key = "LBracket"
 mods = "Command|Shift"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t:-"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b}"
 key = "RBracket"
 mods = "Command|Shift"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t:+"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b[5;30001~"
 key = "LBracket"
 mods = "Command|Alt"
 
-[keyboard.bindings.command]
-args = ["swap-window", "-t", "-1", ";", "select-window", "-t", "-1"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b[5;30002~"
 key = "RBracket"
 mods = "Command|Alt"
 
-[keyboard.bindings.command]
-args = ["swap-window", "-t", "+1", ";", "select-window", "-t", "+1"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b1"
 key = "Key1"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "1"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b2"
 key = "Key2"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "2"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b3"
 key = "Key3"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "3"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b4"
 key = "Key4"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "4"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b5"
 key = "Key5"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "5"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b6"
 key = "Key6"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "6"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b7"
 key = "Key7"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "7"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b8"
 key = "Key8"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "8"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b9"
 key = "Key9"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-window", "-t", "9"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b[5;30004~"
 key = "Left"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-pane", "-L"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b[5;30005~"
 key = "Right"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-pane", "-R"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b[5;30006~"
 key = "Up"
 mods = "Command"
 
-[keyboard.bindings.command]
-args = ["select-pane", "-U"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
-
 [[keyboard.bindings]]
+chars = "\u001b[5;30007~"
 key = "Down"
 mods = "Command"
-
-[keyboard.bindings.command]
-args = ["select-pane", "-D"]
-program = "/Users/dagrevis/.nix-profile/bin/tmux"
