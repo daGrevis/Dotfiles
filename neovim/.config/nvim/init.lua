@@ -1437,7 +1437,10 @@ require('lazy').setup {
         },
       },
       window = {
-        width = 60,
+        -- At most half of the screen on narrow terminals.
+        width = function()
+          return math.min(60, math.floor(vim.o.columns / 2))
+        end,
       },
       event_handlers = {
         {
