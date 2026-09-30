@@ -34,7 +34,7 @@ const spawnSh = (command) =>
   })
 
 const getActiveSessions = async () => {
-  const { ok, stdout } = await spawnSh('tmux ls')
+  const { ok, stdout } = await spawnSh('tmux ls 2>/dev/null')
 
   if (!ok) {
     return []
@@ -88,7 +88,7 @@ const updateHistory = async (nextSession, historySessions) => {
 }
 
 const getCurrentSession = async () => {
-  const { ok, stdout } = await spawnSh("tmux display-message -p '#S'")
+  const { ok, stdout } = await spawnSh("tmux display-message -p '#S' 2>/dev/null")
 
   if (!ok) {
     return
@@ -170,7 +170,7 @@ const getSessionDescriptions = async () => {
 
 const getSessionPorts = async (session, processTree, listeningPorts) => {
   const { ok, stdout } = await spawnSh(
-    `tmux list-panes -s -t '=${session}' -F '#{pane_pid}'`,
+    `tmux list-panes -s -t '=${session}' -F '#{pane_pid}' 2>/dev/null`,
   )
   if (!ok || !stdout) return []
 
@@ -244,7 +244,7 @@ const getRunningInTmux = () => {
 
 const switchToTmuxSession = async (session) => {
   const { ok } = await spawnSh(
-    `tmux ${getRunningInTmux() ? 'switch' : 'attach'} -t '=${session}'`,
+    `tmux ${getRunningInTmux() ? 'switch' : 'attach'} -t '=${session}' 2>/dev/null`,
   )
 
   return ok
@@ -252,14 +252,14 @@ const switchToTmuxSession = async (session) => {
 
 const startNewTmuxinatorSession = async (session) => {
   const { ok, stdout } = await spawnSh(
-    `tmuxinator start --suppress-tmux-version-warning=SUPPRESS-TMUX-VERSION-WARNING '${session}'`,
+    `tmuxinator start --suppress-tmux-version-warning=SUPPRESS-TMUX-VERSION-WARNING '${session}' 2>/dev/null`,
   )
 
   return ok
 }
 
 const startNewTmuxSession = async (session) => {
-  const { ok } = await spawnSh(`tmux new -c ~ -d -s '${session}'`)
+  const { ok } = await spawnSh(`tmux new -c ~ -d -s '${session}' 2>/dev/null`)
 
   return ok
 }
