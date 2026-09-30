@@ -60,13 +60,20 @@ if [ -n "$TMUX" ]; then
   # Claude's tab is still active, current_target would wrongly equal target and
   # the notification would be suppressed. Empty when no client is attached.
   read -r current_pid current_target < <(tmux list-clients -F '#{client_activity} #{client_pid} #{session_name}:#{window_index}.#{pane_index}' | sort -rn | head -n1 | cut -d' ' -f2-)
+  # A client at this machine that has the focus and shows the target pane is
+  # the view of the user, also when a client over SSH has newer activity. That
+  # client is often a phone that the user put down: a key or a focus report
+  # from it after the prompt makes it the newest client.
   away=1
-  for pid in $(tmux list-clients -F '#{client_pid}'); do
+  while read -r pid flags pane; do
     if [ "$(~/sh/is-over-ssh.sh "$pid")" = 0 ]; then
       away=
-      break
+      if [[ "$flags" == *focused* ]] && [ "$pane" = "$target" ]; then
+        current_pid=$pid
+        current_target=$pane
+      fi
     fi
-  done
+  done < <(tmux list-clients -F '#{client_pid} #{client_flags} #{session_name}:#{window_index}.#{pane_index}')
   skip_gui=$away
   if [ "$target" = "$current_target" ] && [ "$(~/sh/is-over-ssh.sh "$current_pid")" = 1 ]; then
     skip_gui=1
