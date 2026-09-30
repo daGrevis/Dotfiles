@@ -164,6 +164,8 @@ alias claude-usage=~/sh/claude-usage.sh
 
 alias generate-password=~/sh/generate-password.sh
 
+alias is-over-ssh=~/sh/is-over-ssh.sh
+
 alias view-images=~/sh/view-images.sh
 
 if [ -z "$TMUX" ]; then

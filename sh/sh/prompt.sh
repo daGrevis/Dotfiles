@@ -17,7 +17,8 @@ properties_prompt() {
         echo -n '%B%F{red}[root]%f%b'
     fi
 
-    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    # Inside tmux, the tmux status bar shows it per client.
+    if [ -z "$TMUX" ] && { [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; }; then
         has_output=1
         echo -n '%B%F{yellow}[ssh]%f%b'
     fi
