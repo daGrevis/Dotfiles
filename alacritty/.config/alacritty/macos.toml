@@ -94,6 +94,11 @@ key = "Key9"
 mods = "Command"
 
 [[keyboard.bindings]]
+chars = "\u001b0"
+key = "Key0"
+mods = "Command"
+
+[[keyboard.bindings]]
 chars = "\u001b[5;30004~"
 key = "Left"
 mods = "Command"
