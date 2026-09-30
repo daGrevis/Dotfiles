@@ -70,6 +70,9 @@ done
 # around them, where they carry a meter that fills a quarter of the screen, but
 # in a status bar a frame that bright reads as louder than the reading it holds.
 # $THEME_FG3 is the theme's own grey, and a terminal has no name for one.
+#
+# @short_bar in .tmux.conf cuts the cells out of the styled bar for a short one,
+# "[53%]", so it has to follow a change to the sequences below.
 if $styled; then
     if [ "$percentage" -ge "$error" ]; then
         colour=red

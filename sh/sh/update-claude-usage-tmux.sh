@@ -1,18 +1,22 @@
 #!/bin/sh
 
-# Puts claude-usage output into the @claude_usage tmux option, which .tmux.conf
-# renders in the status bar, and redraws it. Meant for Claude's SessionStart and
-# Stop hooks: the numbers are stale until claude opens and only change when
-# Claude answers.
+# Puts claude-usage output into the @claude_usage_5h and @claude_usage_7d tmux
+# options, which .tmux.conf renders in the status bar, and redraws it. Meant
+# for Claude's SessionStart and Stop hooks: the numbers are stale until claude
+# opens and only change when Claude answers.
 #
-# The limits belong to the account, so the option is global. The model, effort
-# and context window belong to one conversation and are reported per pane by
-# update-claude-status-tmux.sh.
+# One option per limit, so that a narrow status bar can drop the 7d limit and
+# keep the 5h one. claude-usage.sh puts two spaces before "7d", which is where
+# the line is cut.
 #
-# Unsets the option when the account has no such limits, so that the status bar
-# leaves out that part instead of drawing an empty one. A failed request (exit
-# 2, usually a rate limited endpoint) leaves the last numbers up, because they
-# are still roughly right and blinking out on every 429 is worse.
+# The limits belong to the account, so the options are global. The model,
+# effort and context window belong to one conversation and are reported per
+# pane by update-claude-status-tmux.sh.
+#
+# Unsets the options when the account has no such limits, so that the status
+# bar leaves out those parts instead of drawing empty ones. A failed request
+# (exit 2, usually a rate limited endpoint) leaves the last numbers up, because
+# they are still roughly right and blinking out on every 429 is worse.
 
 # Returns 1 when the request did not go through and the status bar has nothing
 # to show, which is the one case that is worth another try.
@@ -20,11 +24,17 @@ update() {
     usage=$("$HOME/sh/claude-usage.sh" --tmux)
     status=$?
     case $status in
-        0) tmux set-option -g @claude_usage "$usage" 2> /dev/null ;;
-        1) tmux set-option -gu @claude_usage 2> /dev/null ;;
+        0)
+            tmux set-option -g @claude_usage_5h "${usage%%  7d *}" 2> /dev/null
+            tmux set-option -g @claude_usage_7d "7d ${usage#*  7d }" 2> /dev/null
+            ;;
+        1)
+            tmux set-option -gu @claude_usage_5h 2> /dev/null
+            tmux set-option -gu @claude_usage_7d 2> /dev/null
+            ;;
     esac
     tmux refresh-client -S 2> /dev/null
-    [ "$status" = 2 ] && [ -z "$(tmux show-options -gqv @claude_usage 2> /dev/null)" ] && return 1
+    [ "$status" = 2 ] && [ -z "$(tmux show-options -gqv @claude_usage_5h 2> /dev/null)" ] && return 1
     return 0
 }
 

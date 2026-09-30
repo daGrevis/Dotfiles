@@ -3,7 +3,7 @@
 # Prints "1" when the process with the pid in the first argument runs in an
 # SSH login, that is, when an sshd is one of its ancestors, and "0" when it
 # does not, which tmux reads as false. .tmux.conf gives it the pid of a tmux
-# client, to show "[ssh]" in the status bar of that client.
+# client, to draw the session name of that client in yellow in the status bar.
 #
 # Without a pid, it checks the tmux client of this terminal, because the
 # ancestors of a shell in tmux are the ones of the tmux server. When more than
