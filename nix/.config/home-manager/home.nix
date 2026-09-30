@@ -167,6 +167,14 @@ in
       export THEME_MAGENTA='${themeColors.magenta}'
       export THEME_CYAN='${themeColors.cyan}'
       export THEME_WHITE='${themeColors.white}'
+      export THEME_BRIGHT_BLACK='${brighten themeColors.black}'
+      export THEME_BRIGHT_RED='${brighten themeColors.red}'
+      export THEME_BRIGHT_GREEN='${brighten themeColors.green}'
+      export THEME_BRIGHT_YELLOW='${brighten themeColors.yellow}'
+      export THEME_BRIGHT_BLUE='${brighten themeColors.blue}'
+      export THEME_BRIGHT_MAGENTA='${brighten themeColors.magenta}'
+      export THEME_BRIGHT_CYAN='${brighten themeColors.cyan}'
+      export THEME_BRIGHT_WHITE='${brighten themeColors.white}'
       export THEME_ORANGE='${themeColors.orange}'
       export THEME_PINK='${themeColors.pink}'
       export THEME_COMMENT='${themeColors.comment}'
@@ -194,6 +202,11 @@ in
     source = "${dotfilesDirectory}/tmux/.tmux.conf";
     onChange = ''
       if ${pkgs.tmux}/bin/tmux has-session 2> /dev/null; then
+        # The config reads $THEME_* from the environment of the tmux server,
+        # which has the values from when it started, so give it the new ones.
+        while IFS== read -r name value; do
+          $DRY_RUN_CMD ${pkgs.tmux}/bin/tmux set-environment -g "$name" "$value"
+        done < <(. "$HOME/theme.sh"; env | grep '^THEME')
         $DRY_RUN_CMD ${pkgs.tmux}/bin/tmux source-file "$HOME/.tmux.conf" || true
       fi
     '';
