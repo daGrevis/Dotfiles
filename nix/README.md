@@ -8,7 +8,7 @@ Nix & NixOS configuration for declarative, reliable and reproducible system.
 
 ```sh
 cd C:\Program Files\Oracle\VirtualBox
-VBoxManage.exe modifyvm NixOS --iconfile "C:\Users\me\Pictures\Icons\nixos.png"
+VBoxManage.exe modifyvm Nixo --iconfile "C:\Users\me\Pictures\Icons\nixos.png"
 ```
 
 ## Tunnel

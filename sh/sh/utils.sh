@@ -209,6 +209,15 @@ brb() {
     confirm "Reboot?" && sudo reboot
 }
 
+# See windows/README.md.
+bb-host() {
+    confirm "Shutdown host?" && echo shutdown > /mnt/nixos-shared/.host-power
+}
+
+brb-host() {
+    confirm "Reboot host?" && echo reboot > /mnt/nixos-shared/.host-power
+}
+
 xrandr-fzf() {
     xrandr | grep -E '^\s+[0-9]+x[0-9]+' | awk '{print $1}' | sort -t 'x' -k1,1n -k2,2n -u | fzf \
         | xargs -I {} xrandr --output $(xrandr | grep " connected" | head -1 | awk '{print $1}') --mode {}
