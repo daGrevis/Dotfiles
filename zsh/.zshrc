@@ -169,6 +169,10 @@ alias is-over-ssh=~/sh/is-over-ssh.sh
 alias view-images=~/sh/view-images.sh
 
 if [ -z "$TMUX" ]; then
-  # Start default tmux session if not already running inside of tmux.
-  mux default
+  # Attach to the most recently used tmux session if not already running inside
+  # of tmux, so a reconnect after a dropped SSH connection lands where it was.
+  # Start the default session only if no sessions are left.
+  session=$(tmux ls -F '#{session_activity} #{session_name}' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)
+  mux "${session:-default}"
+  unset session
 fi
