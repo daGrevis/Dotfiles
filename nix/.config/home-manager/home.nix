@@ -9,6 +9,7 @@ let
   dotfilesDirectory = "${homeDirectory}/Dotfiles";
   recursive-nerd = pkgs.callPackage ./recursive-nerd.nix { };
   claude-code = pkgs.callPackage ./claude-code.nix { };
+  fetch-logos = pkgs.callPackage ./fetch-logos.nix { src = /. + "${dotfilesDirectory}/fetch/logos"; };
   nix-rice = pkgs.callPackage (
     fetchTarball {
       url = "https://github.com/bertof/nix-rice/archive/refs/tags/v0.2.7.tar.gz";
@@ -282,6 +283,12 @@ in
   # {{{ Ripgrep
 
   home.file.".ripgreprc".source = "${dotfilesDirectory}/ripgrep/.ripgreprc";
+
+  # }}}
+
+  # {{{ Fetch
+
+  home.file.".config/fetch/logos/".source = fetch-logos;
 
   # }}}
 

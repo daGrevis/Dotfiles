@@ -162,6 +162,8 @@ alias c=claude
 
 alias claude-usage=~/sh/claude-usage.sh
 
+alias f=~/sh/fetch.sh
+
 alias generate-password=~/sh/generate-password.sh
 
 alias is-over-ssh=~/sh/is-over-ssh.sh
