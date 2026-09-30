@@ -34,12 +34,10 @@ gd() {
     local keyfile=$(mktemp)
     {
         echo "git diff --color=always $* | delta --paging=never --width=$COLUMNS"
-        # Without args, show untracked files as fully added.
-        if [ $# -eq 0 ]; then
-            echo "git ls-files --others --exclude-standard | while read -r f; do"
-            echo "    git diff --no-index --color=always /dev/null \"\$f\" | delta --paging=never --width=$COLUMNS"
-            echo "done"
-        fi
+        # Show untracked files as fully added. Args after -- are pathspecs, so flags match nothing.
+        echo "git ls-files --others --exclude-standard -- $* | while read -r f; do"
+        echo "    git diff --no-index --color=always /dev/null \"\$f\" | delta --paging=never --width=$COLUMNS"
+        echo "done"
     } > "$cmd_file"
     printf '#command\nr set-mark a^X\n^X quit r\n' > "$keyfile"
     local start_cmd=""
