@@ -25,8 +25,9 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-prompt ''
 zstyle ':completion:*' select-prompt ''
 
-# Make capital and small letters the same when auto-completing.
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# Make capital and small letters the same when auto-completing. If nothing
+# starts with the typed text, match it anywhere in the name instead.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'm:{a-zA-Z}={A-Za-z} l:|=* r:|=*'
 
 # -C skips the slow security re-audit of completion dirs.
 autoload -Uz compinit && compinit -C
@@ -111,6 +112,23 @@ AUTOJUMP_ZSH="$HOME/.nix-profile/share/autojump/autojump.zsh"
 if [ -f $AUTOJUMP_ZSH ]; then
   source "$AUTOJUMP_ZSH"
 fi
+
+# Load fzf-tab to show completion matches in fzf. It must load after compinit
+# and after the Tab binding, because it calls the widget bound to Tab.
+FZF_TAB_ZSH="$HOME/.nix-profile/share/fzf-tab/fzf-tab.plugin.zsh"
+if [ -f $FZF_TAB_ZSH ]; then
+  source "$FZF_TAB_ZSH"
+fi
+
+# Without this, fzf-tab inserts only the common part of the matches and opens
+# fzf at the second Tab. With it, fzf-tab opens fzf at the first Tab.
+setopt MENU_COMPLETE
+
+# Start the fzf query with the typed text, not the common part of matches.
+zstyle ':fzf-tab:*' query-string input
+
+# Ignore case in fzf, the same as the matcher-list does.
+zstyle ':fzf-tab:*' fzf-flags --ignore-case
 
 source ~/theme.sh
 

@@ -111,6 +111,7 @@ in
     yarn
     yt-dlp
     zsh
+    zsh-fzf-tab
     pnpm
     yalc
     # unfree:
