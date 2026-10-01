@@ -88,6 +88,40 @@ vim.opt.cursorline = true
 -- Keeps cursor at the center region of screen.
 vim.opt.scrolloff = 25
 
+-- Folds start open. A closed fold shows its first line and then the line count.
+vim.opt.foldlevel = 99
+vim.opt.foldtext = 'v:lua.fold_text()'
+-- Fold column only in windows with folds, and it marks only the first line of each fold.
+vim.opt.foldcolumn = 'auto:1'
+vim.opt.fillchars = { fold = ' ', foldopen = '▾', foldclose = '▸', foldsep = ' ', foldinner = ' ' }
+
+function _G.fold_text()
+  local line = vim.fn.getline(vim.v.foldstart)
+  local hl = vim.bo.filetype == 'markdown' and line:match '^#+%s' and 'FoldedHeading' or 'FoldedText'
+  return { { line, hl }, { '    ' .. (vim.v.foldend - vim.v.foldstart + 1) .. ' lines', 'FoldedText' } }
+end
+
+-- Dimmed fold colors (closed folds and fold column): the heading and fold colors mixed halfway into the fold background.
+vim.api.nvim_create_autocmd('ColorScheme', {
+  callback = function()
+    local bg = vim.api.nvim_get_hl(0, { name = 'Folded', link = false }).bg
+    local function dim(name)
+      local fg = vim.api.nvim_get_hl(0, { name = name, link = false }).fg
+      if not (fg and bg) then
+        return fg
+      end
+      local mixed = 0
+      for _, shift in ipairs { 0x10000, 0x100, 1 } do
+        mixed = mixed + math.floor((math.floor(fg / shift) % 256 + math.floor(bg / shift) % 256) / 2) * shift
+      end
+      return mixed
+    end
+    vim.api.nvim_set_hl(0, 'FoldedHeading', { fg = dim 'Title', bg = bg, bold = true })
+    vim.api.nvim_set_hl(0, 'FoldedText', { fg = dim 'Folded', bg = bg })
+    vim.api.nvim_set_hl(0, 'FoldColumn', { fg = dim 'Folded' })
+  end,
+})
+
 vim.keymap.set('n', '<C-c>', function()
   close_all_floating_windows()
 end)
@@ -1392,6 +1426,11 @@ require('lazy').setup {
             vim.bo[args.buf].syntax = 'ON'
           else
             vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
+          if vim.bo[args.buf].filetype == 'markdown' then
+            -- Fold headings (together with their subheadings), code blocks and lists.
+            vim.wo[0][0].foldmethod = 'expr'
+            vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
           end
         end,
       })
