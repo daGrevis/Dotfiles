@@ -6,6 +6,9 @@
 # for Claude's statusLine: Claude sends all of them on every redraw, so they
 # follow the conversation.
 #
+# Also puts the limits into @claude_usage_5h and @claude_usage_7d, as soon as
+# Claude has them. See limits.
+#
 # Also meant for Claude's SessionStart hook, which sends a different input and
 # gets the context bar up before the conversation starts. See below.
 #
@@ -66,6 +69,29 @@ percentage=$(printf '%s' "$status" | jq -r '.context_window.used_percentage // 0
 [ -n "$percentage" ] || percentage=0
 context=$("$HOME/sh/bar.sh" --tmux "$percentage")
 
+# The limits, which update-claude-usage-tmux.sh also sets. Its hook only asks
+# the endpoint when a session opens, so a request that fails then leaves the
+# status bar without limits, and a session limit that only starts with the
+# first question has no reset time. Claude reads the limits off every response,
+# so they are here from the first one on. Before that Claude leaves them out, and the options keep what
+# the hook put there.
+#
+# One value per line, like claude-usage.sh: the session percentage, when it
+# resets, then the same two for the week. The reset times are epoch seconds.
+limits=$(printf '%s' "$status" |
+    jq -r '
+        def clock: strflocaltime("%H:%M");
+
+        .rate_limits
+        | if (.five_hour.used_percentage != null and .five_hour.resets_at != null
+            and .seven_day.used_percentage != null and .seven_day.resets_at != null)
+        then "\(.five_hour.used_percentage | round)",
+             (.five_hour.resets_at | clock),
+             "\(.seven_day.used_percentage | round)",
+             (.seven_day.resets_at as $reset
+                 | "\($reset | strflocaltime("%b %d") | sub(" 0";" ")), \($reset | clock)")
+        else empty end' 2> /dev/null)
+
 # The status line redraws many times per answer, so tmux only hears about a
 # value that changed. Returns 0 when it did.
 # shellcheck disable=SC2086 # See pane_target.
@@ -78,10 +104,31 @@ update() {
     fi
 }
 
+# The same for the limits, which are the account's and so global, like
+# update-claude-usage-tmux.sh sets them. Never unsets, see limits.
+update_limit() {
+    [ "$2" = "$(tmux show-options -gqv "$1" 2> /dev/null)" ] && return 1
+    tmux set-option -g "$1" "$2" 2> /dev/null
+}
+
 changed=""
 update @claude_model "$model" && changed=1
 update @claude_effort "$effort" && changed=1
 update @claude_context "$context" && changed=1
+if [ -n "$limits" ]; then
+    {
+        read -r five_hour_percentage
+        read -r five_hour_reset
+        read -r seven_day_percentage
+        read -r seven_day_reset
+    } << EOF
+$limits
+EOF
+    # The same text that claude-usage.sh prints, so that the hooks and this do
+    # not draw the limits in two ways.
+    update_limit @claude_usage_5h "5h $("$HOME/sh/bar.sh" --tmux "$five_hour_percentage") $five_hour_reset" && changed=1
+    update_limit @claude_usage_7d "7d $("$HOME/sh/bar.sh" --tmux "$seven_day_percentage") $seven_day_reset" && changed=1
+fi
 [ -n "$changed" ] && tmux refresh-client -S 2> /dev/null
 
 # Claude draws its own status line from what a statusLine command prints, so

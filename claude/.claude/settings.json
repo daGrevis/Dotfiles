@@ -95,10 +95,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/sh/update-claude-usage-tmux.sh"
-          },
-          {
-            "type": "command",
             "command": "~/sh/claude-notify.sh"
           }
         ]

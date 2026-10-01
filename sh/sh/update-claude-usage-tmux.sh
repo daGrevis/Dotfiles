@@ -2,8 +2,9 @@
 
 # Puts claude-usage output into the @claude_usage_5h and @claude_usage_7d tmux
 # options, which .tmux.conf renders in the status bar, and redraws it. Meant
-# for Claude's SessionStart and Stop hooks: the numbers are stale until claude
-# opens and only change when Claude answers.
+# for Claude's SessionStart hook: the numbers are stale until claude opens.
+# After that update-claude-status-tmux.sh keeps them current, from what Claude
+# reads off every response.
 #
 # One option per limit, so that a narrow status bar can drop the 7d limit and
 # keep the 5h one. claude-usage.sh puts two spaces before "7d", which is where
@@ -38,9 +39,9 @@ update() {
     return 0
 }
 
-# A session that opens while other claudes answer can find the endpoint rate
+# A session that opens right after other claudes can find the endpoint rate
 # limited. With no numbers from before, the status bar shows no limits at all
-# until the first answer, so this asks again a few times. The retries run in
+# until the first response, so this asks again a few times. The retries run in
 # the background, because a hook must not hold up the session it starts.
 if ! update; then
     (

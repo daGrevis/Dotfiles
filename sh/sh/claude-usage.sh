@@ -9,8 +9,8 @@
 # Vertex one, which has no such limits.
 #
 # Exits 2 when the request did not go through, which says nothing about the
-# account: the endpoint rate limits after a handful of calls and several claudes
-# ask on every answer, so 429 is ordinary. Callers keep what they had.
+# account: the endpoint rate limits after a handful of calls, so 429 is ordinary
+# when several claudes open at once. Callers keep what they had.
 #
 # Fetching is not an inference request, so this costs no tokens.
 #
@@ -44,15 +44,18 @@ response=$(curl -sf --max-time 5 -H "Authorization: Bearer $token" https://api.a
 # Reset times are local and on the 24 hour clock, so an hour reads the same
 # here as everywhere else the machine prints one. An empty body leaves jq with
 # nothing to print.
+#
+# After 5 hours or more without a request, no session window runs and the
+# session has no reset time. It is at 0 then, and its reset line stays empty.
+# The window starts with the next request.
 usage=$(printf '%s' "$response" |
     jq -r '
         def epoch: sub("\\.[0-9]+";"") | sub("\\+00:00$";"Z") | fromdateiso8601;
         def clock: strflocaltime("%H:%M");
 
-        if (.five_hour.utilization != null and .five_hour.resets_at != null
-            and .seven_day.utilization != null and .seven_day.resets_at != null)
-        then "\(.five_hour.utilization | round)",
-             (.five_hour.resets_at | epoch | clock),
+        if (.seven_day.utilization != null and .seven_day.resets_at != null)
+        then "\(.five_hour.utilization // 0 | round)",
+             (.five_hour.resets_at | if . != null then epoch | clock else "" end),
              "\(.seven_day.utilization | round)",
              ((.seven_day.resets_at | epoch) as $reset
                  | "\($reset | strflocaltime("%b %d") | sub(" 0";" ")), \($reset | clock)")
@@ -72,7 +75,8 @@ EOF
 # "5h" and "7d" are how long each window is, which is what tells the two apart,
 # and they are short like the "ctx" that the tmux status bar puts on the context
 # bar. Two spaces between the two limits, because one reset time ends where the
-# other's name begins and a single space runs them together.
-printf '5h %s %s  7d %s %s\n' \
-    "$(bar "$five_hour_percentage")" "$five_hour_reset" \
+# other's name begins and a single space runs them together. A session without
+# a reset time also leaves out the space before it.
+printf '5h %s%s  7d %s %s\n' \
+    "$(bar "$five_hour_percentage")" "${five_hour_reset:+ $five_hour_reset}" \
     "$(bar "$seven_day_percentage")" "$seven_day_reset"
