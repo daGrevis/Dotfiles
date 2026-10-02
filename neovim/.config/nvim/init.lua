@@ -122,6 +122,122 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   end,
 })
 
+-- Closed folds stay closed after a reload or a restart. Each one is saved by the text of its first line,
+-- so a fold opens again only when that line changes. Manual and diff folds are not saved.
+local closed_folds_path = vim.fn.stdpath 'state' .. '/closed-folds.json'
+
+local function read_closed_folds()
+  local ok, closed_folds = pcall(function()
+    return vim.json.decode(table.concat(vim.fn.readfile(closed_folds_path), '\n'))
+  end)
+  return ok and closed_folds or {}
+end
+
+local function save_closed_folds(buf)
+  local win = vim.fn.bufwinid(buf)
+  local path = vim.api.nvim_buf_get_name(buf)
+  if win == -1 or path == '' or vim.bo[buf].buftype ~= '' or not vim.b[buf].closed_folds_restored then
+    return
+  end
+  if vim.wo[win].foldmethod == 'manual' or vim.wo[win].diff then
+    return
+  end
+  local lines = {}
+  vim.api.nvim_win_call(win, function()
+    local view = vim.fn.winsaveview()
+    -- Open each closed fold to find the closed folds inside it, then close them all again.
+    local lnums = {}
+    local lnum = 1
+    while lnum <= vim.fn.line '$' do
+      if vim.fn.foldclosed(lnum) == lnum then
+        table.insert(lnums, lnum)
+        vim.cmd(lnum .. 'foldopen')
+      else
+        lnum = lnum + 1
+      end
+    end
+    for i = #lnums, 1, -1 do
+      vim.cmd(lnums[i] .. 'foldclose')
+      table.insert(lines, vim.fn.getline(lnums[i]))
+    end
+    vim.fn.winrestview(view)
+  end)
+  local closed_folds = read_closed_folds()
+  closed_folds[path] = #lines > 0 and lines or nil
+  vim.fn.writefile({ vim.json.encode(closed_folds) }, closed_folds_path)
+end
+
+local function restore_closed_folds(buf)
+  local win = vim.fn.bufwinid(buf)
+  -- A buffer loaded without a window (for example, by bufload()) waits for its window.
+  if win == -1 then
+    return
+  end
+  local lines = read_closed_folds()[vim.api.nvim_buf_get_name(buf)]
+  if not lines or vim.wo[win].foldmethod == 'manual' or vim.wo[win].diff then
+    vim.b[buf].closed_folds_restored = true
+    return
+  end
+  local closed = {}
+  for _, line in ipairs(lines) do
+    closed[line] = true
+  end
+  local function restore()
+    if not vim.api.nvim_win_is_valid(win) or vim.api.nvim_win_get_buf(win) ~= buf then
+      return
+    end
+    vim.api.nvim_win_call(win, function()
+      vim.cmd 'normal! zX'
+      -- From the bottom up, so that the folds inside a fold close before it.
+      for lnum = vim.fn.line '$', 1, -1 do
+        if closed[vim.fn.getline(lnum)] then
+          vim.cmd('silent! ' .. lnum .. 'foldclose')
+          -- The line is not the first line of a fold, so open the fold again.
+          if vim.fn.foldclosed(lnum) ~= lnum then
+            vim.cmd('silent! ' .. lnum .. 'foldopen')
+          end
+        end
+      end
+    end)
+    vim.b[buf].closed_folds_restored = true
+  end
+  -- Treesitter can compute the folds later, so wait for the parse.
+  local parser = vim.treesitter.get_parser(buf, nil, { error = false })
+  if parser and vim.wo[win].foldexpr:find 'treesitter' then
+    parser:parse(nil, function(err)
+      if not err then
+        vim.schedule(restore)
+      end
+    end)
+  else
+    restore()
+  end
+end
+
+-- BufWinEnter does not come after an 'autoread' reload. Neovim keeps the folds then.
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  callback = function(args)
+    if vim.b[args.buf].closed_folds_restored then
+      return
+    end
+    -- Wait for the session file, which can open and close folds by line number.
+    vim.schedule(function()
+      if vim.api.nvim_buf_is_valid(args.buf) then
+        restore_closed_folds(args.buf)
+      end
+    end)
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufWinLeave', 'BufUnload', 'FocusLost' }, {
+  callback = function(args)
+    save_closed_folds(args.buf)
+    if args.event == 'BufUnload' then
+      vim.b[args.buf].closed_folds_restored = false
+    end
+  end,
+})
+
 vim.keymap.set('n', '<C-c>', function()
   close_all_floating_windows()
 end)
