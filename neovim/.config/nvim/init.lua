@@ -134,7 +134,8 @@ local function read_closed_folds()
 end
 
 local function save_closed_folds(buf)
-  local win = vim.fn.bufwinid(buf)
+  -- A window in any tab page, because Neovim can quit from another tab page.
+  local win = vim.fn.win_findbuf(buf)[1] or -1
   local path = vim.api.nvim_buf_get_name(buf)
   if win == -1 or path == '' or vim.bo[buf].buftype ~= '' or not vim.b[buf].closed_folds_restored then
     return
@@ -168,13 +169,20 @@ local function save_closed_folds(buf)
 end
 
 local function restore_closed_folds(buf)
-  local win = vim.fn.bufwinid(buf)
+  -- A window in any tab page, because a session or 'nvim -p' opens buffers in other tab pages.
+  local win = vim.fn.win_findbuf(buf)[1] or -1
   -- A buffer loaded without a window (for example, by bufload()) waits for its window.
   if win == -1 then
     return
   end
   local lines = read_closed_folds()[vim.api.nvim_buf_get_name(buf)]
-  if not lines or vim.wo[win].foldmethod == 'manual' or vim.wo[win].diff then
+  if vim.wo[win].foldmethod == 'manual' or vim.wo[win].diff then
+    vim.b[buf].closed_folds_restored = true
+    return
+  end
+  -- A session file can set an old 'foldlevel' that closes all folds, so open them all first.
+  vim.wo[win].foldlevel = 99
+  if not lines then
     vim.b[buf].closed_folds_restored = true
     return
   end
