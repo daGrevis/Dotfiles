@@ -71,6 +71,9 @@ systemd.user.services.earlyoom = {
         KbdInteractiveAuthentication = false;
         # Tunnel clients all come from loopback, so scans would lock them out.
         PerSourcePenaltyExemptList = "127.0.0.1,::1";
+        # Dead tunnel sessions count toward the limit on dagrev.is, so close them fast.
+        ClientAliveInterval = 15;
+        ClientAliveCountMax = 3;
       };
     };
 
