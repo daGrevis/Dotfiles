@@ -1,10 +1,11 @@
 #!/bin/sh
 
-# Puts which model Claude runs, how much it reasons and how full its context
-# window is into the @claude_model, @claude_effort and @claude_context tmux
-# options, which .tmux.conf renders in the status bar, and redraws them. Meant
-# for Claude's statusLine: Claude sends all of them on every redraw, so they
-# follow the conversation.
+# Puts which model Claude runs, how much it reasons, how full its context
+# window is and when its prompt cache runs out into the @claude_model,
+# @claude_effort, @claude_context and @claude_cache_expiry tmux options, which
+# .tmux.conf renders in the status bar, and redraws them. Meant for Claude's
+# statusLine: Claude sends all of them on every redraw, so they follow the
+# conversation.
 #
 # Also puts the limits into @claude_usage_5h and @claude_usage_7d, as soon as
 # Claude has them. See limits.
@@ -12,8 +13,8 @@
 # Also meant for Claude's SessionStart hook, which sends a different input and
 # gets the context bar up before the conversation starts. See below.
 #
-# Model, effort and context belong to one conversation, so the options are set
-# on the pane claude runs in and several claudes each report their own.
+# Model, effort, context and cache belong to one conversation, so the options
+# are set on the pane claude runs in and several claudes each report their own.
 #
 # Claude's hooks cannot do this. They get no token counts, and the transcript
 # does not say how large the window is, which is 200k for one model and 1M for
@@ -39,11 +40,18 @@ pane_target=${TMUX_PANE:+-t $TMUX_PANE}
 # this script with its own input, which puts the bar up at 0 until the first
 # answer replaces it. A resumed or a compacted session keeps the bar it has,
 # because its context is not 0.
+#
+# A new conversation has no cache before its first request either, so the hook
+# also takes down a cache bar that an earlier claude in this pane left.
 if [ "$(printf '%s' "$status" | jq -r '.hook_event_name // empty' 2> /dev/null)" = "SessionStart" ]; then
     case $(printf '%s' "$status" | jq -r '.source // empty' 2> /dev/null) in
         startup | clear)
             # shellcheck disable=SC2086 # See pane_target.
             tmux set-option -p $pane_target @claude_context "$("$HOME/sh/bar.sh" --tmux 0)" 2> /dev/null
+            # shellcheck disable=SC2086 # See pane_target.
+            tmux set-option -pu $pane_target @claude_cache_expiry 2> /dev/null
+            # shellcheck disable=SC2086 # See pane_target.
+            tmux set-option -pu $pane_target @claude_cache 2> /dev/null
             tmux refresh-client -S 2> /dev/null
             ;;
     esac
@@ -68,6 +76,28 @@ effort=$(printf '%s' "$status" | jq -r '.effort.level // empty' 2> /dev/null)
 percentage=$(printf '%s' "$status" | jq -r '.context_window.used_percentage // 0 | round' 2> /dev/null)
 [ -n "$percentage" ] || percentage=0
 context=$("$HOME/sh/bar.sh" --tmux "$percentage")
+
+# When the prompt cache runs out, as epoch seconds, and its TTL in seconds, for
+# the cache bar. update-claude-cache-tmux.sh draws the bar from them, because
+# the bar has to move while claude waits for a prompt, and this only runs when
+# Claude has news. See there.
+#
+# Claude starts the TTL when it sends a request, and reports which TTL the last
+# request wrote and when it runs out. The TTL is 1h, or 5m once the account is
+# in overage.
+#
+# Claude reports nothing before the first request of a conversation, and says
+# so when the provider reports no cache at all, so the bar is left out then. A
+# last request that reported no cache has no expiry, which goes in as 0, so
+# that the bar reads 100: the next request starts from scratch too.
+#
+# Both in one option, e.g. "1759600000 3600", because .tmux.conf only hands
+# them on.
+cache_expiry=$(printf '%s' "$status" |
+    jq -r '
+        .prompt_cache // empty
+        | select(.caching_observed == true)
+        | "\(.expires_at // 0) \(if .ttl == "1h" then 3600 else 300 end)"' 2> /dev/null)
 
 # The limits, which update-claude-usage-tmux.sh also sets. Its hook only asks
 # the endpoint when a session opens, so a request that fails then leaves the
@@ -115,6 +145,7 @@ changed=""
 update @claude_model "$model" && changed=1
 update @claude_effort "$effort" && changed=1
 update @claude_context "$context" && changed=1
+update @claude_cache_expiry "$cache_expiry" && changed=1
 if [ -n "$limits" ]; then
     {
         read -r five_hour_percentage
