@@ -177,7 +177,9 @@ clip() {
   if $IS_DARWIN; then
     pbcopy "$@"
   else
-    xclip -f "$@" | xclip -selection clipboard
+    # A tmux attach over SSH removes DISPLAY from the session (see
+    # update-environment), and the copy commands of tmux then run without it.
+    DISPLAY=${DISPLAY:-:0} xclip -f "$@" | DISPLAY=${DISPLAY:-:0} xclip -selection clipboard
   fi
 }
 
@@ -185,7 +187,7 @@ clap() {
   if $IS_DARWIN; then
     pbpaste
   else
-    xclip -o -selection clipboard
+    DISPLAY=${DISPLAY:-:0} xclip -o -selection clipboard
   fi
 }
 
