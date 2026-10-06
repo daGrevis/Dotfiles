@@ -5,3 +5,4 @@ settings.py
 node_modules/
 pyvenv.cfg
 .claude/settings.local.json
+handoff-*.md
