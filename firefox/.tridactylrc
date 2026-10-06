@@ -1,0 +1,18 @@
+colors dark
+
+set newtab about:blank
+set modeindicator false
+set smoothscroll true
+
+unbind d
+
+bind <C-d> scrollpage 1
+bind <C-u> scrollpage -1
+
+bind J tabnext
+bind K tabprev
+
+unbindurl youtube\.com/watch\?v=.* t
+unbindurl youtube\.com/watch\?v=.* f
+
+" vim: filetype=vim

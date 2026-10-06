@@ -23,6 +23,28 @@ let
       hexBrighter = nix-rice.color.toRgbHex rgbaBrighter;
     in
       hexBrighter;
+  # Path of the Firefox profile directory, relative to the home directory. It is
+  # the profile of the first install, or else the default profile. It is null if
+  # Firefox did not start on this machine yet.
+  firefoxProfile =
+    let
+      root = lib.findFirst (root: builtins.pathExists "${homeDirectory}/${root}/profiles.ini") null (
+        if stdenv.isDarwin then [ "Library/Application Support/Firefox" ] else [ ".config/mozilla/firefox" ".mozilla/firefox" ]
+      );
+      ini = (lib.foldl' (acc: line:
+        let
+          section = builtins.match "\\[(.+)]" line;
+          pair = builtins.match "([^=]+)=(.*)" line;
+        in
+          if section != null then acc // { current = lib.head section; }
+          else if pair != null then lib.recursiveUpdate acc { sections.${acc.current}.${lib.head pair} = lib.last pair; }
+          else acc
+      ) { current = null; sections = { }; } (lib.splitString "\n" (builtins.readFile "${homeDirectory}/${root}/profiles.ini"))).sections;
+      sections = prefix: lib.attrValues (lib.filterAttrs (name: _: lib.hasPrefix prefix name) ini);
+      paths = map (install: install.Default) (sections "Install")
+        ++ map (profile: profile.Path) (lib.filter (profile: (profile.Default or null) == "1") (sections "Profile"));
+    in
+      if root == null || paths == [ ] then null else "${root}/${lib.head paths}";
 in
 {
   home.stateVersion = "23.05";
@@ -259,6 +281,20 @@ in
       cyan = "${brighten themeColors.cyan}"
       white = "${brighten themeColors.white}"
     '';
+
+  # }}}
+
+  # {{{ Firefox
+
+  # NOTE: nix does not install Firefox. The profile directory name is random and
+  # different on each machine, so the name of this entry is not its target.
+  # user.js is symlinked out of the store, so that a change applies at the next
+  # start of Firefox without a rebuild.
+  home.file."firefox-user.js" = (lib.mkIf (firefoxProfile != null) {
+    target = "${firefoxProfile}/user.js";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/firefox/user.js";
+  });
+  home.file.".tridactylrc".source = "${dotfilesDirectory}/firefox/.tridactylrc";
 
   # }}}
 
