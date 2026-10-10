@@ -2,15 +2,6 @@
 
 Nix & NixOS configuration for declarative, reliable and reproducible system.
 
-## Setup for VirtualBox on Windows
-
-### Setting the Icon File
-
-```sh
-cd C:\Program Files\Oracle\VirtualBox
-VBoxManage.exe modifyvm Nixo --iconfile "C:\Users\me\Pictures\Icons\nixos.png"
-```
-
 ## Tunnel
 
 Reverse SSH tunnel from home to dagrev.is. Port 2222 on dagrev.is leads to sshd on home.

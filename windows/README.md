@@ -1,8 +1,34 @@
 # Windows
 
-Scripts for the Windows host that runs NixOS in VirtualBox.
+## About
+
+Scripts and settings for the Windows host that runs NixOS in VirtualBox.
+
+## VirtualBox VM
+
+### VM Settings
+
+The VM is `Nixo`. These settings are different from the defaults:
+
+- Display: 3D acceleration off.
+- Network: bridged adapter, adapter type virtio-net.
+- Storage: no optical drive. NixOS installs the Guest Additions
+  (`virtualisation.virtualbox.guest.enable`), so the VM does not need
+  `VBoxGuestAdditions.iso`.
+- Shared folders: `NixOS-Shared` for `C:\Users\me\Desktop\NixOS-Shared`,
+  writable, no auto-mount. NixOS mounts it at `/mnt/nixos-shared`.
+- General: shared clipboard and drag and drop are `Bidirectional`.
+
+### Setting the Icon File
+
+```sh
+cd C:\Program Files\Oracle\VirtualBox
+VBoxManage.exe modifyvm Nixo --iconfile "C:\Users\me\Pictures\Icons\nixos.png"
+```
 
 ## Host Power
+
+### How It Works
 
 `bb-host` and `brb-host` in the guest shut down or reboot the Windows host.
 The guest writes `shutdown` or `reboot` to `.host-power` in the shared folder.
