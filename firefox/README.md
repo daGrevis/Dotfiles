@@ -10,9 +10,12 @@ Web browser. This file records my theme, my add-ons and how I apply my prefs.
 
 ## Add-ons
 
+- [Consent-O-Matic](https://addons.mozilla.org/en-US/firefox/addon/consent-o-matic/)
 - [Dark Reader](https://addons.mozilla.org/en-US/firefox/addon/darkreader/)
+- [Don't Fuck With Paste](https://addons.mozilla.org/en-US/firefox/addon/don-t-fuck-with-paste/)
 - [Firefox Multi-Account Containers](https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/)
 - [Pinboard WebExtension](https://addons.mozilla.org/en-US/firefox/addon/pinboard-webextension/)
+- [Preact Developer Tools](https://addons.mozilla.org/en-US/firefox/addon/preact-devtools/)
 - [React Developer Tools](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
 - [Simple Translate](https://addons.mozilla.org/en-US/firefox/addon/simple-translate/)
 - [Tridactyl](https://addons.mozilla.org/en-US/firefox/addon/tridactyl-vim/)
