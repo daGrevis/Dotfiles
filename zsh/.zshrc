@@ -193,6 +193,14 @@ if [ -z "$TMUX" ]; then
   # of tmux, so a reconnect after a dropped SSH connection lands where it was.
   # Start the default session only if no sessions are left.
   session=$(tmux ls -F '#{session_activity} #{session_name}' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)
-  mux "${session:-default}"
+  if [ -n "$session" ]; then
+    mux "$session"
+  else
+    # Starts ~/.config/tmuxinator/default.yml with tmux only, which is faster
+    # than mux.js and tmuxinator. Like mux.js, it updates the history.
+    { grep -vx default ~/.mux-history 2>/dev/null; echo default; } > ~/.mux-history.tmp && mv ~/.mux-history.tmp ~/.mux-history
+    tmux new-session -d -s default -n zsh -c ~ && tmux send-keys -t default f C-m
+    tmux -u attach-session -t default
+  fi
   unset session
 fi

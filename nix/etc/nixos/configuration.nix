@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 
@@ -19,6 +19,20 @@
     };
 
     initrd.checkJournalingFS = false;
+
+    kernelParams = [
+      # Stops systemd-ssh-generator, which slows the boot in VirtualBox. It
+      # only adds SSH over vsock and a local Unix socket. sshd.service stays.
+      "systemd.ssh_auto=no"
+      # The size of the VGA text console, so that systemd does not query the
+      # console with an escape sequence that it never answers.
+      "systemd.tty.rows.console=25"
+      "systemd.tty.columns.console=80"
+      # systemd starts no mount unit while more than 5 mount table changes
+      # per second came in, and the boot makes more than 5 at once. The
+      # kernel passes this to PID 1 as an environment variable.
+      "SYSTEMD_DEFAULT_MOUNT_RATE_LIMIT_BURST=50"
+    ];
   };
 
   fileSystems."/mnt/nixos-shared" = {
@@ -124,6 +138,10 @@ systemd.user.services.earlyoom = {
     trusted-users = [ "root" "dagrevis" ];
     experimental-features = [ "nix-command" ];
   };
+
+  # Without "bpf", systemd attaches no BPF LSM program at boot, which is slow
+  # here. No unit uses RestrictFileSystems=, the only user of it.
+  security.lsm = lib.mkForce [ "landlock" "yama" ];
 
   security.sudo.wheelNeedsPassword = false;
 
