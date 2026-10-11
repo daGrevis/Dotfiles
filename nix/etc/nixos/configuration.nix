@@ -128,7 +128,16 @@ systemd.user.services.earlyoom = {
     users = {
       dagrevis = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "docker" "vboxsf" ];
+        extraGroups = [
+          # Lets the user run sudo.
+          "wheel"
+          # Lets the user run docker without sudo.
+          "docker"
+          # Lets the user read and write the shared folder in /mnt/nixos-shared.
+          "vboxsf"
+          # Lets VBoxClient open /dev/vboxuser for the shared clipboard.
+          "vboxuserdev"
+        ];
         shell = pkgs.zsh;
       };
     };
