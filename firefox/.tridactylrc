@@ -5,6 +5,7 @@ set modeindicator false
 set smoothscroll true
 
 unbind d
+unbind <C-f>
 
 bind <C-d> scrollpage 1
 bind <C-u> scrollpage -1
