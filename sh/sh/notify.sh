@@ -64,22 +64,28 @@ if [ -n "$TMUX" ]; then
   # the view of the user, also when a client over SSH has newer activity. That
   # client is often a phone that the user put down: a key or a focus report
   # from it after the prompt makes it the newest client.
+  #
+  # A click switches the newest client at this machine. A bare
+  # `display-message -p '#{client_tty}'` gives the newest client of the session
+  # of the pane, which is a client over SSH when the client at this machine
+  # shows another session. The click then switched the client over SSH.
   away=1
-  while read -r pid flags pane; do
+  client=
+  while read -r pid tty flags pane; do
     if [ "$(~/sh/is-over-ssh.sh "$pid")" = 0 ]; then
       away=
+      [ -n "$client" ] || client=$tty
       if [[ "$flags" == *focused* ]] && [ "$pane" = "$target" ]; then
         current_pid=$pid
         current_target=$pane
       fi
     fi
-  done < <(tmux list-clients -F '#{client_pid} #{client_flags} #{session_name}:#{window_index}.#{pane_index}')
+  done < <(tmux list-clients -F '#{client_activity} #{client_pid} #{client_tty} #{client_flags} #{session_name}:#{window_index}.#{pane_index}' | sort -rn | cut -d' ' -f2-)
   skip_gui=$away
   if [ "$target" = "$current_target" ] && [ "$(~/sh/is-over-ssh.sh "$current_pid")" = 1 ]; then
     skip_gui=1
   fi
   socket=$(echo "$TMUX" | cut -d, -f1)
-  client=$(tmux display-message -p '#{client_tty}')
   tmux_bin=$(which tmux)
 elif [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
   # Outside tmux, the SSH_* variables are the ones of this login, as in
