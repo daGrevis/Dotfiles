@@ -1,19 +1,45 @@
+" Delete settings changed at runtime, so this file is the only source of truth
+sanitise tridactyllocal tridactylsync
+
 colors dark
 
+" Open an empty page in new tabs, not the Tridactyl start page
 set newtab about:blank
+" Hide the mode name in the bottom right corner
 set modeindicator false
 set smoothscroll true
+" Do not let pages focus an input on load, so j and k scroll at once
+set allowautofocus false
 
+" Do not close the tab with d
 unbind d
+" Keep <C-f> for the Firefox find bar
 unbind <C-f>
 
+" Scroll down a full page, not half a page
 bind <C-d> scrollpage 1
+" Scroll up a full page, not half a page
 bind <C-u> scrollpage -1
 
+" Go to the next tab (the default is the previous tab)
 bind J tabnext
+" Go to the previous tab (the default is the next tab)
 bind K tabprev
 
+" Search the page forward
+bind / fillcmdline find
+" Search the page backward
+bind ? fillcmdline find --reverse
+" Go to the next match below the current view
+bind n findnext --search-from-view
+" Go to the previous match above the current view
+bind N findnext --search-from-view --reverse
+" Clear the search highlight
+bind ,<Space> nohlsearch
+
+" Let YouTube use t for theater mode
 unbindurl youtube\.com/watch\?v=.* t
+" Let YouTube use f for full screen
 unbindurl youtube\.com/watch\?v=.* f
 
 " vim: filetype=vim
