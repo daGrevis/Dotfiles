@@ -133,6 +133,15 @@ if [ "$(uname)" = "Darwin" ]; then
   fi
 else
   if [ -n "$TMUX" ]; then
+    # A pane that a client over SSH created has no DISPLAY, because tmux takes
+    # it from that client. xdotool then fails, the empty class does not match,
+    # and the notification shows while the user looks at the pane. Nothing
+    # closes it then, because the pane does not get the focus again. The
+    # tmux server started under X, so its DISPLAY is the one of this machine.
+    if [ -z "$DISPLAY" ]; then
+      display=$(tmux show-environment -g DISPLAY 2>/dev/null)
+      [[ "$display" != DISPLAY=* ]] || export DISPLAY="${display#DISPLAY=}"
+    fi
     focused=$(xdotool getactivewindow getwindowclassname 2>/dev/null)
     if [ -z "$skip_gui" ] && { [ "$target" != "$current_target" ] || [[ "${focused,,}" != "alacritty" ]]; }; then
       notify_id_file="/tmp/.notify-id-${TMUX_PANE#%}"
