@@ -20,6 +20,10 @@
 
     initrd.checkJournalingFS = false;
 
+    # Loads the display driver in stage 1. Without it, VBoxDRMClient can start
+    # before /dev/dri exists.
+    initrd.kernelModules = [ "vmwgfx" ];
+
     kernelParams = [
       # Stops systemd-ssh-generator, which slows the boot in VirtualBox. It
       # only adds SSH over vsock and a local Unix socket. sshd.service stays.
