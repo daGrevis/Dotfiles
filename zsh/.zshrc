@@ -130,6 +130,9 @@ zstyle ':fzf-tab:*' query-string input
 # Ignore case in fzf, the same as the matcher-list does.
 zstyle ':fzf-tab:*' fzf-flags --ignore-case
 
+# Use FZF_DEFAULT_OPTS in fzf-tab too. Without this, fzf-tab clears it.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+
 source ~/theme.sh
 
 source ~/sh/prompt.sh
