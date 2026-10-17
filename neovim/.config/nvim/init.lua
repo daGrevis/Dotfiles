@@ -1417,6 +1417,49 @@ require('lazy').setup {
         return '%l:%v/%L'
       end
 
+      local prose_counts = {}
+
+      local count_prose = function(lines)
+        local paragraphs, sentences, words = 0, 0, 0
+        local in_paragraph = false
+        for _, line in ipairs(lines) do
+          local blank = line:match '^%s*$' ~= nil
+          if not blank and not in_paragraph then
+            paragraphs = paragraphs + 1
+          end
+          in_paragraph = not blank
+          for _ in (line .. ' '):gmatch '[.!?]+%s' do
+            sentences = sentences + 1
+          end
+          for _ in line:gmatch '%S+' do
+            words = words + 1
+          end
+        end
+        return paragraphs .. 'p,' .. sentences .. 's,' .. words .. 'w'
+      end
+
+      local section_prose = function()
+        if vim.bo.filetype ~= 'markdown' then
+          return ''
+        end
+
+        local mode = vim.fn.mode()
+        if mode == 'v' or mode == 'V' or mode == CTRL_V then
+          local lines = vim.fn.getregion(vim.fn.getpos 'v', vim.fn.getpos '.', { type = mode })
+          return count_prose(lines)
+        end
+
+        local buf = vim.api.nvim_get_current_buf()
+        local tick = vim.b.changedtick
+        local cached = prose_counts[buf]
+        if cached == nil or cached.tick ~= tick then
+          cached = { tick = tick, text = count_prose(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) }
+          prose_counts[buf] = cached
+        end
+
+        return cached.text
+      end
+
       local diagnostic_levels = {
         { name = 'ERROR', text = 'E', hl = 'DiagnosticVirtualTextError' },
         { name = 'WARN', text = 'W', hl = 'DiagnosticVirtualTextWarn' },
@@ -1473,6 +1516,7 @@ require('lazy').setup {
             local git = section_git { trunc_width = 40 }
             local fileinfo = MiniStatusline.section_fileinfo { trunc_width = 120 }
             local location = section_location()
+            local prose = section_prose()
             local search = MiniStatusline.section_searchcount { trunc_width = 75 }
 
             return MiniStatusline.combine_groups {
@@ -1481,7 +1525,7 @@ require('lazy').setup {
               { hl = 'MiniStatuslineFilename', strings = { filename, git } },
               '%=', -- End left alignment
               { strings = { diagnostics, fileinfo } },
-              { hl = 'TabLineSel', strings = { search, location } },
+              { hl = 'TabLineSel', strings = { search, location, prose } },
             }
           end,
         },
