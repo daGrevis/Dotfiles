@@ -125,7 +125,13 @@ systemd.user.services.earlyoom = {
 
   virtualisation = {
     docker.enable = true;
-    virtualbox.guest.enable = true;
+
+    virtualbox.guest = {
+      enable = true;
+      # The vboxguest of VirtualBox 7.2.6 has an unbalanced rcu_read_unlock(),
+      # which sometimes hangs the boot with an expedited RCU stall.
+      use3rdPartyModules = false;
+    };
   };
 
   users = {
