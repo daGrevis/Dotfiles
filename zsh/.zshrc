@@ -179,7 +179,7 @@ _fzf_compgen_dir() {
 
 alias blender=/Applications/blender.app/Contents/MacOS/blender
 
-alias c=claude
+alias c=~/sh/claude.sh
 
 alias claude-usage=~/sh/claude-usage.sh
 
