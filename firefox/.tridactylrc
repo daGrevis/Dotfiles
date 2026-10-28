@@ -8,8 +8,11 @@ set newtab about:blank
 " Hide the mode name in the bottom right corner
 set modeindicator false
 set smoothscroll true
+
 " Do not let pages focus an input on load, so j and k scroll at once
 set allowautofocus false
+seturl nixos:3000 allowautofocus true
+seturl dagrev.is allowautofocus true
 
 " Do not close the tab with d
 unbind d
