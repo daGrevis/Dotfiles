@@ -384,6 +384,8 @@ in
 
   # NOTE: not systemd.user.services, because its Install.WantedBy enables the
   # unit on every host. systemd takes the unit name from the store file name.
+  # home-share in sh/sh/utils.sh adds forwards through the control socket and
+  # keeps its list in RuntimeDirectory, which systemd empties on each restart.
   home.file.".config/systemd/user/tunnel.service" = (lib.mkIf stdenv.isLinux {
     source = "${pkgs.writeTextDir "tunnel.service" ''
       [Unit]
@@ -391,7 +393,8 @@ in
       StartLimitIntervalSec=0
 
       [Service]
-      ExecStart=${pkgs.openssh}/bin/ssh -F none -N -i %h/.ssh/tunnel_ed25519 -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o StrictHostKeyChecking=yes -R 0.0.0.0:2222:localhost:22 tunnel@dagrev.is
+      RuntimeDirectory=tunnel
+      ExecStart=${pkgs.openssh}/bin/ssh -F none -N -i %h/.ssh/tunnel_ed25519 -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o StrictHostKeyChecking=yes -o ControlMaster=yes -o ControlPath=%t/tunnel/control.sock -R 0.0.0.0:2222:localhost:22 tunnel@dagrev.is
       Restart=always
       RestartSec=10
 

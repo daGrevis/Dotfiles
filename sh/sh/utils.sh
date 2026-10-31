@@ -63,6 +63,31 @@ alias g='grep -i'
 
 alias serve-http='python3 -m http.server'
 
+# See "Home Share" in nix/README.md.
+home-share() {
+    local dir="$XDG_RUNTIME_DIR/tunnel" port
+    if [ -z "$1" ]; then
+        for port in $(ls "$dir/shares" 2>/dev/null | sort -n); do
+            echo "$port https://dagrev.is:$((20000 + port))"
+        done
+        return
+    fi
+    ssh -F none -o ControlPath="$dir/control.sock" -O forward -R "172.17.0.1:$((30000 + $1)):localhost:$1" tunnel@dagrev.is || return
+    mkdir -p "$dir/shares" && touch "$dir/shares/$1"
+    echo "https://dagrev.is:$((20000 + $1))"
+}
+
+home-unshare() {
+    local dir="$XDG_RUNTIME_DIR/tunnel" port
+    if [ -z "$1" ]; then
+        for port in $(ls "$dir/shares" 2>/dev/null); do
+            home-unshare "$port"
+        done
+        return
+    fi
+    ssh -F none -o ControlPath="$dir/control.sock" -O cancel -R "172.17.0.1:$((30000 + $1)):localhost:$1" tunnel@dagrev.is && rm -f "$dir/shares/$1"
+}
+
 l() {
     # https://github.com/eza-community/eza
     command -v eza &> /dev/null
