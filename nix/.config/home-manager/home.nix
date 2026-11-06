@@ -9,6 +9,7 @@ let
   dotfilesDirectory = "${homeDirectory}/Dotfiles";
   recursive-nerd = pkgs.callPackage ./recursive-nerd.nix { };
   claude-code = pkgs.callPackage ./claude-code.nix { };
+  claude-afk = pkgs.callPackage ./claude-afk.nix { inherit claude-code dotfilesDirectory username; uid = 1001; gid = 100; };
   fetch-logos = pkgs.callPackage ./fetch-logos.nix { src = /. + "${dotfilesDirectory}/fetch/logos"; };
   nix-rice = pkgs.callPackage (
     fetchTarball {
@@ -140,6 +141,7 @@ in
     ngrok
   ] ++ lib.optionals stdenv.isLinux [
     xdotool
+    claude-afk
   ];
 
   # }}}
@@ -401,6 +403,40 @@ in
       [Install]
       WantedBy=default.target
     ''}/tunnel.service";
+  });
+
+  # }}}
+
+  # {{{ claude-afk
+
+  # See claude-afk/README.md. The units are not systemd.user.services, for the
+  # same reason as the tunnel.
+  home.file.".config/systemd/user/claude-afk.service" = (lib.mkIf stdenv.isLinux {
+    source = "${pkgs.writeTextDir "claude-afk.service" ''
+      [Unit]
+      Description=Run a due claude-afk task if the usage limits allow it
+
+      [Service]
+      Type=oneshot
+      ExecStart=${claude-afk}/bin/claude-afk tick
+      # SIGTERM goes only to the runner, which stops the container and commits
+      # the partial work before systemd stops the rest.
+      KillMode=mixed
+      TimeoutStopSec=60
+    ''}/claude-afk.service";
+  });
+
+  home.file.".config/systemd/user/claude-afk.timer" = (lib.mkIf stdenv.isLinux {
+    source = "${pkgs.writeTextDir "claude-afk.timer" ''
+      [Unit]
+      Description=Start claude-afk every 15 minutes
+
+      [Timer]
+      OnCalendar=*:0/15
+
+      [Install]
+      WantedBy=timers.target
+    ''}/claude-afk.timer";
   });
 
   # }}}

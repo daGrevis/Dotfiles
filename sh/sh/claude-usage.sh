@@ -16,9 +16,14 @@
 #
 # With --tmux, the bars come out in tmux style sequences, for the status bar.
 # See bar.sh.
+#
+# With --raw, the JSON of the endpoint comes out as it is, for claude-afk, which
+# does its own calculations with the numbers. The exit codes are the same.
 
 tmux_styles=false
 [ "$1" = "--tmux" ] && tmux_styles=true
+raw=false
+[ "$1" = "--raw" ] && raw=true
 
 bar() {
     if $tmux_styles; then
@@ -37,6 +42,11 @@ token=$(jq -r '.claudeAiOauth.accessToken // empty' "$credentials")
 [ -n "$token" ] || exit 1
 
 response=$(curl -sf --max-time 5 -H "Authorization: Bearer $token" https://api.anthropic.com/api/oauth/usage) || exit 2
+
+if $raw; then
+    printf '%s\n' "$response"
+    exit 0
+fi
 
 # One value per line: the session percentage, when it resets, then the same two
 # for the week. The shell puts them together, because bar.sh draws the bars.
