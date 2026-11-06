@@ -244,7 +244,7 @@ const getRunningInTmux = () => {
 
 const switchToTmuxSession = async (session) => {
   const { ok } = await spawnSh(
-    `tmux ${getRunningInTmux() ? 'switch' : 'attach'} -t '=${session}' 2>/dev/null`,
+    `tmux ${getRunningInTmux() ? 'switch-client' : 'attach'} -t '=${session}' 2>/dev/null`,
   )
 
   return ok
