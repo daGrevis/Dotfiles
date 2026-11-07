@@ -5,7 +5,7 @@ let
   username = "dagrevis";
   theme = "nightfox";
   themeColors = builtins.fromJSON (builtins.readFile "${dotfilesDirectory}/sh/sh/themes/${theme}.json");
-  homeDirectory = if stdenv.isLinux then "/home/${username}" else "/Users/${username}";
+  homeDirectory = if stdenv.hostPlatform.isLinux then "/home/${username}" else "/Users/${username}";
   dotfilesDirectory = "${homeDirectory}/Dotfiles";
   recursive-nerd = pkgs.callPackage ./recursive-nerd.nix { };
   claude-code = pkgs.callPackage ./claude-code.nix { };
@@ -30,7 +30,7 @@ let
   firefoxProfile =
     let
       root = lib.findFirst (root: builtins.pathExists "${homeDirectory}/${root}/profiles.ini") null (
-        if stdenv.isDarwin then [ "Library/Application Support/Firefox" ] else [ ".config/mozilla/firefox" ".mozilla/firefox" ]
+        if stdenv.hostPlatform.isDarwin then [ "Library/Application Support/Firefox" ] else [ ".config/mozilla/firefox" ".mozilla/firefox" ]
       );
       ini = (lib.foldl' (acc: line:
         let
@@ -139,7 +139,7 @@ in
     yalc
     # unfree:
     ngrok
-  ] ++ lib.optionals stdenv.isLinux [
+  ] ++ lib.optionals stdenv.hostPlatform.isLinux [
     xdotool
     claude-afk
   ];
@@ -251,10 +251,10 @@ in
   # {{{ Alacritty
 
   home.file.".config/alacritty/alacritty.toml".source = "${dotfilesDirectory}/alacritty/.config/alacritty/alacritty.toml";
-  home.file.".config/alacritty/nixos.toml" = (lib.mkIf stdenv.isLinux {
+  home.file.".config/alacritty/nixos.toml" = (lib.mkIf stdenv.hostPlatform.isLinux {
     source = "${dotfilesDirectory}/alacritty/.config/alacritty/nixos.toml";
   });
-  home.file.".config/alacritty/macos.toml" = (lib.mkIf stdenv.isDarwin {
+  home.file.".config/alacritty/macos.toml" = (lib.mkIf stdenv.hostPlatform.isDarwin {
     source = "${dotfilesDirectory}/alacritty/.config/alacritty/macos.toml";
   });
   home.file.".config/alacritty/theme.toml".text =
@@ -388,7 +388,7 @@ in
   # unit on every host. systemd takes the unit name from the store file name.
   # home-share in sh/sh/utils.sh adds forwards through the control socket and
   # keeps its list in RuntimeDirectory, which systemd empties on each restart.
-  home.file.".config/systemd/user/tunnel.service" = (lib.mkIf stdenv.isLinux {
+  home.file.".config/systemd/user/tunnel.service" = (lib.mkIf stdenv.hostPlatform.isLinux {
     source = "${pkgs.writeTextDir "tunnel.service" ''
       [Unit]
       Description=Reverse SSH tunnel to dagrev.is
@@ -411,7 +411,7 @@ in
 
   # See claude-afk/README.md. The units are not systemd.user.services, for the
   # same reason as the tunnel.
-  home.file.".config/systemd/user/claude-afk.service" = (lib.mkIf stdenv.isLinux {
+  home.file.".config/systemd/user/claude-afk.service" = (lib.mkIf stdenv.hostPlatform.isLinux {
     source = "${pkgs.writeTextDir "claude-afk.service" ''
       [Unit]
       Description=Run a due claude-afk task if the usage limits allow it
@@ -426,7 +426,7 @@ in
     ''}/claude-afk.service";
   });
 
-  home.file.".config/systemd/user/claude-afk.timer" = (lib.mkIf stdenv.isLinux {
+  home.file.".config/systemd/user/claude-afk.timer" = (lib.mkIf stdenv.hostPlatform.isLinux {
     source = "${pkgs.writeTextDir "claude-afk.timer" ''
       [Unit]
       Description=Start claude-afk every 15 minutes
