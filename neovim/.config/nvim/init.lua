@@ -1678,6 +1678,19 @@ require('lazy').setup {
     'AndrewRadev/switch.vim',
   },
 
+  { -- Switch between vim splits and tmux splits.
+    'christoomey/vim-tmux-navigator',
+    init = function()
+      vim.g.tmux_navigator_no_mappings = 1
+    end,
+    keys = {
+      { '<M-Left>', ':TmuxNavigateLeft<CR>' },
+      { '<M-Down>', ':TmuxNavigateDown<CR>' },
+      { '<M-Up>', ':TmuxNavigateUp<CR>' },
+      { '<M-Right>', ':TmuxNavigateRight<CR>' },
+    },
+  },
+
   { -- Indent guides.
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
@@ -1720,7 +1733,12 @@ require('lazy').setup {
           end
 
           local passphrase = vim.fn.inputsecret 'Passphrase: '
-          vim.system({ 'gpg', '--batch', '--pinentry-mode', 'loopback', '--passphrase-fd', '0', '--output', '/dev/null', '--decrypt', args.file }, { stdin = passphrase }):wait()
+          vim
+            .system(
+              { 'gpg', '--batch', '--pinentry-mode', 'loopback', '--passphrase-fd', '0', '--output', '/dev/null', '--decrypt', args.file },
+              { stdin = passphrase }
+            )
+            :wait()
         end,
       })
     end,
