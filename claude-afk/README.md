@@ -61,6 +61,7 @@ Your instructions for Claude ...
 - `reserve`: the share of the 5h window that the tasks leave for you. It is a list of `HH:MM=value` entries with spaces between them. Each value from 0 to 1 applies from its time until the next entry. The default is `01:00=0 09:00=0.5 15:00=0.8 23:00=0.5`. A run starts only when the free share is at least the reserve plus 0.1, and it stops below the reserve.
 - `max_week_pace`: the used share of the week can be at most this value multiplied by the elapsed share of the week. The default is 1.0. Thus the tasks spread their usage over the week, and they stop in a week when you work much.
 - `min_free_week`: the share of the week that the tasks always leave for you. The default is 0.3.
+- `env`: names of variables from `~/.env` on the host, with spaces between them, for example `GMAIL_ADDRESS GMAIL_APP_PASSWORD`. The container gets each one with its value. An injected instruction can send these values to any host, as with `mounts`.
 - `mounts`: host directories or files for the container of the task, with spaces between them. Each one ends with `:ro` (read-only, the default) or `:rw`, for example `~/Code/project:ro`. The container gets each one at the same path, and it cannot see other host files. The prompt must say what Claude can do with each one. Do not mount secrets. A web page that the task reads can tell Claude to send the files to any host.
 
 ### Findings

@@ -489,6 +489,7 @@ run_task() {
     #
     # All tasks share the Nix volume, as a cache for nix-shell.
     set -- docker run --rm --interactive --name "$container" \
+        --hostname "$container" \
         --user "$(id -u):$(id -g)" \
         --tmpfs /tmp \
         --env HOME=/tmp \
@@ -512,6 +513,13 @@ run_task() {
         case $_path in "~"*) _path=$HOME${_path#"~"} ;; esac
         set -- "$@" --volume "$_path:$_path:$_mode"
         [ "$_mode" = rw ] && _add_dirs="$_add_dirs $_path"
+    done
+    # The values come from ~/.env, because systemd does not load it. --env with
+    # no value takes the value from the environment of docker, so that the
+    # value does not show in the process list.
+    for _name in $(setting "$dir" env ""); do
+        export "$_name=$(set -a && . "$HOME/.env" > /dev/null 2>&1; printenv "$_name")"
+        set -- "$@" --env "$_name"
     done
     # ANTHROPIC_MODEL too, because an org default model can beat --model. See
     # the Claude part of home.nix.

@@ -9,6 +9,10 @@ notify() {
   ~/sh/notify.sh "$@"
 }
 
+email() {
+  ~/sh/email.sh "$@"
+}
+
 codex() {
   case "${1:-}" in
     exec|review|login|logout|mcp|mcp-server|app-server|app|completion|sandbox|debug|apply|cloud|features|help|-h|--help|-V|--version)
