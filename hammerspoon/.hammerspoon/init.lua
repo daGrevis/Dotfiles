@@ -106,9 +106,11 @@ local function setFrontmostWindowPosition(fn)
   local frontmostWindow = hs.window.frontmostWindow()
   local currentScreen = frontmostWindow:screen()
   local frame = currentScreen:frame()
-  local nextFrame = currentScreen:localToAbsolute(
-    fn(frame.w, frame.h, frame.x, frame.y)
-  )
+  -- Offset from frame, which starts below the menu bar. Most apps move down out
+  -- of the menu bar, some don't.
+  local nextFrame = fn(frame.w, frame.h, frame.x, frame.y)
+  nextFrame.x = nextFrame.x + frame.x
+  nextFrame.y = nextFrame.y + frame.y
   frontmostWindow:setFrame(nextFrame)
 end
 
