@@ -7,7 +7,16 @@ let
   themeColors = builtins.fromJSON (builtins.readFile "${dotfilesDirectory}/sh/sh/themes/${theme}.json");
   homeDirectory = if stdenv.hostPlatform.isLinux then "/home/${username}" else "/Users/${username}";
   dotfilesDirectory = "${homeDirectory}/Dotfiles";
-  recursive-nerd = pkgs.callPackage ./recursive-nerd.nix { };
+  # The fonts build with a fixed nixpkgs, so a nixpkgs update does not patch them again.
+  # The pin is nixos-unstable 26.11pre1097682.02c087f3fe67 from 2026-10-20, with fontforge 20251009.
+  # To update it, put a new commit in url (nixos-version --revision gives the commit of the system).
+  # Then put the output of nix-prefetch-url --unpack <url> in sha256. The fonts then build one time.
+  recursive-nerd = (import (
+    fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/02c087f3fe673c9e317f206a627cb6b910336dbe.tar.gz";
+      sha256 = "1l60ar0j7j7jrrg4r7j4kscrih0qn2n0lslffzflhv86lyq650r2";
+    }
+  ) { inherit (stdenv.hostPlatform) system; }).callPackage ./recursive-nerd.nix { };
   claude-code = pkgs.callPackage ./claude-code.nix { };
   claude-afk = pkgs.callPackage ./claude-afk.nix { inherit claude-code dotfilesDirectory username; uid = 1001; gid = 100; };
   fetch-logos = pkgs.callPackage ./fetch-logos.nix { src = /. + "${dotfilesDirectory}/fetch/logos"; };

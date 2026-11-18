@@ -6,7 +6,7 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "recursive-nerd";
-  version = "3.3.0";
+  version = "3.5.1";
 
   src = fetchgit {
     url = "https://github.com/ryanoasis/nerd-fonts";
@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
       "src/"
       "!src/unpatched-fonts/"
     ];
-    sha256 = "sha256-EupyDZ+CT+TpWeY96CRoR7311iaPiyi/cs/DtfMqZl4=";
+    sha256 = "sha256-hpYDly9mQg9lx9hQPjk6LKzbIDPIkutwPGsSQZsM6PY=";
   };
 
   nativeBuildInputs = with python3Packages; [
@@ -27,9 +27,11 @@ stdenvNoCC.mkDerivation rec {
 
   buildPhase = ''
     mkdir -p $out/share/fonts/opentype
-    for f in ${pkgs.recursive}/share/fonts/opentype/RecursiveMonoLnrSt-*; do
-      python font-patcher $f --quiet --careful --complete --outputdir $out/share/fonts/opentype
-    done
+    # Only the styles that alacritty and awesome use. font-patcher opens the source
+    # font for writing, so copy it out of the read-only store first.
+    install -m 644 -t . ${pkgs.recursive}/share/fonts/opentype/RecursiveMonoLnrSt-{Regular,Italic,Black,BlackItalic}.otf
+    printf '%s\n' RecursiveMonoLnrSt-*.otf \
+      | xargs -P $NIX_BUILD_CORES -I {} python font-patcher {} --quiet --careful --complete --outputdir $out/share/fonts/opentype
   '';
 
   dontInstall = true;
