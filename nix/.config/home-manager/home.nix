@@ -382,10 +382,14 @@ in
   home.sessionVariables.CLAUDE_CODE_EFFORT_LEVEL = "xhigh";
 
   home.activation.installClaudePlugins = lib.hm.dag.entryAfter [ "claudeSettings" ] ''
-    PATH="${claude-code}/bin:$PATH"
+    PATH="${claude-code}/bin:${pkgs.git}/bin:${pkgs.openssh}/bin:$PATH"
     if ! ${pkgs.jq}/bin/jq -e '.plugins | has("simple-english@simple-english")' "$HOME/.claude/plugins/installed_plugins.json" >/dev/null 2>&1; then
       $DRY_RUN_CMD claude plugin marketplace add AminBlg/SimpleEnglish || true
       $DRY_RUN_CMD claude plugin install simple-english@simple-english || true
+    fi
+    if ! ${pkgs.jq}/bin/jq -e '.plugins | has("unslop@heydamir")' "$HOME/.claude/plugins/installed_plugins.json" >/dev/null 2>&1; then
+      $DRY_RUN_CMD claude plugin marketplace add heydamir/unslop || true
+      $DRY_RUN_CMD claude plugin install unslop@heydamir || true
     fi
   '';
 

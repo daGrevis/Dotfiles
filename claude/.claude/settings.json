@@ -11,10 +11,17 @@
         "source": "github",
         "repo": "AminBlg/SimpleEnglish"
       }
+    },
+    "heydamir": {
+      "source": {
+        "source": "github",
+        "repo": "heydamir/unslop"
+      }
     }
   },
   "enabledPlugins": {
-    "simple-english@simple-english": true
+    "simple-english@simple-english": true,
+    "unslop@heydamir": true
   },
   "outputStyle": "concise-ste",
   "statusLine": {
