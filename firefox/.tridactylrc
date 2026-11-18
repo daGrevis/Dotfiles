@@ -11,8 +11,10 @@ set smoothscroll true
 
 " Do not let pages focus an input on load, so j and k scroll at once
 set allowautofocus false
-seturl nixos:3000 allowautofocus true
-seturl dagrev.is allowautofocus true
+" Let my apps focus inputs. Not seturl: it needs a web page in the active tab,
+" so it fails silently when the rc runs at browser start. jsb runs in the background
+jsb tri.config.setURL("nixos:3000", "allowautofocus", "true")
+jsb tri.config.setURL("dagrev.is", "allowautofocus", "true")
 
 " Do not close the tab with d
 unbind d
