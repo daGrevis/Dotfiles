@@ -98,7 +98,7 @@ l() {
     if [ "$?" != "0" ]; then
         ls -lahtr "$@"
     else
-        eza -lag -s modified "$@"
+        eza -lag -s modified --absolute=follow "$@"
     fi
 }
 
