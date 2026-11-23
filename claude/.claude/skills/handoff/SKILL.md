@@ -15,10 +15,14 @@ with no context.
 ## Rules
 
 - Overwrite the handoff file for this task if it exists. Never create a second one.
-- Keep the file under 50 lines, and each line under 100 characters.
+- Aim for under 50 lines. This is a guide, not a limit. Keep each line under 100 characters.
+- Never remove useful information to make the file shorter. When you update a handoff, keep
+  its items. Remove an item only when it is solved or not true anymore.
 - One item per line, as a Markdown list. Never write comma-separated items.
 - Write only what the reader cannot get from the code, from `git diff`, or from
   `CLAUDE.md`. The diff shows what changed, not why, and not whether it is finished.
+- Do not write the git state of the work: what is committed, staged or pushed, commit
+  hashes, or the current branch. The reader gets it from git.
 - Name real paths, for example `sh/clean-yank.py:42`. Do not quote file contents.
 - Use these fields only. Do not add fields. Do not write paragraphs.
 - Write the default text if a field has nothing important.
