@@ -23,15 +23,27 @@ stdenvNoCC.mkDerivation rec {
   nativeBuildInputs = with python3Packages; [
     python
     fontforge
+    fonttools
   ];
 
   buildPhase = ''
     mkdir -p $out/share/fonts/opentype
-    # Only the styles that alacritty and awesome use. font-patcher opens the source
+    # Only the styles that alacritty, kitty and awesome use. font-patcher opens the source
     # font for writing, so copy it out of the read-only store first.
     install -m 644 -t . ${pkgs.recursive}/share/fonts/opentype/RecursiveMonoLnrSt-{Regular,Italic,Black,BlackItalic}.otf
     printf '%s\n' RecursiveMonoLnrSt-*.otf \
       | xargs -P $NIX_BUILD_CORES -I {} python font-patcher {} --quiet --careful --complete --outputdir $out/share/fonts/opentype
+    # fontforge clears the monospace flags of the source font, because its code ligatures are wider
+    # than one cell. CoreText reads the flag of the CFF table, and without it kitty falls back to Menlo.
+    python - $out/share/fonts/opentype/*.otf <<'EOF'
+    import sys
+    from fontTools.ttLib import TTFont
+    for path in sys.argv[1:]:
+        font = TTFont(path)
+        font['post'].isFixedPitch = 1
+        font['CFF '].cff.topDictIndex[0].isFixedPitch = 1
+        font.save(path)
+    EOF
   '';
 
   dontInstall = true;

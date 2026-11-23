@@ -30,7 +30,7 @@ do
 end
 
 modkey = "Mod1"
-terminal = "alacritty"
+terminal = "kitty"
 
 fg1 = "#d6d6d7"
 bg0 = "#131a24"

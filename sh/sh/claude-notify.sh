@@ -46,6 +46,9 @@ if [ -n "$TMUX" ]; then
   session=$(tmux display-message -p '#{session_name}')
 fi
 
+# The bundle id of Claude desktop, for its icon on macOS, see notify.sh.
+sender=com.anthropic.claudefordesktop
+
 title="Claude Code"
 if [ -n "$session" ]; then
   title="Claude Code ($session)"
@@ -77,7 +80,7 @@ if [ "$notification_type" = "permission_prompt" ]; then
   # Drop a pause marker; the next PostToolUse (after the user approves) restamps
   # the start. Restamping here would wrongly count the user's away time.
   echo "$now" > "$pause_file"
-  nohup ~/sh/notify.sh "$title" "Waiting for input... ($message)" > /dev/null 2>&1 &
+  nohup ~/sh/notify.sh "$title" "Waiting for input... ($message)" "$sender" > /dev/null 2>&1 &
 else
   # Stop event. Turns the user never started end here too — a background task
   # completing, a scheduled wake-up, a subagent report — and the SubagentStop
@@ -88,5 +91,5 @@ else
 
   # Clean up the start and pause files.
   rm -f "$start_file" "$pause_file"
-  nohup ~/sh/notify.sh "$title" "$message" > /dev/null 2>&1 &
+  nohup ~/sh/notify.sh "$title" "$message" "$sender" > /dev/null 2>&1 &
 fi

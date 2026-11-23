@@ -30,16 +30,6 @@ local function openApp(app_name, new)
   hs.execute(s)
 end
 
-local function trim(s)
-  s = string.gsub(s, "%s+", "")
-  return s
-end
-
-local function resolveSymlink(path)
-  local output = hs.execute('readlink -f ' .. path, true)
-  return trim(output)
-end
-
 local function closeNotifications()
   local s = [[
     tell application "System Events"
@@ -64,7 +54,11 @@ local function closeNotifications()
   ]]
 
   hs.osascript.applescript(s)
+  -- notify.sh sends with the bundle id of the terminal of the user, or of
+  -- Claude desktop for claude-notify.sh.
+  hs.execute('/opt/homebrew/bin/alerter --remove "notify" --sender "net.kovidgoyal.kitty" 2>/dev/null', true)
   hs.execute('/opt/homebrew/bin/alerter --remove "notify" --sender "org.alacritty" 2>/dev/null', true)
+  hs.execute('/opt/homebrew/bin/alerter --remove "notify" --sender "com.anthropic.claudefordesktop" 2>/dev/null', true)
 end
 
 local function airPods(deviceName)
@@ -123,10 +117,10 @@ hs.hotkey.bind({'cmd', 'shift'}, 'd', function()
   hs.execute('open -R ~/Downloads')
 end)
 
--- Alacritty.
+-- kitty.
 hs.hotkey.bind({'cmd', 'shift'}, 'return', function()
-  -- Because it's installed with home-manager, it has different location and it's also a symlink.
-  hs.execute("open -n '" .. resolveSymlink('~/.nix-profile/Applications/Alacritty.app') .. "'")
+  -- The copy of home-manager, the same app that Spotlight opens.
+  hs.execute("open -n '" .. os.getenv('HOME') .. "/Applications/Home Manager Apps/kitty.app'")
 end)
 
 -- Firefox.
@@ -178,8 +172,9 @@ local function focusPreviouslyUsedWindow(fn)
   local front_app = hs.application.frontmostApplication()
 
   local windows
-  if front_app:name() == 'Alacritty' then
-    local rest_apps = hs.fnutils.ifilter({hs.application.find('Alacritty')}, function(app)
+  -- The terminals open with "open -n", so each window is an app of its own.
+  if front_app:name() == 'kitty' or front_app:name() == 'Alacritty' then
+    local rest_apps = hs.fnutils.ifilter({hs.application.find(front_app:name())}, function(app)
       return app:pid() ~= front_app:pid()
     end)
 
@@ -214,11 +209,12 @@ hs.hotkey.bind({'cmd', 'ctrl'}, 'f', function()
   frontmostWindow:maximize()
 end)
 
--- Maximize Alacritty windows that don't fit on their screen. Alacritty has no
--- decorations, so macOS doesn't know that a window is maximized and keeps the
+-- Maximize kitty and Alacritty windows that don't fit on their screen. They
+-- have no decorations, so macOS doesn't know that a window is maximized and keeps the
 -- old size when a screen goes away. macOS still moves the window, and that move
 -- triggers this. Global, so that it isn't garbage collected.
-alacrittyWindowFilter = hs.window.filter.new(false)
+terminalWindowFilter = hs.window.filter.new(false)
+  :setAppFilter('kitty', {allowRoles='AXStandardWindow'})
   :setAppFilter('Alacritty', {allowRoles='AXStandardWindow'})
   :subscribe(hs.window.filter.windowMoved, function(window)
     local screenFrame = window:screen():frame()

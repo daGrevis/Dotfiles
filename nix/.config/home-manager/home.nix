@@ -55,6 +55,13 @@ let
         ++ map (profile: profile.Path) (lib.filter (profile: (profile.Default or null) == "1") (sections "Profile"));
     in
       if root == null || paths == [ ] then null else "${root}/${lib.head paths}";
+  # Makes every kitty read its config again, as alacritty does by itself
+  # (live_config_reload). kitty reads it again on SIGUSR1. "pkill kitty" finds
+  # no kitty, because the process has the name of the nix wrapper,
+  # .kitty-wrapped, so this function of kitty finds it by its command line.
+  reloadKitty = ''
+    $DRY_RUN_CMD ${pkgs.kitty}/bin/kitty +runpy 'from kitty.utils import reload_conf_in_all_kitties; reload_conf_in_all_kitties()' || true
+  '';
 in
 {
   home.stateVersion = "23.05";
@@ -64,6 +71,12 @@ in
 
   # Let home-manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # Copy the apps to ~/Applications/Home Manager Apps, so that Spotlight finds
+  # them. Spotlight does not follow the symlink that linkApps makes there,
+  # which is the default before stateVersion 25.11.
+  targets.darwin.copyApps.enable = stdenv.hostPlatform.isDarwin;
+  targets.darwin.linkApps.enable = false;
 
   # {{{ Packages
 
@@ -104,6 +117,7 @@ in
     inetutils
     jq
     killall
+    kitty
     less
     libnotify
     lsof
@@ -292,6 +306,81 @@ in
       cyan = "${brighten themeColors.cyan}"
       white = "${brighten themeColors.white}"
     '';
+
+  # }}}
+
+  # {{{ Kitty
+
+  home.file.".config/kitty/kitty.conf".source = "${dotfilesDirectory}/kitty/.config/kitty/kitty.conf";
+  home.file.".config/kitty/kitty.conf".onChange = reloadKitty;
+  home.file.".config/kitty/linux.conf" = (lib.mkIf stdenv.hostPlatform.isLinux {
+    source = "${dotfilesDirectory}/kitty/.config/kitty/linux.conf";
+    onChange = reloadKitty;
+  });
+  home.file.".config/kitty/macos.conf" = (lib.mkIf stdenv.hostPlatform.isDarwin {
+    source = "${dotfilesDirectory}/kitty/.config/kitty/macos.conf";
+    onChange = reloadKitty;
+  });
+  # The arguments of kitty when open or the Dock starts it.
+  home.file.".config/kitty/macos-launch-services-cmdline" = (lib.mkIf stdenv.hostPlatform.isDarwin {
+    source = "${dotfilesDirectory}/kitty/.config/kitty/macos-launch-services-cmdline";
+  });
+  # The app icon. It is icons/whiskers_1024x1024.png from
+  # https://github.com/jaredmontoya/whiskers, a fork of
+  # https://github.com/igrmk/whiskers. Its shape fills 900 px of the 1024 px,
+  # and the shape of a macOS icon (Finder, Slack, Firefox) fills 824 px at
+  # +100+100. So it got a transparent border with:
+  #
+  #   magick whiskers_1024x1024.png -resize 938x938 -gravity center \
+  #     -background none -extent 1024x1024 kitty.app.png
+  #
+  # kitty puts it in the Dock when it starts. kitty cannot put it on its app,
+  # because the app runs the kitty of the nix store, which is read-only.
+  home.file.".config/kitty/kitty.app.png" = (lib.mkIf stdenv.hostPlatform.isDarwin {
+    source = "${dotfilesDirectory}/kitty/.config/kitty/kitty.app.png";
+  });
+  # Puts the app icon above on the copy of the app, for Finder, Spotlight and
+  # the notifications of sh/sh/notify.sh. copyApps puts the icon of kitty back
+  # on every switch, so this runs after it. macOS keeps the icon of an app for
+  # the mtime of the app, and copyApps sets that to 1970, so touch changes it.
+  home.activation.kittyIcon = lib.mkIf stdenv.hostPlatform.isDarwin (lib.hm.dag.entryAfter [ "copyApps" ] ''
+    app="$HOME/Applications/Home Manager Apps/kitty.app"
+    png="${dotfilesDirectory}/kitty/.config/kitty/kitty.app.png"
+    iconset="$(mktemp -d)/kitty.iconset"
+    mkdir "$iconset"
+    for size in 16 32 128 256 512; do
+      /usr/bin/sips -z $size $size "$png" --out "$iconset/icon_''${size}x''${size}.png" > /dev/null
+      /usr/bin/sips -z $((size * 2)) $((size * 2)) "$png" --out "$iconset/icon_''${size}x''${size}@2x.png" > /dev/null
+    done
+    $DRY_RUN_CMD /usr/bin/iconutil -c icns "$iconset" -o "$app/Contents/Resources/kitty.icns"
+    $DRY_RUN_CMD touch "$app"
+    $DRY_RUN_CMD /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app"
+    rm -r "$(dirname "$iconset")"
+  '');
+  home.file.".config/kitty/theme.conf".text =
+    ''
+      background ${themeColors.bg0}
+      foreground ${themeColors.fg1}
+
+      color0 ${themeColors.black}
+      color1 ${themeColors.red}
+      color2 ${themeColors.green}
+      color3 ${themeColors.yellow}
+      color4 ${themeColors.blue}
+      color5 ${themeColors.magenta}
+      color6 ${themeColors.cyan}
+      color7 ${themeColors.white}
+
+      color8 ${brighten themeColors.black}
+      color9 ${brighten themeColors.red}
+      color10 ${brighten themeColors.green}
+      color11 ${brighten themeColors.yellow}
+      color12 ${brighten themeColors.blue}
+      color13 ${brighten themeColors.magenta}
+      color14 ${brighten themeColors.cyan}
+      color15 ${brighten themeColors.white}
+    '';
+  home.file.".config/kitty/theme.conf".onChange = reloadKitty;
 
   # }}}
 
