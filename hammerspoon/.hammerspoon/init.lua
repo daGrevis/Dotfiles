@@ -318,6 +318,16 @@ hs.hotkey.bind({'cmd', 'ctrl'}, 'h', function()
   windowToRefocus = frontmostWindow
 end)
 
+-- Forget the minimized windows when a window comes back or opens in some other
+-- way, so that the next press minimizes everything again. Global, so that it
+-- isn't garbage collected.
+minimizedWindowsResetFilter = hs.window.filter.new(false)
+  :setDefaultFilter({allowRoles='AXStandardWindow'})
+  :subscribe({hs.window.filter.windowUnminimized, hs.window.filter.windowCreated}, function()
+    minimizedWindows = {}
+    windowToRefocus = nil
+  end)
+
 -- }}}
 
 -- }}}
