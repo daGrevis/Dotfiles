@@ -42,17 +42,22 @@ if [ "$event" = "PostToolUse" ]; then
 fi
 
 session=""
+description=""
 if [ -n "$TMUX" ]; then
   session=$(tmux display-message -p '#{session_name}')
+  description=$(tmux display-message -p '#{@description}')
 fi
 
 # The bundle id of Claude desktop, for its icon on macOS, see notify.sh.
 sender=com.anthropic.claudefordesktop
 
-title="Claude Code"
-if [ -n "$session" ]; then
-  title="Claude Code ($session)"
+# The icon of Claude names the app, so the title names the session: the name
+# of the tmux session, then its description (prefix-.) in parentheses.
+title=$session
+if [ -n "$description" ]; then
+  title="${title:+$title }($description)"
 fi
+title=${title:-claude}
 
 notification_type=$(echo "$input" | jq -r '.notification_type // empty')
 
