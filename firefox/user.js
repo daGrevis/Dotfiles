@@ -19,6 +19,8 @@ user_pref("findbar.highlightAll", true);
 // Full screen opens and closes without an animation. Default: "200 200".
 user_pref("full-screen-api.transition-duration.enter", "0 0");
 user_pref("full-screen-api.transition-duration.leave", "0 0");
+// Firefox applies userChrome.css from the profile directory. Default: false.
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 
 // AI
 

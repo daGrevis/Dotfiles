@@ -38,3 +38,11 @@ keeps its last value.
 
 To keep a change, edit `user.js`. To reset a pref that you removed, use
 `about:config`.
+
+## Styles
+
+`userChrome.css` changes the Firefox interface. Now it makes the selected tab
+easier to find. Firefox reads it from the `chrome` directory of the profile at
+each start, if the pref `toolkit.legacyUserProfileCustomizations.stylesheets`
+is true. `user.js` sets this pref. `home.nix` links `userChrome.css` the same
+way as `user.js`.

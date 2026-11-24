@@ -394,6 +394,10 @@ in
     target = "${firefoxProfile}/user.js";
     source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/firefox/user.js";
   });
+  home.file."firefox-userChrome.css" = (lib.mkIf (firefoxProfile != null) {
+    target = "${firefoxProfile}/chrome/userChrome.css";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/firefox/userChrome.css";
+  });
   home.file.".tridactylrc".source = "${dotfilesDirectory}/firefox/.tridactylrc";
 
   # }}}

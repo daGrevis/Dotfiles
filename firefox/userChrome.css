@@ -1,0 +1,10 @@
+/* Styles for the Firefox interface. Firefox reads this file from the chrome
+ * directory of the profile at each start. home.nix links it there. */
+
+/* The theme gives the selected tab only a 10% grey background and a 5% white
+ * outline, so it is hard to find. The soft white glow matches the stars. */
+.tab-background:is([selected], [multiselected]) {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+  outline: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25) !important;
+}
