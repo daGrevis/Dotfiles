@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
-# Send a desktop notification. Clicking it focuses the terminal (kitty or
-# alacritty) and switches to the tmux session/window/pane where notify was
-# called.
-#
-# The terminal is the one of the newest tmux client at this machine, from the
-# name of the terminal of the client: xterm-kitty is kitty, and every other
-# name is alacritty. Outside tmux, the name is $TERM. The notification has the
-# icon of that terminal, and the click focuses it. The notification is skipped
-# only when one of the two terminals has the focus, see below.
+# Send a desktop notification. Clicking it focuses kitty and switches to the
+# tmux session/window/pane where notify was called.
 #
 # The third argument is the bundle id of an app. On macOS, the notification
 # then has the icon of that app, and the click still focuses the terminal.
@@ -60,9 +53,8 @@
 # also runs the hook when a client comes to the pane that another client
 # already shows, see the set-hook lines there.
 #
-# The bell (\a) triggers the dock icon bounce on macOS (Alacritty doesn't support
-# the red dot badge, see https://github.com/alacritty/alacritty/issues/4472, and
-# kitty asks for attention on a bell, see window_alert_on_bell in the kitty docs).
+# The bell (\a) triggers the dock icon bounce on macOS (kitty asks for attention
+# on a bell, see window_alert_on_bell in the kitty docs).
 # The bounce only works if you've switched away from the terminal to another app.
 # On Linux, the bell triggers the urgency hint.
 #
@@ -71,7 +63,6 @@
 title="${1:-Notification}"
 message="${2:-Done}"
 sender="${3:-}"
-terminal=$TERM
 
 # Shared tmux variables (used by both macOS and Linux paths).
 if [ -n "$TMUX" ]; then
@@ -95,16 +86,16 @@ if [ -n "$TMUX" ]; then
   # shows another session. The click then switched the client over SSH.
   away=1
   client=
-  while read -r pid tty termname flags pane; do
+  while read -r pid tty flags pane; do
     if [ "$(~/sh/is-over-ssh.sh "$pid")" = 0 ]; then
       away=
-      [ -n "$client" ] || { client=$tty; terminal=$termname; }
+      [ -n "$client" ] || client=$tty
       if [[ "$flags" == *focused* ]] && [ "$pane" = "$target" ]; then
         current_pid=$pid
         current_target=$pane
       fi
     fi
-  done < <(tmux list-clients -F '#{client_activity} #{client_pid} #{client_tty} #{client_termname} #{client_flags} #{session_name}:#{window_index}.#{pane_index}' | sort -rn | cut -d' ' -f2-)
+  done < <(tmux list-clients -F '#{client_activity} #{client_pid} #{client_tty} #{client_flags} #{session_name}:#{window_index}.#{pane_index}' | sort -rn | cut -d' ' -f2-)
   skip_gui=$away
   if [ "$target" = "$current_target" ] && [ "$(~/sh/is-over-ssh.sh "$current_pid")" = 1 ]; then
     skip_gui=1
@@ -120,16 +111,9 @@ fi
 
 if [ "$(uname)" = "Darwin" ]; then
   # The bundle id, because the name of the kitty process is that of the nix
-  # wrapper, .kitty-wrapped. alacritty needs -e before the program to run.
-  if [ "$terminal" = xterm-kitty ]; then
-    terminal_app=~/"Applications/Home Manager Apps/kitty.app"
-    terminal_id=net.kovidgoyal.kitty
-    terminal_args=()
-  else
-    terminal_app=~/"Applications/Home Manager Apps/Alacritty.app"
-    terminal_id=org.alacritty
-    terminal_args=(-e)
-  fi
+  # wrapper, .kitty-wrapped.
+  terminal_app=~/"Applications/Home Manager Apps/kitty.app"
+  terminal_id=net.kovidgoyal.kitty
   # Clears the flag of the newer API for the app of the sender, see the top.
   if [ -n "$sender" ]; then
     ncprefs=$(mktemp)
@@ -157,7 +141,7 @@ EOF
   alerter_bin=$(which alerter)
   if [ -n "$TMUX" ]; then
     frontmost=$(osascript -e 'tell application "System Events" to get bundle identifier of first application process whose frontmost is true')
-    if [ -z "$skip_gui" ] && { [ "$target" != "$current_target" ] || { [ "$frontmost" != net.kovidgoyal.kitty ] && [ "$frontmost" != org.alacritty ]; }; }; then
+    if [ -z "$skip_gui" ] && { [ "$target" != "$current_target" ] || [ "$frontmost" != net.kovidgoyal.kitty ]; }; then
       alerter_pid_file="/tmp/.notify-alerter-pid-${TMUX_PANE#%}"
       (
         pid_file=$(mktemp "$alerter_pid_file.XXXXXX")
@@ -175,7 +159,7 @@ EOF
             open -b "$terminal_id"
             "$tmux_bin" -S "$socket" switch-client -c "$client" -t "$target" 2>/dev/null
           else
-            open -a "$terminal_app" --args "${terminal_args[@]}" "$tmux_bin" -S "$socket" attach-session -t "$target"
+            open -a "$terminal_app" --args "$tmux_bin" -S "$socket" attach-session -t "$target"
           fi
         fi
       ) </dev/null >/dev/null 2>&1 &
@@ -200,13 +184,8 @@ else
       display=$(tmux show-environment -g DISPLAY 2>/dev/null)
       [[ "$display" != DISPLAY=* ]] || export DISPLAY="${display#DISPLAY=}"
     fi
-    if [ "$terminal" = xterm-kitty ]; then
-      terminal_class=kitty
-    else
-      terminal_class=Alacritty
-    fi
     focused=$(xdotool getactivewindow getwindowclassname 2>/dev/null)
-    if [ -z "$skip_gui" ] && { [ "$target" != "$current_target" ] || { [[ "${focused,,}" != kitty ]] && [[ "${focused,,}" != alacritty ]]; }; }; then
+    if [ -z "$skip_gui" ] && { [ "$target" != "$current_target" ] || [[ "${focused,,}" != kitty ]]; }; then
       notify_id_file="/tmp/.notify-id-${TMUX_PANE#%}"
       dbus_bin=$(which dbus-send 2>/dev/null)
       (
@@ -221,7 +200,7 @@ else
         } < <(notify-send "$title" "$message" -t 0 --action=default=Open --action=click=Open --wait --print-id 2>/dev/null)
         rm -f "$notify_id_file.$first_line"
         if [ "$result" = "default" ] || [ "$result" = "click" ]; then
-          xdotool search --class "$terminal_class" windowactivate 2>/dev/null
+          xdotool search --class kitty windowactivate 2>/dev/null
           "$tmux_bin" -S "$socket" switch-client -c "$client" -t "$target" 2>/dev/null
         fi
       ) &

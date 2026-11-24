@@ -31,26 +31,18 @@
 # on the screen are drawn in the background, so a step does not wait for a
 # decode either.
 #
-# Every other terminal gets text. alacritty draws no bitmaps. It has neither
-# the sixel protocol nor the kitty graphics protocol, so an image can only be
-# approximated with text. chafa does that with block characters and 24-bit
-# colour, which both alacritty and tmux already carry.
+# Every other terminal gets text. Without the kitty graphics protocol, an image
+# can only be approximated with text. chafa does that with block characters
+# and 24-bit colour, which tmux already carries.
 #
 # The symbol set is "block+sextant+space". The Block Elements, U+2580 to
 # U+259F, cut a cell in four. The sextants, U+1FB00 to U+1FB3B, cut it in six,
-# and chafa takes them for about two cells in three. The font (Recursive Nerd
-# Font) has neither of the two, but alacritty draws both itself, because
-# font.builtin_box_drawing is on by default.
-#
-# Nothing more is added. The wedges at U+1FB3C and the octants at U+1CD00 cut
-# the cell finer still, and chafa knows both, but alacritty draws neither, and
-# a glyph from the font cannot replace them: a built-in glyph fills a cell of
-# "line height + font.offset.y", which is two pixels taller than any glyph the
-# font can hold. Every wedge would sit two pixels short of the blocks around
-# it.
+# and chafa takes them for about two cells in three. The set leaves out the
+# finer wedges (U+1FB3C) and octants (U+1CD00), which chafa also knows.
 #
 # "--format symbols" is necessary as well: tmux is built with sixel support,
-# chafa sees that and sends pixels that alacritty then drops.
+# chafa sees that and sends sixel pixels, which a terminal without sixel
+# drops.
 #
 # chafa reads nine image formats and no more, so a file of any other format,
 # for example WebP or BMP, goes through ImageMagick first. Only the first frame

@@ -28,7 +28,7 @@ stdenvNoCC.mkDerivation rec {
 
   buildPhase = ''
     mkdir -p $out/share/fonts/opentype
-    # Only the styles that alacritty, kitty and awesome use. font-patcher opens the source
+    # Only the styles that kitty and awesome use. font-patcher opens the source
     # font for writing, so copy it out of the read-only store first.
     install -m 644 -t . ${pkgs.recursive}/share/fonts/opentype/RecursiveMonoLnrSt-{Regular,Italic,Black,BlackItalic}.otf
     printf '%s\n' RecursiveMonoLnrSt-*.otf \

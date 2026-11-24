@@ -55,8 +55,8 @@ let
         ++ map (profile: profile.Path) (lib.filter (profile: (profile.Default or null) == "1") (sections "Profile"));
     in
       if root == null || paths == [ ] then null else "${root}/${lib.head paths}";
-  # Makes every kitty read its config again, as alacritty does by itself
-  # (live_config_reload). kitty reads it again on SIGUSR1. "pkill kitty" finds
+  # Makes every kitty read its config again, which kitty does not do by itself.
+  # kitty reads it again on SIGUSR1. "pkill kitty" finds
   # no kitty, because the process has the name of the nix wrapper,
   # .kitty-wrapped, so this function of kitty finds it by its command line.
   reloadKitty = ''
@@ -83,7 +83,6 @@ in
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
-    alacritty
     asciinema
     asdf-vm
     autojump
@@ -268,44 +267,6 @@ in
 
   home.file.".gitconfig".source = "${dotfilesDirectory}/git/.gitconfig";
   home.file.".gitignore_global".source = "${dotfilesDirectory}/git/.gitignore_global";
-
-  # }}}
-
-  # {{{ Alacritty
-
-  home.file.".config/alacritty/alacritty.toml".source = "${dotfilesDirectory}/alacritty/.config/alacritty/alacritty.toml";
-  home.file.".config/alacritty/nixos.toml" = (lib.mkIf stdenv.hostPlatform.isLinux {
-    source = "${dotfilesDirectory}/alacritty/.config/alacritty/nixos.toml";
-  });
-  home.file.".config/alacritty/macos.toml" = (lib.mkIf stdenv.hostPlatform.isDarwin {
-    source = "${dotfilesDirectory}/alacritty/.config/alacritty/macos.toml";
-  });
-  home.file.".config/alacritty/theme.toml".text =
-    ''
-      [colors.primary]
-      background = "${themeColors.bg0}"
-      foreground = "${themeColors.fg1}"
-
-      [colors.normal]
-      black = "${themeColors.black}"
-      red = "${themeColors.red}"
-      green = "${themeColors.green}"
-      yellow = "${themeColors.yellow}"
-      blue = "${themeColors.blue}"
-      magenta = "${themeColors.magenta}"
-      cyan = "${themeColors.cyan}"
-      white = "${themeColors.white}"
-
-      [colors.bright]
-      black = "${brighten themeColors.black}"
-      red = "${brighten themeColors.red}"
-      green = "${brighten themeColors.green}"
-      yellow = "${brighten themeColors.yellow}"
-      blue = "${brighten themeColors.blue}"
-      magenta = "${brighten themeColors.magenta}"
-      cyan = "${brighten themeColors.cyan}"
-      white = "${brighten themeColors.white}"
-    '';
 
   # }}}
 

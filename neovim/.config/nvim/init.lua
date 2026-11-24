@@ -1824,7 +1824,8 @@ require('lazy').setup {
     opts = {
       image = {
         enabled = true,
-        -- Alacritty draws no images, so the float would open empty there.
+        -- A terminal without the kitty graphics protocol draws no images, so
+        -- the float would open empty there.
         doc = { float = false },
       },
     },

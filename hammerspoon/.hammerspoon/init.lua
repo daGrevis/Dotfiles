@@ -54,10 +54,9 @@ local function closeNotifications()
   ]]
 
   hs.osascript.applescript(s)
-  -- notify.sh sends with the bundle id of the terminal of the user, or of
-  -- Claude desktop for claude-notify.sh.
+  -- notify.sh sends with the bundle id of kitty, or of Claude desktop for
+  -- claude-notify.sh.
   hs.execute('/opt/homebrew/bin/alerter --remove "notify" --sender "net.kovidgoyal.kitty" 2>/dev/null', true)
-  hs.execute('/opt/homebrew/bin/alerter --remove "notify" --sender "org.alacritty" 2>/dev/null', true)
   hs.execute('/opt/homebrew/bin/alerter --remove "notify" --sender "com.anthropic.claudefordesktop" 2>/dev/null', true)
 end
 
@@ -172,8 +171,8 @@ local function focusPreviouslyUsedWindow(fn)
   local front_app = hs.application.frontmostApplication()
 
   local windows
-  -- The terminals open with "open -n", so each window is an app of its own.
-  if front_app:name() == 'kitty' or front_app:name() == 'Alacritty' then
+  -- kitty opens with "open -n", so each window is an app of its own.
+  if front_app:name() == 'kitty' then
     local rest_apps = hs.fnutils.ifilter({hs.application.find(front_app:name())}, function(app)
       return app:pid() ~= front_app:pid()
     end)
@@ -209,13 +208,12 @@ hs.hotkey.bind({'cmd', 'ctrl'}, 'f', function()
   frontmostWindow:maximize()
 end)
 
--- Maximize kitty and Alacritty windows that don't fit on their screen. They
+-- Maximize kitty windows that don't fit on their screen. They
 -- have no decorations, so macOS doesn't know that a window is maximized and keeps the
 -- old size when a screen goes away. macOS still moves the window, and that move
 -- triggers this. Global, so that it isn't garbage collected.
 terminalWindowFilter = hs.window.filter.new(false)
   :setAppFilter('kitty', {allowRoles='AXStandardWindow'})
-  :setAppFilter('Alacritty', {allowRoles='AXStandardWindow'})
   :subscribe(hs.window.filter.windowMoved, function(window)
     local screenFrame = window:screen():frame()
     local windowFrame = window:frame()
