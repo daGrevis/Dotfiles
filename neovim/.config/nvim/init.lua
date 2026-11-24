@@ -1817,6 +1817,19 @@ require('lazy').setup {
     end,
   },
 
+  { -- Images in Markdown, drawn with the kitty graphics protocol.
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    opts = {
+      image = {
+        enabled = true,
+        -- Alacritty draws no images, so the float would open empty there.
+        doc = { float = false },
+      },
+    },
+  },
+
   {
     'olimorris/codecompanion.nvim',
     version = 'v18.5.1',
