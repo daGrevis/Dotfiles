@@ -232,6 +232,16 @@ draw() {
   fi
   mkdir -p "$cache"
   render "$index"
+  # tmux passes the image on only to the clients of the session of the pane,
+  # and kitty draws nothing for a placeholder whose image it never got. With
+  # no client there, for example while the user looks at another session, the
+  # wait for a key stops every 0.5 s, so that the view can draw the picture
+  # again when a client comes.
+  clients=1
+  if [ "$mode" = kitty ] && [ -n "${TMUX:-}" ]; then
+    clients=$(tmux display-message -p -t "$here" '#{session_attached}')
+  fi
+  if [ "$clients" -eq 0 ]; then stty min 0 time 5; else stty min 1 time 0; fi
   # Home, then erase, so that a picture which is shorter than the pane does not
   # leave the one before it behind.
   printf '\033[H\033[2J'
@@ -268,7 +278,8 @@ read_key() {
 }
 
 view() {
-  count=$(wc -l < "$work/list")
+  # wc on macOS pads the number with spaces, and the arithmetic drops them.
+  count=$(($(wc -l < "$work/list")))
   index=1
   saved=$(stty -g)
   trap 'trap - WINCH; stty "$saved"; printf "\033[H\033[2J"' EXIT
@@ -305,6 +316,13 @@ view() {
         draw
         ;;
       quit) return 0 ;;
+      # The wait for a key stopped without one, see draw.
+      none)
+        if [ "$clients" -eq 0 ] && [ "$(tmux display-message -p -t "$here" \
+          '#{session_attached}')" -gt 0 ]; then
+          draw
+        fi
+        ;;
     esac
   done
 }
