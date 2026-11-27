@@ -33,17 +33,83 @@ const spawnSh = (command) =>
     })
   })
 
-const getActiveSessions = async () => {
-  const { ok, stdout } = await spawnSh('tmux ls 2>/dev/null')
+// Like spawnSh, but without a shell in between, because each process start
+// makes the popup slower. Ignores stderr, like 2>/dev/null.
+const spawnFile = (file, args, input) =>
+  new Promise((resolve) => {
+    const child = child_process.spawn(file, args, {
+      stdio: [input === undefined ? 'ignore' : 'pipe', 'pipe', 'ignore'],
+    })
 
-  if (!ok) {
-    return []
+    const response = { ok: false, stdout: '' }
+
+    child.stdout.on('data', (data) => {
+      response.stdout += data.toString()
+    })
+
+    child.on('error', () => {
+      resolve(response)
+    })
+
+    child.on('close', (code) => {
+      response.ok = code === 0
+
+      resolve(response)
+    })
+
+    if (input !== undefined) {
+      child.stdin.end(input)
+    }
+  })
+
+// One tmux call for everything, because each process start makes the popup slower.
+const getTmuxState = async () => {
+  const { stdout } = await spawnFile('tmux', [
+    'list-panes',
+    '-a',
+    '-F',
+    'pane\t#{session_name}\t#{pane_pid}\t#{pane_tty}\t#{@description}',
+    ';',
+    'display-message',
+    '-p',
+    'current\t#S',
+  ])
+
+  const activeSessions = []
+  const sessionPanePids = {}
+  const sessionDescriptions = {}
+  const paneTtys = new Set()
+  let currentSession
+
+  for (const line of stdout.split('\n')) {
+    const [kind, session, pid, tty, ...descParts] = line.split('\t')
+    if (kind === 'current') {
+      currentSession = session
+    }
+    if (kind !== 'pane') {
+      continue
+    }
+
+    if (!sessionPanePids[session]) {
+      activeSessions.push(session)
+      sessionPanePids[session] = []
+    }
+    sessionPanePids[session].push(pid)
+    paneTtys.add(tty.replace(/^\/dev\//, ''))
+
+    const desc = descParts.join('\t').trim()
+    if (desc) {
+      sessionDescriptions[session] = desc
+    }
   }
 
-  return stdout
-    .split('\n')
-    .slice(0, -1)
-    .map((line) => line.split(':', 1)[0])
+  return {
+    activeSessions,
+    currentSession,
+    sessionPanePids,
+    sessionDescriptions,
+    paneTtys: [...paneTtys],
+  }
 }
 
 const getTmuxinatorSessions = async () => {
@@ -87,21 +153,44 @@ const updateHistory = async (nextSession, historySessions) => {
   await fsPromises.writeFile(HISTORY_PATH, fileContent)
 }
 
-const getCurrentSession = async () => {
-  const { ok, stdout } = await spawnSh("tmux display-message -p '#S' 2>/dev/null")
-
-  if (!ok) {
-    return
-  }
-
-  return stdout.trim()
-}
-
 const removeDuplicates = (list) => {
   return list.filter((item, index) => list.indexOf(item) === index)
 }
 
+// On macOS, netstat is much faster than lsof and also shows the pid.
+const getListeningPortsNetstat = async () => {
+  const { ok, stdout } = await spawnFile('netstat', ['-anv', '-p', 'tcp'])
+  if (!ok || !stdout) return
+
+  const lines = stdout.split('\n')
+  const header = lines.find((line) => line.startsWith('Proto'))
+  if (!header) return
+
+  // "Local Address" and "Foreign Address" are two words in the header but one in a row.
+  const pidIndex = header.trim().split(/\s+/).indexOf('pid') - 2
+  if (pidIndex < 0) return
+
+  const pidPorts = {}
+  for (const line of lines) {
+    const parts = line.trim().split(/\s+/)
+    if (parts[5] === 'LISTEN') {
+      const pid = parts[pidIndex]
+      const portMatch = parts[3].match(/\.(\d+)$/)
+      if (portMatch) {
+        if (!pidPorts[pid]) pidPorts[pid] = new Set()
+        pidPorts[pid].add(portMatch[1])
+      }
+    }
+  }
+  return pidPorts
+}
+
 const getListeningPorts = async () => {
+  if (process.platform === 'darwin') {
+    const pidPorts = await getListeningPortsNetstat()
+    if (pidPorts) return pidPorts
+  }
+
   const { ok, stdout } = await spawnSh(
     'lsof -iTCP -sTCP:LISTEN -P -n 2>/dev/null',
   )
@@ -122,8 +211,17 @@ const getListeningPorts = async () => {
   return pidPorts
 }
 
-const getProcessTree = async () => {
-  const { ok, stdout } = await spawnSh('ps -eo pid=,ppid=')
+// Only the processes on the terminal of a pane, because ps for all processes is
+// slow. A process that listens in a pane runs on the terminal of that pane.
+const getProcessTree = async (paneTtys) => {
+  if (paneTtys.length === 0) return {}
+
+  const { ok, stdout } = await spawnFile('ps', [
+    '-o',
+    'pid=,ppid=',
+    '-t',
+    paneTtys.join(','),
+  ])
   if (!ok || !stdout) return {}
 
   const children = {}
@@ -151,30 +249,7 @@ const getAllDescendantPids = (pid, processTree) => {
   return pids
 }
 
-const getSessionDescriptions = async () => {
-  const { ok, stdout } = await spawnSh(
-    "tmux list-sessions -F '#{session_name}\t#{@description}' 2>/dev/null",
-  )
-  if (!ok || !stdout) return {}
-
-  const descriptions = {}
-  for (const line of stdout.trim().split('\n')) {
-    const [name, ...descParts] = line.split('\t')
-    const desc = descParts.join('\t').trim()
-    if (name && desc) {
-      descriptions[name] = desc
-    }
-  }
-  return descriptions
-}
-
-const getSessionPorts = async (session, processTree, listeningPorts) => {
-  const { ok, stdout } = await spawnSh(
-    `tmux list-panes -s -t '=${session}' -F '#{pane_pid}' 2>/dev/null`,
-  )
-  if (!ok || !stdout) return []
-
-  const panePids = stdout.trim().split('\n').filter(Boolean)
+const getSessionPorts = (panePids, processTree, listeningPorts) => {
   const ports = new Set()
 
   for (const panePid of panePids) {
@@ -225,9 +300,11 @@ const sessionSorter = (activeSessions, historySessions) => (a, b) => {
 }
 
 const selectWithFzf = async (sessions, hasCurrent) => {
-  const bind = hasCurrent ? `--bind 'load:up'` : ''
-  const { stdout, ok } = await spawnSh(
-    `echo '${sessions.join('\n')}' | fzf ${bind} --print-query --ansi --no-scrollbar`,
+  const bind = hasCurrent ? ['--bind', 'load:up'] : []
+  const { stdout, ok } = await spawnFile(
+    'fzf',
+    [...bind, '--print-query', '--ansi', '--no-scrollbar'],
+    sessions.join('\n') + '\n',
   )
 
   const [query, match] = stdout.split('\n')
@@ -265,28 +342,24 @@ const startNewTmuxSession = async (session) => {
 }
 
 const main = async () => {
-  const activeSessions = await getActiveSessions()
-  const tmuxinatorSessions = await getTmuxinatorSessions()
+  const tmuxState = getTmuxState()
+  const [
+    { activeSessions, currentSession, sessionPanePids, sessionDescriptions },
+    tmuxinatorSessions,
+    processTree,
+    listeningPorts,
+  ] = await Promise.all([
+    tmuxState,
+    getTmuxinatorSessions(),
+    tmuxState.then(({ paneTtys }) => getProcessTree(paneTtys)),
+    getListeningPorts(),
+  ])
+  const RIGHT_PAD = 3
+  const termWidth = (process.stdout.columns || 80) - RIGHT_PAD
   const historySessions = await getHistorySessions(
     activeSessions,
     tmuxinatorSessions,
   )
-  const currentSession = await getCurrentSession()
-
-  const [processTree, listeningPorts, sessionDescriptions, termWidth] =
-    await Promise.all([
-    getProcessTree(),
-    getListeningPorts(),
-    getSessionDescriptions(),
-    spawnSh('stty size 2>/dev/null').then(({ ok, stdout }) => {
-      const RIGHT_PAD = 3
-      if (ok && stdout.trim()) {
-        const cols = parseInt(stdout.trim().split(/\s+/)[1], 10)
-        if (cols > 0) return cols - RIGHT_PAD
-      }
-      return 80 - RIGHT_PAD
-    }),
-  ])
 
   const isCurrentActive =
     currentSession && activeSessions.includes(currentSession)
@@ -303,15 +376,13 @@ const main = async () => {
     : otherSessions
 
   const sessionPortsMap = {}
-  await Promise.all(
-    activeSessions.map(async (session) => {
-      sessionPortsMap[session] = await getSessionPorts(
-        session,
-        processTree,
-        listeningPorts,
-      )
-    }),
-  )
+  for (const session of activeSessions) {
+    sessionPortsMap[session] = getSessionPorts(
+      sessionPanePids[session] || [],
+      processTree,
+      listeningPorts,
+    )
+  }
 
   const sessions = sortedSessions
     .map((session) => {
